@@ -1,0 +1,20 @@
+<div class="info"
+     *ngIf="item">
+  <div class="audience-size">{{ item.audience_size | number }}
+    <span>people</span>
+  </div>
+  <div class="breadcrumbs">
+    <template ngFor
+              let-crumb
+              [ngForOf]="item.path"
+              let-first="first"
+              let-last="last">
+      <span [ngClass]="{'first-crumb': first}">{{ crumb }}</span>
+      <span *ngIf="!last"> &gt; </span>
+    </template>
+  </div>
+  <div class="description">
+    <span class="description-label">Description: </span>
+    <span [innerHTML]="getDescription(item)"></span>
+  </div>
+</div>

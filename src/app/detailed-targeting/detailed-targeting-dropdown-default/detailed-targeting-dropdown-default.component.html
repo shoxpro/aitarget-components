@@ -1,0 +1,10 @@
+<ul *ngIf="items && items.length">
+  <li class="dropdown-row"
+      *ngFor="let item of items"
+      (mouseover)="setDropdownInfoItem(item, $event)"
+      (mouseout)="setDropdownInfoItem(null, $event)"
+      (click)="selectItem(item)">
+    <div class="dropdown-row__name">{{item.name}}</div>
+    <div class="dropdown-row__type">{{item.type}}</div>
+  </li>
+</ul>
