@@ -15,6 +15,6 @@
   </div>
   <div class="description">
     <span class="description-label">Description: </span>
-    <span [innerHTML]="getDescription(item)"></span>
+    <span [innerHTML]="item.description || getDescription(item)"></span>
   </div>
 </div>

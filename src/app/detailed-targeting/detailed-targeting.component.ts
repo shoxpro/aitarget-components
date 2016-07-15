@@ -6,8 +6,9 @@ import { DetailedTargetingDropdownBrowseComponent } from './detailed-targeting-d
 import { DetailedTargetingInfoComponent } from './detailed-targeting-info/';
 import { FbService } from '../fb/fb.service';
 import { DetailedTargetingDropdownDefaultService } from './detailed-targeting-dropdown-default/detailed-targeting-dropdown-default.service';
-import { DetailedTargetingInfoService } from './detailed-targeting-info/detailed-targeting-info.component';
 import { TargetingSpecService } from '../targeting/targeting-spec.service';
+import { DetailedTargetingInfoService } from './detailed-targeting-info/detailed-targeting-info.service';
+import { DetailedTargetingSelectedService } from './detailed-targeting-selected/detailed-targeting-selected.service';
 
 @Component({
   moduleId: module.id,
@@ -22,7 +23,8 @@ import { TargetingSpecService } from '../targeting/targeting-spec.service';
     DetailedTargetingDropdownBrowseComponent,
     DetailedTargetingInfoComponent
   ],
-  providers: [FbService, DetailedTargetingDropdownDefaultService, DetailedTargetingInfoService, TargetingSpecService]
+  providers: [FbService, DetailedTargetingDropdownDefaultService, DetailedTargetingInfoService, TargetingSpecService,
+    DetailedTargetingSelectedService]
 })
 export class DetailedTargetingComponent implements OnInit {
 

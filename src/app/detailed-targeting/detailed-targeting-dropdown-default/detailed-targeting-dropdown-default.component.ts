@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { DetailedTargetingDropdownDefaultService } from './detailed-targeting-dropdown-default.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
-import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.component';
-import { TargetingSpecService } from '../../targeting/targeting-spec.service';
+import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
+import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 
 @Component({
   moduleId: module.id,
@@ -18,7 +18,7 @@ export class DetailedTargetingDropdownDefaultComponent implements OnInit {
 
   constructor (private DetailedTargetingDropdownDefaultService: DetailedTargetingDropdownDefaultService,
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
-               private TargetingSpecService: TargetingSpecService,
+               private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
                private ref: ChangeDetectorRef) {}
 
   public setDropdownInfoItem (item: DetailedTargetingItem) {
@@ -26,17 +26,15 @@ export class DetailedTargetingDropdownDefaultComponent implements OnInit {
   }
 
   public selectItem (item: DetailedTargetingItem) {
-    let spec = this.TargetingSpecService.get();
+    let selectedItems = this.DetailedTargetingSelectedService.get();
 
-    spec[item.type] = spec[item.type] || [];
-
-    let alreadyAdded: boolean = Boolean(spec[item.type].filter(selected => selected.id === item.id).length);
+    let alreadyAdded: boolean = Boolean(selectedItems.filter(selected => selected.id === item.id).length);
 
     if (!alreadyAdded) {
-      spec[item.type].push({id: item.id, name: item.name});
+      selectedItems.push(item);
     }
 
-    this.TargetingSpecService.update(spec);
+    this.DetailedTargetingSelectedService.updateSelected(selectedItems);
   }
 
   ngOnInit () {

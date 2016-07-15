@@ -12,11 +12,13 @@ import {
 
 import { DetailedTargetingSelectedComponent } from './detailed-targeting-selected.component';
 import { TargetingSpecService } from '../../targeting/targeting-spec.service';
+import { DetailedTargetingSelectedService } from './detailed-targeting-selected.service';
 
 describe('Component: DetailedTargetingSelected', () => {
   it('should create an instance', () => {
-    inject([TargetingSpecService], (TargetingSpecService) => {
-      this.component = new DetailedTargetingSelectedComponent(TargetingSpecService);
+    inject([TargetingSpecService,
+      DetailedTargetingSelectedService], (TargetingSpecService, DetailedTargetingSelectedService) => {
+      this.component = new DetailedTargetingSelectedComponent(TargetingSpecService, DetailedTargetingSelectedService);
       expect(this.component)
         .toBeTruthy();
     });

@@ -1,3 +1,30 @@
-<p>
-  {{ spec | json }}
-</p>
+<div class="content">
+  <div class="group"
+       #group
+       [ngClass]="{'group_hover': group.hovered}"
+       *ngFor="let key of structuredSelectedKeys">
+    <div class="group__title"
+         (mouseenter)="group.hovered = true;"
+         (mouseleave)="group.hovered = false;">
+      <div>
+        <template ngFor
+                  let-crumb
+                  [ngForOf]="key.split(',')"
+                  let-last="last">
+          <span class="crumb">{{ crumb }}</span>
+          <span *ngIf="!last"> &gt; </span>
+        </template>
+      </div>
+      <span class="remove remove_group"
+            (click)="removeGroup(key)">&times;</span>
+    </div>
+    <div class="group__items">
+      <div class="group__item"
+           *ngFor="let item of structuredSelectedMap[key]">
+        <span>{{ item.name }}</span>
+        <span class="remove remove_item"
+              (click)="removeItem(item)">&times;</span>
+      </div>
+    </div>
+  </div>
+</div>
