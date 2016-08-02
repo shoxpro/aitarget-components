@@ -7,6 +7,14 @@
   background: #ffffff;
 }
 
+.table {
+  display: table;
+}
+
+.table__cell {
+  display: table-cell;
+}
+
 label {
   display:    inline-block;
   box-sizing: border-box;

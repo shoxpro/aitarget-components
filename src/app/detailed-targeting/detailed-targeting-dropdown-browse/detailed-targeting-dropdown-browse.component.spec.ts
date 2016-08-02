@@ -1,20 +1,19 @@
 /* tslint:disable:no-unused-variable */
 
-import { By }           from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
-import {
-  beforeEach, beforeEachProviders,
-  describe, xdescribe,
-  expect, it, xit,
-  async, inject
-} from '@angular/core/testing';
-
+import { describe, expect, it, inject } from '@angular/core/testing';
 import { DetailedTargetingDropdownBrowseComponent } from './detailed-targeting-dropdown-browse.component';
+import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 describe('Component: DetailedTargetingDropdownBrowse', () => {
   it('should create an instance', () => {
-    let component = new DetailedTargetingDropdownBrowseComponent();
-    expect(component).toBeTruthy();
+    inject([DetailedTargetingModeService,
+      ChangeDetectorRef], (DetailedTargetingModeService,
+                           ChangeDetectorRef) => {
+      let component = new DetailedTargetingDropdownBrowseComponent(DetailedTargetingModeService,
+        ChangeDetectorRef);
+      expect(component)
+        .toBeTruthy();
+    });
   });
 });

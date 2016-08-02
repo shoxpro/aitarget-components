@@ -1,24 +1,27 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { DetailedTargetingDropdownDefaultService } from './detailed-targeting-dropdown-default.service';
+import { DetailedTargetingDropdownSuggestedService } from './detailed-targeting-dropdown-suggested.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
+import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'detailed-targeting-dropdown-default',
-  templateUrl: 'detailed-targeting-dropdown-default.component.html',
-  styleUrls: ['detailed-targeting-dropdown-default.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'detailed-targeting-dropdown-suggested',
+  templateUrl: 'detailed-targeting-dropdown-suggested.component.html',
+  styleUrls: ['detailed-targeting-dropdown-suggested.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class DetailedTargetingDropdownDefaultComponent implements OnInit {
+export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
 
   public items: DetailedTargetingItem[];
+  private mode;
 
-  constructor (private DetailedTargetingDropdownDefaultService: DetailedTargetingDropdownDefaultService,
+  constructor (private DetailedTargetingDropdownSuggestedService: DetailedTargetingDropdownSuggestedService,
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
+               private DetailedTargetingModeService: DetailedTargetingModeService,
                private ref: ChangeDetectorRef) {}
 
   public setDropdownInfoItem (item: DetailedTargetingItem) {
@@ -38,8 +41,15 @@ export class DetailedTargetingDropdownDefaultComponent implements OnInit {
   }
 
   ngOnInit () {
-    this.DetailedTargetingDropdownDefaultService.items.subscribe(items => {
+    this.DetailedTargetingDropdownSuggestedService.items.subscribe(items => {
       this.items = items;
+
+      this.ref.markForCheck();
+      this.ref.detectChanges();
+    });
+
+    this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
+      this.mode = mode;
 
       this.ref.markForCheck();
       this.ref.detectChanges();
