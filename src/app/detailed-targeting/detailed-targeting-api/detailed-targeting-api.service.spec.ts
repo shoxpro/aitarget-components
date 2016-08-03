@@ -6,10 +6,11 @@ import { DetailedTargetingDropdownSuggestedService } from '../detailed-targeting
 import { FbService } from '../../fb/fb.service';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
+import { DetailedTargetingDropdownBrowseService } from '../detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
 
 describe('DetailedTargetingApi Service', () => {
   beforeEachProviders(() => [DetailedTargetingApiService, DetailedTargetingInfoService, FbService,
-    DetailedTargetingDropdownSuggestedService, DetailedTargetingModeService]);
+    DetailedTargetingDropdownSuggestedService, DetailedTargetingDropdownBrowseService, DetailedTargetingModeService]);
 
   it('should ...',
     inject([DetailedTargetingApiService], (service: DetailedTargetingApiService) => {

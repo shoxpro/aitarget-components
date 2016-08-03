@@ -1,3 +1,14 @@
-<div *ngIf="mode === 'browse'">
-  detailed-targeting-dropdown-browse works!
-</div>
+<ul *ngIf="items && items.length && mode === 'browse'">
+  <li class="dropdown-row_browse"
+      *ngFor="let item of items">
+    <div class="dropdown-row-content">
+      <div class="dropdown-row-cell dropdown-row-tick"
+           [ngStyle]="{'width': 23 + 15 * item.path?.length + 'px'}">
+        <div class="dropdown-row-tick-content"
+             *ngIf="!item.id"></div>
+      </div>
+      <div class="dropdown-row-cell dropdown-row-name">{{item.name}}</div>
+      <div class="dropdown-row-cell dropdown-row-addon"></div>
+    </div>
+  </li>
+</ul>

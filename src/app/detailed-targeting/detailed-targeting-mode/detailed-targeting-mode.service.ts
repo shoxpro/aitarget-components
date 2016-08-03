@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs/Rx';
 @Injectable()
 export class DetailedTargetingModeService {
 
-  private _mode = new BehaviorSubject<String>('suggested');
+  private _mode = new BehaviorSubject<String>('browse');
 
   public mode = this._mode.asObservable();
 

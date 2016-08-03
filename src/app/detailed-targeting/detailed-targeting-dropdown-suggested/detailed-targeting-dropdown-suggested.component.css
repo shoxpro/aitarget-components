@@ -11,6 +11,10 @@ ul {
   border-top: none;
 }
 
+li {
+  height:      31px;
+}
+
 .dropdown-row {
   position:        relative;
   display:         flex;
