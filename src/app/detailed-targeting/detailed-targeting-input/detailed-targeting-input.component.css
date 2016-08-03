@@ -12,7 +12,9 @@
 }
 
 .table__cell {
-  display: table-cell;
+  display:    table-cell;
+  min-height: 100%;
+  height:     1px;
 }
 
 label {

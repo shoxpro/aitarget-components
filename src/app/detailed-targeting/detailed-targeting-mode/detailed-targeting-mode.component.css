@@ -1,17 +1,17 @@
 .mode {
-  display: flex;
+  display: table;
   height:  100%;
 }
 
 .mode-suggested, .mode-browse {
-  position:    relative;
-  display:     inline-block;
-  padding:     0 8px;
-  height:      100%;
-  border-left: 1px solid #bdc7d8;
-  color:       #4b4f56;
-  font-weight: bold;
-  cursor:      pointer;
+  position:       relative;
+  display:        table-cell;
+  padding:        0 8px;
+  color:          #4b4f56;
+  vertical-align: middle;
+  white-space:    nowrap;
+  font-weight:    bold;
+  cursor:         pointer;
 }
 
 .mode-suggested.active, .mode-browse.active,
@@ -19,9 +19,21 @@
   color: #5791ff;
 }
 
+.left-border {
+  position:    absolute;
+  left:        0;
+  display:     inline-block;
+  border-left: 1px solid #bdc7d8;
+}
+
+.left-border:before {
+  display: inline-block;
+  content: '';
+}
+
 .tick {
   position:      absolute;
-  bottom:        -9px;
+  bottom:        0;
   left:          50%;
   z-index:       101;
   display:       none;
