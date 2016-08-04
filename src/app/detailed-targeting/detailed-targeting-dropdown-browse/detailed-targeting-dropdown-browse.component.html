@@ -1,14 +1,20 @@
 <ul *ngIf="items && items.length && mode === 'browse'">
-  <li class="dropdown-row_browse"
-      *ngFor="let item of items">
-    <div class="dropdown-row-content">
-      <div class="dropdown-row-cell dropdown-row-tick"
-           [ngStyle]="{'width': 23 + 15 * item.path?.length + 'px'}">
-        <div class="dropdown-row-tick-content"
-             *ngIf="!item.id"></div>
+  <template ngFor
+            let-item
+            [ngForOf]="items">
+    <li class="dropdown-row_browse"
+        (click)="clickItem(item)"
+        *ngIf="item.key !== '__ROOT__' && openItems[item.parent]">
+      <div class="dropdown-row-content">
+        <div class="dropdown-row-cell dropdown-row-tick"
+             [ngClass]="{'open': openItems[item.key]}"
+             [ngStyle]="{'width': 23 + 15 * item.path?.length + 'px'}">
+          <div class="dropdown-row-tick-content"
+               *ngIf="!item.id"></div>
+        </div>
+        <div class="dropdown-row-cell dropdown-row-name">{{item.name}}</div>
+        <div class="dropdown-row-cell dropdown-row-addon"></div>
       </div>
-      <div class="dropdown-row-cell dropdown-row-name">{{item.name}}</div>
-      <div class="dropdown-row-cell dropdown-row-addon"></div>
-    </div>
-  </li>
+    </li>
+  </template>
 </ul>

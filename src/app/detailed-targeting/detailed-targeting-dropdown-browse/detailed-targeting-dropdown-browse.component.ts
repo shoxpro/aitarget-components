@@ -13,35 +13,24 @@ import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-
 export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   private mode;
   private items;
+  public openItems: Object = {
+    __ROOT__: true
+  };
 
   constructor (private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
                private DetailedTargetingApiService: DetailedTargetingApiService,
                private DetailedTargetingModeService: DetailedTargetingModeService,
                private ref: ChangeDetectorRef) {}
 
-  private getArrangedItems (items) {
-
-    let arrangedItems: Object = {};
-
-    items.forEach((item) => {
-      if (arrangedItems[item.key]) {
-        arrangedItems[item.key].push(item);
-      } else {
-        arrangedItems[item.key] = [];
-      }
-    });
-
-    console.info(`arrangedItems:`, arrangedItems);
-
-    return items;
-  }
+  public clickItem (item) {
+    if (!item.id) {
+      this.openItems[item.key] = !Boolean(this.openItems[item.key]);
+    }
+  };
 
   ngOnInit () {
     this.DetailedTargetingDropdownBrowseService.items.subscribe(items => {
-
-      this.items = this.getArrangedItems(items);
-
-      console.info(`browse items:`, items);
+      this.items = items;
 
       this.ref.markForCheck();
       this.ref.detectChanges();
