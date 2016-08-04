@@ -25,6 +25,10 @@ li {
   cursor:        pointer;
 }
 
+.dropdown-row_browse:hover {
+  background: #f6f7f9;
+}
+
 .dropdown-row_browse:last-of-type {
   border-bottom: none;
 }
