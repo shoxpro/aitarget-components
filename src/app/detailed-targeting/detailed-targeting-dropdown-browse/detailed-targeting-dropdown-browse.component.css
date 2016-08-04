@@ -93,3 +93,8 @@ li {
   white-space:   nowrap;
   font-weight:   bold;
 }
+
+.dropdown-row-addon {
+  width:      30px;
+  text-align: center;
+}
