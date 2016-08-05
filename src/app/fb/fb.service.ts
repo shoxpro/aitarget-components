@@ -53,7 +53,7 @@ export class FbService {
         status: true,
         cookie: true,
         xfbml: true,
-        version: 'v2.6'
+        version: 'v2.7'
       });
 
       FB.Event.subscribe('auth.statusChange', (response) => {
