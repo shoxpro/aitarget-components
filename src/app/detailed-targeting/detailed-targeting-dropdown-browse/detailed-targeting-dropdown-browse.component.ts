@@ -27,7 +27,10 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
                private DetailedTargetingModeService: DetailedTargetingModeService,
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
-               private ref: ChangeDetectorRef) {}
+               private ref: ChangeDetectorRef) {
+    //Load browse items
+    this.DetailedTargetingApiService.browse();
+  }
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -119,7 +122,8 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
      * Update items from dropdown (toggle checkboxes) when selected items changes
      */
     this.DetailedTargetingSelectedService.items.subscribe((items: DetailedTargetingItem[]) => {
-      this.selectedItems = items.map(item => item.key);
+      console.info(`DetailedTargetingSelectedService items:`, items);
+      this.selectedItems = items.map(item => item.id);
 
       this.updateTemplate();
     });
@@ -129,10 +133,6 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
      */
     this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
       this.mode = mode;
-
-      if (mode === 'browse') {
-        this.DetailedTargetingApiService.browse();
-      }
 
       this.updateTemplate();
     });

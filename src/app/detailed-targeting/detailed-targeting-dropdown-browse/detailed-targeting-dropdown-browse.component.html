@@ -19,7 +19,7 @@
           <div class="dropdown-row-checkbox">
             <label *ngIf="item.id">
               <input type="checkbox"
-                     [attr.checked]="selectedItems.indexOf(item.key) > -1 ? true : null">
+                     [attr.checked]="selectedItems.indexOf(item.id) > -1 ? true : null">
             </label>
           </div>
         </div>
