@@ -7,6 +7,7 @@ import { DetailedTargetingDropdownSuggestedService } from './detailed-targeting-
 import { TargetingSpecService } from '../../targeting/targeting-spec.service';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
+import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-targeting-api.service';
 
 describe('Component: DetailedTargetingDropdownSuggested', () => {
   it('should create an instance', () => {
@@ -14,15 +15,18 @@ describe('Component: DetailedTargetingDropdownSuggested', () => {
       DetailedTargetingInfoService,
       TargetingSpecService,
       DetailedTargetingModeService,
+      DetailedTargetingApiService,
       ChangeDetectorRef], (DetailedTargetingDropdownSuggestedService,
                            DetailedTargetingInfoService,
                            TargetingSpecService,
                            DetailedTargetingModeService,
+                           DetailedTargetingApiService,
                            ChangeDetectorRef) => {
       let component = new DetailedTargetingDropdownSuggestedComponent(DetailedTargetingDropdownSuggestedService,
         DetailedTargetingInfoService,
         TargetingSpecService,
         DetailedTargetingModeService,
+        DetailedTargetingApiService,
         ChangeDetectorRef);
       expect(component)
         .toBeTruthy();

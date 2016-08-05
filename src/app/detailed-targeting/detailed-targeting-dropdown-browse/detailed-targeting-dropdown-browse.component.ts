@@ -27,10 +27,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
                private DetailedTargetingModeService: DetailedTargetingModeService,
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
-               private ref: ChangeDetectorRef) {
-    //Load browse items
-    this.DetailedTargetingApiService.browse();
-  }
+               private ref: ChangeDetectorRef) {}
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -109,6 +106,9 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   };
 
   ngOnInit () {
+    //Load browse items
+    this.DetailedTargetingApiService.browse();
+
     /**
      * Update dropdown list when new items to browse
      */

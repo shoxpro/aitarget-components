@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-targeting-api.service';
 import { DetailedTargetingModeComponent } from '../detailed-targeting-mode/';
+import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
 
 @Component({
   moduleId: module.id,
@@ -15,14 +16,23 @@ export class DetailedTargetingInputComponent implements OnInit {
   private _searchTermStream = new Subject<string>();
   private term: string;
 
-  search (term: string) {
+  /**
+   * Search on typing
+   * @param term
+   */
+  public search (term: string) {
     this._searchTermStream.next(term);
   }
 
-  constructor (private DetailedTargetingApiService: DetailedTargetingApiService) {
-    //this.term = 'fish';
-    //this.DetailedTargetingApiService.search(this.term);
+  /**
+   * Open dropdown with suggestions when gets focus
+   */
+  public focus () {
+    this.DetailedTargetingModeService.set('suggested');
   }
+
+  constructor (private DetailedTargetingApiService: DetailedTargetingApiService,
+               private DetailedTargetingModeService: DetailedTargetingModeService) {}
 
   ngOnInit () {
     this._searchTermStream

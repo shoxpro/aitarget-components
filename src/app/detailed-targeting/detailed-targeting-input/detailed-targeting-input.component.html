@@ -3,6 +3,7 @@
     <input type="text"
            [(ngModel)]="term"
            (keyup)="search(term)"
+           (focus)="focus()"
            placeholder="Add demographics, interests or behaviours">
   </label>
   <detailed-targeting-mode class="table__cell"></detailed-targeting-mode>

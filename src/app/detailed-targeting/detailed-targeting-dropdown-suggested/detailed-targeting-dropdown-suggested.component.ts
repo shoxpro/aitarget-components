@@ -4,6 +4,7 @@ import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
+import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-targeting-api.service';
 
 @Component({
   moduleId: module.id,
@@ -18,10 +19,24 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
   public items: DetailedTargetingItem[];
   private mode;
 
+  /**
+   * Trigger change detection mechanism that updates component's template
+   */
+  private updateTemplate () {
+    this.ref.markForCheck();
+    this.ref.detectChanges();
+  }
+
+  private suggest (targetingList: Array<Object> = []) {
+    console.info(`suggest smth:`);
+    this.DetailedTargetingApiService.suggest(targetingList);
+  }
+
   constructor (private DetailedTargetingDropdownSuggestedService: DetailedTargetingDropdownSuggestedService,
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
                private DetailedTargetingModeService: DetailedTargetingModeService,
+               private DetailedTargetingApiService: DetailedTargetingApiService,
                private ref: ChangeDetectorRef) {}
 
   public setDropdownInfoItem (item: DetailedTargetingItem) {
@@ -44,16 +59,32 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
     this.DetailedTargetingDropdownSuggestedService.items.subscribe(items => {
       this.items = items;
 
-      this.ref.markForCheck();
-      this.ref.detectChanges();
+      this.updateTemplate();
     });
 
     this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
       this.mode = mode;
 
-      this.ref.markForCheck();
-      this.ref.detectChanges();
+      this.updateTemplate();
     });
+
+    /**
+     * Load suggested items when list of selected items changes
+     */
+    this.DetailedTargetingSelectedService.items
+        .map((items: DetailedTargetingItem[]) => {
+          return items.map(item => {
+            return {
+              id: item.id,
+              type: item.type
+            }
+          });
+        })
+        .subscribe((targetingList: Array<Object>) => {
+          this.suggest(targetingList);
+
+          this.updateTemplate();
+        });
   }
 
 }

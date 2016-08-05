@@ -20,7 +20,6 @@ export class DetailedTargetingApiService {
       this.DetailedTargetingModeService.set(null);
       return this.DetailedTargetingDropdownSuggestedService.updateDropdown([]);
     }
-    this.DetailedTargetingModeService.set('suggested');
     this.FbService.get((FB) => {
       FB.api(`/${adaccountId}/targetingsearch`, {q: q}, (response) => {
         this.DetailedTargetingDropdownSuggestedService.updateDropdown(response.data);
@@ -35,6 +34,17 @@ export class DetailedTargetingApiService {
         include_nodes: true
       }, (response) => {
         this.DetailedTargetingDropdownBrowseService.updateDropdown(response.data);
+      });
+    });
+  }
+
+  suggest (targetingList: Array<Object>, adaccountId: string = 'act_944874195534529') {
+    console.info(`targetingsuggestions!!!:`, targetingList);
+    this.FbService.get((FB) => {
+      FB.api(`/${adaccountId}/targetingsuggestions`, {
+        targeting_list: targetingList
+      }, (response) => {
+        this.DetailedTargetingDropdownSuggestedService.updateDropdown(response.data);
       });
     });
   }
