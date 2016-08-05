@@ -13,6 +13,7 @@ import { DetailedTargetingInfoService } from '../detailed-targeting-info/detaile
   styleUrls: ['detailed-targeting-dropdown-browse.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
 export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   private mode;
   private items;
@@ -28,12 +29,38 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
                private ref: ChangeDetectorRef) {}
 
-  public setDropdownInfoItem (item: DetailedTargetingItem) {
-    let value = item && item.id ? item : null;
-    this.DetailedTargetingInfoService.update(value);
+  /**
+   * Trigger change detection mechanism that updates component's template
+   */
+  private updateTemplate () {
+    this.ref.markForCheck();
+    this.ref.detectChanges();
   }
 
-  public selectItem (item: DetailedTargetingItem) {
+  /**
+   * Open or close browse rows when clicked
+   * @param item
+   */
+  private toggleBranch (item: DetailedTargetingItem) {
+    //Get all open keys
+    let openKeys = Object.keys(this.openItems);
+    //Toggle branch by item.key
+    this.openItems[item.key] = !Boolean(this.openItems[item.key]);
+    //If branch is closed, than close all it's children as well
+    if (!this.openItems[item.key] && openKeys.length) {
+      openKeys.forEach(key => {
+        if (key.indexOf(item.key) > -1) {
+          this.openItems[key] = false;
+        }
+      });
+    }
+  }
+
+  /**
+   * Select row item from the browse list
+   * @param item
+   */
+  private selectItem (item: DetailedTargetingItem) {
     let selectedItems = this.DetailedTargetingSelectedService.get();
 
     let alreadyAdded: boolean = Boolean(selectedItems.filter(selected => selected.id === item.id).length);
@@ -45,7 +72,11 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     this.DetailedTargetingSelectedService.updateSelected(selectedItems);
   }
 
-  public removeItem (itemToRemove: DetailedTargetingItem) {
+  /**
+   * Remove row item from previously selected
+   * @param itemToRemove
+   */
+  private removeItem (itemToRemove: DetailedTargetingItem) {
     let selectedItems = this.DetailedTargetingSelectedService.get();
 
     selectedItems = selectedItems.filter(item => item.id !== itemToRemove.id);
@@ -53,9 +84,18 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     this.DetailedTargetingSelectedService.updateSelected(selectedItems);
   }
 
+  /**
+   * Show row's info when hovered
+   * @param item
+   */
+  public setDropdownInfoItem (item: DetailedTargetingItem) {
+    let value = item && item.id ? item : null;
+    this.DetailedTargetingInfoService.update(value);
+  }
+
   public clickItem (item: DetailedTargetingItem) {
     if (!item.id) {
-      this.openItems[item.key] = !Boolean(this.openItems[item.key]);
+      this.toggleBranch(item);
     } else {
       if (this.selectedItems && this.selectedItems.indexOf(item.key) > -1) {
         this.removeItem(item);
@@ -66,18 +106,27 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   };
 
   ngOnInit () {
+    /**
+     * Update dropdown list when new items to browse
+     */
     this.DetailedTargetingDropdownBrowseService.items.subscribe(items => {
       this.items = items;
 
-      this.ref.markForCheck();
-      this.ref.detectChanges();
+      this.updateTemplate();
     });
 
+    /**
+     * Update items from dropdown (toggle checkboxes) when selected items changes
+     */
     this.DetailedTargetingSelectedService.items.subscribe((items: DetailedTargetingItem[]) => {
       this.selectedItems = items.map(item => item.key);
-      console.info(`this.selectedItems:`, this.selectedItems);
+
+      this.updateTemplate();
     });
 
+    /**
+     * Toggle mode if changed
+     */
     this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
       this.mode = mode;
 
@@ -85,8 +134,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
         this.DetailedTargetingApiService.browse();
       }
 
-      this.ref.markForCheck();
-      this.ref.detectChanges();
+      this.updateTemplate();
     });
   }
 
