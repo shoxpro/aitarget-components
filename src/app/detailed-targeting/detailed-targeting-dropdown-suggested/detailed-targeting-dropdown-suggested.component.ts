@@ -28,7 +28,6 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
   }
 
   private suggest (targetingList: Array<Object> = []) {
-    console.info(`suggest smth:`);
     this.DetailedTargetingApiService.suggest(targetingList);
   }
 
@@ -72,6 +71,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
      * Load suggested items when list of selected items changes
      */
     this.DetailedTargetingSelectedService.items
+        .filter(items => items.length > 0)
         .map((items: DetailedTargetingItem[]) => {
           return items.map(item => {
             return {

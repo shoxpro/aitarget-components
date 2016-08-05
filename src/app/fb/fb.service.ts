@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Subject, Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class FbService {
+
+  private _api = new Subject<Object>();
 
   /**
    * Load the SDK asynchronously
@@ -21,27 +24,7 @@ export class FbService {
     fjs.parentNode.insertBefore(js, fjs);
   }
 
-  /**
-   * Exec passed callback if FB sdk exists
-   * @param callback
-   */
-  private execCallback (callback: Function) {
-    let FB = (<any>window).FB;
-    if (FB && typeof callback === 'function') {
-      callback(FB);
-    }
-  }
-
-  constructor () {
-    this.loadSdk();
-  }
-
-  /**
-   * Load and initialize facebook javascript SDK (global FB instance)
-   * Trigger passed callback with FB instance
-   * @param callback
-   */
-  public get (callback: Function) {
+  private setAsyncInit (observer) {
     (<any>window).fbAsyncInit = () => {
       /**
        * Use Aitarget selfservice app id as default value
@@ -62,7 +45,7 @@ export class FbService {
 
       FB.Event.subscribe('auth.statusChange', (response) => {
         if (response.status === 'connected') {
-          this.execCallback(callback);
+          observer.next(FB);
         }
       });
 
@@ -76,7 +59,15 @@ export class FbService {
         }
       });
     };
-
-    this.execCallback(callback);
   }
+
+  public api = Observable.create((observer) => {
+    let FB = (<any>window).FB;
+    if (FB) {
+      observer.next(FB);
+    } else {
+      this.setAsyncInit(observer);
+      this.loadSdk();
+    }
+  });
 }

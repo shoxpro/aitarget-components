@@ -32,8 +32,15 @@ import { DetailedTargetingApiService } from './detailed-targeting-api/detailed-t
 })
 export class DetailedTargetingComponent implements OnInit {
 
-  constructor () {}
+  constructor (private DetailedTargetingApiService: DetailedTargetingApiService) {}
 
-  ngOnInit () { }
+  ngOnInit () {
+    //Load suggested items
+    this.DetailedTargetingApiService.suggest();
+    setTimeout(() => {
+      //Load browse items
+      this.DetailedTargetingApiService.browse();
+    }, 1000);
+  }
 
 }

@@ -106,9 +106,6 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   };
 
   ngOnInit () {
-    //Load browse items
-    this.DetailedTargetingApiService.browse();
-
     /**
      * Update dropdown list when new items to browse
      */
