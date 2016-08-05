@@ -6,7 +6,7 @@ export class FbService {
   /**
    * Load the SDK asynchronously
    */
-  loadSdk () {
+  private loadSdk () {
     let js,
       id = 'facebook-jssdk',
       s = 'script',
@@ -32,12 +32,16 @@ export class FbService {
     }
   }
 
+  constructor () {
+    this.loadSdk();
+  }
+
   /**
    * Load and initialize facebook javascript SDK (global FB instance)
    * Trigger passed callback with FB instance
    * @param callback
    */
-  get (callback: Function) {
+  public get (callback: Function) {
     (<any>window).fbAsyncInit = () => {
       /**
        * Use Aitarget selfservice app id as default value
@@ -74,7 +78,5 @@ export class FbService {
     };
 
     this.execCallback(callback);
-
-    this.loadSdk();
   }
 }
