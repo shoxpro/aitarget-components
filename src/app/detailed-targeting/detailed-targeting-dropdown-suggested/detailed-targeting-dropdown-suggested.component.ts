@@ -51,10 +51,15 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
       selectedItems.push(item);
     }
 
+    console.info(`selectedItems:`, selectedItems);
+
     this.DetailedTargetingSelectedService.updateSelected(selectedItems);
   }
 
   ngOnInit () {
+    //Load suggested items
+    this.DetailedTargetingApiService.suggest();
+
     this.DetailedTargetingDropdownSuggestedService.items.subscribe(items => {
       this.items = items;
 

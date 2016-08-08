@@ -12,9 +12,10 @@
 }
 
 .table__cell {
-  display:    table-cell;
-  min-height: 100%;
-  height:     1px;
+  display:        table-cell;
+  min-height:     31px;
+  height:         1px;
+  vertical-align: middle;
 }
 
 label {

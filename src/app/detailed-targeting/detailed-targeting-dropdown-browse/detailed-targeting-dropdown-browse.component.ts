@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingDropdownBrowseService } from './detailed-targeting-dropdown-browse.service';
 import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-targeting-api.service';
@@ -17,17 +17,18 @@ import { DetailedTargetingInfoService } from '../detailed-targeting-info/detaile
 export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   private mode;
   private items;
-  public openItems: Object = {
-    __ROOT__: true
-  };
   private selectedItems;
+  private openItems;
 
   constructor (private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
                private DetailedTargetingApiService: DetailedTargetingApiService,
                private DetailedTargetingModeService: DetailedTargetingModeService,
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
-               private ref: ChangeDetectorRef) {}
+               private ElementRef: ElementRef,
+               private ref: ChangeDetectorRef) {
+    this.openItems = this.DetailedTargetingDropdownBrowseService.getOpenItems();
+  }
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -38,22 +39,50 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   }
 
   /**
+   * If branch is closed, than close all it's children as well
+   * @param item
+   * @param openItems
+   * @param openKeys
+   */
+  private closeChildrenNodes (item, openItems, openKeys) {
+    if (openItems[item.key]) {
+      return;
+    }
+    openKeys.forEach(key => {
+      if (key.indexOf(item.key) > -1) {
+        openItems[key] = false;
+      }
+    });
+  }
+
+  private getScrollToItemKey (item, openItems) {
+    if (openItems[item.key]) {
+      return item.key;
+    } else {
+      let lastIndex = item.key.lastIndexOf(' > ');
+      return item.key.slice(0, lastIndex > -1 ? lastIndex : item.key.length);
+    }
+  }
+
+  /**
    * Open or close browse rows when clicked
    * @param item
    */
   private toggleBranch (item: DetailedTargetingItem) {
     //Get all open keys
-    let openKeys = Object.keys(this.openItems);
+    let openItems = this.DetailedTargetingDropdownBrowseService.getOpenItems();
+    let openKeys = Object.keys(openItems);
+
     //Toggle branch by item.key
-    this.openItems[item.key] = !Boolean(this.openItems[item.key]);
-    //If branch is closed, than close all it's children as well
-    if (!this.openItems[item.key] && openKeys.length) {
-      openKeys.forEach(key => {
-        if (key.indexOf(item.key) > -1) {
-          this.openItems[key] = false;
-        }
-      });
-    }
+    openItems[item.key] = !Boolean(openItems[item.key]);
+
+    //Toggle Nodes
+    this.closeChildrenNodes(item, openItems, openKeys);
+
+    //Decide where to scroll
+    openItems._scrollTo = this.getScrollToItemKey(item, openItems);
+
+    this.DetailedTargetingDropdownBrowseService.updateOpenItems(openItems);
   }
 
   /**
@@ -97,7 +126,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     if (!item.id) {
       this.toggleBranch(item);
     } else {
-      if (this.selectedItems && this.selectedItems.indexOf(item.key) > -1) {
+      if (this.selectedItems && this.selectedItems.indexOf(item.id) > -1) {
         this.removeItem(item);
       } else {
         this.selectItem(item);
@@ -105,7 +134,26 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     }
   };
 
+  public scrollTo (key) {
+    if (!key) {
+      return;
+    }
+
+    let elm = this.ElementRef.nativeElement;
+    let list = elm.querySelector('ul');
+    let itemRow = elm.querySelector(`[data-key="${key}"]`);
+
+    if (itemRow) {
+      list.scrollTop = itemRow.offsetTop;
+    }
+  }
+
   ngOnInit () {
+    //TODO: rethink how to make request without timeout
+    setTimeout(() => {
+      //Load browse items
+      this.DetailedTargetingApiService.browse();
+    }, 1000);
     /**
      * Update dropdown list when new items to browse
      */
@@ -118,12 +166,13 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     /**
      * Update items from dropdown (toggle checkboxes) when selected items changes
      */
-    this.DetailedTargetingSelectedService.items.subscribe((items: DetailedTargetingItem[]) => {
-      console.info(`DetailedTargetingSelectedService items:`, items);
-      this.selectedItems = items.map(item => item.id);
+    this.DetailedTargetingSelectedService.items
+        .map((items: DetailedTargetingItem[]) => items.map(item => item.id))
+        .subscribe((selectedItems: Array<string>) => {
+          this.selectedItems = selectedItems;
 
-      this.updateTemplate();
-    });
+          this.updateTemplate();
+        });
 
     /**
      * Toggle mode if changed
@@ -132,6 +181,14 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
       this.mode = mode;
 
       this.updateTemplate();
+    });
+
+    this.DetailedTargetingDropdownBrowseService.openItems.subscribe((openItems) => {
+      this.openItems = openItems;
+      this.updateTemplate();
+      setTimeout(() => {
+        this.scrollTo(openItems._scrollTo);
+      });
     });
   }
 

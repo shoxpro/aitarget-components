@@ -10,9 +10,10 @@
         <template ngFor
                   let-crumb
                   [ngForOf]="key.split(',')"
-                  let-last="last">
-          <span class="crumb">{{ crumb }}</span>
-          <span *ngIf="!last"> &gt; </span>
+                  let-last="last"
+                  let-index="index">
+          <span class="crumb"
+                (click)="showCrumb(key, index)">{{ crumb }}</span> <span *ngIf="!last"> &gt; </span>
         </template>
       </div>
       <span class="remove remove_group"
@@ -21,9 +22,8 @@
     <div class="group__items">
       <div class="group__item"
            *ngFor="let item of structuredSelectedMap[key]">
-        <span>{{ item.name }}</span>
-        <span class="remove remove_item"
-              (click)="removeItem(item)">&times;</span>
+        <span>{{ item.name }}</span> <span class="remove remove_item"
+                                           (click)="removeItem(item)">&times;</span>
       </div>
     </div>
   </div>

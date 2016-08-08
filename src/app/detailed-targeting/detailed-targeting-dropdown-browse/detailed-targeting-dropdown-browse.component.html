@@ -5,6 +5,7 @@
     <li class="dropdown-row_browse"
         (click)="clickItem(item)"
         *ngIf="item.key !== '__ROOT__' && openItems[item.parent]"
+        [attr.data-key]="item?.key"
         (mouseover)="setDropdownInfoItem(item)"
         (mouseout)="setDropdownInfoItem(null)">
       <div class="dropdown-row-content">
