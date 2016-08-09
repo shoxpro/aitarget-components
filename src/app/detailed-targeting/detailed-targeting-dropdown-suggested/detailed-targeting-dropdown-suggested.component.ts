@@ -5,6 +5,7 @@ import { DetailedTargetingInfoService } from '../detailed-targeting-info/detaile
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-targeting-api.service';
+import { DetailedTargetingInputService } from '../detailed-targeting-input/detailed-targeting-input.service';
 
 @Component({
   moduleId: module.id,
@@ -36,6 +37,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
                private DetailedTargetingModeService: DetailedTargetingModeService,
                private DetailedTargetingApiService: DetailedTargetingApiService,
+               private DetailedTargetingInputService: DetailedTargetingInputService,
                private ref: ChangeDetectorRef) {}
 
   public setDropdownInfoItem (item: DetailedTargetingItem) {
@@ -51,7 +53,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
       selectedItems.push(item);
     }
 
-    console.info(`selectedItems:`, selectedItems);
+    this.DetailedTargetingInputService.setTerm('');
 
     this.DetailedTargetingSelectedService.updateSelected(selectedItems);
   }
@@ -86,6 +88,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
           });
         })
         .subscribe((targetingList: Array<Object>) => {
+          this.DetailedTargetingModeService.set('suggested');
           this.suggest(targetingList);
 
           this.updateTemplate();

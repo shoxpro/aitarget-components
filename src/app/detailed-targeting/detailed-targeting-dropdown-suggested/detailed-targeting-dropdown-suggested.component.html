@@ -1,4 +1,4 @@
-<ul *ngIf="items && items.length && mode === 'suggested'">
+<ul *ngIf="items && items.length && (mode === 'search' || mode === 'suggested')">
   <li class="dropdown-row"
       *ngFor="let item of items"
       (mouseover)="setDropdownInfoItem(item)"

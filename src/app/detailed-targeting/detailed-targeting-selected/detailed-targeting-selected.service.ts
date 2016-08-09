@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { BehaviorSubject } from 'rxjs/Rx';
-import { data } from './data';
 
 @Injectable()
 export class DetailedTargetingSelectedService {
 
-  private _items = new BehaviorSubject<DetailedTargetingItem[]>(<any>data);
+  private _items = new BehaviorSubject<DetailedTargetingItem[]>([]);
   private _structuredSelectedMap: Object;
   private _structuredSelectedKeys: string[];
   public items = this._items.asObservable();

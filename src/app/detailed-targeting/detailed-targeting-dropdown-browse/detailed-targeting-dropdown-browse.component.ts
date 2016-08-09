@@ -157,11 +157,21 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     /**
      * Update dropdown list when new items to browse
      */
-    this.DetailedTargetingDropdownBrowseService.items.subscribe(items => {
-      this.items = items;
+    this.DetailedTargetingDropdownBrowseService.items
+        .map(items => {
+          return items.filter(item => item.key !== '__ROOT__')
+                      .map((item, index, list) => {
+                        if (!item.id && list[index + 1].key.indexOf(item.key) === -1) {
+                          item.searchable = true;
+                        }
+                        return item;
+                      });
+        })
+        .subscribe(items => {
+          this.items = items;
 
-      this.updateTemplate();
-    });
+          this.updateTemplate();
+        });
 
     /**
      * Update items from dropdown (toggle checkboxes) when selected items changes

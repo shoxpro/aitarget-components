@@ -4,7 +4,7 @@
             [ngForOf]="items">
     <li class="dropdown-row_browse"
         (click)="clickItem(item)"
-        *ngIf="item.key !== '__ROOT__' && openItems[item.parent]"
+        *ngIf="openItems[item.parent]"
         [attr.data-key]="item?.key"
         (mouseover)="setDropdownInfoItem(item)"
         (mouseout)="setDropdownInfoItem(null)">
@@ -13,10 +13,17 @@
              [ngClass]="{'open': openItems[item.key]}"
              [ngStyle]="{'width': 23 + 15 * item.path?.length + 'px'}">
           <div class="dropdown-row-tick-content"
-               *ngIf="!item.id"></div>
+               *ngIf="!item.id && !item.searchable"></div>
         </div>
         <div class="dropdown-row-cell dropdown-row-name">{{item.name}}</div>
         <div class="dropdown-row-cell dropdown-row-addon">
+          <div class="dropdown-row-search"
+               *ngIf="item.searchable">
+            <img src="https://static.xx.fbcdn.net/rsrc.php/v2/yZ/r/xcjB9wqvY-g.png"
+                 width="16"
+                 height="16"
+                 alt="search icon">
+          </div>
           <div class="dropdown-row-checkbox">
             <label *ngIf="item.id">
               <input type="checkbox"

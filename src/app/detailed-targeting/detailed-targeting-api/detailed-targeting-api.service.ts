@@ -15,11 +15,6 @@ export class DetailedTargetingApiService {
                private DetailedTargetingModeService: DetailedTargetingModeService) {}
 
   search (q: string, adaccountId: string = 'act_944874195534529') {
-    if (!q) {
-      this.DetailedTargetingInfoService.update(null);
-      this.DetailedTargetingModeService.set(null);
-      return this.DetailedTargetingDropdownSuggestedService.updateDropdown([]);
-    }
     this.FbService.api.subscribe((FB) => {
       FB.api(`/${adaccountId}/targetingsearch`, {q: q}, (response) => {
         this.DetailedTargetingDropdownSuggestedService.updateDropdown(response.data);

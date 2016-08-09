@@ -7,7 +7,8 @@ import { DetailedTargetingModeService } from './detailed-targeting-mode.service'
 
 describe('Component: DetailedTargetingMode', () => {
   it('should create an instance', () => {
-    inject([DetailedTargetingModeService, ChangeDetectorRef], (DetailedTargetingModeService, ChangeDetectorRef) => {
+    inject([DetailedTargetingModeService,
+      ChangeDetectorRef], (DetailedTargetingModeService, ChangeDetectorRef) => {
       let component = new DetailedTargetingModeComponent(DetailedTargetingModeService, ChangeDetectorRef);
       expect(component)
         .toBeTruthy();
