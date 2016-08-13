@@ -1,0 +1,5 @@
+<label *ngIf="item.isParent">
+  <input type="checkbox"
+         #checkbox
+         (change)="change(checkbox.checked)">
+</label>

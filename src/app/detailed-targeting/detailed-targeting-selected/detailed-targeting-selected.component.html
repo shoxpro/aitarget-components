@@ -2,14 +2,14 @@
   <div class="group"
        #group
        [ngClass]="{'group_hover': group.hovered}"
-       *ngFor="let key of structuredSelectedKeys">
+       *ngFor="let key of structuredSelectedItems.keys">
     <div class="group__title"
          (mouseenter)="group.hovered = true;"
          (mouseleave)="group.hovered = false;">
       <div>
         <template ngFor
                   let-crumb
-                  [ngForOf]="key.split(',')"
+                  [ngForOf]="key.split(' > ')"
                   let-last="last"
                   let-index="index">
           <span class="crumb"
@@ -21,7 +21,7 @@
     </div>
     <div class="group__items">
       <div class="group__item"
-           *ngFor="let item of structuredSelectedMap[key]">
+           *ngFor="let item of structuredSelectedItems.map[key]">
         <span>{{ item.name }}</span> <span class="remove remove_item"
                                            (click)="removeItem(item)">&times;</span>
       </div>

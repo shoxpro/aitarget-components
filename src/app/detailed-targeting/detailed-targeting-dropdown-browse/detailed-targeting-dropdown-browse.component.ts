@@ -5,12 +5,14 @@ import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
+import { BrowseMultiSelectComponent } from '../browse-multi-select/browse-multi-select.component';
 
 @Component({
   moduleId: module.id,
   selector: 'detailed-targeting-dropdown-browse',
   templateUrl: 'detailed-targeting-dropdown-browse.component.html',
   styleUrls: ['detailed-targeting-dropdown-browse.component.css'],
+  directives: [BrowseMultiSelectComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -19,6 +21,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   private items;
   private selectedItems;
   private openItems;
+  private structuredSelectedItems;
 
   constructor (private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
                private DetailedTargetingApiService: DetailedTargetingApiService,
@@ -127,8 +130,10 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
       this.toggleBranch(item);
     } else {
       if (this.selectedItems && this.selectedItems.indexOf(item.id) > -1) {
+        item.selected = false;
         this.removeItem(item);
       } else {
+        item.selected = true;
         this.selectItem(item);
       }
     }
@@ -164,12 +169,22 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
                         if (!item.id && list[index + 1].key.indexOf(item.key) === -1) {
                           item.searchable = true;
                         }
+                        if (!item.id && list[index + 1].id) {
+                          let children = [];
+                          let nextIndex = index + 1;
+                          while (list[nextIndex] && list[nextIndex].id) {
+                            children.push(list[nextIndex]);
+                            nextIndex += 1;
+                          }
+
+                          item.isParent = true;
+                          item.children = children;
+                        }
                         return item;
                       });
         })
         .subscribe(items => {
           this.items = items;
-
           this.updateTemplate();
         });
 
@@ -180,6 +195,8 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
         .map((items: DetailedTargetingItem[]) => items.map(item => item.id))
         .subscribe((selectedItems: Array<string>) => {
           this.selectedItems = selectedItems;
+
+          console.info(`selectedItems:`, selectedItems);
 
           this.updateTemplate();
         });
@@ -200,6 +217,18 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
         this.scrollTo(openItems._scrollTo);
       });
     });
+
+    this.DetailedTargetingSelectedService.items
+        .map(this.DetailedTargetingSelectedService.structureSelectedItems)
+        .subscribe((structuredSelectedItems) => {
+          this.structuredSelectedItems = structuredSelectedItems;
+          //Add selected property to browse items that are selected
+          if (this.items) {
+            this.items.forEach((item: DetailedTargetingItem) => {
+              item.selected = this.selectedItems.indexOf(item.id) > -1;
+            });
+          }
+        });
   }
 
 }

@@ -42,6 +42,7 @@ const barrels: string[] = [
   'app/detailed-targeting/detailed-targeting-info',
   'app/targeting',
   'app/detailed-targeting/detailed-targeting-mode',
+  'app/detailed-targeting/browse-multi-select',
   /** @cli-barrel */
 ];
 

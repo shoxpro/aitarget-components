@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class FbService {
-
-  private _api = new Subject<Object>();
 
   /**
    * Load the SDK asynchronously

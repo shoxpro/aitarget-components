@@ -14,7 +14,7 @@ export class DetailedTargetingApiService {
                private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
                private DetailedTargetingModeService: DetailedTargetingModeService) {}
 
-  search (q: string, adaccountId: string = 'act_944874195534529') {
+  search (q: string, adaccountId = 'act_944874195534529') {
     this.FbService.api.subscribe((FB) => {
       FB.api(`/${adaccountId}/targetingsearch`, {q: q}, (response) => {
         this.DetailedTargetingDropdownSuggestedService.updateDropdown(response.data);
@@ -22,7 +22,7 @@ export class DetailedTargetingApiService {
     });
   }
 
-  browse (adaccountId: string = 'act_944874195534529') {
+  browse (adaccountId = 'act_944874195534529') {
     this.FbService.api.subscribe((FB) => {
       FB.api(`/${adaccountId}/targetingbrowse`, {
         include_headers: false,
@@ -33,7 +33,7 @@ export class DetailedTargetingApiService {
     });
   }
 
-  suggest (targetingList: Array<Object> = [], adaccountId: string = 'act_944874195534529') {
+  suggest (targetingList: Array<Object> = [], adaccountId = 'act_944874195534529') {
     this.FbService.api.subscribe((FB) => {
       FB.api(`/${adaccountId}/targetingsuggestions`, {
         targeting_list: targetingList

@@ -16,8 +16,7 @@ export class DetailedTargetingSelectedComponent implements OnInit {
   public spec: TargetingSpec;
   public items: DetailedTargetingItem[];
 
-  public structuredSelectedMap: Object;
-  public structuredSelectedKeys: string[];
+  private structuredSelectedItems;
 
   constructor (private TargetingSpecService: TargetingSpecService,
                private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
@@ -30,7 +29,7 @@ export class DetailedTargetingSelectedComponent implements OnInit {
    * @param index
    */
   public showCrumb (key: string, index: number) {
-    let path = key.split(',');
+    let path = key.split(' > ');
     let defaultOpenItems = this.DetailedTargetingDropdownBrowseService.defaultOpenItems;
     let openItems = Object.assign({}, defaultOpenItems);
 
@@ -50,7 +49,7 @@ export class DetailedTargetingSelectedComponent implements OnInit {
 
   public removeGroup (key) {
     let selectedItems = this.DetailedTargetingSelectedService.get();
-    let idsToRemove = this.structuredSelectedMap[key].map(item => item.id);
+    let idsToRemove = this.structuredSelectedItems.map[key].map(item => item.id);
 
     selectedItems = selectedItems.filter(item => idsToRemove.indexOf(item.id) === -1);
 
@@ -70,14 +69,17 @@ export class DetailedTargetingSelectedComponent implements OnInit {
       this.spec = spec;
       console.log('Targeting Spec: ', this.spec);
     });
+
     this.DetailedTargetingSelectedService.items.subscribe((items: DetailedTargetingItem[]) => {
       this.items = items;
-      let structuredSelectedData = this.DetailedTargetingSelectedService.getStructuredSelectedData();
-      this.structuredSelectedKeys = structuredSelectedData.keys;
-      this.structuredSelectedMap = structuredSelectedData.map;
       this.TargetingSpecService.updateWithDetailedTargeting(this.items);
     });
 
+    this.DetailedTargetingSelectedService.items
+        .map(this.DetailedTargetingSelectedService.structureSelectedItems)
+        .subscribe((structuredSelectedItems) => {
+          this.structuredSelectedItems = structuredSelectedItems;
+        });
   }
 
 }

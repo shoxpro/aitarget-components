@@ -84,11 +84,13 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
             return {
               id: item.id,
               type: item.type
-            }
+            };
           });
         })
         .subscribe((targetingList: Array<Object>) => {
-          this.DetailedTargetingModeService.set('suggested');
+          if (this.DetailedTargetingModeService.get() === 'search') {
+            this.DetailedTargetingModeService.set('suggested');
+          }
           this.suggest(targetingList);
 
           this.updateTemplate();

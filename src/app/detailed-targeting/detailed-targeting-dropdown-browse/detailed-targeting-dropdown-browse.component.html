@@ -3,19 +3,21 @@
             let-item
             [ngForOf]="items">
     <li class="dropdown-row_browse"
-        (click)="clickItem(item)"
         *ngIf="openItems[item.parent]"
         [attr.data-key]="item?.key"
         (mouseover)="setDropdownInfoItem(item)"
         (mouseout)="setDropdownInfoItem(null)">
       <div class="dropdown-row-content">
         <div class="dropdown-row-cell dropdown-row-tick"
+             (click)="clickItem(item)"
              [ngClass]="{'open': openItems[item.key]}"
              [ngStyle]="{'width': 23 + 15 * item.path?.length + 'px'}">
           <div class="dropdown-row-tick-content"
                *ngIf="!item.id && !item.searchable"></div>
         </div>
-        <div class="dropdown-row-cell dropdown-row-name">{{item.name}}</div>
+        <div class="dropdown-row-cell dropdown-row-name"
+             (click)="clickItem(item)">{{item.name}}
+        </div>
         <div class="dropdown-row-cell dropdown-row-addon">
           <div class="dropdown-row-search"
                *ngIf="item.searchable">
@@ -24,10 +26,15 @@
                  height="16"
                  alt="search icon">
           </div>
-          <div class="dropdown-row-checkbox">
+          <div class="dropdown-row-checkbox-parent"
+               *ngIf="item.isParent">
+            <browse-multi-select [item]="item"></browse-multi-select>
+          </div>
+          <div class="dropdown-row-checkbox"
+               (click)="clickItem(item)">
             <label *ngIf="item.id">
               <input type="checkbox"
-                     [attr.checked]="selectedItems.indexOf(item.id) > -1 ? true : null">
+                     [(ngModel)]="item.selected">
             </label>
           </div>
         </div>
