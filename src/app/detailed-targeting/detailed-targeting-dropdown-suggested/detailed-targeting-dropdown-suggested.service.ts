@@ -3,7 +3,7 @@ import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { Subject } from 'rxjs/Rx';
 
 @Injectable()
-export class DetailedTargetingDropdownDefaultService {
+export class DetailedTargetingDropdownSuggestedService {
 
   private _items = new Subject<DetailedTargetingItem[]>();
   public items = this._items.asObservable();

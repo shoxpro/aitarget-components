@@ -5,10 +5,15 @@ ul {
   box-sizing: border-box;
   margin:     0;
   padding:    0;
+  max-height: 272px;
   width:      100%;
-  height:     272px;
+  height:     auto;
   border:     1px solid #bdc7d8;
   border-top: none;
+}
+
+li {
+  height: 31px;
 }
 
 .dropdown-row {

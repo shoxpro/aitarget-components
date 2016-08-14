@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class FbService {
@@ -6,7 +7,7 @@ export class FbService {
   /**
    * Load the SDK asynchronously
    */
-  loadSdk () {
+  private loadSdk () {
     let js,
       id = 'facebook-jssdk',
       s = 'script',
@@ -21,23 +22,7 @@ export class FbService {
     fjs.parentNode.insertBefore(js, fjs);
   }
 
-  /**
-   * Exec passed callback if FB sdk exists
-   * @param callback
-   */
-  private execCallback (callback: Function) {
-    let FB = (<any>window).FB;
-    if (FB && typeof callback === 'function') {
-      callback(FB);
-    }
-  }
-
-  /**
-   * Load and initialize facebook javascript SDK (global FB instance)
-   * Trigger passed callback with FB instance
-   * @param callback
-   */
-  get (callback: Function) {
+  private setAsyncInit (observer) {
     (<any>window).fbAsyncInit = () => {
       /**
        * Use Aitarget selfservice app id as default value
@@ -53,12 +38,12 @@ export class FbService {
         status: true,
         cookie: true,
         xfbml: true,
-        version: 'v2.6'
+        version: 'v2.7'
       });
 
       FB.Event.subscribe('auth.statusChange', (response) => {
         if (response.status === 'connected') {
-          this.execCallback(callback);
+          observer.next(FB);
         }
       });
 
@@ -72,9 +57,15 @@ export class FbService {
         }
       });
     };
-
-    this.execCallback(callback);
-
-    this.loadSdk();
   }
+
+  public api = Observable.create((observer) => {
+    let FB = (<any>window).FB;
+    if (FB) {
+      observer.next(FB);
+    } else {
+      this.setAsyncInit(observer);
+      this.loadSdk();
+    }
+  });
 }

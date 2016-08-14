@@ -1,0 +1,10 @@
+<div class="mode">
+  <div class="mode-suggested"
+       [ngClass]="{'active': mode === 'suggested'}"
+       (click)="setMode('suggested')"><span class="left-border"></span>Suggested<span class="tick"></span>
+  </div>
+  <div class="mode-browse"
+       [ngClass]="{'active': mode === 'browse'}"
+       (click)="setMode('browse')"><span class="left-border"></span>Browse<span class="tick"></span>
+  </div>
+</div>

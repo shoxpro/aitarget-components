@@ -7,6 +7,17 @@
   background: #ffffff;
 }
 
+.table {
+  display: table;
+}
+
+.table__cell {
+  display:        table-cell;
+  min-height:     31px;
+  height:         1px;
+  vertical-align: middle;
+}
+
 label {
   display:    inline-block;
   box-sizing: border-box;
