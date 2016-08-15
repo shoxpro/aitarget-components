@@ -6,12 +6,14 @@ import { DetailedTargetingSelectedService } from '../detailed-targeting-selected
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-targeting-api.service';
 import { DetailedTargetingInputService } from '../detailed-targeting-input/detailed-targeting-input.service';
+import { TypeToHumanPipe } from '../type-to-human.pipe';
 
 @Component({
   moduleId: module.id,
   selector: 'detailed-targeting-dropdown-suggested',
   templateUrl: 'detailed-targeting-dropdown-suggested.component.html',
   styleUrls: ['detailed-targeting-dropdown-suggested.component.css'],
+  pipes: [TypeToHumanPipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
