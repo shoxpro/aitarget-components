@@ -3,7 +3,6 @@ import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'browse-multi-select',
   templateUrl: 'browse-multi-select.component.html',
   styleUrls: ['browse-multi-select.component.css']

@@ -6,7 +6,6 @@ import { DetailedTargetingModeService } from '../detailed-targeting-mode/detaile
 import { DetailedTargetingDropdownBrowseService } from '../detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'detailed-targeting-selected',
   templateUrl: 'detailed-targeting-selected.component.html',
   styleUrls: ['detailed-targeting-selected.component.css']
@@ -31,7 +30,7 @@ export class DetailedTargetingSelectedComponent implements OnInit {
   public showCrumb (key: string, index: number) {
     let path = key.split(' > ');
     let defaultOpenItems = this.DetailedTargetingDropdownBrowseService.defaultOpenItems;
-    let openItems = Object.assign({}, defaultOpenItems);
+    let openItems = (<any>Object).assign({}, defaultOpenItems);
 
     path.forEach((crumb: string, pos: number) => {
       if (pos <= index) {
