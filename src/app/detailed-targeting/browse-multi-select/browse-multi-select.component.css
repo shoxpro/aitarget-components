@@ -1,0 +1,26 @@
+label {
+  display: table;
+  float:   right;
+  width:   100%;
+}
+
+label:hover .label-text {
+  visibility:      visible;
+  text-decoration: underline;
+  cursor:          pointer;
+}
+
+.label-text {
+  display:        table-cell;
+  visibility:     collapse;
+  padding-right:  10px;
+  color:          #365899;
+  vertical-align: middle;
+  text-align:     right;
+  white-space:    nowrap;
+  font-weight:    bold;
+}
+
+input {
+  display: table-cell;
+}
