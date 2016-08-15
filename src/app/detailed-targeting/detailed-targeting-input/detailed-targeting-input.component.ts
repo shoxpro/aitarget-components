@@ -6,7 +6,6 @@ import { DetailedTargetingInputService } from './detailed-targeting-input.servic
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'detailed-targeting-input',
   templateUrl: 'detailed-targeting-input.component.html',
   styleUrls: ['detailed-targeting-input.component.css'],

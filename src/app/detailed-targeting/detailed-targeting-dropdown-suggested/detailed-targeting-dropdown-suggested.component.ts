@@ -9,7 +9,6 @@ import { DetailedTargetingInputService } from '../detailed-targeting-input/detai
 import { TypeToHumanPipe } from '../type-to-human.pipe';
 
 @Component({
-  moduleId: module.id,
   selector: 'detailed-targeting-dropdown-suggested',
   templateUrl: 'detailed-targeting-dropdown-suggested.component.html',
   styleUrls: ['detailed-targeting-dropdown-suggested.component.css'],

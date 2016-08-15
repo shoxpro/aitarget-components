@@ -15,7 +15,6 @@ import { DetailedTargetingApiService } from './detailed-targeting-api/detailed-t
 import { DetailedTargetingInputService } from './detailed-targeting-input/detailed-targeting-input.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'detailed-targeting',
   templateUrl: 'detailed-targeting.component.html',
   styleUrls: ['detailed-targeting.component.css'],

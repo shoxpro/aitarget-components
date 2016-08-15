@@ -8,7 +8,6 @@ import { DetailedTargetingInfoService } from '../detailed-targeting-info/detaile
 import { BrowseMultiSelectComponent } from '../browse-multi-select/browse-multi-select.component';
 
 @Component({
-  moduleId: module.id,
   selector: 'detailed-targeting-dropdown-browse',
   templateUrl: 'detailed-targeting-dropdown-browse.component.html',
   styleUrls: ['detailed-targeting-dropdown-browse.component.css'],

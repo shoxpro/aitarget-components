@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@
 import { DetailedTargetingModeService } from './detailed-targeting-mode.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'detailed-targeting-mode',
   templateUrl: 'detailed-targeting-mode.component.html',
   styleUrls: ['detailed-targeting-mode.component.css'],

@@ -3,7 +3,6 @@ import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from './detailed-targeting-info.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'detailed-targeting-info',
   templateUrl: 'detailed-targeting-info.component.html',
   styleUrls: ['detailed-targeting-info.component.css'],
