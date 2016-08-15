@@ -18,7 +18,8 @@
         <div class="dropdown-row-cell dropdown-row-name"
              (click)="clickItem(item)">{{item.name}}
         </div>
-        <div class="dropdown-row-cell dropdown-row-addon">
+        <div class="dropdown-row-cell dropdown-row-addon"
+             [ngClass]="{'dropdown-row-addon_parent': item.isParent}">
           <div class="dropdown-row-search"
                *ngIf="item.searchable">
             <img src="https://static.xx.fbcdn.net/rsrc.php/v2/yZ/r/xcjB9wqvY-g.png"

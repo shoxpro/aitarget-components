@@ -99,6 +99,12 @@ li {
 }
 
 .dropdown-row-addon {
+  box-sizing: border-box;
+  padding:    0 9px;
   width:      30px;
-  text-align: center;
+  text-align: right;
+}
+
+.dropdown-row-addon_parent {
+  width: 110px;
 }

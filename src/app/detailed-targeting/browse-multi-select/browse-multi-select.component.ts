@@ -51,6 +51,7 @@ export class BrowseMultiSelectComponent implements AfterViewInit {
     let isIndeterminate = hasSelectedChildren && !allChildrenSelected;
 
     let checkbox = <HTMLInputElement>this.el.querySelector('input[type="checkbox"]');
+    let label = this.el.querySelector('span.label-text');
 
     if (!checkbox) {
       return;
@@ -58,6 +59,12 @@ export class BrowseMultiSelectComponent implements AfterViewInit {
 
     checkbox.indeterminate = isIndeterminate;
     checkbox.checked = isIndeterminate ? false : (allChildrenSelected || null);
+
+    if (checkbox.checked) {
+      label.textContent = 'Unselect All';
+    } else {
+      label.textContent = 'Select All';
+    }
   }
 
   ngAfterViewInit () {

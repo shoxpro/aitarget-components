@@ -1,4 +1,5 @@
 <label *ngIf="item.isParent">
+  <span class="label-text">Select All</span>
   <input type="checkbox"
          #checkbox
          (change)="change(checkbox.checked)">

@@ -5,6 +5,6 @@
       (mouseout)="setDropdownInfoItem(null)"
       (click)="selectItem(item)">
     <div class="dropdown-row__name">{{item.name}}</div>
-    <div class="dropdown-row__type">{{item.type}}</div>
+    <div class="dropdown-row__type">{{item.type | typeToHuman}}</div>
   </li>
 </ul>
