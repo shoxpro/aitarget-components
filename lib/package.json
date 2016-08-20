@@ -1,0 +1,24 @@
+{
+  "name": "aitarget-components",
+  "version": "0.0.1",
+  "description": "Library of angular2 components for fb.aitarget.com tool",
+  "main": "index.js",
+  "scripts": {
+    "build": "../node_modules/.bin/webpack --config ../config/webpack.config.js",
+    "prepublish": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aitarget/aitarget-components.git"
+  },
+  "keywords": [
+    "aitarget"
+  ],
+  "author": "Aitarget Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aitarget/aitarget-components/issues"
+  },
+  "homepage": "https://github.com/aitarget/aitarget-components/lib/#readme"
+}
