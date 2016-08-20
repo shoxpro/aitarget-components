@@ -1,20 +1,15 @@
 var webpack = require('webpack');
 var path = require('path');
 
-var sourceDir = 'src';
-var projectRoot = './';
-
 module.exports = {
   devtool: 'inline-source-map',
   resolve: {
     extensions: ['', '.ts', '.js'],
-    root:       path.resolve(projectRoot, './' + sourceDir)
+    root:       path.resolve('./', 'src')
   },
-  entry:   {
-    'detailed-targeting': './src/app/detailed-targeting/detailed-targeting.component.ts'
-  },
+  entry:   require('./components.entry'),
   output:  {
-    path:     path.resolve(projectRoot, './build'),
+    path:     path.resolve('./', 'build'),
     filename: "[name].js"
   },
   module:  {
@@ -23,8 +18,8 @@ module.exports = {
         test:    /\.js$/,
         loader:  'source-map-loader',
         exclude: [
-          path.resolve(projectRoot, 'node_modules/rxjs'),
-          path.resolve(projectRoot, 'node_modules/@angular')
+          path.resolve('./', 'node_modules/rxjs'),
+          path.resolve('./', 'node_modules/@angular')
         ]
       }
     ],
@@ -36,7 +31,7 @@ module.exports = {
             loader: 'awesome-typescript-loader',
             query:  {
               useForkChecker: true,
-              tsconfig:       path.resolve(projectRoot, './' + sourceDir + '/tsconfig.json')
+              tsconfig:       path.resolve('./', 'src/tsconfig.json')
             }
           },
           {
@@ -54,27 +49,10 @@ module.exports = {
       { test: /\.html$/, loader: 'raw-loader' }
     ]
   },
-  //plugins: [
-  //  new ForkCheckerPlugin(),
-  //  //new HtmlWebpackPlugin({
-  //  //  template:       path.resolve(projectRoot, './${sourceDir}/index.html'),
-  //  //  chunksSortMode: 'dependency'
-  //  //}),
-  //  //new webpack.optimize.CommonsChunkPlugin({
-  //  //  name: ['polyfills']
-  //  //}),
-  //  //new webpack.optimize.CommonsChunkPlugin({
-  //  //  minChunks:         Infinity,
-  //  //  name:              'inline',
-  //  //  filename:          'inline.js',
-  //  //  sourceMapFilename: 'inline.map'
-  //  //}),
-  //  new CopyWebpackPlugin([{
-  //    context: path.resolve(projectRoot, './public'),
-  //    from:    '**/*',
-  //    to:      path.resolve(projectRoot, './build')
-  //  }])
-  //],
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({ name: 'core', filename: 'core.js' }),
+    new webpack.optimize.UglifyJsPlugin()
+  ],
   node:    {
     fs:             'empty',
     global:         'window',
