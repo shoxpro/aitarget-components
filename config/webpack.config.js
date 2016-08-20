@@ -1,15 +1,17 @@
 var webpack = require('webpack');
 var path = require('path');
 
+var parentRoot = '../';
+
 module.exports = {
   devtool: 'inline-source-map',
   resolve: {
     extensions: ['', '.ts', '.js'],
-    root:       path.resolve('./', 'src')
+    root:       path.resolve(__dirname, parentRoot, 'src')
   },
-  entry:   require('./components.entry'),
+  entry:   require('./components.entry')(parentRoot),
   output:  {
-    path:     path.resolve('./', 'build'),
+    path:     path.resolve(__dirname, parentRoot, 'lib/components'),
     filename: "[name].js"
   },
   module:  {
@@ -18,8 +20,8 @@ module.exports = {
         test:    /\.js$/,
         loader:  'source-map-loader',
         exclude: [
-          path.resolve('./', 'node_modules/rxjs'),
-          path.resolve('./', 'node_modules/@angular')
+          path.resolve(parentRoot, 'node_modules/rxjs'),
+          path.resolve(parentRoot, 'node_modules/@angular')
         ]
       }
     ],
@@ -31,7 +33,7 @@ module.exports = {
             loader: 'awesome-typescript-loader',
             query:  {
               useForkChecker: true,
-              tsconfig:       path.resolve('./', 'src/tsconfig.json')
+              tsconfig:       path.resolve(parentRoot, 'src/tsconfig.json')
             }
           },
           {
