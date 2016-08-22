@@ -11,9 +11,9 @@
     "e2e": "protractor",
     "build": "cd lib && npm run build",
     "gh-pages": "sh ./scripts/npm/gh-pages.sh",
-    "deploy-patch": "cd lib && ../node_modules/.bin/npm version patch && ../node_modules/.bin/npm publish",
-    "deploy-minor": "cd lib && ../node_modules/.bin/npm version minor && ../node_modules/.bin/npm publish",
-    "deploy-major": "cd lib && ../node_modules/.bin/npm version major && ../node_modules/.bin/npm publish"
+    "deploy-patch": "npm run build && npm version patch && npm publish",
+    "deploy-minor": "npm run build && npm version minor && npm publish",
+    "deploy-major": "npm run build && npm version major && npm publish"
   },
   "private": true,
   "dependencies": {

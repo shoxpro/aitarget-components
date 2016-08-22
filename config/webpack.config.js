@@ -11,8 +11,9 @@ module.exports = {
   },
   entry:   require('./components.entry')(parentRoot),
   output:  {
-    path:     path.resolve(__dirname, parentRoot, 'lib/components'),
-    filename: "[name].js"
+    path:          path.resolve(__dirname, parentRoot, 'lib/components'),
+    filename:      "[name].js",
+    libraryTarget: 'umd'
   },
   module:  {
     preLoaders: [
@@ -53,7 +54,10 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({ name: 'core', filename: 'core.js' }),
-    new webpack.optimize.UglifyJsPlugin()
+    new webpack.optimize.UglifyJsPlugin({
+      // tmp string to fix for prod mode @see https://github.com/angular/angular/issues/10618
+      mangle: { screw_ie8: true, keep_fnames: true }
+    })
   ],
   node:    {
     fs:             'empty',
