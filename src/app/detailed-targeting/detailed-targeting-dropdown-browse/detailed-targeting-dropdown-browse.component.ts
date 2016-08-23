@@ -158,7 +158,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     setTimeout(() => {
       //Load browse items
       this.DetailedTargetingApiService.browse();
-    }, 1000);
+    }, 2000);
     /**
      * Update dropdown list when new items to browse
      */
