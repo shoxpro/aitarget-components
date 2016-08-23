@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ng build
+ng build --prod
 mkdir gh-pages
 cd gh-pages/
 git clone git@github.com:aitarget/aitarget-components.git ./
