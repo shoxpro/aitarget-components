@@ -9,6 +9,6 @@ Angular 2 components for fb.aitarget.com tool.
 #Usage
 
 ```
-<script src="./node_modules/aitarget-components/components/core.js">
-<script src="./node_modules/aitarget-components/components/*.js">
+<script src="/node_modules/aitarget-components/components/core.js"></script>
+<script src="/node_modules/aitarget-components/components/*.js"></script>
 ```

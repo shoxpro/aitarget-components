@@ -4,12 +4,13 @@ import { DetailedTargetingModeComponent } from '../detailed-targeting-mode/';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingInputService } from './detailed-targeting-input.service';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
+import { FORM_DIRECTIVES } from '@angular/forms';
 
 @Component({
   selector: 'detailed-targeting-input',
   templateUrl: 'detailed-targeting-input.component.html',
   styleUrls: ['detailed-targeting-input.component.css'],
-  directives: [DetailedTargetingModeComponent],
+  directives: [DetailedTargetingModeComponent, FORM_DIRECTIVES],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingInputComponent implements OnInit {

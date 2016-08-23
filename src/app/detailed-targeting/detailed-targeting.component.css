@@ -1,5 +1,7 @@
 :host {
-  position: relative;
-  display:  block;
-  width:    472px;
+  all:       initial;
+  position:  relative;
+  display:   block;
+  width:     472px;
+  font-size: 12px;
 }

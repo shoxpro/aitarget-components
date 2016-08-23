@@ -1,30 +1,21 @@
 var webpack = require('webpack');
 var path = require('path');
 
-var parentRoot = '../';
+var parentRoot = './';
 
 module.exports = {
-  devtool: 'inline-source-map',
+  devtool: 'cheap-module-source-map',
   resolve: {
     extensions: ['', '.ts', '.js'],
     root:       path.resolve(__dirname, parentRoot, 'src')
   },
   entry:   require('./components.entry')(parentRoot),
   output:  {
-    path:     path.resolve(__dirname, parentRoot, 'lib/components'),
-    filename: "[name].js"
+    path:          path.resolve(__dirname, parentRoot, '../lib/components'),
+    filename:      "[name].js",
+    libraryTarget: 'umd'
   },
   module:  {
-    preLoaders: [
-      {
-        test:    /\.js$/,
-        loader:  'source-map-loader',
-        exclude: [
-          path.resolve(parentRoot, 'node_modules/rxjs'),
-          path.resolve(parentRoot, 'node_modules/@angular')
-        ]
-      }
-    ],
     loaders:    [
       {
         test:    /\.ts$/,
@@ -53,7 +44,10 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({ name: 'core', filename: 'core.js' }),
-    new webpack.optimize.UglifyJsPlugin()
+    new webpack.optimize.UglifyJsPlugin({
+      // tmp string to fix for prod mode @see https://github.com/angular/angular/issues/10618
+      mangle: { screw_ie8: true, keep_fnames: true }
+    })
   ],
   node:    {
     fs:             'empty',

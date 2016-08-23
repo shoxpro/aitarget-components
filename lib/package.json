@@ -1,11 +1,9 @@
 {
   "name": "aitarget-components",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Library of angular2 components for fb.aitarget.com tool",
   "main": "index.js",
   "scripts": {
-    "build": "../node_modules/.bin/webpack --config ../config/webpack.config.js",
-    "prepublish": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

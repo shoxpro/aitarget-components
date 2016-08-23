@@ -1,6 +1,6 @@
 {
   "name": "aitarget-components",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
@@ -9,11 +9,11 @@
     "test": "ng test",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
-    "build": "cd lib && npm run build",
+    "build": "./node_modules/.bin/webpack --config ./config/webpack.config.js",
     "gh-pages": "sh ./scripts/npm/gh-pages.sh",
-    "deploy-patch": "cd lib && ../node_modules/.bin/npm version patch && ../node_modules/.bin/npm publish",
-    "deploy-minor": "cd lib && ../node_modules/.bin/npm version minor && ../node_modules/.bin/npm publish",
-    "deploy-major": "cd lib && ../node_modules/.bin/npm version major && ../node_modules/.bin/npm publish"
+    "deploy-patch": "npm run build && npm version patch && cd lib && npm version patch && npm publish && git add --all . && git commit --amend --no-edit",
+    "deploy-minor": "npm run build && npm version minor && cd lib && npm version minor && npm publish && git add --all . && git commit --amend --no-edit",
+    "deploy-major": "npm run build && npm version major && cd lib && npm version major && npm publish && git add --all . && git commit --amend --no-edit"
   },
   "private": true,
   "dependencies": {
