@@ -1,6 +1,9 @@
-<label *ngIf="item.isParent">
-  <span class="label-text">Select All</span>
-  <input type="checkbox"
-         #checkbox
-         (change)="change(checkbox.checked)">
+<label class="browse-multi-select__label"
+       *ngIf="item.isParent">
+  <span class="browse-multi-select__label-text">Select All</span>
+  <input
+    class="browse-multi-select__input"
+    type="checkbox"
+    #checkbox
+    (change)="change(checkbox.checked)">
 </label>

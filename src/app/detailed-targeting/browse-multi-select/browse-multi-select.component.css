@@ -1,16 +1,16 @@
-label {
+.browse-multi-select__label {
   display: table;
   float:   right;
   width:   100%;
 }
 
-label:hover .label-text {
+.browse-multi-select__label:hover .browse-multi-select__label-text {
   visibility:      visible;
   text-decoration: underline;
   cursor:          pointer;
 }
 
-.label-text {
+.browse-multi-select__label-text {
   display:        table-cell;
   visibility:     collapse;
   padding-right:  10px;
@@ -21,6 +21,6 @@ label:hover .label-text {
   font-weight:    bold;
 }
 
-input {
+.browse-multi-select__input {
   display: table-cell;
 }
