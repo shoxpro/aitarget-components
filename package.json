@@ -11,9 +11,7 @@
     "e2e": "protractor",
     "build": "./node_modules/.bin/webpack --config ./config/webpack.config.js",
     "gh-pages": "sh ./scripts/npm/gh-pages.sh",
-    "deploy-patch": "npm run build && npm version patch && cd lib && npm version patch && npm publish && git add --all . && git commit --amend --no-edit",
-    "deploy-minor": "npm run build && npm version minor && cd lib && npm version minor && npm publish && git add --all . && git commit --amend --no-edit",
-    "deploy-major": "npm run build && npm version major && cd lib && npm version major && npm publish && git add --all . && git commit --amend --no-edit"
+    "deploy": "sh ./scripts/npm/deploy.sh"
   },
   "private": true,
   "dependencies": {
