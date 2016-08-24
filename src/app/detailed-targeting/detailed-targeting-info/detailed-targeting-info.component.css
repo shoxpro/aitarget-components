@@ -1,4 +1,4 @@
-.info {
+.detailed-targeting-info__content {
   position:    absolute;
   right:       -230px;
   bottom:      0;
@@ -11,43 +11,38 @@
   background:  #ffffff;
 }
 
-.audience-size {
+.detailed-targeting-info__audience-size {
   font-weight: bold;
   font-size:   16px;
 }
 
-.audience-size span {
+.detailed-targeting-info__audience-size-postfix {
   color:       #1d2129;
   font-weight: normal;
   font-size:   12px;
 }
 
-.audience-size {
+.detailed-targeting-info__audience-size {
   margin-bottom: 12px;
 }
 
-.breadcrumbs {
+.detailed-targeting-info__breadcrumbs {
   margin-bottom: 12px;
   color:         #666666;
   font-weight:   normal;
 }
 
-.first-crumb {
+.detailed-targeting-info__first-crumb {
   color:       #1d2129;
   font-weight: bold;
 }
 
-.devider {
-  display: inline-block;
-  padding: 0 5px;
-}
-
-.description {
+.detailed-targeting-info__description {
   color:       #666666;
   font-weight: normal;
 }
 
-.description-label {
+.detailed-targeting-info__description-label {
   color:       #1d2129;
   font-weight: bold;
 }
