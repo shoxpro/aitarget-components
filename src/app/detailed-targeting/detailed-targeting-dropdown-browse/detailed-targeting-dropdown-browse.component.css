@@ -1,4 +1,4 @@
-ul {
+.detailed-targeting-dropdown-browse__list {
   position:   relative;
   display:    block;
   overflow-y: auto;
@@ -12,12 +12,9 @@ ul {
   border-top: none;
 }
 
-li {
-  height: 31px;
-}
-
-.dropdown-row_browse {
+.detailed-targeting-dropdown-browse__row {
   position:      relative;
+  height:        31px;
   border-bottom: 1px solid #e9eaed;
   background:    white;
   color:         #666666;
@@ -25,15 +22,15 @@ li {
   cursor:        pointer;
 }
 
-.dropdown-row_browse:hover {
+.detailed-targeting-dropdown-browse__row:hover {
   background: #f6f7f9;
 }
 
-.dropdown-row_browse:last-of-type {
+.detailed-targeting-dropdown-browse__row:last-of-type {
   border-bottom: none;
 }
 
-.dropdown-row-content {
+.detailed-targeting-dropdown-browse__row-content {
   position: absolute;
   top:      0;
   display:  table;
@@ -41,16 +38,16 @@ li {
   height:   100%;
 }
 
-.dropdown-row-cell {
+.detailed-targeting-dropdown-browse__row-cell {
   display:        table-cell;
   vertical-align: middle;
 }
 
-.dropdown-row-tick {
+.detailed-targeting-dropdown-browse__row-tick {
   position: relative;
 }
 
-.dropdown-row-tick-content {
+.detailed-targeting-dropdown-browse__row-tick-content {
   position:     absolute;
   top:          6px;
   right:        0;
@@ -61,7 +58,7 @@ li {
   cursor:       pointer;
 }
 
-.dropdown-row-tick-content:before {
+.detailed-targeting-dropdown-browse__row-tick-content:before {
   position:          absolute;
   top:               4px;
   left:              2px;
@@ -73,10 +70,7 @@ li {
   content:           "";
 }
 
-.dropdown-row-tick.open .dropdown-row-tick-content:before {
-  /*top:       6px;
-  left:      -1px;
-  transform: rotate(90deg);*/
+.detailed-targeting-dropdown-browse__row-tick_open .detailed-targeting-dropdown-browse__row-tick-content:before {
   position:         absolute;
   top:              5px;
   left:             0;
@@ -88,7 +82,7 @@ li {
   content:          "";
 }
 
-.dropdown-row-name {
+.detailed-targeting-dropdown-browse__row-name {
   overflow:      hidden;
   padding-left:  8px;
   max-width:     100px;
@@ -98,7 +92,7 @@ li {
   font-weight:   bold;
 }
 
-.dropdown-row-addon {
+.detailed-targeting-dropdown-browse__row-addon {
   box-sizing: border-box;
   padding:    0 9px;
   width:      30px;
