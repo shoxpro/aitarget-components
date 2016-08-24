@@ -22,10 +22,16 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/). 
 Before running the tests make sure you are serving the app via `ng serve`.
 
-## Deploying to Github Pages
-
-Run `ng github-pages:deploy` to deploy to Github Pages.
-
 ## Further help
 
 To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Deploying to Github Pages
+
+Run `npm run gh-pages` to deploy to Github Pages.
+
+## Publishing library to npm
+
+Run `npm run deploy -- patch | minor | major | prepatch | preminor | premajor | prerelease | from-git` to publish.
+See: https://docs.npmjs.com/cli/version when choosing proper semver string.
+
