@@ -1,10 +1,12 @@
-<div class="mode">
-  <div class="mode-suggested"
-       [ngClass]="{'active': mode === 'suggested'}"
-       (click)="setMode('suggested')"><span class="left-border"></span>Suggested<span class="tick"></span>
+<div class="detailed-targeting-mode__content">
+  <div class="detailed-targeting-mode__suggested"
+       [ngClass]="{'detailed-targeting-mode__suggested_active': mode === 'suggested'}"
+       (click)="setMode('suggested')">
+    <span class="detailed-targeting-mode__left-border"></span>Suggested<span class="detailed-targeting-mode__tick"></span>
   </div>
-  <div class="mode-browse"
-       [ngClass]="{'active': mode === 'browse'}"
-       (click)="setMode('browse')"><span class="left-border"></span>Browse<span class="tick"></span>
+  <div class="detailed-targeting-mode__browse"
+       [ngClass]="{'detailed-targeting-mode__browse_active': mode === 'browse'}"
+       (click)="setMode('browse')">
+    <span class="detailed-targeting-mode__left-border"></span>Browse<span class="detailed-targeting-mode__tick"></span>
   </div>
 </div>

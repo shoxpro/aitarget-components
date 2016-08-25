@@ -1,37 +1,38 @@
-<ul *ngIf="items && items.length && mode === 'browse'">
+<ul class="detailed-targeting-dropdown-browse__list"
+    *ngIf="items && items.length && mode === 'browse'">
   <template ngFor
             let-item
             [ngForOf]="items">
-    <li class="dropdown-row_browse"
+    <li class="detailed-targeting-dropdown-browse__row"
         *ngIf="openItems[item.parent]"
         [attr.data-key]="item?.key"
         (mouseover)="setDropdownInfoItem(item)"
         (mouseout)="setDropdownInfoItem(null)">
-      <div class="dropdown-row-content">
-        <div class="dropdown-row-cell dropdown-row-tick"
+      <div class="detailed-targeting-dropdown-browse__row-content">
+        <div class="detailed-targeting-dropdown-browse__row-cell detailed-targeting-dropdown-browse__row-tick"
              (click)="clickItem(item)"
-             [ngClass]="{'open': openItems[item.key]}"
+             [ngClass]="{'detailed-targeting-dropdown-browse__row-tick_open': openItems[item.key]}"
              [ngStyle]="{'width': 23 + 15 * item.path?.length + 'px'}">
-          <div class="dropdown-row-tick-content"
+          <div class="detailed-targeting-dropdown-browse__row-tick-content"
                *ngIf="!item.id && !item.searchable"></div>
         </div>
-        <div class="dropdown-row-cell dropdown-row-name"
+        <div class="detailed-targeting-dropdown-browse__row-cell detailed-targeting-dropdown-browse__row-name"
              (click)="clickItem(item)">{{item.name}}
         </div>
-        <div class="dropdown-row-cell dropdown-row-addon"
-             [ngClass]="{'dropdown-row-addon_parent': item.isParent}">
-          <div class="dropdown-row-search"
+        <div class="detailed-targeting-dropdown-browse__row-cell detailed-targeting-dropdown-browse__row-addon"
+             [ngClass]='{"detailed-targeting-dropdown-browse__row-addon_parent": item.isParent}'>
+          <div class="detailed-targeting-dropdown-browse__row-search"
                *ngIf="item.searchable">
             <img src="https://static.xx.fbcdn.net/rsrc.php/v2/yZ/r/xcjB9wqvY-g.png"
                  width="16"
                  height="16"
                  alt="search icon">
           </div>
-          <div class="dropdown-row-checkbox-parent"
+          <div class="detailed-targeting-dropdown-browse__row-checkbox-parent"
                *ngIf="item.isParent">
             <browse-multi-select [item]="item"></browse-multi-select>
           </div>
-          <div class="dropdown-row-checkbox"
+          <div class="detailed-targeting-dropdown-browse__row-checkbox"
                (click)="clickItem(item)">
             <label *ngIf="item.id">
               <input type="checkbox"

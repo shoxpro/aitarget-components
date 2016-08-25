@@ -1,9 +1,9 @@
-.mode {
+.detailed-targeting-mode__content {
   display: table;
   height:  100%;
 }
 
-.mode-suggested, .mode-browse {
+.detailed-targeting-mode__suggested, .detailed-targeting-mode__browse {
   position:       relative;
   display:        table-cell;
   padding:        0 8px;
@@ -14,24 +14,24 @@
   cursor:         pointer;
 }
 
-.mode-suggested.active, .mode-browse.active,
-.mode-suggested:hover, .mode-browse:hover {
+.detailed-targeting-mode__suggested.active, .detailed-targeting-mode__browse.active,
+.detailed-targeting-mode__suggested:hover, .detailed-targeting-mode__browse:hover {
   color: #5791ff;
 }
 
-.left-border {
+.detailed-targeting-mode__left-border {
   position:    absolute;
   left:        0;
   display:     inline-block;
   border-left: 1px solid #bdc7d8;
 }
 
-.left-border:before {
+.detailed-targeting-mode__left-border:before {
   display: inline-block;
   content: '';
 }
 
-.tick {
+.detailed-targeting-mode__tick {
   position:      absolute;
   bottom:        0;
   left:          50%;
@@ -45,7 +45,7 @@
   border-left:   5px solid transparent;
 }
 
-.tick:after {
+.detailed-targeting-mode__tick:after {
   position:      relative;
   top:           1px;
   left:          -5px;
@@ -58,6 +58,6 @@
   content:       '';
 }
 
-.mode-suggested.active .tick, .mode-browse.active .tick {
+.detailed-targeting-mode__suggested_active .detailed-targeting-mode__tick, .detailed-targeting-mode__browse_active .detailed-targeting-mode__tick {
   display: inline-block;
 }

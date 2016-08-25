@@ -1,10 +1,10 @@
-<ul *ngIf="items && items.length && (mode === 'search' || mode === 'suggested')">
-  <li class="dropdown-row"
+<ul class="detailed-targeting-dropdown-suggested__list" *ngIf="items && items.length && (mode === 'search' || mode === 'suggested')">
+  <li class="detailed-targeting-dropdown-suggested__row"
       *ngFor="let item of items"
       (mouseover)="setDropdownInfoItem(item)"
       (mouseout)="setDropdownInfoItem(null)"
       (click)="selectItem(item)">
-    <div class="dropdown-row__name">{{item.name}}</div>
-    <div class="dropdown-row__type">{{item.type | typeToHuman}}</div>
+    <div class="detailed-targeting-dropdown-suggested__name">{{item.name}}</div>
+    <div class="detailed-targeting-dropdown-suggested__type">{{item.type | typeToHuman}}</div>
   </li>
 </ul>

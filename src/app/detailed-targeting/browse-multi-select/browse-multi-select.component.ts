@@ -50,7 +50,7 @@ export class BrowseMultiSelectComponent implements AfterViewInit {
     let isIndeterminate = hasSelectedChildren && !allChildrenSelected;
 
     let checkbox = <HTMLInputElement>this.el.querySelector('input[type="checkbox"]');
-    let label = this.el.querySelector('span.label-text');
+    let label = this.el.querySelector('span.browse-multi-select__label-text');
 
     if (!checkbox) {
       return;
