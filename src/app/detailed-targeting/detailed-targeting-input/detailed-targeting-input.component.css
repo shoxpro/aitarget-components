@@ -7,25 +7,24 @@
   background: #ffffff;
 }
 
-.table {
+.detailed-targeting-input__table {
   display: table;
 }
 
-.table__cell {
+.detailed-targeting-input__label {
+  box-sizing: border-box;
+  padding:    8px;
+  width:      100%;
+}
+
+.detailed-targeting-input__table-cell {
   display:        table-cell;
   min-height:     31px;
   height:         1px;
   vertical-align: middle;
 }
 
-label {
-  display:    inline-block;
-  box-sizing: border-box;
-  padding:    8px;
-  width:      100%;
-}
-
-input {
+.detailed-targeting-input__input {
   box-sizing: border-box;
   padding:    0;
   width:      100%;
@@ -33,6 +32,6 @@ input {
   font-size:  12px;
 }
 
-input:focus {
+.detailed-targeting-input__input:focus {
   outline: none;
 }
