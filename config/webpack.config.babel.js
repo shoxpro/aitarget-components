@@ -1,11 +1,20 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const WebpackShellPlugin = require('webpack-shell-plugin');
+const path = require('path');
+const fs = require('fs');
+let options = require('./webpack.options');
 
-var parentRoot = './';
+if (fs.existsSync('./config/webpack.options.local.js')) {
+  let optionsLocal = require('./webpack.options.local');
+  // Extend options with local options
+  Object.assign(options, optionsLocal)
+}
+
+const parentRoot = './';
 
 module.exports = function (env) {
   // Main config for webpack for development
-  var config = {
+  let config = {
     devtool: 'inline-source-map',
     watch:   true,
     resolve: {
@@ -46,7 +55,8 @@ module.exports = function (env) {
       ]
     },
     plugins: [
-      new webpack.optimize.CommonsChunkPlugin({ name: 'core', filename: 'core.js' })
+      new webpack.optimize.CommonsChunkPlugin({ name: 'core', filename: 'core.js' }),
+      new WebpackShellPlugin(options.WebpackShellPlugin)
     ],
     node:    {
       fs:             'empty',
