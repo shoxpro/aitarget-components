@@ -32,3 +32,4 @@ testem.log
 .DS_Store
 Thumbs.db
 lib/components
+config/webpack.options.local.js
