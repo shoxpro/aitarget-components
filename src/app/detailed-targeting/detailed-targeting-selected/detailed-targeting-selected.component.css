@@ -1,11 +1,10 @@
 .detailed-targeting-selected__content {
   padding: 8px 0;
-  width:   472px;
   opacity: 1;
 }
 
 .detailed-targeting-selected__group_hover {
-  background: #f6f7f9
+  background: #f5fafd
 }
 
 .detailed-targeting-selected__remove {
@@ -49,7 +48,7 @@
 }
 
 .detailed-targeting-selected__item:hover {
-  background: #f6f7f9
+  background: #f5fafd
 }
 
 .detailed-targeting-selected__item:hover .detailed-targeting-selected__remove-item {

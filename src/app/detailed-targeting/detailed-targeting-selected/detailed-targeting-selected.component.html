@@ -1,4 +1,5 @@
-<div class="detailed-targeting-selected__content">
+<div *ngIf="structuredSelectedItems.keys.length"
+     class="detailed-targeting-selected__content">
   <div class="detailed-targeting-selected__group"
        #group
        [ngClass]='{"detailed-targeting-selected__group_hover": group.hovered}'
@@ -22,8 +23,9 @@
     <div class="detailed-targeting-selected__items">
       <div class="detailed-targeting-selected__item"
            *ngFor="let item of structuredSelectedItems.map[key]">
-        <span>{{ item.name }}</span><span class="detailed-targeting-selected__remove detailed-targeting-selected__remove-item"
-                                          (click)="removeItem(item)">&times;</span>
+        <span>{{ item.name
+              }}</span><span class="detailed-targeting-selected__remove detailed-targeting-selected__remove-item"
+                             (click)="removeItem(item)">&times;</span>
       </div>
     </div>
   </div>

@@ -1,8 +1,8 @@
 :host {
-  position:         absolute;
-  left:             15%;
-  width:            500px;
-  height:           64px;
-  font-size:        12px;
-  font-family:      helvetica, arial, 'lucida grande', sans-serif;
+  position:    absolute;
+  left:        15%;
+  width:       500px;
+  height:      64px;
+  font-size:   12px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

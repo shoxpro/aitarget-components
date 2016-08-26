@@ -1,35 +1,45 @@
-:host {
-  display:    table;
-  box-sizing: border-box;
-  width:      100%;
-  height:     32px;
-  border:     1px solid #bdc7d8;
-  background: #ffffff;
+.detailed-targeting-input__table {
+  display:          table;
+  box-sizing:       border-box;
+  width:            100%;
+  height:           30px;
+  border:           1px solid #d9dfe7;
+  border-radius:    3px;
+  background-color: #f2f6fa;
 }
 
-.detailed-targeting-input__table {
-  display: table;
+.detailed-targeting-input_dropdown-active {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius:  0;
+}
+
+.detailed-targeting-input_focus {
+  outline:      none;
+  border-color: #abbdd4;
+  box-shadow:   0 0 5px 0 rgba(154, 168, 181, 0.39);
 }
 
 .detailed-targeting-input__label {
   box-sizing: border-box;
-  padding:    8px;
+  padding:    6px 8px;
   width:      100%;
 }
 
 .detailed-targeting-input__table-cell {
   display:        table-cell;
-  min-height:     31px;
-  height:         1px;
+  height:         30px;
   vertical-align: middle;
 }
 
 .detailed-targeting-input__input {
-  box-sizing: border-box;
-  padding:    0;
-  width:      100%;
-  border:     none;
-  font-size:  12px;
+  box-sizing:       border-box;
+  padding:          0;
+  width:            100%;
+  height:           15px;
+  border:           none;
+  background-color: inherit;
+  font-size:        12px;
+  line-height:      normal;
 }
 
 .detailed-targeting-input__input:focus {

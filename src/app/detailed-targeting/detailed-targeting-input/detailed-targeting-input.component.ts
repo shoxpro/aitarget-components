@@ -15,6 +15,8 @@ import { FORM_DIRECTIVES } from '@angular/forms';
 })
 export class DetailedTargetingInputComponent implements OnInit {
   private term;
+  private mode;
+  private hasFocus;
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -36,7 +38,15 @@ export class DetailedTargetingInputComponent implements OnInit {
    * Open dropdown with suggestions when gets focus
    */
   public focus () {
+    this.hasFocus = true;
     this.DetailedTargetingModeService.set('suggested');
+  }
+
+  /**
+   * Process focus lost
+   */
+  public blur () {
+    this.hasFocus = false;
   }
 
   constructor (private DetailedTargetingApiService: DetailedTargetingApiService,
@@ -61,11 +71,18 @@ export class DetailedTargetingInputComponent implements OnInit {
 
           this.updateTemplate();
         });
+
     this.DetailedTargetingModeService.mode
         .distinctUntilChanged()
         .subscribe(() => {
           this.DetailedTargetingInputService.setTerm('');
         });
+
+    this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
+      this.mode = mode;
+
+      this.updateTemplate();
+    });
   }
 
 }
