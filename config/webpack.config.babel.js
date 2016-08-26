@@ -1,16 +1,18 @@
 const webpack = require('webpack');
 const WebpackShellPlugin = require('webpack-shell-plugin');
+
 const path = require('path');
 const fs = require('fs');
+
 let options = require('./webpack.options');
 
 if (fs.existsSync('./config/webpack.options.local.js')) {
   let optionsLocal = require('./webpack.options.local');
   // Extend options with local options
-  Object.assign(options, optionsLocal)
+  Object.assign(options, optionsLocal);
 }
 
-const parentRoot = './';
+const parentRoot = '../';
 
 module.exports = function (env) {
   // Main config for webpack for development
@@ -19,11 +21,11 @@ module.exports = function (env) {
     watch:   true,
     resolve: {
       extensions: ['', '.ts', '.js'],
-      root:       path.resolve(__dirname, parentRoot, 'src')
+      root:       path.resolve(__dirname, parentRoot, './src')
     },
-    entry:   require('./components.entry')(parentRoot),
+    entry:   require('./components.entry')(path.resolve(__dirname, parentRoot)),
     output:  {
-      path:          path.resolve(__dirname, parentRoot, '../lib/components'),
+      path:          path.resolve(__dirname, parentRoot, './lib/components'),
       filename:      "[name].js",
       libraryTarget: 'umd'
     },
@@ -36,7 +38,7 @@ module.exports = function (env) {
               loader: 'awesome-typescript-loader',
               query:  {
                 useForkChecker: true,
-                tsconfig:       path.resolve(parentRoot, 'src/tsconfig.json')
+                tsconfig:       path.resolve(__dirname, parentRoot, './src/tsconfig.json')
               }
             },
             {
