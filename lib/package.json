@@ -1,6 +1,6 @@
 {
   "name": "aitarget-components",
-  "version": "0.0.6-0",
+  "version": "0.0.6-1",
   "description": "Library of angular2 components for fb.aitarget.com tool",
   "main": "index.js",
   "scripts": {
