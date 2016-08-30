@@ -16,7 +16,7 @@ export class DetailedTargetingApiService {
 
   search (q: string, adaccountId = 'act_944874195534529') {
     this.FbService.api.subscribe((FB) => {
-      FB.api(`/${adaccountId}/targetingsearch`, {q: q}, (response) => {
+      FB.api(`/${adaccountId}/targetingsearch`, { q: q }, (response) => {
         this.DetailedTargetingDropdownSuggestedService.updateDropdown(response.data);
       });
     });

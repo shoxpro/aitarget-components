@@ -9,9 +9,9 @@ export class FbService {
    */
   private loadSdk () {
     let js,
-      id = 'facebook-jssdk',
-      s = 'script',
-      fjs = document.getElementsByTagName(s)[0];
+        id  = 'facebook-jssdk',
+        s   = 'script',
+        fjs = document.getElementsByTagName(s)[0];
 
     if (document.getElementById(id)) {
       return;

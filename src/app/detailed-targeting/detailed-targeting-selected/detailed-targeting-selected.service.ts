@@ -24,7 +24,7 @@ export class DetailedTargetingSelectedService {
       let key;
       if (item.name === lastInPath) {
         key = item.path.slice(0, -1)
-                  .join(' > ');
+          .join(' > ');
       } else {
         key = item.path.join(' > ');
       }

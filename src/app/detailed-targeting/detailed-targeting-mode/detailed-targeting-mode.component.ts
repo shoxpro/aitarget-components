@@ -16,8 +16,8 @@ export class DetailedTargetingModeComponent implements OnInit {
   };
 
 
-  constructor(private DetailedTargetingModeService: DetailedTargetingModeService,
-              private ref: ChangeDetectorRef) {
+  constructor (private DetailedTargetingModeService: DetailedTargetingModeService,
+               private ref: ChangeDetectorRef) {
   }
 
   /**
@@ -25,7 +25,6 @@ export class DetailedTargetingModeComponent implements OnInit {
    * @param e
    */
   public processOutsideClick = (e) => {
-    console.log('processOutsideClick e.target: ', e.target);
     let clickedOutside = true;
     let elm = e.target;
 
@@ -39,7 +38,7 @@ export class DetailedTargetingModeComponent implements OnInit {
     }
   };
 
-  ngOnInit() {
+  ngOnInit () {
     this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
       this.mode = mode;
 

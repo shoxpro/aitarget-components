@@ -24,20 +24,20 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   private structuredSelectedItems;
   private activeInfo;
 
-  constructor(private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
-              private DetailedTargetingApiService: DetailedTargetingApiService,
-              private DetailedTargetingModeService: DetailedTargetingModeService,
-              private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
-              private DetailedTargetingInfoService: DetailedTargetingInfoService,
-              private ElementRef: ElementRef,
-              private ref: ChangeDetectorRef) {
+  constructor (private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
+               private DetailedTargetingApiService: DetailedTargetingApiService,
+               private DetailedTargetingModeService: DetailedTargetingModeService,
+               private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
+               private DetailedTargetingInfoService: DetailedTargetingInfoService,
+               private ElementRef: ElementRef,
+               private ref: ChangeDetectorRef) {
     this.openItems = this.DetailedTargetingDropdownBrowseService.getOpenItems();
   }
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate() {
+  private updateTemplate () {
     this.ref.markForCheck();
     this.ref.detectChanges();
   }
@@ -48,7 +48,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
    * @param openItems
    * @param openKeys
    */
-  private closeChildrenNodes(item, openItems, openKeys) {
+  private closeChildrenNodes (item, openItems, openKeys) {
     if (openItems[item.key]) {
       return;
     }
@@ -59,7 +59,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     });
   }
 
-  private getScrollToItemKey(item, openItems) {
+  private getScrollToItemKey (item, openItems) {
     if (openItems[item.key]) {
       return item.key;
     } else {
@@ -72,7 +72,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
    * Open or close browse rows when clicked
    * @param item
    */
-  private toggleBranch(item: DetailedTargetingItem) {
+  private toggleBranch (item: DetailedTargetingItem) {
     //Get all open keys
     let openItems = this.DetailedTargetingDropdownBrowseService.getOpenItems();
     let openKeys = Object.keys(openItems);
@@ -93,7 +93,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
    * Select row item from the browse list
    * @param item
    */
-  private selectItem(item: DetailedTargetingItem) {
+  private selectItem (item: DetailedTargetingItem) {
     let selectedItems = this.DetailedTargetingSelectedService.get();
 
     let alreadyAdded: boolean = Boolean(selectedItems.filter(selected => selected.id === item.id).length);
@@ -109,7 +109,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
    * Remove row item from previously selected
    * @param itemToRemove
    */
-  private removeItem(itemToRemove: DetailedTargetingItem) {
+  private removeItem (itemToRemove: DetailedTargetingItem) {
     let selectedItems = this.DetailedTargetingSelectedService.get();
 
     selectedItems = selectedItems.filter(item => item.id !== itemToRemove.id);
@@ -121,7 +121,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
    * Show row's info when hovered
    * @param item
    */
-  public setDropdownInfoItem(item: DetailedTargetingItem) {
+  public setDropdownInfoItem (item: DetailedTargetingItem) {
     let value = item && item.id ? item : null;
     this.DetailedTargetingInfoService.update(value);
   }
@@ -131,7 +131,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
    * Open item branch if not last item with id, select or remove clicked item to/from selected items.
    * @param item
    */
-  public clickItem(item: DetailedTargetingItem) {
+  public clickItem (item: DetailedTargetingItem) {
     if (!item.id) {
       this.toggleBranch(item);
     } else {
@@ -149,7 +149,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
    * Scroll dropdown list to clicked item.key
    * @param key
    */
-  public scrollTo(key) {
+  public scrollTo (key) {
     if (!key) {
       return;
     }
@@ -163,7 +163,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit () {
     //TODO: rethink how to make request without timeout
     setTimeout(() => {
       //Load browse items
