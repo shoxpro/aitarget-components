@@ -16,6 +16,10 @@
   box-shadow:    0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.detailed-targeting-dropdown-browse__list_active-info {
+  border-radius: 0 0 0 3px;
+}
+
 .detailed-targeting-dropdown-browse__row {
   position:      relative;
   height:        31px;

@@ -13,6 +13,16 @@
   border-bottom-left-radius:  0;
 }
 
+.detailed-targeting-input_selected-items {
+  border-top-right-radius: 0;
+  border-top-left-radius:  0;
+}
+
+.detailed-targeting-input_active-info {
+  border-top-right-radius:    0;
+  border-bottom-right-radius: 0;
+}
+
 .detailed-targeting-input_focus {
   outline:      none;
   border-color: #abbdd4;

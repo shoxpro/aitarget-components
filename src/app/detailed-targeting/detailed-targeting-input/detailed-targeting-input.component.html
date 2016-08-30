@@ -1,6 +1,8 @@
 <div class="detailed-targeting-input__table"
      [ngClass]="{
      'detailed-targeting-input_dropdown-active': mode,
+     'detailed-targeting-input_selected-items': structuredSelectedItems?.keys.length,
+     'detailed-targeting-input_active-info': activeInfo,
      'detailed-targeting-input_focus': hasFocus}">
   <label class="detailed-targeting-input__label detailed-targeting-input__table-cell">
     <input class="detailed-targeting-input__input"

@@ -1,6 +1,12 @@
 .detailed-targeting-selected__content {
-  padding: 8px 0;
-  opacity: 1;
+  opacity:                    1;
+  max-height:                 200px;
+  overflow-y:                 auto;
+  border:                     1px solid #d9dfe7;
+  border-bottom:              none;
+  border-radius:              3px;
+  border-bottom-left-radius:  0;
+  border-bottom-right-radius: 0;
 }
 
 .detailed-targeting-selected__group_hover {
@@ -8,25 +14,25 @@
 }
 
 .detailed-targeting-selected__remove {
-  position:    absolute;
-  top:         50%;
-  display:     none;
-  color:       #bdc0c8;
-  font-weight: bold;
-  cursor:      pointer;
-  transform:   translateY(-50%);
+  position:      absolute;
+  display:       none;
+  color:         #bdc0c8;
+  font-weight:   bold;
+  cursor:        pointer;
+  padding-right: 5px;
+  right:         0;
 }
 
 .detailed-targeting-selected__group_hover .detailed-targeting-selected__remove-group {
-  right:   5px;
   display: inline-block;
 }
 
 .detailed-targeting-selected__group-title {
   position:        relative;
   display:         flex;
-  padding:         6px 30px 6px 10px;
+  padding:         6px 0px 6px 10px;
   justify-content: space-between;
+  align-content:   center;
 }
 
 .detailed-targeting-selected__group-title .detailed-targeting-selected__crumb {
@@ -52,6 +58,17 @@
 }
 
 .detailed-targeting-selected__item:hover .detailed-targeting-selected__remove-item {
-  right:   5px;
   display: inline-block;
+}
+
+.detailed-targeting-selected__group-devider {
+  height:  1px;
+  padding: 0 8px;
+}
+
+.detailed-targeting-selected__group-devider:after {
+  content:    "";
+  display:    block;
+  height:     100%;
+  background: #d9dfe7;
 }
