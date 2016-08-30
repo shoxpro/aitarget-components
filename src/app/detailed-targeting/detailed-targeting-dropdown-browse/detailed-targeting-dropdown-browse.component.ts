@@ -164,11 +164,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   }
 
   ngOnInit () {
-    //TODO: rethink how to make request without timeout
-    setTimeout(() => {
-      //Load browse items
-      this.DetailedTargetingApiService.browse();
-    }, 2000);
+    this.DetailedTargetingApiService.browse();
     /**
      * Update dropdown list when new items to browse
      */
