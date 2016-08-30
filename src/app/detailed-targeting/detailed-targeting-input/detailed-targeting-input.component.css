@@ -50,6 +50,7 @@
   background-color: inherit;
   font-size:        12px;
   line-height:      normal;
+  font-weight:      normal;
 }
 
 .detailed-targeting-input__input:focus {
