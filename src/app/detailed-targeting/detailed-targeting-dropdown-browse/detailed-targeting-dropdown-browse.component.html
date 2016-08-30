@@ -1,4 +1,5 @@
 <ul class="detailed-targeting-dropdown-browse__list"
+    [ngClass]="{'detailed-targeting-dropdown-browse__list_active-info': activeInfo}"
     *ngIf="items && items.length && mode === 'browse'">
   <template ngFor
             let-item

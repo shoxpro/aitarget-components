@@ -12,15 +12,16 @@ import { DetailedTargetingDropdownBrowseService } from '../detailed-targeting-dr
 })
 export class DetailedTargetingSelectedComponent implements OnInit {
 
-  public spec: TargetingSpec;
-  public items: DetailedTargetingItem[];
+  private spec: TargetingSpec;
+  private items: DetailedTargetingItem[];
 
   private structuredSelectedItems;
 
   constructor (private TargetingSpecService: TargetingSpecService,
                private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
                private DetailedTargetingModeService: DetailedTargetingModeService,
-               private DetailedTargetingSelectedService: DetailedTargetingSelectedService) {}
+               private DetailedTargetingSelectedService: DetailedTargetingSelectedService) {
+  }
 
   /**
    * Open clicked crumb in browse dropdown and scroll to it
@@ -35,7 +36,7 @@ export class DetailedTargetingSelectedComponent implements OnInit {
     path.forEach((crumb: string, pos: number) => {
       if (pos <= index) {
         let openItemKey = path.slice(0, pos + 1)
-                              .join(' > ');
+          .join(' > ');
 
         openItems._scrollTo = openItemKey;
         openItems[openItemKey] = true;
@@ -75,10 +76,10 @@ export class DetailedTargetingSelectedComponent implements OnInit {
     });
 
     this.DetailedTargetingSelectedService.items
-        .map(this.DetailedTargetingSelectedService.structureSelectedItems)
-        .subscribe((structuredSelectedItems) => {
-          this.structuredSelectedItems = structuredSelectedItems;
-        });
+      .map(this.DetailedTargetingSelectedService.structureSelectedItems)
+      .subscribe((structuredSelectedItems) => {
+        this.structuredSelectedItems = structuredSelectedItems;
+      });
   }
 
 }

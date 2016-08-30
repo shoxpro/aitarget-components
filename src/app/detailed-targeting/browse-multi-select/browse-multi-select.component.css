@@ -2,6 +2,8 @@
   display: table;
   float:   right;
   width:   100%;
+  margin:  initial;
+  padding: initial;
 }
 
 .browse-multi-select__label:hover .browse-multi-select__label-text {

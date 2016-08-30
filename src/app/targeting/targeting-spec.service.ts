@@ -25,7 +25,7 @@ export class TargetingSpecService {
     spec.detailedTargeting = {};
     items.forEach((item: DetailedTargetingItem) => {
       spec.detailedTargeting[item.type] = spec.detailedTargeting[item.type] || [];
-      spec.detailedTargeting[item.type].push({id: item.id, name: item.name});
+      spec.detailedTargeting[item.type].push({ id: item.id, name: item.name });
     });
 
     this.update(spec);

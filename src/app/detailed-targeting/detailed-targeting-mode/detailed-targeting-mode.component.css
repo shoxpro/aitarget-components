@@ -16,7 +16,7 @@
 
 .detailed-targeting-mode__suggested.active, .detailed-targeting-mode__browse.active,
 .detailed-targeting-mode__suggested:hover, .detailed-targeting-mode__browse:hover {
-  color: #5791ff;
+  color: #53aaca;
 }
 
 .detailed-targeting-mode__left-border {
@@ -41,7 +41,7 @@
   width:         0;
   height:        0;
   border-right:  5px solid transparent;
-  border-bottom: 5px solid #5791ff;
+  border-bottom: 5px solid #abbdd4;
   border-left:   5px solid transparent;
 }
 

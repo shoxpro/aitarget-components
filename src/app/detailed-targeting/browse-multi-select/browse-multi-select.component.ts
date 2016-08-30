@@ -14,25 +14,27 @@ export class BrowseMultiSelectComponent implements AfterViewInit {
   @Input('item') item: DetailedTargetingItem;
 
   constructor (el: ElementRef,
-               private DetailedTargetingSelectedService: DetailedTargetingSelectedService) { this.el = el.nativeElement; }
+               private DetailedTargetingSelectedService: DetailedTargetingSelectedService) {
+    this.el = el.nativeElement;
+  }
 
   public change (checked: boolean) {
-    let selectedItems = this.DetailedTargetingSelectedService.get();
-    let newSelectedItems = [];
+    // Update selected property in children items and get all children ids
+    let childrenIds = this.item.children.map((item: DetailedTargetingItem) => {
+      item.selected = checked;
+      return item.id;
+    });
 
+    // Get currently selected items
+    let selectedItems = this.DetailedTargetingSelectedService.get();
+    // Filter out all children items from currently selected items
+    let newSelectedItems = selectedItems.filter((item: DetailedTargetingItem) => {
+      return childrenIds.indexOf(item.id) === -1;
+    });
+
+    // Add children items if selected
     if (checked) {
-      this.item.children.forEach((item: DetailedTargetingItem) => {
-        item.selected = true;
-        newSelectedItems.push(item);
-      });
-    } else {
-      let childrenIds = this.item.children.map((item: DetailedTargetingItem) => {
-        item.selected = false;
-        return item.id;
-      });
-      newSelectedItems = selectedItems.filter((item: DetailedTargetingItem) => {
-        return childrenIds.indexOf(item.id) === -1;
-      });
+      newSelectedItems = newSelectedItems.concat(this.item.children);
     }
 
     this.DetailedTargetingSelectedService.updateSelected(newSelectedItems);

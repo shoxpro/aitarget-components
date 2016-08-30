@@ -1,9 +1,16 @@
-<div class="detailed-targeting-input__table">
+<div class="detailed-targeting-input__table"
+     [ngClass]="{
+     'detailed-targeting-input_dropdown-active': mode,
+     'detailed-targeting-input_selected-items': structuredSelectedItems?.keys.length,
+     'detailed-targeting-input_active-info': activeInfo,
+     'detailed-targeting-input_focus': hasFocus}">
   <label class="detailed-targeting-input__label detailed-targeting-input__table-cell">
-    <input class="detailed-targeting-input__input" type="text"
+    <input class="detailed-targeting-input__input"
+           type="text"
            [(ngModel)]="term"
            (keyup)="keyup(term)"
            (focus)="focus()"
+           (blur)="blur()"
            placeholder="Add demographics, interests or behaviours">
   </label>
   <detailed-targeting-mode class="detailed-targeting-input__table-cell"></detailed-targeting-mode>

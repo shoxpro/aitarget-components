@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/Rx';
+import { FB } from './fb.interface';
 
 @Injectable()
 export class FbService {
+
+  private _api = new BehaviorSubject<FB>(null);
+
+  public api = this._api.asObservable();
 
   /**
    * Load the SDK asynchronously
    */
   private loadSdk () {
     let js,
-      id = 'facebook-jssdk',
-      s = 'script',
-      fjs = document.getElementsByTagName(s)[0];
+        id  = 'facebook-jssdk',
+        s   = 'script',
+        fjs = document.getElementsByTagName(s)[0];
 
     if (document.getElementById(id)) {
       return;
@@ -23,6 +28,10 @@ export class FbService {
   }
 
   private setAsyncInit (observer) {
+    // Exit if fbAsyncInit was already set
+    if ((<any>window).fbAsyncInit) {
+      return;
+    }
     (<any>window).fbAsyncInit = () => {
       /**
        * Use Aitarget selfservice app id as default value
@@ -31,7 +40,7 @@ export class FbService {
        * @type {string}
        */
       let aitargetSelfserviceAppId = '683082315084696';
-      let FB = (<any>window).FB;
+      let FB: FB = (<any>window).FB;
 
       FB.init({
         appId: `${(<any>window).app_id || aitargetSelfserviceAppId}`,
@@ -59,13 +68,8 @@ export class FbService {
     };
   }
 
-  public api = Observable.create((observer) => {
-    let FB = (<any>window).FB;
-    if (FB) {
-      observer.next(FB);
-    } else {
-      this.setAsyncInit(observer);
-      this.loadSdk();
-    }
-  });
+  constructor () {
+    this.setAsyncInit(this._api);
+    this.loadSdk();
+  }
 }

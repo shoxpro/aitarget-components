@@ -22,6 +22,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   private selectedItems;
   private openItems;
   private structuredSelectedItems;
+  private activeInfo;
 
   constructor (private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
                private DetailedTargetingApiService: DetailedTargetingApiService,
@@ -125,6 +126,11 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     this.DetailedTargetingInfoService.update(value);
   }
 
+  /**
+   * Dropdown item click handler.
+   * Open item branch if not last item with id, select or remove clicked item to/from selected items.
+   * @param item
+   */
   public clickItem (item: DetailedTargetingItem) {
     if (!item.id) {
       this.toggleBranch(item);
@@ -139,6 +145,10 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     }
   };
 
+  /**
+   * Scroll dropdown list to clicked item.key
+   * @param key
+   */
   public scrollTo (key) {
     if (!key) {
       return;
@@ -154,52 +164,55 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   }
 
   ngOnInit () {
-    //TODO: rethink how to make request without timeout
-    setTimeout(() => {
-      //Load browse items
-      this.DetailedTargetingApiService.browse();
-    }, 2000);
+    this.DetailedTargetingApiService.browse();
     /**
      * Update dropdown list when new items to browse
      */
     this.DetailedTargetingDropdownBrowseService.items
-        .map(items => {
-          return items.filter(item => item.key !== '__ROOT__')
-                      .map((item, index, list) => {
-                        if (!item.id && list[index + 1].key.indexOf(item.key) === -1) {
-                          item.searchable = true;
-                        }
-                        if (!item.id && list[index + 1].id) {
-                          let children = [];
-                          let nextIndex = index + 1;
-                          while (list[nextIndex] && list[nextIndex].id) {
-                            children.push(list[nextIndex]);
-                            nextIndex += 1;
-                          }
+      .map(items => {
+        return items.filter(item => item.key !== '__ROOT__')
+          .map((item, index, list) => {
+            if (!item.id && list[index + 1].key.indexOf(item.key) === -1) {
+              item.searchable = true;
+            }
+            if (!item.id && list[index + 1].id) {
+              let children = [];
+              let nextIndex = index + 1;
+              while (list[nextIndex] && list[nextIndex].id) {
+                children.push(list[nextIndex]);
+                nextIndex += 1;
+              }
 
-                          item.isParent = true;
-                          item.children = children;
-                        }
-                        return item;
-                      });
-        })
-        .subscribe(items => {
-          this.items = items;
-          this.updateTemplate();
-        });
+              item.isParent = true;
+              item.children = children;
+            }
+            return item;
+          });
+      })
+      .subscribe(items => {
+        this.items = items;
+        this.updateTemplate();
+      });
 
     /**
      * Update items from dropdown (toggle checkboxes) when selected items changes
      */
     this.DetailedTargetingSelectedService.items
-        .map((items: DetailedTargetingItem[]) => items.map(item => item.id))
-        .subscribe((selectedItems: Array<string>) => {
-          this.selectedItems = selectedItems;
+      .map((items: DetailedTargetingItem[]) => items.map(item => item.id))
+      .subscribe((selectedItems: Array<string>) => {
+        this.selectedItems = selectedItems;
 
-          console.info(`selectedItems:`, selectedItems);
+        //Add selected property to browse items that are selected
+        if (this.items) {
+          this.items.forEach((item: DetailedTargetingItem) => {
+            item.selected = this.selectedItems.indexOf(item.id) > -1;
+          });
+        }
 
-          this.updateTemplate();
-        });
+        console.info(`selectedItems:`, selectedItems);
+
+        this.updateTemplate();
+      });
 
     /**
      * Toggle mode if changed
@@ -210,6 +223,9 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
       this.updateTemplate();
     });
 
+    /**
+     * If openItems change reflect these changes it in a template.
+     */
     this.DetailedTargetingDropdownBrowseService.openItems.subscribe((openItems) => {
       this.openItems = openItems;
       this.updateTemplate();
@@ -218,17 +234,13 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
       });
     });
 
-    this.DetailedTargetingSelectedService.items
-        .map(this.DetailedTargetingSelectedService.structureSelectedItems)
-        .subscribe((structuredSelectedItems) => {
-          this.structuredSelectedItems = structuredSelectedItems;
-          //Add selected property to browse items that are selected
-          if (this.items) {
-            this.items.forEach((item: DetailedTargetingItem) => {
-              item.selected = this.selectedItems.indexOf(item.id) > -1;
-            });
-          }
-        });
+    /**
+     * Indicate that info is open. Needed to set proper border-radius to dropdown.
+     */
+    this.DetailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
+      this.activeInfo = Boolean(item);
+      this.updateTemplate();
+    });
   }
 
 }

@@ -20,6 +20,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
 
   public items: DetailedTargetingItem[];
   private mode;
+  private activeInfo;
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -39,7 +40,8 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
                private DetailedTargetingModeService: DetailedTargetingModeService,
                private DetailedTargetingApiService: DetailedTargetingApiService,
                private DetailedTargetingInputService: DetailedTargetingInputService,
-               private ref: ChangeDetectorRef) {}
+               private ref: ChangeDetectorRef) {
+  }
 
   public setDropdownInfoItem (item: DetailedTargetingItem) {
     this.DetailedTargetingInfoService.update(item);
@@ -79,23 +81,31 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
      * Load suggested items when list of selected items changes
      */
     this.DetailedTargetingSelectedService.items
-        .filter(items => items.length > 0)
-        .map((items: DetailedTargetingItem[]) => {
-          return items.map(item => {
-            return {
-              id: item.id,
-              type: item.type
-            };
-          });
-        })
-        .subscribe((targetingList: Array<Object>) => {
-          if (this.DetailedTargetingModeService.get() === 'search') {
-            this.DetailedTargetingModeService.set('suggested');
-          }
-          this.suggest(targetingList);
-
-          this.updateTemplate();
+      .filter(items => items.length > 0)
+      .map((items: DetailedTargetingItem[]) => {
+        return items.map(item => {
+          return {
+            id: item.id,
+            type: item.type
+          };
         });
+      })
+      .subscribe((targetingList: Array<Object>) => {
+        if (this.DetailedTargetingModeService.get() === 'search') {
+          this.DetailedTargetingModeService.set('suggested');
+        }
+        this.suggest(targetingList);
+
+        this.updateTemplate();
+      });
+
+    /**
+     * Indicate that info is open. Needed to set proper border-radius to dropdown.
+     */
+    this.DetailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
+      this.activeInfo = Boolean(item);
+      this.updateTemplate();
+    });
   }
 
 }

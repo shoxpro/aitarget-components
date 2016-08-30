@@ -1,4 +1,6 @@
-<ul class="detailed-targeting-dropdown-suggested__list" *ngIf="items && items.length && (mode === 'search' || mode === 'suggested')">
+<ul class="detailed-targeting-dropdown-suggested__list"
+    [ngClass]="{'detailed-targeting-dropdown-suggested__list_active-info': activeInfo}"
+    *ngIf="items && items.length && (mode === 'search' || mode === 'suggested')">
   <li class="detailed-targeting-dropdown-suggested__row"
       *ngFor="let item of items"
       (mouseover)="setDropdownInfoItem(item)"

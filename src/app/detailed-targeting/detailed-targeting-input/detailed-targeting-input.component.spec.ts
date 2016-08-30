@@ -7,17 +7,18 @@ import { DetailedTargetingModeService } from '../detailed-targeting-mode/detaile
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
 import { DetailedTargetingInputService } from './detailed-targeting-input.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 
 describe('Component: DetailedTargetingInput', () => {
   it('should create an instance', () => {
     inject([DetailedTargetingApiService,
       DetailedTargetingModeService,
       DetailedTargetingInputService,
-      DetailedTargetingInfoService, ChangeDetectorRef], (DetailedTargetingApiService, DetailedTargetingModeService,
-                                                         DetailedTargetingInputService, DetailedTargetingInfoService,
-                                                         ChangeDetectorRef) => {
+      DetailedTargetingInfoService, DetailedTargetingSelectedService, ChangeDetectorRef], (DetailedTargetingApiService, DetailedTargetingModeService,
+                                                                                           DetailedTargetingInputService, DetailedTargetingInfoService,
+                                                                                           DetailedTargetingSelectedService, ChangeDetectorRef) => {
       let component = new DetailedTargetingInputComponent(DetailedTargetingApiService, DetailedTargetingModeService,
-        DetailedTargetingInputService, DetailedTargetingInfoService, ChangeDetectorRef);
+        DetailedTargetingInputService, DetailedTargetingInfoService, DetailedTargetingSelectedService, ChangeDetectorRef);
       expect(component)
         .toBeTruthy();
     });
