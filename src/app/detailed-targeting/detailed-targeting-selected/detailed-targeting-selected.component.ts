@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { TargetingSpecService, TargetingSpec } from '../../targeting/targeting-spec.service';
+import { TargetingSpecService } from '../../targeting/targeting-spec.service';
 import { DetailedTargetingSelectedService } from './detailed-targeting-selected.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingDropdownBrowseService } from '../detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
+import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 
 @Component({
   selector: 'detailed-targeting-selected',

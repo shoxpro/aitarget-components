@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { DetailedTargetingSelectedComponent } from './detailed-targeting-selected/';
 import { DetailedTargetingInputComponent } from './detailed-targeting-input/';
 import { DetailedTargetingDropdownSuggestedComponent } from './detailed-targeting-dropdown-suggested/';
@@ -13,6 +13,7 @@ import { DetailedTargetingModeService } from './detailed-targeting-mode/detailed
 import { DetailedTargetingDropdownBrowseService } from './detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
 import { DetailedTargetingApiService } from './detailed-targeting-api/detailed-targeting-api.service';
 import { DetailedTargetingInputService } from './detailed-targeting-input/detailed-targeting-input.service';
+import { TargetingSpec } from '../targeting/targeting-spec.interface';
 
 @Component({
   selector: 'detailed-targeting',
@@ -32,8 +33,18 @@ import { DetailedTargetingInputService } from './detailed-targeting-input/detail
 })
 export class DetailedTargetingComponent implements OnInit {
 
-  constructor () {}
+  @Input('spec') spec: TargetingSpec = {};
+  @Input('onChange') onChange: Function = () => {};
 
-  ngOnInit () {}
+  constructor (private TargetingSpecService: TargetingSpecService) {}
+
+  ngOnInit () {
+    this.TargetingSpecService.update(this.spec);
+
+    this.TargetingSpecService.spec.subscribe((spec: TargetingSpec) => {
+      this.onChange(spec);
+      console.log('Targeting Spec updated: ', spec);
+    });
+  }
 
 }
