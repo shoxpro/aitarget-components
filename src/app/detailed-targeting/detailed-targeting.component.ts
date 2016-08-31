@@ -14,6 +14,8 @@ import { DetailedTargetingDropdownBrowseService } from './detailed-targeting-dro
 import { DetailedTargetingApiService } from './detailed-targeting-api/detailed-targeting-api.service';
 import { DetailedTargetingInputService } from './detailed-targeting-input/detailed-targeting-input.service';
 import { TargetingSpec } from '../targeting/targeting-spec.interface';
+import { defaultDetailedTargetingSpec } from '../targeting/targeting-spec-detailed.const';
+import { DetailedTargetingItem } from './detailed-targeting-item';
 
 @Component({
   selector:        'detailed-targeting',
@@ -36,9 +38,30 @@ export class DetailedTargetingComponent implements OnInit {
   @Input('spec') spec: TargetingSpec    = {};
   @Input('onChange') onChange: Function = () => {};
 
-  constructor (private TargetingSpecService: TargetingSpecService) {}
+  constructor (private TargetingSpecService: TargetingSpecService,
+               private DetailedTargetingApiService: DetailedTargetingApiService,
+               private DetailedTargetingSelectedService: DetailedTargetingSelectedService) {}
 
   ngOnInit () {
+    // Set targetingList array for validation
+    let targetingList = [];
+    for (let type in defaultDetailedTargetingSpec) {
+      if (this.spec[type] && this.spec[type].length) {
+        this.spec[type].forEach((item: DetailedTargetingItem) => {
+          targetingList.push({ type: type, id: item.id });
+        });
+      }
+    }
+
+    // If no empty get validated items and update selected
+    if (targetingList.length) {
+      this.DetailedTargetingApiService.validate(targetingList).subscribe((selectedItems) => {
+        this.DetailedTargetingSelectedService.updateSelected(selectedItems);
+      });
+    }
+
+    this.TargetingSpecService.update(this.spec);
+
     this.TargetingSpecService.spec.subscribe((spec: TargetingSpec) => {
       this.onChange(spec);
       console.log('Targeting Spec updated: ', spec);
