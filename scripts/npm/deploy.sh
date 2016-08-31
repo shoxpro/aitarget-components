@@ -19,6 +19,10 @@ cd lib
 eval "${cmd}"
 npm publish
 
+# Generate changelog if github_changelog_generator installed
+# See https://github.com/skywinder/github-changelog-generator
+if which github_changelog_generator > /dev/null; then eval "$(github_changelog_generator)"; fi
+
 # Add git tag and update commit
 git add --all .
 git commit --amend -m "chore: bump version ${semver} to ${VERSION}"
