@@ -1,0 +1,25 @@
+import { DetailedTargetingSpec } from './targeting-spec-detailed.interface';
+export const defaultDetailedTargetingSpec: DetailedTargetingSpec = {
+  interests:             [],
+  behaviors:             [],
+  relationship_statuses: [],
+  interested_in:         [],
+  life_events:           [],
+  politics:              [],
+  industries:            [],
+  income:                [],
+  net_worth:             [],
+  home_type:             [],
+  home_ownership:        [],
+  ethnic_affinity:       [],
+  generation:            [],
+  household_composition: [],
+  moms:                  [],
+  office_type:           [],
+  education_schools:     [],
+  education_statuses:    [],
+  college_years:         [],
+  education_majors:      [],
+  work_employers:        [],
+  work_positions:        []
+};

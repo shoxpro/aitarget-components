@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { DetailedTargetingItem } from '../detailed-targeting/detailed-targeting-item';
 import { TargetingSpec } from './targeting-spec.interface';
+import { defaultDetailedTargetingSpec } from './targeting-spec-detailed.const';
 
 @Injectable()
 export class TargetingSpecService {
 
   private _spec = new BehaviorSubject<TargetingSpec>(<TargetingSpec>{});
-  public spec = this._spec.asObservable();
+  public spec   = this._spec.asObservable();
 
   public get (): TargetingSpec {
     return this._spec.getValue();
@@ -18,7 +19,7 @@ export class TargetingSpecService {
   }
 
   public updateWithDetailedTargeting (items: DetailedTargetingItem[]) {
-    let spec = this.get();
+    let spec              = this.get();
     let detailedTargeting = {};
 
     items.forEach((item: DetailedTargetingItem) => {
@@ -26,7 +27,9 @@ export class TargetingSpecService {
       detailedTargeting[item.type].push({ id: item.id, name: item.name });
     });
 
-    Object.assign(spec, detailedTargeting);
+    // Extend current spec with default detailed targeting spec and current detailed targeting
+    // noinspection TypeScriptUnresolvedFunction
+    Object.assign(spec, defaultDetailedTargetingSpec, detailedTargeting);
 
     this.update(spec);
   }
