@@ -23,12 +23,8 @@ cd ../
 git add --all .
 git commit --amend -m "chore: bump version ${semver} to ${VERSION}"
 
-# Push changes to remote
-git push origin HEAD --tags --force
-
-# Generate changelog if github_changelog_generator installed
-# Don't forget to add github token https://github.com/skywinder/github-changelog-generator#github-token
-if which github_changelog_generator > /dev/null; then eval "$(github_changelog_generator)"; fi
+# Generate changelog
+node ./scripts/npm/chagelog.js
 
 # Copy updated changelog to lib directory
 cp CHANGELOG.md lib/
