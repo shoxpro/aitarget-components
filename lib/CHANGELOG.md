@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.0.6-7](https://github.com/aitarget/aitarget-components/tree/v0.0.6-7) (2016-08-31)
+[Full Changelog](https://github.com/aitarget/aitarget-components/compare/v0.0.6-6...v0.0.6-7)
+
+**Merged pull requests:**
+
+- Add CHAGELOG.md [\#42](https://github.com/aitarget/aitarget-components/pull/42) ([yuriMalakhov](https://github.com/yuriMalakhov))
+
 ## [v0.0.6-6](https://github.com/aitarget/aitarget-components/tree/v0.0.6-6) (2016-08-31)
 [Full Changelog](https://github.com/aitarget/aitarget-components/compare/v0.0.6-5...v0.0.6-6)
 
