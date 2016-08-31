@@ -24,7 +24,7 @@ git add --all .
 git commit --amend -m "chore: bump version ${semver} to ${VERSION}"
 
 # Push changes to remote
-git push origin HEAD --tags --force
+git push origin +HEAD --tags
 
 # Generate changelog if github_changelog_generator installed
 # Don't forget to add github token https://github.com/skywinder/github-changelog-generator#github-token
