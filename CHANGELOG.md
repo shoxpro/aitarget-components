@@ -1,3 +1,13 @@
+<a name="0.0.6-9"></a>
+## [0.0.6-9](https://github.com/aitarget/aitarget-components/compare/v0.0.6-9...0.0.6-9) (2016-08-31)
+
+
+### Bug Fixes
+
+* **placeholder:** make input font-weight: normal, close #38 ([8ad7333](https://github.com/aitarget/aitarget-components/commit/8ad7333)), closes [#38](https://github.com/aitarget/aitarget-components/issues/38)
+
+
+
 <a name="0.0.6-8"></a>
 ## [0.0.6-8](https://github.com/aitarget/aitarget-components/compare/v0.0.6-8...0.0.6-8) (2016-08-31)
 
