@@ -20,8 +20,8 @@ eval "${cmd}"
 npm publish
 
 # Generate changelog if github_changelog_generator installed
-# See https://github.com/skywinder/github-changelog-generator
-if which github_changelog_generator > /dev/null; then eval "$(github_changelog_generator)"; fi
+# Don't forget to add github token https://github.com/skywinder/github-changelog-generator#github-token
+if which github_changelog_generator > /dev/null; then eval "$(cd ../ && github_changelog_generator)"; fi
 
 # Add git tag and update commit
 git add --all .

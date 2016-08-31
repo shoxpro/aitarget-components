@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/aitarget/aitarget-components/tree/HEAD)
-
-[Full Changelog](https://github.com/aitarget/aitarget-components/compare/v0.0.6-3...HEAD)
+## [v0.0.6-4](https://github.com/aitarget/aitarget-components/tree/v0.0.6-4) (2016-08-31)
+[Full Changelog](https://github.com/aitarget/aitarget-components/compare/v0.0.6-3...v0.0.6-4)
 
 **Merged pull requests:**
 
