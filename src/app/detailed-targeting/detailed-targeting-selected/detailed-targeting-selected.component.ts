@@ -7,9 +7,9 @@ import { DetailedTargetingDropdownBrowseService } from '../detailed-targeting-dr
 import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 
 @Component({
-  selector: 'detailed-targeting-selected',
+  selector:    'detailed-targeting-selected',
   templateUrl: 'detailed-targeting-selected.component.html',
-  styleUrls: ['detailed-targeting-selected.component.css']
+  styleUrls:   ['detailed-targeting-selected.component.css']
 })
 export class DetailedTargetingSelectedComponent implements OnInit {
 
@@ -30,16 +30,17 @@ export class DetailedTargetingSelectedComponent implements OnInit {
    * @param index
    */
   public showCrumb (key: string, index: number) {
-    let path = key.split(' > ');
+    let path             = key.split(' > ');
     let defaultOpenItems = this.DetailedTargetingDropdownBrowseService.defaultOpenItems;
-    let openItems = Object.assign({}, defaultOpenItems);
+    // noinspection TypeScriptUnresolvedFunction
+    let openItems        = Object.assign({}, defaultOpenItems);
 
     path.forEach((crumb: string, pos: number) => {
       if (pos <= index) {
         let openItemKey = path.slice(0, pos + 1)
           .join(' > ');
 
-        openItems._scrollTo = openItemKey;
+        openItems._scrollTo    = openItemKey;
         openItems[openItemKey] = true;
       }
     });
@@ -50,7 +51,7 @@ export class DetailedTargetingSelectedComponent implements OnInit {
 
   public removeGroup (key) {
     let selectedItems = this.DetailedTargetingSelectedService.get();
-    let idsToRemove = this.structuredSelectedItems.map[key].map(item => item.id);
+    let idsToRemove   = this.structuredSelectedItems.map[key].map(item => item.id);
 
     selectedItems = selectedItems.filter(item => idsToRemove.indexOf(item.id) === -1);
 

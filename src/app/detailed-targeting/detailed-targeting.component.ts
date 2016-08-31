@@ -16,31 +16,29 @@ import { DetailedTargetingInputService } from './detailed-targeting-input/detail
 import { TargetingSpec } from '../targeting/targeting-spec.interface';
 
 @Component({
-  selector: 'detailed-targeting',
-  templateUrl: 'detailed-targeting.component.html',
-  styleUrls: ['detailed-targeting.component.css'],
+  selector:        'detailed-targeting',
+  templateUrl:     'detailed-targeting.component.html',
+  styleUrls:       ['detailed-targeting.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  directives: [
+  directives:      [
     DetailedTargetingSelectedComponent,
     DetailedTargetingInputComponent,
     DetailedTargetingDropdownSuggestedComponent,
     DetailedTargetingDropdownBrowseComponent,
     DetailedTargetingInfoComponent
   ],
-  providers: [FbService, DetailedTargetingApiService, DetailedTargetingDropdownSuggestedService,
+  providers:       [FbService, DetailedTargetingApiService, DetailedTargetingDropdownSuggestedService,
     DetailedTargetingDropdownBrowseService, DetailedTargetingInfoService, TargetingSpecService,
     DetailedTargetingSelectedService, DetailedTargetingModeService, DetailedTargetingInputService]
 })
 export class DetailedTargetingComponent implements OnInit {
 
-  @Input('spec') spec: TargetingSpec = {};
+  @Input('spec') spec: TargetingSpec    = {};
   @Input('onChange') onChange: Function = () => {};
 
   constructor (private TargetingSpecService: TargetingSpecService) {}
 
   ngOnInit () {
-    this.TargetingSpecService.update(this.spec);
-
     this.TargetingSpecService.spec.subscribe((spec: TargetingSpec) => {
       this.onChange(spec);
       console.log('Targeting Spec updated: ', spec);

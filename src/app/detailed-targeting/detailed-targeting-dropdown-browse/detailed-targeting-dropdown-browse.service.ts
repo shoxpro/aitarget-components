@@ -9,11 +9,10 @@ interface _defaultOpenItems {
 
 @Injectable()
 export class DetailedTargetingDropdownBrowseService {
-
   private _items = new Subject<DetailedTargetingItem[]>();
 
   private _defaultOpenItems: _defaultOpenItems = {
-    __ROOT__: true,
+    __ROOT__:  true,
     _scrollTo: null
   };
 
