@@ -32,7 +32,7 @@ export class DetailedTargetingSelectedComponent implements OnInit {
   public showCrumb (key: string, index: number) {
     let path = key.split(' > ');
     let defaultOpenItems = this.DetailedTargetingDropdownBrowseService.defaultOpenItems;
-    let openItems = (<any>Object).assign({}, defaultOpenItems);
+    let openItems = Object.assign({}, defaultOpenItems);
 
     path.forEach((crumb: string, pos: number) => {
       if (pos <= index) {

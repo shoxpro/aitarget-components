@@ -26,7 +26,7 @@ export class TargetingSpecService {
       detailedTargeting[item.type].push({ id: item.id, name: item.name });
     });
 
-    Object.assign(spec, detailedTargeting, {});
+    Object.assign(spec, detailedTargeting);
 
     this.update(spec);
   }
