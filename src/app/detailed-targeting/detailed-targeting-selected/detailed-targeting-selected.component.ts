@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TargetingSpecService } from '../../targeting/targeting-spec.service';
 import { DetailedTargetingSelectedService } from './detailed-targeting-selected.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingDropdownBrowseService } from '../detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
-import { TargetingSpec } from '../../targeting/targeting-spec.interface';
+import { DetailedTargetingService } from '../detailed-targeting.service';
 
 @Component({
   selector:    'detailed-targeting-selected',
@@ -13,12 +12,11 @@ import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 })
 export class DetailedTargetingSelectedComponent implements OnInit {
 
-  private spec: TargetingSpec;
   private items: DetailedTargetingItem[];
 
   private structuredSelectedItems;
 
-  constructor (private TargetingSpecService: TargetingSpecService,
+  constructor (private DetailedTargetingService: DetailedTargetingService,
                private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
                private DetailedTargetingModeService: DetailedTargetingModeService,
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService) {
@@ -67,15 +65,11 @@ export class DetailedTargetingSelectedComponent implements OnInit {
   }
 
   ngOnInit () {
-    this.TargetingSpecService.spec.subscribe((spec: TargetingSpec) => {
-      this.spec = spec;
-      console.log('Targeting Spec: ', this.spec);
-    });
-
-    this.DetailedTargetingSelectedService.items.subscribe((items: DetailedTargetingItem[]) => {
-      this.items = items;
-      this.TargetingSpecService.updateWithDetailedTargeting(this.items);
-    });
+    this.DetailedTargetingSelectedService.items
+      .subscribe((items: DetailedTargetingItem[]) => {
+        this.items = items;
+        this.DetailedTargetingService.updateWithSelectedItems(this.items);
+      });
 
     this.DetailedTargetingSelectedService.items
       .map(this.DetailedTargetingSelectedService.structureSelectedItems)

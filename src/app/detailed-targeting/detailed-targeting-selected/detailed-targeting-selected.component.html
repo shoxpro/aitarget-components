@@ -25,8 +25,7 @@
     <div class="detailed-targeting-selected__items">
       <div class="detailed-targeting-selected__item"
            *ngFor="let item of structuredSelectedItems.map[key]">
-        <span>{{ item.name
-              }}
+        <span>{{ item.name }}
         </span>
         <span class="detailed-targeting-selected__remove detailed-targeting-selected__remove-item"
               (click)="removeItem(item)">&times;</span>

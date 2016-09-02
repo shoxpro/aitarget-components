@@ -16,6 +16,9 @@ import { DetailedTargetingInputService } from './detailed-targeting-input/detail
 import { TargetingSpec } from '../targeting/targeting-spec.interface';
 import { defaultDetailedTargetingSpec } from '../targeting/targeting-spec-detailed.const';
 import { DetailedTargetingItem } from './detailed-targeting-item';
+import { DetailedTargetingService } from './detailed-targeting.service';
+import { DetailedTargetingSpec } from '../targeting/targeting-spec-detailed.interface';
+import * as _ from 'lodash';
 
 @Component({
   selector:        'detailed-targeting',
@@ -31,7 +34,8 @@ import { DetailedTargetingItem } from './detailed-targeting-item';
   ],
   providers:       [FbService, DetailedTargetingApiService, DetailedTargetingDropdownSuggestedService,
     DetailedTargetingDropdownBrowseService, DetailedTargetingInfoService, TargetingSpecService,
-    DetailedTargetingSelectedService, DetailedTargetingModeService, DetailedTargetingInputService]
+    DetailedTargetingSelectedService, DetailedTargetingModeService, DetailedTargetingInputService,
+    DetailedTargetingService]
 })
 export class DetailedTargetingComponent implements OnInit {
 
@@ -39,8 +43,10 @@ export class DetailedTargetingComponent implements OnInit {
   @Input('onChange') onChange: Function = () => {};
 
   constructor (private TargetingSpecService: TargetingSpecService,
+               private DetailedTargetingService: DetailedTargetingService,
                private DetailedTargetingApiService: DetailedTargetingApiService,
-               private DetailedTargetingSelectedService: DetailedTargetingSelectedService) {}
+               private DetailedTargetingSelectedService: DetailedTargetingSelectedService) {
+  }
 
   ngOnInit () {
     // Set targetingList array for validation
@@ -53,19 +59,39 @@ export class DetailedTargetingComponent implements OnInit {
       }
     }
 
-    // If no empty get validated items and update selected
+    // If targetingList is not empty get validated items and update selected
     if (targetingList.length) {
       this.DetailedTargetingApiService.validate(targetingList).subscribe((selectedItems) => {
         this.DetailedTargetingSelectedService.updateSelected(selectedItems);
       });
     }
 
-    this.TargetingSpecService.update(this.spec);
+    /**
+     * Update global Targeting spec when detailedTargetingSpec changes
+     */
+    this.DetailedTargetingService.spec
+    // Skip first initialization subject and second with passed spec
+      .skip(2)
+      .subscribe((detailedTargetingSpec: DetailedTargetingSpec) => {
+        console.log('detailedTargetingSpec: ', detailedTargetingSpec);
+        //noinspection TypeScriptUnresolvedFunction
+        let newTargetingSpec = Object.assign({}, this.spec, detailedTargetingSpec);
+        let cleanSpec        = this.TargetingSpecService.clean(newTargetingSpec);
+        this.TargetingSpecService.update(cleanSpec);
+      });
 
-    this.TargetingSpecService.spec.subscribe((spec: TargetingSpec) => {
-      this.onChange(spec);
-      console.log('Targeting Spec updated: ', spec);
-    });
+    /**
+     * Trigger onchange if global Targeting spec changed
+     */
+    this.TargetingSpecService.spec
+    // Skip first initialization subject and second with passed spec
+      .skip(1)
+      .subscribe((spec: TargetingSpec) => {
+        if (!_.isEqual(this.spec, spec)) {
+          console.log('Targeting Spec updated: ', spec);
+          this.onChange(spec);
+        }
+      });
   }
 
 }

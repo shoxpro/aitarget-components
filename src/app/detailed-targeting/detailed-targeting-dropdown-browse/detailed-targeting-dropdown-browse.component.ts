@@ -208,8 +208,6 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
           });
         }
 
-        console.info(`selectedItems:`, selectedItems);
-
         this.updateTemplate();
       });
 
