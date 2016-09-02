@@ -11,4 +11,5 @@ export class DetailedTargetingItem {
   parent: string;
   path: [string];
   audience_size: number;
+  valid: boolean;
 }

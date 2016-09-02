@@ -1,34 +1,36 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/Rx';
-import { DetailedTargetingItem } from '../detailed-targeting/detailed-targeting-item';
-
-export type TargetingSpec = {
-  detailedTargeting: Object
-};
+import { TargetingSpec } from './targeting-spec.interface';
+import { defaultDetailedTargetingSpec } from './targeting-spec-detailed.const';
 
 @Injectable()
 export class TargetingSpecService {
 
-  private _spec = new BehaviorSubject<TargetingSpec>(<TargetingSpec>{});
-  public spec = this._spec.asObservable();
+  private _spec = new BehaviorSubject<TargetingSpec>({});
+  public spec   = this._spec.asObservable();
 
   public get (): TargetingSpec {
     return this._spec.getValue();
   }
 
-  public update (spec: TargetingSpec) {
-    this._spec.next(spec);
+  /**
+   * Remove empty array properties from Targeting Spec
+   * @param items
+   */
+  public clean (spec) {
+    let updatedSpec = {};
+
+    for (let property in spec) {
+      if (!defaultDetailedTargetingSpec[property] || spec[property].length) {
+        updatedSpec[property] = spec[property];
+      }
+    }
+
+    return updatedSpec;
   }
 
-  public updateWithDetailedTargeting (items: DetailedTargetingItem[]) {
-    let spec = this.get();
-    spec.detailedTargeting = {};
-    items.forEach((item: DetailedTargetingItem) => {
-      spec.detailedTargeting[item.type] = spec.detailedTargeting[item.type] || [];
-      spec.detailedTargeting[item.type].push({ id: item.id, name: item.name });
-    });
-
-    this.update(spec);
+  public update (spec: TargetingSpec) {
+    this._spec.next(spec);
   }
 
   constructor () {}

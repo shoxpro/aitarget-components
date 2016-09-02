@@ -9,10 +9,10 @@ import { BrowseMultiSelectComponent } from '../browse-multi-select/browse-multi-
 import { FORM_DIRECTIVES } from '@angular/forms';
 
 @Component({
-  selector: 'detailed-targeting-dropdown-browse',
-  templateUrl: 'detailed-targeting-dropdown-browse.component.html',
-  styleUrls: ['detailed-targeting-dropdown-browse.component.css'],
-  directives: [BrowseMultiSelectComponent, FORM_DIRECTIVES],
+  selector:        'detailed-targeting-dropdown-browse',
+  templateUrl:     'detailed-targeting-dropdown-browse.component.html',
+  styleUrls:       ['detailed-targeting-dropdown-browse.component.css'],
+  directives:      [BrowseMultiSelectComponent, FORM_DIRECTIVES],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -21,7 +21,6 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   private items;
   private selectedItems;
   private openItems;
-  private structuredSelectedItems;
   private activeInfo;
 
   constructor (private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
@@ -75,7 +74,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   private toggleBranch (item: DetailedTargetingItem) {
     //Get all open keys
     let openItems = this.DetailedTargetingDropdownBrowseService.getOpenItems();
-    let openKeys = Object.keys(openItems);
+    let openKeys  = Object.keys(openItems);
 
     //Toggle branch by item.key
     openItems[item.key] = !Boolean(openItems[item.key]);
@@ -154,8 +153,8 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
       return;
     }
 
-    let elm = this.ElementRef.nativeElement;
-    let list = elm.querySelector('ul');
+    let elm     = this.ElementRef.nativeElement;
+    let list    = elm.querySelector('ul');
     let itemRow = elm.querySelector(`[data-key="${key}"]`);
 
     if (itemRow) {
@@ -176,7 +175,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
               item.searchable = true;
             }
             if (!item.id && list[index + 1].id) {
-              let children = [];
+              let children  = [];
               let nextIndex = index + 1;
               while (list[nextIndex] && list[nextIndex].id) {
                 children.push(list[nextIndex]);
@@ -208,8 +207,6 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
             item.selected = this.selectedItems.indexOf(item.id) > -1;
           });
         }
-
-        console.info(`selectedItems:`, selectedItems);
 
         this.updateTemplate();
       });
