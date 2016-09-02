@@ -1,13 +1,13 @@
 .detailed-targeting-selected__content {
-  opacity:                    1;
-  max-height:                 200px;
   overflow-y:                 auto;
+  max-height:                 200px;
   border:                     1px solid #d9dfe7;
-  background:                 #ffffff;
   border-bottom:              none;
   border-radius:              3px;
-  border-bottom-left-radius:  0;
   border-bottom-right-radius: 0;
+  border-bottom-left-radius:  0;
+  background:                 #ffffff;
+  opacity:                    1;
 }
 
 .detailed-targeting-selected__group_hover {
@@ -15,13 +15,17 @@
 }
 
 .detailed-targeting-selected__remove {
-  position:      absolute;
-  display:       none;
-  color:         #bdc0c8;
-  font-weight:   bold;
-  cursor:        pointer;
-  padding-right: 5px;
-  right:         0;
+  position:    absolute;
+  top:         0;
+  right:       0;
+  display:     none;
+  padding:     0 5px;
+  height:      100%;
+  color:       #bdc0c8;
+  font-weight: bold;
+  font-size:   15px;
+  line-height: 24px;
+  cursor:      pointer;
 }
 
 .detailed-targeting-selected__group_hover .detailed-targeting-selected__remove-group {
@@ -37,7 +41,7 @@
 }
 
 .detailed-targeting-selected__group-title .detailed-targeting-selected__crumb {
-  color:  #365899;
+  color:  #50a9c9;;
   cursor: pointer;
 }
 
@@ -52,6 +56,7 @@
   padding:         6px 0 6px 8px;
   font-weight:     bold;
   justify-content: space-between;
+  align-content:   center;
 }
 
 .detailed-targeting-selected__item:hover {
@@ -63,13 +68,13 @@
 }
 
 .detailed-targeting-selected__group-devider {
-  height:  1px;
   padding: 0 8px;
+  height:  1px;
 }
 
 .detailed-targeting-selected__group-devider:after {
-  content:    "";
   display:    block;
   height:     100%;
   background: #d9dfe7;
+  content:    "";
 }
