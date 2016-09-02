@@ -28,10 +28,16 @@ export class TargetingSpecService {
     });
 
     // Extend current spec with default detailed targeting spec and current detailed targeting
+    let updatedSpec = {};
     // noinspection TypeScriptUnresolvedFunction
     Object.assign(spec, defaultDetailedTargetingSpec, detailedTargeting);
+    for (let property in spec) {
+      if (!defaultDetailedTargetingSpec[property] || spec[property].length) {
+        updatedSpec[property] = spec[property];
+      }
+    }
 
-    this.update(spec);
+    this.update(updatedSpec);
   }
 
   constructor () {}
