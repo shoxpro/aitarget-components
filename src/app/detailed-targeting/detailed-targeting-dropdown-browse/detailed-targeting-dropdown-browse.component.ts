@@ -19,7 +19,7 @@ import { FORM_DIRECTIVES } from '@angular/forms';
 export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   private mode;
   private items;
-  private selectedItems;
+  private selectedItemsCombinedIds;
   private openItems;
   private activeInfo;
 
@@ -32,6 +32,8 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
                private ref: ChangeDetectorRef) {
     this.openItems = this.DetailedTargetingDropdownBrowseService.getOpenItems();
   }
+
+  private combinedId = (item) => [item.type, item.id].join('.');
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -93,9 +95,16 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
    * @param item
    */
   private selectItem (item: DetailedTargetingItem) {
+    // Set selected property for checkboxes
+    item.selected = true;
+
     let selectedItems = this.DetailedTargetingSelectedService.get();
 
-    let alreadyAdded: boolean = Boolean(selectedItems.filter(selected => selected.id === item.id).length);
+    let selectedItemsFiltered = selectedItems.filter(selected => {
+      return selected.type === item.type && selected.id === item.id;
+    });
+
+    let alreadyAdded: boolean = Boolean(selectedItemsFiltered.length);
 
     if (!alreadyAdded) {
       selectedItems.push(item);
@@ -109,9 +118,14 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
    * @param itemToRemove
    */
   private removeItem (itemToRemove: DetailedTargetingItem) {
+    // Set selected property for checkboxes
+    itemToRemove.selected = false;
+
     let selectedItems = this.DetailedTargetingSelectedService.get();
 
-    selectedItems = selectedItems.filter(item => item.id !== itemToRemove.id);
+    selectedItems = selectedItems.filter(item => {
+      return itemToRemove.type !== item.type || item.id !== itemToRemove.id;
+    });
 
     this.DetailedTargetingSelectedService.updateSelected(selectedItems);
   }
@@ -134,11 +148,9 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     if (!item.id) {
       this.toggleBranch(item);
     } else {
-      if (this.selectedItems && this.selectedItems.indexOf(item.id) > -1) {
-        item.selected = false;
+      if (this.selectedItemsCombinedIds && this.selectedItemsCombinedIds.indexOf(this.combinedId(item)) > -1) {
         this.removeItem(item);
       } else {
-        item.selected = true;
         this.selectItem(item);
       }
     }
@@ -168,48 +180,48 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
      * Update dropdown list when new items to browse
      */
     this.DetailedTargetingDropdownBrowseService.items
-      .map(items => {
-        return items.filter(item => item.key !== '__ROOT__')
-          .map((item, index, list) => {
-            if (!item.id && list[index + 1].key.indexOf(item.key) === -1) {
-              item.searchable = true;
-            }
-            if (!item.id && list[index + 1].id) {
-              let children  = [];
-              let nextIndex = index + 1;
-              while (list[nextIndex] && list[nextIndex].id) {
-                children.push(list[nextIndex]);
-                nextIndex += 1;
-              }
+        .map(items => {
+          return items.filter(item => item.key !== '__ROOT__')
+                      .map((item, index, list) => {
+                        if (!item.id && list[index + 1].key.indexOf(item.key) === -1) {
+                          item.searchable = true;
+                        }
+                        if (!item.id && list[index + 1].id) {
+                          let children  = [];
+                          let nextIndex = index + 1;
+                          while (list[nextIndex] && list[nextIndex].id) {
+                            children.push(list[nextIndex]);
+                            nextIndex += 1;
+                          }
 
-              item.isParent = true;
-              item.children = children;
-            }
-            return item;
-          });
-      })
-      .subscribe(items => {
-        this.items = items;
-        this.updateTemplate();
-      });
+                          item.isParent = true;
+                          item.children = children;
+                        }
+                        return item;
+                      });
+        })
+        .subscribe(items => {
+          this.items = items;
+          this.updateTemplate();
+        });
 
     /**
      * Update items from dropdown (toggle checkboxes) when selected items changes
      */
     this.DetailedTargetingSelectedService.items
-      .map((items: DetailedTargetingItem[]) => items.map(item => item.id))
-      .subscribe((selectedItems: Array<string>) => {
-        this.selectedItems = selectedItems;
+        .map((items: DetailedTargetingItem[]) => items.map(item => this.combinedId(item)))
+        .subscribe((selectedItems: Array<string>) => {
+          this.selectedItemsCombinedIds = selectedItems;
 
-        //Add selected property to browse items that are selected
-        if (this.items) {
-          this.items.forEach((item: DetailedTargetingItem) => {
-            item.selected = this.selectedItems.indexOf(item.id) > -1;
-          });
-        }
+          //Add selected property to browse items that are selected
+          if (this.items) {
+            this.items.forEach((item: DetailedTargetingItem) => {
+              item.selected = this.selectedItemsCombinedIds.indexOf(this.combinedId(item)) > -1;
+            });
+          }
 
-        this.updateTemplate();
-      });
+          this.updateTemplate();
+        });
 
     /**
      * Toggle mode if changed

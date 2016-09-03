@@ -9,10 +9,10 @@ import { DetailedTargetingInputService } from '../detailed-targeting-input/detai
 import { TypeToHumanPipe } from '../type-to-human.pipe';
 
 @Component({
-  selector: 'detailed-targeting-dropdown-suggested',
-  templateUrl: 'detailed-targeting-dropdown-suggested.component.html',
-  styleUrls: ['detailed-targeting-dropdown-suggested.component.css'],
-  pipes: [TypeToHumanPipe],
+  selector:        'detailed-targeting-dropdown-suggested',
+  templateUrl:     'detailed-targeting-dropdown-suggested.component.html',
+  styleUrls:       ['detailed-targeting-dropdown-suggested.component.css'],
+  pipes:           [TypeToHumanPipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -50,7 +50,11 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
   public selectItem (item: DetailedTargetingItem) {
     let selectedItems = this.DetailedTargetingSelectedService.get();
 
-    let alreadyAdded: boolean = Boolean(selectedItems.filter(selected => selected.id === item.id).length);
+    let selectedItemsFiltered = selectedItems.filter(selected => {
+      return selected.type === item.type && selected.id === item.id;
+    });
+
+    let alreadyAdded: boolean = Boolean(selectedItemsFiltered.length);
 
     if (!alreadyAdded) {
       selectedItems.push(item);
@@ -81,23 +85,23 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
      * Load suggested items when list of selected items changes
      */
     this.DetailedTargetingSelectedService.items
-      .filter(items => items.length > 0)
-      .map((items: DetailedTargetingItem[]) => {
-        return items.map(item => {
-          return {
-            id: item.id,
-            type: item.type
-          };
-        });
-      })
-      .subscribe((targetingList: Array<Object>) => {
-        if (this.DetailedTargetingModeService.get() === 'search') {
-          this.DetailedTargetingModeService.set('suggested');
-        }
-        this.suggest(targetingList);
+        .filter(items => items.length > 0)
+        .map((items: DetailedTargetingItem[]) => {
+          return items.map(item => {
+            return {
+              id:   item.id,
+              type: item.type
+            };
+          });
+        })
+        .subscribe((targetingList: Array<Object>) => {
+          if (this.DetailedTargetingModeService.get() === 'search') {
+            this.DetailedTargetingModeService.set('suggested');
+          }
+          this.suggest(targetingList);
 
-        this.updateTemplate();
-      });
+          this.updateTemplate();
+        });
 
     /**
      * Indicate that info is open. Needed to set proper border-radius to dropdown.
