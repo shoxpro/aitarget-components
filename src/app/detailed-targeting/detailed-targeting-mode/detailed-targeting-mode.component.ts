@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { DetailedTargetingModeService } from './detailed-targeting-mode.service';
+import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
 
 @Component({
   selector: 'detailed-targeting-mode',
@@ -15,8 +16,8 @@ export class DetailedTargetingModeComponent implements OnInit {
     this.DetailedTargetingModeService.set(mode);
   };
 
-
   constructor (private DetailedTargetingModeService: DetailedTargetingModeService,
+               private DetailedTargetingInfoService: DetailedTargetingInfoService,
                private ref: ChangeDetectorRef) {
   }
 
@@ -35,6 +36,7 @@ export class DetailedTargetingModeComponent implements OnInit {
 
     if (clickedOutside) {
       this.DetailedTargetingModeService.set(null);
+      this.DetailedTargetingInfoService.update(null);
     }
   };
 
