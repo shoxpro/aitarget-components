@@ -6,6 +6,7 @@ import { TypeToHumanPipe } from './type-to-human.pipe';
 describe('Pipe: TypeToHuman', () => {
   it('create an instance', () => {
     let pipe = new TypeToHumanPipe();
-    expect(pipe).toBeTruthy();
+    expect(pipe)
+      .toBeTruthy();
   });
 });

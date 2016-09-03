@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Rx';
 export class DetailedTargetingInputService {
 
   private _term = new Subject();
-  public term = this._term.asObservable();
+  public term   = this._term.asObservable();
 
   public setTerm (term: string) {
     this._term.next(term);

@@ -5,6 +5,7 @@ import { DetailedTargetingItem } from './detailed-targeting-item';
 
 describe('DetailedTargetingItem', () => {
   it('should create an instance', () => {
-    expect(new DetailedTargetingItem()).toBeTruthy();
+    expect(new DetailedTargetingItem())
+      .toBeTruthy();
   });
 });

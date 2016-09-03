@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { addProviders, async, inject } from '@angular/core/testing';
+import { addProviders, inject } from '@angular/core/testing';
 import { DetailedTargetingService } from './detailed-targeting.service';
 
 describe('Service: DetailedTargeting', () => {
@@ -11,6 +11,7 @@ describe('Service: DetailedTargeting', () => {
   it('should ...',
     inject([DetailedTargetingService],
       (service: DetailedTargetingService) => {
-        expect(service).toBeTruthy();
+        expect(service)
+          .toBeTruthy();
       }));
 });

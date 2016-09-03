@@ -3,9 +3,9 @@ import { DetailedTargetingModeService } from './detailed-targeting-mode.service'
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
 
 @Component({
-  selector: 'detailed-targeting-mode',
-  templateUrl: 'detailed-targeting-mode.component.html',
-  styleUrls: ['detailed-targeting-mode.component.css'],
+  selector:        'detailed-targeting-mode',
+  templateUrl:     'detailed-targeting-mode.component.html',
+  styleUrls:       ['detailed-targeting-mode.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailedTargetingModeComponent implements OnInit {
@@ -27,11 +27,11 @@ export class DetailedTargetingModeComponent implements OnInit {
    */
   public processOutsideClick = (e) => {
     let clickedOutside = true;
-    let elm = e.target;
+    let elm            = e.target;
 
     while (elm && clickedOutside) {
       clickedOutside = elm.tagName.toLowerCase() !== 'detailed-targeting';
-      elm = elm.parentElement;
+      elm            = elm.parentElement;
     }
 
     if (clickedOutside) {

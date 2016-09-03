@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Rx';
 export class DetailedTargetingDropdownSuggestedService {
 
   private _items = new Subject<DetailedTargetingItem[]>();
-  public items = this._items.asObservable();
+  public items   = this._items.asObservable();
 
   public updateDropdown (items: DetailedTargetingItem[]) {
     this._items.next(items);

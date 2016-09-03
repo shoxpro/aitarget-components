@@ -54,16 +54,17 @@ export class DetailedTargetingComponent implements OnInit {
     for (let type in defaultDetailedTargetingSpec) {
       if (this.spec[type] && this.spec[type].length) {
         this.spec[type].forEach((item: DetailedTargetingItem) => {
-          targetingList.push({ type: type, id: item.id });
+          targetingList.push({type: type, id: item.id});
         });
       }
     }
 
     // If targetingList is not empty get validated items and update selected
     if (targetingList.length) {
-      this.DetailedTargetingApiService.validate(targetingList).subscribe((selectedItems) => {
-        this.DetailedTargetingSelectedService.updateSelected(selectedItems);
-      });
+      this.DetailedTargetingApiService.validate(targetingList)
+          .subscribe((selectedItems) => {
+            this.DetailedTargetingSelectedService.updateSelected(selectedItems);
+          });
     }
 
     /**
@@ -71,27 +72,27 @@ export class DetailedTargetingComponent implements OnInit {
      */
     this.DetailedTargetingService.spec
     // Skip first initialization subject and second with passed spec
-      .skip(2)
-      .subscribe((detailedTargetingSpec: DetailedTargetingSpec) => {
-        console.log('detailedTargetingSpec: ', detailedTargetingSpec);
-        //noinspection TypeScriptUnresolvedFunction
-        let newTargetingSpec = Object.assign({}, this.spec, detailedTargetingSpec);
-        let cleanSpec        = this.TargetingSpecService.clean(newTargetingSpec);
-        this.TargetingSpecService.update(cleanSpec);
-      });
+        .skip(2)
+        .subscribe((detailedTargetingSpec: DetailedTargetingSpec) => {
+          console.log('detailedTargetingSpec: ', detailedTargetingSpec);
+          //noinspection TypeScriptUnresolvedFunction
+          let newTargetingSpec = Object.assign({}, this.spec, detailedTargetingSpec);
+          let cleanSpec        = this.TargetingSpecService.clean(newTargetingSpec);
+          this.TargetingSpecService.update(cleanSpec);
+        });
 
     /**
      * Trigger onchange if global Targeting spec changed
      */
     this.TargetingSpecService.spec
     // Skip first initialization subject and second with passed spec
-      .skip(1)
-      .subscribe((spec: TargetingSpec) => {
-        if (!_.isEqual(this.spec, spec)) {
-          console.log('Targeting Spec updated: ', spec);
-          this.onChange(spec);
-        }
-      });
+        .skip(1)
+        .subscribe((spec: TargetingSpec) => {
+          if (!_.isEqual(this.spec, spec)) {
+            console.log('Targeting Spec updated: ', spec);
+            this.onChange(spec);
+          }
+        });
   }
 
 }

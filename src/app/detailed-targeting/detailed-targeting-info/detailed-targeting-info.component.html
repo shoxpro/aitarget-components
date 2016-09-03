@@ -9,8 +9,8 @@
               [ngForOf]="item.path"
               let-first="first"
               let-last="last">
-      <span [ngClass]='{"detailed-targeting-info__first-crumb": first}'>{{ crumb }}</span>
-      <span *ngIf="!last"> &gt; </span>
+      <span [ngClass]='{"detailed-targeting-info__first-crumb": first}'>{{ crumb }}</span> <span *ngIf="!last">
+      &gt; </span>
     </template>
   </div>
   <div class="detailed-targeting-info__description">

@@ -14,9 +14,10 @@ describe('Component: DetailedTargetingInput', () => {
     inject([DetailedTargetingApiService,
       DetailedTargetingModeService,
       DetailedTargetingInputService,
-      DetailedTargetingInfoService, DetailedTargetingSelectedService, ChangeDetectorRef], (DetailedTargetingApiService, DetailedTargetingModeService,
-                                                                                           DetailedTargetingInputService, DetailedTargetingInfoService,
-                                                                                           DetailedTargetingSelectedService, ChangeDetectorRef) => {
+      DetailedTargetingInfoService, DetailedTargetingSelectedService,
+      ChangeDetectorRef], (DetailedTargetingApiService, DetailedTargetingModeService,
+                           DetailedTargetingInputService, DetailedTargetingInfoService,
+                           DetailedTargetingSelectedService, ChangeDetectorRef) => {
       let component = new DetailedTargetingInputComponent(DetailedTargetingApiService, DetailedTargetingModeService,
         DetailedTargetingInputService, DetailedTargetingInfoService, DetailedTargetingSelectedService, ChangeDetectorRef);
       expect(component)

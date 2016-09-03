@@ -8,6 +8,7 @@ describe('DetailedTargetingDropdownBrowse Service', () => {
 
   it('should ...',
     inject([DetailedTargetingDropdownBrowseService], (service: DetailedTargetingDropdownBrowseService) => {
-      expect(service).toBeTruthy();
+      expect(service)
+        .toBeTruthy();
     }));
 });

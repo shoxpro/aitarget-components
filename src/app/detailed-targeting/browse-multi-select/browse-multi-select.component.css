@@ -1,9 +1,9 @@
 .browse-multi-select__label {
   display: table;
   float:   right;
-  width:   100%;
   margin:  initial;
   padding: initial;
+  width:   100%;
 }
 
 .browse-multi-select__label:hover .browse-multi-select__label-text {

@@ -3,9 +3,9 @@ import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from './detailed-targeting-info.service';
 
 @Component({
-  selector: 'detailed-targeting-info',
+  selector:    'detailed-targeting-info',
   templateUrl: 'detailed-targeting-info.component.html',
-  styleUrls: ['detailed-targeting-info.component.css'],
+  styleUrls:   ['detailed-targeting-info.component.css'],
 })
 
 export class DetailedTargetingInfoComponent implements OnInit {
