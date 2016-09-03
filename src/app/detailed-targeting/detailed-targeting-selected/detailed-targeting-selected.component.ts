@@ -36,7 +36,7 @@ export class DetailedTargetingSelectedComponent implements OnInit {
     path.forEach((crumb: string, pos: number) => {
       if (pos <= index) {
         let openItemKey = path.slice(0, pos + 1)
-          .join(' > ');
+                              .join(' > ');
 
         openItems._scrollTo    = openItemKey;
         openItems[openItemKey] = true;
@@ -49,33 +49,37 @@ export class DetailedTargetingSelectedComponent implements OnInit {
 
   public removeGroup (key) {
     let selectedItems = this.DetailedTargetingSelectedService.get();
-    let idsToRemove   = this.structuredSelectedItems.map[key].map(item => item.id);
 
-    selectedItems = selectedItems.filter(item => idsToRemove.indexOf(item.id) === -1);
+    // Extended id with respect to item's type
+    let combinedId = (item) => [item.type, item.id].join('.');
+
+    let combinedIdsToRemove = this.structuredSelectedItems.map[key].map(item => combinedId(item));
+
+    selectedItems = selectedItems.filter(item => combinedIdsToRemove.indexOf(combinedId(item)) === -1);
 
     this.DetailedTargetingSelectedService.updateSelected(selectedItems);
   }
 
   public removeItem (itemToRemove: DetailedTargetingItem) {
     let selectedItems = this.DetailedTargetingSelectedService.get();
-
-    selectedItems = selectedItems.filter(item => item.id !== itemToRemove.id);
+    let shouldRemove  = (item) => item.id !== itemToRemove.id && item.type === itemToRemove.type;
+    selectedItems     = selectedItems.filter(item => shouldRemove(item));
 
     this.DetailedTargetingSelectedService.updateSelected(selectedItems);
   }
 
   ngOnInit () {
     this.DetailedTargetingSelectedService.items
-      .subscribe((items: DetailedTargetingItem[]) => {
-        this.items = items;
-        this.DetailedTargetingService.updateWithSelectedItems(this.items);
-      });
+        .subscribe((items: DetailedTargetingItem[]) => {
+          this.items = items;
+          this.DetailedTargetingService.updateWithSelectedItems(this.items);
+        });
 
     this.DetailedTargetingSelectedService.items
-      .map(this.DetailedTargetingSelectedService.structureSelectedItems)
-      .subscribe((structuredSelectedItems) => {
-        this.structuredSelectedItems = structuredSelectedItems;
-      });
+        .map(this.DetailedTargetingSelectedService.structureSelectedItems)
+        .subscribe((structuredSelectedItems) => {
+          this.structuredSelectedItems = structuredSelectedItems;
+        });
   }
 
 }
