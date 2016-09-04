@@ -12,7 +12,7 @@ import { DetailedTargetingItem } from '../detailed-targeting-item';
 export class DetailedTargetingApiService {
 
   private api = this.FbService.api
-    .filter((FB: FB) => Boolean(FB));
+                    .filter((FB: FB) => Boolean(FB));
 
   constructor (private FbService: FbService,
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
@@ -22,7 +22,7 @@ export class DetailedTargetingApiService {
 
   public search (q: string, adaccountId = 'act_944874195534529') {
     this.api.subscribe((FB: FB) => {
-      FB.api(`/${adaccountId}/targetingsearch`, { q: q }, (response) => {
+      FB.api(`/${adaccountId}/targetingsearch`, {q: q}, (response) => {
         this.DetailedTargetingDropdownSuggestedService.updateDropdown(response.data);
       });
     });

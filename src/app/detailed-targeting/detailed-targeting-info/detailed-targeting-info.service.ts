@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Rx';
 export class DetailedTargetingInfoService {
 
   private _item = new Subject<DetailedTargetingItem>();
-  public item = this._item.asObservable();
+  public item   = this._item.asObservable();
 
   public update (item: DetailedTargetingItem) {
     this._item.next(item);

@@ -3,9 +3,9 @@ import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 
 @Component({
-  selector: 'browse-multi-select',
+  selector:    'browse-multi-select',
   templateUrl: 'browse-multi-select.component.html',
-  styleUrls: ['browse-multi-select.component.css']
+  styleUrls:   ['browse-multi-select.component.css']
 })
 export class BrowseMultiSelectComponent implements AfterViewInit {
 
@@ -26,7 +26,7 @@ export class BrowseMultiSelectComponent implements AfterViewInit {
     });
 
     // Get currently selected items
-    let selectedItems = this.DetailedTargetingSelectedService.get();
+    let selectedItems    = this.DetailedTargetingSelectedService.get();
     // Filter out all children items from currently selected items
     let newSelectedItems = selectedItems.filter((item: DetailedTargetingItem) => {
       return childrenIds.indexOf(item.id) === -1;
@@ -44,22 +44,22 @@ export class BrowseMultiSelectComponent implements AfterViewInit {
    * Set checked or indeterminate state
    */
   public checkState () {
-    let selectedChildren = this.item.children.filter((item: DetailedTargetingItem) => {
+    let selectedChildren    = this.item.children.filter((item: DetailedTargetingItem) => {
       return item.selected;
     });
     let hasSelectedChildren = selectedChildren.length;
     let allChildrenSelected = selectedChildren.length === this.item.children.length;
-    let isIndeterminate = hasSelectedChildren && !allChildrenSelected;
+    let isIndeterminate     = hasSelectedChildren && !allChildrenSelected;
 
     let checkbox = <HTMLInputElement>this.el.querySelector('input[type="checkbox"]');
-    let label = this.el.querySelector('span.browse-multi-select__label-text');
+    let label    = this.el.querySelector('span.browse-multi-select__label-text');
 
     if (!checkbox) {
       return;
     }
 
     checkbox.indeterminate = isIndeterminate;
-    checkbox.checked = isIndeterminate ? false : (allChildrenSelected || null);
+    checkbox.checked       = isIndeterminate ? false : (allChildrenSelected || null);
 
     if (checkbox.checked) {
       label.textContent = 'Unselect All';

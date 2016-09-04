@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs/Rx';
 export class DetailedTargetingSelectedService {
 
   private _items = new BehaviorSubject<DetailedTargetingItem[]>([]);
-  public items = this._items.asObservable();
+  public items   = this._items.asObservable();
 
   public get (): DetailedTargetingItem[] {
     return this._items.getValue();
@@ -17,14 +17,14 @@ export class DetailedTargetingSelectedService {
   }
 
   public structureSelectedItems (items: DetailedTargetingItem[]) {
-    let structuredSelectedMap = {};
+    let structuredSelectedMap  = {};
     let structuredSelectedKeys = [];
     items.forEach((item) => {
       let lastInPath = item.path[item.path.length - 1];
       let key;
       if (item.name === lastInPath) {
         key = item.path.slice(0, -1)
-          .join(' > ');
+                  .join(' > ');
       } else {
         key = item.path.join(' > ');
       }
@@ -40,7 +40,7 @@ export class DetailedTargetingSelectedService {
 
     return {
       keys: structuredSelectedKeys,
-      map: structuredSelectedMap
+      map:  structuredSelectedMap
     };
   }
 

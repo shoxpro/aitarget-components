@@ -9,10 +9,10 @@ import { DetailedTargetingSelectedService } from '../detailed-targeting-selected
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 
 @Component({
-  selector: 'detailed-targeting-input',
-  templateUrl: 'detailed-targeting-input.component.html',
-  styleUrls: ['detailed-targeting-input.component.css'],
-  directives: [DetailedTargetingModeComponent, FORM_DIRECTIVES],
+  selector:        'detailed-targeting-input',
+  templateUrl:     'detailed-targeting-input.component.html',
+  styleUrls:       ['detailed-targeting-input.component.css'],
+  directives:      [DetailedTargetingModeComponent, FORM_DIRECTIVES],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingInputComponent implements OnInit {
@@ -63,26 +63,26 @@ export class DetailedTargetingInputComponent implements OnInit {
 
   ngOnInit () {
     this.DetailedTargetingInputService.term
-      .debounceTime(500)
-      .distinctUntilChanged()
-      .subscribe((term: string) => {
-        this.term = term;
+        .debounceTime(500)
+        .distinctUntilChanged()
+        .subscribe((term: string) => {
+          this.term = term;
 
-        if (!term) {
-          this.DetailedTargetingInfoService.update(null);
-        } else {
-          this.DetailedTargetingModeService.set('search');
-          this.DetailedTargetingApiService.search(term);
-        }
+          if (!term) {
+            this.DetailedTargetingInfoService.update(null);
+          } else {
+            this.DetailedTargetingModeService.set('search');
+            this.DetailedTargetingApiService.search(term);
+          }
 
-        this.updateTemplate();
-      });
+          this.updateTemplate();
+        });
 
     this.DetailedTargetingModeService.mode
-      .distinctUntilChanged()
-      .subscribe(() => {
-        this.DetailedTargetingInputService.setTerm('');
-      });
+        .distinctUntilChanged()
+        .subscribe(() => {
+          this.DetailedTargetingInputService.setTerm('');
+        });
 
     this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
       this.mode = mode;
@@ -91,11 +91,11 @@ export class DetailedTargetingInputComponent implements OnInit {
     });
 
     this.DetailedTargetingSelectedService.items
-      .map(this.DetailedTargetingSelectedService.structureSelectedItems)
-      .subscribe((structuredSelectedItems) => {
-        this.structuredSelectedItems = structuredSelectedItems;
-        this.updateTemplate();
-      });
+        .map(this.DetailedTargetingSelectedService.structureSelectedItems)
+        .subscribe((structuredSelectedItems) => {
+          this.structuredSelectedItems = structuredSelectedItems;
+          this.updateTemplate();
+        });
 
     this.DetailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
       this.activeInfo = Boolean(item);

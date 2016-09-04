@@ -14,8 +14,8 @@
 }
 
 .detailed-targeting-input_selected-items {
-  border-top-right-radius: 0;
   border-top-left-radius:  0;
+  border-top-right-radius: 0;
 }
 
 .detailed-targeting-input_active-info {
@@ -48,9 +48,9 @@
   height:           15px;
   border:           none;
   background-color: inherit;
+  font-weight:      normal;
   font-size:        12px;
   line-height:      normal;
-  font-weight:      normal;
 }
 
 .detailed-targeting-input__input:focus {

@@ -8,6 +8,7 @@ describe('DetailedTargetingInfo Service', () => {
 
   it('should ...',
     inject([DetailedTargetingInfoService], (service: DetailedTargetingInfoService) => {
-      expect(service).toBeTruthy();
+      expect(service)
+        .toBeTruthy();
     }));
 });
