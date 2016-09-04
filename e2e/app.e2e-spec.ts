@@ -9,6 +9,6 @@ describe('aitarget-components App', function() {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).not.toEqual('app works!');
+    expect(page.getParagraphText()).toEqual('app works!');
   });
 });

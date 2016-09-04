@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+
 import { AppComponent } from './app.component';
 import { DetailedTargetingComponent } from './detailed-targeting/detailed-targeting.component';
 
@@ -12,13 +13,11 @@ import { DetailedTargetingComponent } from './detailed-targeting/detailed-target
   ],
   imports:         [
     BrowserModule,
-    CommonModule,
-    FormsModule
+    FormsModule,
+    HttpModule
   ],
   providers:       [],
   entryComponents: [AppComponent],
   bootstrap:       [AppComponent]
 })
-export class AppModule {
-
-}
+export class AppModule { }
