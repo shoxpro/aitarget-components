@@ -1,6 +1,6 @@
 {
   "name": "aitarget-components",
-  "version": "0.0.6-10",
+  "version": "0.0.6-12",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
@@ -48,7 +48,7 @@
     "protractor": "3.3.0",
     "ts-node": "1.2.1",
     "tslint": "3.13.0",
-    "typescript": "^2.0.0",
+    "typescript": "2.0.0",
     "webpack-shell-plugin": "^0.4.3"
   }
 }

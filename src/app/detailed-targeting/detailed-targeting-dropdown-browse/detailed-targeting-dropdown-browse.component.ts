@@ -39,6 +39,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
    * Trigger change detection mechanism that updates component's template
    */
   private updateTemplate () {
+    this.ref.detach();
     this.ref.markForCheck();
     this.ref.detectChanges();
   }

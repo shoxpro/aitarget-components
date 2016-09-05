@@ -1,3 +1,42 @@
+<a name="0.0.6-12"></a>
+## [0.0.6-12](https://github.com/aitarget/aitarget-components/compare/v0.0.7-0...0.0.6-12) (2016-09-05)
+
+
+### Bug Fixes
+
+* **enums:** distinct enums in detailed targeting spec, close #49 ([bb89cc3](https://github.com/aitarget/aitarget-components/commit/bb89cc3)), closes [#49](https://github.com/aitarget/aitarget-components/issues/49)
+* **exception:** workaround for 'Attempt to use a destroyed view: detectChanges' exception, close #46 ([4794e79](https://github.com/aitarget/aitarget-components/commit/4794e79)), closes [#46](https://github.com/aitarget/aitarget-components/issues/46)
+* **info:** close all info blocks when clicked ourside, close #48 ([92f0c80](https://github.com/aitarget/aitarget-components/commit/92f0c80)), closes [#48](https://github.com/aitarget/aitarget-components/issues/48)
+* **placeholder:** make input font-weight: normal, close #38 ([8ad7333](https://github.com/aitarget/aitarget-components/commit/8ad7333)), closes [#38](https://github.com/aitarget/aitarget-components/issues/38)
+* **style:** improve style of detailed-targeting-selected component, close #45 ([3d879c3](https://github.com/aitarget/aitarget-components/commit/3d879c3)), closes [#45](https://github.com/aitarget/aitarget-components/issues/45)
+
+
+### Features
+
+* **onchange:** trigger spec onchange function if it is really changed and skip triggering on initialization ([47cb9c6](https://github.com/aitarget/aitarget-components/commit/47cb9c6))
+* **spec:** when updating spec with new detailed targeting, don't leave properties with empty arrays ([0f0670e](https://github.com/aitarget/aitarget-components/commit/0f0670e))
+
+
+
+<a name="0.0.6-11"></a>
+## [0.0.6-11](https://github.com/aitarget/aitarget-components/compare/v0.0.7-0...0.0.6-11) (2016-09-05)
+
+
+### Bug Fixes
+
+* **enums:** distinct enums in detailed targeting spec, close #49 ([bb89cc3](https://github.com/aitarget/aitarget-components/commit/bb89cc3)), closes [#49](https://github.com/aitarget/aitarget-components/issues/49)
+* **info:** close all info blocks when clicked ourside, close #48 ([92f0c80](https://github.com/aitarget/aitarget-components/commit/92f0c80)), closes [#48](https://github.com/aitarget/aitarget-components/issues/48)
+* **placeholder:** make input font-weight: normal, close #38 ([8ad7333](https://github.com/aitarget/aitarget-components/commit/8ad7333)), closes [#38](https://github.com/aitarget/aitarget-components/issues/38)
+* **style:** improve style of detailed-targeting-selected component, close #45 ([3d879c3](https://github.com/aitarget/aitarget-components/commit/3d879c3)), closes [#45](https://github.com/aitarget/aitarget-components/issues/45)
+
+
+### Features
+
+* **onchange:** trigger spec onchange function if it is really changed and skip triggering on initialization ([47cb9c6](https://github.com/aitarget/aitarget-components/commit/47cb9c6))
+* **spec:** when updating spec with new detailed targeting, don't leave properties with empty arrays ([0f0670e](https://github.com/aitarget/aitarget-components/commit/0f0670e))
+
+
+
 <a name="0.0.6-10"></a>
 ## [0.0.6-10](https://github.com/aitarget/aitarget-components/compare/v0.0.6-9...0.0.6-10) (2016-09-02)
 

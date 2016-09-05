@@ -21,8 +21,8 @@ export class FbService {
     if (document.getElementById(id)) {
       return;
     }
-    js = document.createElement(s);
-    js.id = id;
+    js     = document.createElement(s);
+    js.id  = id;
     js.src = '//connect.facebook.net/en_US/sdk.js';
     fjs.parentNode.insertBefore(js, fjs);
   }
@@ -30,6 +30,10 @@ export class FbService {
   private setAsyncInit (observer) {
     // Exit if fbAsyncInit was already set
     if ((<any>window).fbAsyncInit) {
+      let FB = (<any>window).FB;
+      if (FB) {
+        observer.next(FB);
+      }
       return;
     }
     (<any>window).fbAsyncInit = () => {
@@ -40,13 +44,13 @@ export class FbService {
        * @type {string}
        */
       let aitargetSelfserviceAppId = '683082315084696';
-      let FB: FB = (<any>window).FB;
+      let FB: FB                   = (<any>window).FB;
 
       FB.init({
-        appId: `${(<any>window).app_id || aitargetSelfserviceAppId}`,
-        status: true,
-        cookie: true,
-        xfbml: true,
+        appId:   `${(<any>window).app_id || aitargetSelfserviceAppId}`,
+        status:  true,
+        cookie:  true,
+        xfbml:   true,
         version: 'v2.7'
       });
 

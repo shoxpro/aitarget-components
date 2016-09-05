@@ -1,18 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from './detailed-targeting-info.service';
 
 @Component({
-  selector:    'detailed-targeting-info',
-  templateUrl: 'detailed-targeting-info.component.html',
-  styleUrls:   ['detailed-targeting-info.component.css'],
+  selector:        'detailed-targeting-info',
+  templateUrl:     'detailed-targeting-info.component.html',
+  styleUrls:       ['detailed-targeting-info.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class DetailedTargetingInfoComponent implements OnInit {
 
   public item: DetailedTargetingItem;
 
-  constructor (private DetailedTargetingInfoService: DetailedTargetingInfoService) {}
+  /**
+   * Trigger change detection mechanism that updates component's template
+   */
+  private updateTemplate () {
+    this.ref.detach();
+    this.ref.markForCheck();
+    this.ref.detectChanges();
+  }
+
+  constructor (private DetailedTargetingInfoService: DetailedTargetingInfoService,
+               private ref: ChangeDetectorRef) {}
 
   public getDescription (item: DetailedTargetingItem) {
     let description: string;
@@ -30,6 +41,7 @@ export class DetailedTargetingInfoComponent implements OnInit {
   ngOnInit () {
     this.DetailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
       this.item = item;
+      this.updateTemplate();
     });
   }
 
