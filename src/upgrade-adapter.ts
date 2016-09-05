@@ -1,2 +1,5 @@
 import { UpgradeAdapter } from '@angular/upgrade';
-export const upgradeAdapter = new UpgradeAdapter();
+import { forwardRef } from '@angular/core';
+import { DetailedTargetingModule } from './app/detailed-targeting/detailed-targeting.module';
+
+export const upgradeAdapter = new UpgradeAdapter(forwardRef(() => DetailedTargetingModule));

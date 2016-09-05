@@ -1,14 +1,11 @@
 /* tslint:disable:no-unused-variable */
 
-import { describe, expect, it, inject } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { DetailedTargetingComponent } from './detailed-targeting.component';
 
 describe('Component: DetailedTargeting', () => {
   it('should create an instance', () => {
-    inject([], () => {
-      this.component = new DetailedTargetingComponent();
-      expect(this.component)
-        .toBeTruthy();
-    });
+    let component = new DetailedTargetingComponent();
+    expect(component).toBeTruthy();
   });
 });

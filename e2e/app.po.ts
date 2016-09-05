@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor/globals';
 
-export class AitargetComponentsPage {
+export class WebpackPage {
   navigateTo() {
     return browser.get('/');
   }

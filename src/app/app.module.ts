@@ -1,23 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+
+import { DetailedTargetingModule } from './detailed-targeting/detailed-targeting.module';
 
 import { AppComponent } from './app.component';
-import { DetailedTargetingComponent } from './detailed-targeting/detailed-targeting.component';
+import { MainModule } from './shared/main.module';
 
 @NgModule({
-  declarations:    [
-    AppComponent,
-    DetailedTargetingComponent
+  declarations: [
+    AppComponent
   ],
-  imports:         [
-    BrowserModule,
-    FormsModule,
-    HttpModule
+  imports: [
+    DetailedTargetingModule,
+    MainModule
   ],
-  providers:       [],
-  entryComponents: [AppComponent],
-  bootstrap:       [AppComponent]
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,10 +1,10 @@
-import { AitargetComponentsPage } from './app.po';
+import { WebpackPage } from './app.po';
 
-describe('aitarget-components App', function() {
-  let page: AitargetComponentsPage;
+describe('webpack App', function() {
+  let page: WebpackPage;
 
   beforeEach(() => {
-    page = new AitargetComponentsPage();
+    page = new WebpackPage();
   });
 
   it('should display message saying app works', () => {
