@@ -63,7 +63,8 @@ export class DetailedTargetingComponent implements OnInit {
     if (targetingList.length) {
       this.DetailedTargetingApiService.validate(targetingList)
           .subscribe((selectedItems) => {
-            this.DetailedTargetingSelectedService.updateSelected(selectedItems);
+            let validSelectedItems = selectedItems.filter((selectedItem) => selectedItem.valid);
+            this.DetailedTargetingSelectedService.updateSelected(validSelectedItems);
           });
     }
 

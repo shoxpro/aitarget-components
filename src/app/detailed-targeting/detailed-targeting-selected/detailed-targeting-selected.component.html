@@ -1,12 +1,11 @@
 <div *ngIf="structuredSelectedItems.keys.length"
      class="detailed-targeting-selected__content">
   <div class="detailed-targeting-selected__group"
-       #group
-       [ngClass]='{"detailed-targeting-selected__group_hover": group.hovered}'
+       [ngClass]='{"detailed-targeting-selected__group_hover": groupHovered}'
        *ngFor="let key of structuredSelectedItems.keys; let last = last">
     <div class="detailed-targeting-selected__group-title"
-         (mouseenter)="group.hovered = true;"
-         (mouseleave)="group.hovered = false;">
+         (mouseenter)="hoverGroup(true)"
+         (mouseleave)="hoverGroup(false)">
       <div>
         <template ngFor
                   let-crumb
