@@ -26,8 +26,12 @@ export class DetailedTargetingInputComponent implements OnInit {
    * Trigger change detection mechanism that updates component's template
    */
   private updateTemplate () {
-    this.ref.markForCheck();
-    this.ref.detectChanges();
+    this.ref.detach();
+    // TODO: rethink this timeout, but without it it throws "Attempt to use a destroyed view: detectChanges"
+    setTimeout(() => {
+      this.ref.markForCheck();
+      this.ref.detectChanges();
+    }, 0);
   }
 
   /**
@@ -97,10 +101,12 @@ export class DetailedTargetingInputComponent implements OnInit {
           this.updateTemplate();
         });
 
-    this.DetailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
-      this.activeInfo = Boolean(item);
-      this.updateTemplate();
-    });
+    this.DetailedTargetingInfoService.item
+        .debounceTime(50)
+        .subscribe((item: DetailedTargetingItem) => {
+          this.activeInfo = Boolean(item);
+          this.updateTemplate();
+        });
   }
 
 }

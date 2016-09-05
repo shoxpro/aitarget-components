@@ -1,3 +1,7 @@
 <div class="app__conent">
-  <detailed-targeting></detailed-targeting>
+  <div *ngIf="!hideDetailedTargeting">
+    <detailed-targeting></detailed-targeting>
+  </div>
+  <br>
+  <button (click)="hideDetailedTargeting = !hideDetailedTargeting">Toggle</button>
 </div>

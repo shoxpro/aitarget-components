@@ -6,20 +6,29 @@ import { DetailedTargetingInfoService } from '../detailed-targeting-info/detaile
   selector:        'detailed-targeting-mode',
   templateUrl:     'detailed-targeting-mode.component.html',
   styleUrls:       ['detailed-targeting-mode.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingModeComponent implements OnInit {
 
   private mode;
 
-  public setMode = (mode: string) => {
-    this.DetailedTargetingModeService.set(mode);
-  };
+  /**
+   * Trigger change detection mechanism that updates component's template
+   */
+  private updateTemplate () {
+    this.ref.detach();
+    this.ref.markForCheck();
+    this.ref.detectChanges();
+  }
 
   constructor (private DetailedTargetingModeService: DetailedTargetingModeService,
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
                private ref: ChangeDetectorRef) {
   }
+
+  public setMode = (mode: string) => {
+    this.DetailedTargetingModeService.set(mode);
+  };
 
   /**
    * Set mode to null if user click outside detailed-targeting element
@@ -50,8 +59,7 @@ export class DetailedTargetingModeComponent implements OnInit {
         window.document.body.addEventListener('click', this.processOutsideClick);
       }
 
-      this.ref.markForCheck();
-      this.ref.detectChanges();
+      this.updateTemplate();
     });
   }
 

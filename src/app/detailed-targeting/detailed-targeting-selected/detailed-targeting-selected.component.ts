@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
 import { DetailedTargetingSelectedService } from './detailed-targeting-selected.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
@@ -6,9 +6,10 @@ import { DetailedTargetingDropdownBrowseService } from '../detailed-targeting-dr
 import { DetailedTargetingService } from '../detailed-targeting.service';
 
 @Component({
-  selector:    'detailed-targeting-selected',
-  templateUrl: 'detailed-targeting-selected.component.html',
-  styleUrls:   ['detailed-targeting-selected.component.css']
+  selector:        'detailed-targeting-selected',
+  templateUrl:     'detailed-targeting-selected.component.html',
+  styleUrls:       ['detailed-targeting-selected.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingSelectedComponent implements OnInit {
 
@@ -16,10 +17,20 @@ export class DetailedTargetingSelectedComponent implements OnInit {
 
   private structuredSelectedItems;
 
+  /**
+   * Trigger change detection mechanism that updates component's template
+   */
+  private updateTemplate () {
+    this.ref.detach();
+    this.ref.markForCheck();
+    this.ref.detectChanges();
+  }
+
   constructor (private DetailedTargetingService: DetailedTargetingService,
                private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
                private DetailedTargetingModeService: DetailedTargetingModeService,
-               private DetailedTargetingSelectedService: DetailedTargetingSelectedService) {
+               private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
+               private ref: ChangeDetectorRef) {
   }
 
   /**
@@ -79,6 +90,7 @@ export class DetailedTargetingSelectedComponent implements OnInit {
         .map(this.DetailedTargetingSelectedService.structureSelectedItems)
         .subscribe((structuredSelectedItems) => {
           this.structuredSelectedItems = structuredSelectedItems;
+          this.updateTemplate();
         });
   }
 
