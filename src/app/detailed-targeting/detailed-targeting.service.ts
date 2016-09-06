@@ -25,7 +25,7 @@ export class DetailedTargetingService {
 
     items.forEach((item: DetailedTargetingItem) => {
       detailedTargeting[item.type] = detailedTargeting[item.type] || [];
-      detailedTargeting[item.type].push({id: item.id, name: item.name});
+      detailedTargeting[item.type].push(item.id);
     });
 
     // noinspection TypeScriptUnresolvedFunction

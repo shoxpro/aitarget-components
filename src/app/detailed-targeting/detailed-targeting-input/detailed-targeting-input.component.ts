@@ -48,6 +48,7 @@ export class DetailedTargetingInputComponent implements OnInit {
   public focus () {
     this.hasFocus = true;
     this.DetailedTargetingModeService.set('suggested');
+    this.updateTemplate();
   }
 
   /**
@@ -55,6 +56,7 @@ export class DetailedTargetingInputComponent implements OnInit {
    */
   public blur () {
     this.hasFocus = false;
+    this.updateTemplate();
   }
 
   constructor (private DetailedTargetingApiService: DetailedTargetingApiService,

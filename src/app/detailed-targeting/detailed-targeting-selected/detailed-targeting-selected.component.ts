@@ -16,6 +16,7 @@ export class DetailedTargetingSelectedComponent implements OnInit {
   private items: DetailedTargetingItem[];
 
   private structuredSelectedItems;
+  private groupHovered;
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -77,6 +78,11 @@ export class DetailedTargetingSelectedComponent implements OnInit {
     selectedItems     = selectedItems.filter(item => shouldRemove(item));
 
     this.DetailedTargetingSelectedService.updateSelected(selectedItems);
+  }
+
+  public hoverGroup (isHovered) {
+    this.groupHovered = isHovered;
+    this.updateTemplate();
   }
 
   ngOnInit () {
