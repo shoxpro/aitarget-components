@@ -6,18 +6,18 @@ import { AppComponent } from './app.component';
 import { DetailedTargetingComponent } from './detailed-targeting/detailed-targeting.component';
 
 @NgModule({
-  declarations: [
+  declarations:    [
     AppComponent,
     DetailedTargetingComponent
   ],
-  imports: [
+  imports:         [
     BrowserModule,
     CommonModule,
     FormsModule
   ],
-  providers: [],
+  providers:       [],
   entryComponents: [AppComponent],
-  bootstrap: [AppComponent]
+  bootstrap:       [AppComponent]
 })
 export class AppModule {
 

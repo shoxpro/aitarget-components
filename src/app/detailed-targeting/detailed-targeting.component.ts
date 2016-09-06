@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef } from '@angular/core';
 import { DetailedTargetingSelectedComponent } from './detailed-targeting-selected/';
 import { DetailedTargetingInputComponent } from './detailed-targeting-input/';
 import { DetailedTargetingDropdownSuggestedComponent } from './detailed-targeting-dropdown-suggested/';
@@ -45,8 +45,26 @@ export class DetailedTargetingComponent implements OnInit {
   constructor (private TargetingSpecService: TargetingSpecService,
                private DetailedTargetingService: DetailedTargetingService,
                private DetailedTargetingApiService: DetailedTargetingApiService,
-               private DetailedTargetingSelectedService: DetailedTargetingSelectedService) {
+               private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
+               private DetailedTargetingModeService: DetailedTargetingModeService,
+               private DetailedTargetingInfoService: DetailedTargetingInfoService,
+               private ElementRef: ElementRef) {
   }
+
+  /**
+   * Set mode to null if user click outside detailed-targeting element
+   * @param e
+   */
+  private processOutsideClick = (e) => {
+    let targetElement = e.target;
+
+    const clickedInside = this.ElementRef.nativeElement.contains(targetElement);
+
+    if (!clickedInside) {
+      this.DetailedTargetingModeService.set(null);
+      this.DetailedTargetingInfoService.update(null);
+    }
+  };
 
   ngOnInit () {
     // Set targetingList array for validation
@@ -94,6 +112,14 @@ export class DetailedTargetingComponent implements OnInit {
             this.onChange(spec);
           }
         });
+
+    this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
+      // Process body clicks in order to close element if clicked outside and element
+      window.document.body.removeEventListener('click', this.processOutsideClick);
+      if (mode) {
+        window.document.body.addEventListener('click', this.processOutsideClick);
+      }
+    });
   }
 
 }
