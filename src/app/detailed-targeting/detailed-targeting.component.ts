@@ -40,7 +40,7 @@ import * as _ from 'lodash';
 export class DetailedTargetingComponent implements OnInit {
 
   @Input('spec') spec: TargetingSpec    = {};
-  @Input('onChange') onChange: Function = () => {};
+  @Input('onChange') onChange: Function = (spec?) => {};
 
   constructor (private TargetingSpecService: TargetingSpecService,
                private DetailedTargetingService: DetailedTargetingService,
@@ -52,6 +52,14 @@ export class DetailedTargetingComponent implements OnInit {
   }
 
   /**
+   * Close detailed targeting component
+   */
+  private close = () => {
+    this.DetailedTargetingModeService.set(null);
+    this.DetailedTargetingInfoService.update(null);
+  };
+
+  /**
    * Set mode to null if user click outside detailed-targeting element
    * @param e
    */
@@ -61,8 +69,14 @@ export class DetailedTargetingComponent implements OnInit {
     const clickedInside = this.ElementRef.nativeElement.contains(targetElement);
 
     if (!clickedInside) {
-      this.DetailedTargetingModeService.set(null);
-      this.DetailedTargetingInfoService.update(null);
+      this.close();
+    }
+  };
+
+  private processKeydown = (e) => {
+    // when Escape
+    if (e.keyCode === 27) {
+      this.close();
     }
   };
 
@@ -113,11 +127,17 @@ export class DetailedTargetingComponent implements OnInit {
           }
         });
 
+    /**
+     * Bind/unbind different events depending on detailed-component mode.
+     * Mode reflects component's current state.
+     */
     this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
       // Process body clicks in order to close element if clicked outside and element
       window.document.body.removeEventListener('click', this.processOutsideClick);
+      window.document.body.removeEventListener('keydown', this.processKeydown);
       if (mode) {
         window.document.body.addEventListener('click', this.processOutsideClick);
+        window.document.body.addEventListener('keydown', this.processKeydown);
       }
     });
   }
