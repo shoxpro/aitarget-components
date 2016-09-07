@@ -95,7 +95,6 @@ export class DetailedTargetingComponent implements OnInit {
     // Skip first initialization subject and second with passed spec
         .skip(2)
         .subscribe((detailedTargetingSpec: DetailedTargetingSpec) => {
-          console.log('detailedTargetingSpec: ', detailedTargetingSpec);
           //noinspection TypeScriptUnresolvedFunction
           let newTargetingSpec = Object.assign({}, this.spec, detailedTargetingSpec);
           let cleanSpec        = this.TargetingSpecService.clean(newTargetingSpec);

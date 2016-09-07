@@ -29,7 +29,7 @@ export class DetailedTargetingService {
     });
 
     // noinspection TypeScriptUnresolvedFunction
-    Object.assign({}, defaultDetailedTargetingSpec, detailedTargeting);
+    detailedTargeting = Object.assign({}, defaultDetailedTargetingSpec, detailedTargeting);
 
     this.update(detailedTargeting);
   }
