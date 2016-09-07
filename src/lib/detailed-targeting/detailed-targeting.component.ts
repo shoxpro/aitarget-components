@@ -109,7 +109,6 @@ export class DetailedTargetingComponent implements OnInit {
         .skip(1)
         .subscribe((spec: TargetingSpec) => {
           if (!_.isEqual(this.spec, spec)) {
-            console.log('Targeting Spec updated: ', spec);
             this.onChange(spec);
           }
         });
