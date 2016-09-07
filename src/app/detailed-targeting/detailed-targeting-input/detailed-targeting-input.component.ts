@@ -28,7 +28,7 @@ export class DetailedTargetingInputComponent implements OnInit {
       this.ref.detach();
       this.ref.markForCheck();
       this.ref.detectChanges();
-    }, 10);
+    }, 0);
   }
 
   /**

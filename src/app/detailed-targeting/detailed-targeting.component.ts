@@ -10,11 +10,20 @@ import { DetailedTargetingSpec } from '../targeting/targeting-spec-detailed.inte
 import * as _ from 'lodash';
 import { DetailedTargetingModeService } from './detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingInfoService } from './detailed-targeting-info/detailed-targeting-info.service';
+import { DetailedTargetingDropdownSuggestedService } from './detailed-targeting-dropdown-suggested/detailed-targeting-dropdown-suggested.service';
+import { DetailedTargetingDropdownBrowseService } from './detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
+import { DetailedTargetingInputService } from './detailed-targeting-input/detailed-targeting-input.service';
 
 @Component({
   selector:        'detailed-targeting',
   templateUrl:     'detailed-targeting.component.html',
   styleUrls:       ['detailed-targeting.component.css'],
+  providers:       [
+    DetailedTargetingApiService, DetailedTargetingDropdownSuggestedService,
+    DetailedTargetingDropdownBrowseService, DetailedTargetingInfoService,
+    DetailedTargetingSelectedService, DetailedTargetingModeService, DetailedTargetingInputService,
+    DetailedTargetingService
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailedTargetingComponent implements OnInit {

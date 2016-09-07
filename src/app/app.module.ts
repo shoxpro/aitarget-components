@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DetailedTargetingModule } from './detailed-targeting/detailed-targeting.module';
 import { AppComponent } from './app.component';
 import { MainModule } from './shared/main.module';
+import { ServiceModule } from './shared/service.module';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { MainModule } from './shared/main.module';
   imports:      [
     DetailedTargetingModule,
     BrowserModule,
+    ServiceModule,
     MainModule
   ],
   providers:    [],
