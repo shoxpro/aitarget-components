@@ -1,10 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-targeting-api.service';
-import { DetailedTargetingModeComponent } from '../detailed-targeting-mode/';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingInputService } from './detailed-targeting-input.service';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
-import { FORM_DIRECTIVES } from '@angular/forms';
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 
@@ -12,7 +10,6 @@ import { DetailedTargetingItem } from '../detailed-targeting-item';
   selector:        'detailed-targeting-input',
   templateUrl:     'detailed-targeting-input.component.html',
   styleUrls:       ['detailed-targeting-input.component.css'],
-  directives:      [DetailedTargetingModeComponent, FORM_DIRECTIVES],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingInputComponent implements OnInit {
@@ -26,9 +23,9 @@ export class DetailedTargetingInputComponent implements OnInit {
    * Trigger change detection mechanism that updates component's template
    */
   private updateTemplate () {
-    this.ref.detach();
     // TODO: rethink this timeout, but without it it throws "Attempt to use a destroyed view: detectChanges"
     setTimeout(() => {
+      this.ref.detach();
       this.ref.markForCheck();
       this.ref.detectChanges();
     }, 0);

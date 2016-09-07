@@ -1,9 +1,11 @@
-export class AitargetComponentsPage {
+import { browser, element, by } from 'protractor/globals';
+
+export class WebpackPage {
   navigateTo() {
     return browser.get('/');
   }
 
   getParagraphText() {
-    return (<any>element(by.css('app-root h1'))).getText();
+    return element(by.css('app-root h1')).getText();
   }
 }

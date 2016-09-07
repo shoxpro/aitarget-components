@@ -5,14 +5,11 @@ import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
-import { BrowseMultiSelectComponent } from '../browse-multi-select/browse-multi-select.component';
-import { FORM_DIRECTIVES } from '@angular/forms';
 
 @Component({
   selector:        'detailed-targeting-dropdown-browse',
   templateUrl:     'detailed-targeting-dropdown-browse.component.html',
   styleUrls:       ['detailed-targeting-dropdown-browse.component.css'],
-  directives:      [BrowseMultiSelectComponent, FORM_DIRECTIVES],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
