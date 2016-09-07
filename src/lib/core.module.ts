@@ -12,5 +12,5 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ]
 })
-export class MainModule {
+export class CoreModule {
 }

@@ -8,11 +8,11 @@ import { DetailedTargetingSelectedComponent } from './detailed-targeting-selecte
 import { DetailedTargetingModeComponent } from './detailed-targeting-mode/detailed-targeting-mode.component';
 import { BrowseMultiSelectComponent } from './browse-multi-select/browse-multi-select.component';
 import { TypeToHumanPipe } from './type-to-human.pipe';
-import { MainModule } from '../shared/main.module';
+import { CoreModule } from '../core.module';
 
 @NgModule({
   imports:      [
-    MainModule
+    CoreModule
   ],
   declarations: [
     DetailedTargetingComponent,
