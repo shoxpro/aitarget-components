@@ -4,7 +4,6 @@ import { DetailedTargetingSelectedService } from './detailed-targeting-selected/
 import { DetailedTargetingApiService } from './detailed-targeting-api/detailed-targeting-api.service';
 import { TargetingSpec } from '../targeting/targeting-spec.interface';
 import { defaultDetailedTargetingSpec } from '../targeting/targeting-spec-detailed.const';
-import { DetailedTargetingItem } from './detailed-targeting-item';
 import { DetailedTargetingService } from './detailed-targeting.service';
 import { DetailedTargetingSpec } from '../targeting/targeting-spec-detailed.interface';
 import * as _ from 'lodash';
@@ -74,8 +73,8 @@ export class DetailedTargetingComponent implements OnInit {
     let targetingList = [];
     for (let type in defaultDetailedTargetingSpec) {
       if (this.spec[type] && this.spec[type].length) {
-        this.spec[type].forEach((item: DetailedTargetingItem) => {
-          targetingList.push({type: type, id: item.id});
+        this.spec[type].forEach((id) => {
+          targetingList.push({type: type, id: id});
         });
       }
     }
