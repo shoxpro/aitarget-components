@@ -1,0 +1,9 @@
+{
+    "detailed-targeting-mode": {
+        "BROWSE": "浏览",
+        "SUGGESTED": "建议"
+    },
+    "detailed-targeting-input": {
+        "PLACEHOLDER": "添加人口统计数据、兴趣和行为"
+    }
+}

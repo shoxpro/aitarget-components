@@ -1,7 +1,10 @@
 <div class="app__content">
   <div *ngIf="!hideDetailedTargeting">
-    <detailed-targeting></detailed-targeting>
+    <detailed-targeting [lang]="lang"></detailed-targeting>
   </div>
   <br>
   <button (click)="hideDetailedTargeting = !hideDetailedTargeting">Toggle</button>
+  <button (click)="lang = 'en_US'">EN</button>
+  <button (click)="lang = 'ru_RU'">RU</button>
+  <button (click)="lang = 'zh_CN'">CN</button>
 </div>

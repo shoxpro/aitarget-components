@@ -1,7 +1,9 @@
 {
-    "detailed-targeting": {
-        "Browse": "Browse",
-        "Suggested": "Suggested",
-        "Add demographics, interests or behaviours": "Add demographics, interests or behaviours"
-    }
+  "detailed-targeting-mode": {
+    "BROWSE": "Browse",
+    "SUGGESTED": "Suggested"
+  },
+  "detailed-targeting-input": {
+    "PLACEHOLDER": "Add demographics, interests or behaviours"
+  }
 }

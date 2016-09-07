@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { DetailedTargetingModeService } from './detailed-targeting-mode.service';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
   selector:        'detailed-targeting-mode',
@@ -21,6 +22,7 @@ export class DetailedTargetingModeComponent implements OnInit {
   }
 
   constructor (private DetailedTargetingModeService: DetailedTargetingModeService,
+               private TranslateService: TranslateService,
                private ref: ChangeDetectorRef) {
   }
 
@@ -32,6 +34,10 @@ export class DetailedTargetingModeComponent implements OnInit {
     this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
       this.mode = mode;
 
+      this.updateTemplate();
+    });
+
+    this.TranslateService.onLangChange.subscribe(() => {
       this.updateTemplate();
     });
   }

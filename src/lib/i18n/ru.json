@@ -1,7 +1,9 @@
 {
-    "detailed-targeting": {
-        "Browse": "Просмотр",
-        "Suggested": "Рекомендации",
-        "Add demographics, interests or behaviours": "Добавьте демографические данные, интересы или модели поведения"
+    "detailed-targeting-mode": {
+        "BROWSE": "Просмотр",
+        "SUGGESTED": "Рекомендации"
+    },
+    "detailed-targeting-input": {
+        "PLACEHOLDER": "Добавьте демографические данные, интересы или модели поведения"
     }
 }

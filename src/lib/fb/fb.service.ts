@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { FB } from './fb.interface';
+import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
 
 @Injectable()
 export class FbService {
 
   private _api = new BehaviorSubject<FB>(null);
 
-  public api = this._api.asObservable();
+  public api                   = this._api.asObservable();
+  private _defaultLang: string = 'en_US';
+  private lang: string         = this._defaultLang;
 
   /**
    * Load the SDK asynchronously
    */
-  private loadSdk () {
+  private loadSdk (lang: string = this._defaultLang) {
     let js,
-        id  = 'facebook-jssdk',
+        id  = `facebook-jssdk-${lang}`,
         s   = 'script',
         fjs = document.getElementsByTagName(s)[0];
 
@@ -23,7 +26,7 @@ export class FbService {
     }
     js     = document.createElement(s);
     js.id  = id;
-    js.src = '//connect.facebook.net/en_US/sdk.js';
+    js.src = `//connect.facebook.net/${lang}/sdk.js`;
     fjs.parentNode.insertBefore(js, fjs);
   }
 
@@ -72,8 +75,16 @@ export class FbService {
     };
   }
 
-  constructor () {
+  private startSdk = (lang: string = this._defaultLang) => {
     this.setAsyncInit(this._api);
-    this.loadSdk();
+    this.loadSdk(lang);
+  };
+
+  constructor (private TranslateService: TranslateService) {
+    this.TranslateService.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.lang = event.lang;
+    });
+    this.startSdk(this.lang);
   }
+
 }
