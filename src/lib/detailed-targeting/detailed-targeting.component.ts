@@ -90,8 +90,8 @@ export class DetailedTargetingComponent implements OnInit {
     let targetingList = [];
     for (let type in defaultDetailedTargetingSpec) {
       if (this.spec[type] && this.spec[type].length) {
-        this.spec[type].forEach((id) => {
-          targetingList.push({type: type, id: id});
+        this.spec[type].forEach((item) => {
+          targetingList.push({type: type, id: item.id || item});
         });
       }
     }
