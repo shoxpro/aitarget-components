@@ -118,7 +118,6 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
      * Load suggestions when language changes
      */
     this.TranslateService.onLangChange.subscribe(() => {
-      console.log(`this.DetailedTargetingApiService.suggest();`);
       this.DetailedTargetingApiService.suggest();
     });
   }

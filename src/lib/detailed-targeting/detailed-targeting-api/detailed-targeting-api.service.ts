@@ -25,7 +25,6 @@ export class DetailedTargetingApiService {
     this.TranslateService.onLangChange.subscribe((event: LangChangeEvent) => {
       this.lang = event.lang;
     });
-    console.log(`DetailedTargetingApiService constructor`);
   }
 
   public search (q: string, adaccountId = 'act_944874195534529') {
@@ -41,6 +40,11 @@ export class DetailedTargetingApiService {
       FB.api(`/${adaccountId}/targetingbrowse`, {
         include_headers: false,
         include_nodes:   true,
+        fields:          [
+          "id", "name", "type",
+          "path", "audience_size", "key",
+          "parent", "info", "info_title",
+          "img", "link"],
         locale:          this.lang
       }, (response) => {
         this.DetailedTargetingDropdownBrowseService.updateDropdown(response.data);
