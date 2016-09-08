@@ -5,5 +5,40 @@
   },
   "detailed-targeting-input": {
     "PLACEHOLDER": "Add demographics, interests or behaviours"
+  },
+  "detailed-targeting-info": {
+    "PEOPLE": "people",
+    "DESCRIPTION": "Description",
+    "DESCRIBE_INTERESTS": "People who have expressed an interest in or like pages related to",
+    "DESCRIBE_DEFAULT": "People who listed their {{type}} as <i>{{name}}</i> in their Facebook profile."
+  },
+  "browse-multi-select": {
+    "SELECT_ALL": "Select All",
+    "UNSELECT_ALL": "Unselect All"
+  },
+  "detailed-targeting-dropdown-suggested": {
+    "INTERESTS": "Interests",
+    "BEHAVIORS": "Behaviors",
+    "RELATIONSHIP_STATUSES": "Relationship Status",
+    "INTERESTED_IN": "Interested In",
+    "LIFE_EVENTS": "Life Events",
+    "POLITICS": "Politics",
+    "INDUSTRIES": "Industries",
+    "INCOME": "Income",
+    "NET_WORTH": "Net Worth",
+    "HOME_TYPE": "Home Type",
+    "HOME_OWNERSHIP": "Home Ownership",
+    "ETHNIC_AFFINITY": "Ethnic Affinity",
+    "GENERATION": "Generation",
+    "HOUSEHOLD_COMPOSITION": "Household Composition",
+    "MOMS": "Moms",
+    "FAMILY_STATUSES": "Family Status",
+    "OFFICE_TYPE": "Office Type",
+    "EDUCATION_SCHOOLS": "Schools",
+    "EDUCATION_STATUSES": "Education Level",
+    "COLLEGE_YEARS": "College Years",
+    "EDUCATION_MAJORS": "Fields Of Study",
+    "WORK_EMPLOYERS": "Employers",
+    "WORK_POSITIONS": "Job Titles"
   }
 }

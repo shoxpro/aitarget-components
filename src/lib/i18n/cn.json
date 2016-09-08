@@ -1,9 +1,44 @@
 {
-    "detailed-targeting-mode": {
-        "BROWSE": "浏览",
-        "SUGGESTED": "建议"
-    },
-    "detailed-targeting-input": {
-        "PLACEHOLDER": "添加人口统计数据、兴趣和行为"
-    }
+  "detailed-targeting-mode": {
+    "BROWSE": "浏览",
+    "SUGGESTED": "建议"
+  },
+  "detailed-targeting-input": {
+    "PLACEHOLDER": "添加人口统计数据、兴趣和行为"
+  },
+  "detailed-targeting-info": {
+    "PEOPLE": "用户",
+    "DESCRIPTION": "描述",
+    "DESCRIBE_INTERESTS": "People who have expressed an interest in or like pages related to",
+    "DESCRIBE_DEFAULT": "People who listed their {{type}} as <i>{{name}}</i> in their Facebook profile."
+  },
+  "browse-multi-select": {
+    "SELECT_ALL": "全选",
+    "UNSELECT_ALL": "取消全选"
+  },
+  "detailed-targeting-dropdown-suggested": {
+    "INTERESTS": "兴趣",
+    "BEHAVIORS": "行为",
+    "RELATIONSHIP_STATUSES": "感情状况",
+    "INTERESTED_IN": "性取向",
+    "LIFE_EVENTS": "生活纪事",
+    "POLITICS": "政治（美国)",
+    "INDUSTRIES": "Industries",
+    "INCOME": "Income",
+    "NET_WORTH": "Net Worth",
+    "HOME_TYPE": "Home Type",
+    "HOME_OWNERSHIP": "Home Ownership",
+    "ETHNIC_AFFINITY": "族裔",
+    "GENERATION": "世代",
+    "HOUSEHOLD_COMPOSITION": "Household Composition",
+    "MOMS": "Moms",
+    "FAMILY_STATUSES": "Family Status",
+    "OFFICE_TYPE": "Office Type",
+    "EDUCATION_SCHOOLS": "学校",
+    "EDUCATION_STATUSES": "教育程度",
+    "COLLEGE_YEARS": "大学就读年份",
+    "EDUCATION_MAJORS": "研究领域",
+    "WORK_EMPLOYERS": "雇主",
+    "WORK_POSITIONS": "职位"
+  }
 }
