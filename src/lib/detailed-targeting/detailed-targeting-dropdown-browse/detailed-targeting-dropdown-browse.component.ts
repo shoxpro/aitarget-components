@@ -174,6 +174,18 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     }
   }
 
+  /**
+   * Add selected property to browse items that are selected
+   */
+  private toggleSelected = () => {
+    if (!this.selectedItemsCombinedIds || !this.items) {
+      return;
+    }
+    this.items.forEach((item: DetailedTargetingItem) => {
+      item.selected = this.selectedItemsCombinedIds.indexOf(this.combinedId(item)) > -1;
+    });
+  };
+
   ngOnInit () {
     /**
      * Update dropdown list when new items to browse
@@ -201,6 +213,9 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
         })
         .subscribe(items => {
           this.items = items;
+
+          this.toggleSelected();
+
           this.updateTemplate();
         });
 
@@ -212,12 +227,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
         .subscribe((selectedItems: Array<string>) => {
           this.selectedItemsCombinedIds = selectedItems;
 
-          //Add selected property to browse items that are selected
-          if (this.items) {
-            this.items.forEach((item: DetailedTargetingItem) => {
-              item.selected = this.selectedItemsCombinedIds.indexOf(this.combinedId(item)) > -1;
-            });
-          }
+          this.toggleSelected();
 
           this.updateTemplate();
         });
