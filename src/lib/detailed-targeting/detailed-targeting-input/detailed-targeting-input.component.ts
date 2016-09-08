@@ -5,6 +5,7 @@ import { DetailedTargetingInputService } from './detailed-targeting-input.servic
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
   selector:        'detailed-targeting-input',
@@ -61,6 +62,7 @@ export class DetailedTargetingInputComponent implements OnInit {
                private DetailedTargetingInputService: DetailedTargetingInputService,
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
+               private TranslateService: TranslateService,
                private ref: ChangeDetectorRef) {
   }
 
@@ -106,6 +108,10 @@ export class DetailedTargetingInputComponent implements OnInit {
           this.activeInfo = Boolean(item);
           this.updateTemplate();
         });
+
+    this.TranslateService.onLangChange.subscribe(() => {
+      this.updateTemplate();
+    });
   }
 
 }

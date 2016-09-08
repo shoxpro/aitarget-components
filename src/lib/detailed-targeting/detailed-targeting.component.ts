@@ -12,6 +12,7 @@ import { DetailedTargetingInfoService } from './detailed-targeting-info/detailed
 import { DetailedTargetingDropdownSuggestedService } from './detailed-targeting-dropdown-suggested/detailed-targeting-dropdown-suggested.service';
 import { DetailedTargetingDropdownBrowseService } from './detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
 import { DetailedTargetingInputService } from './detailed-targeting-input/detailed-targeting-input.service';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
   selector:        'detailed-targeting',
@@ -23,12 +24,25 @@ import { DetailedTargetingInputService } from './detailed-targeting-input/detail
     DetailedTargetingSelectedService, DetailedTargetingModeService, DetailedTargetingInputService,
     DetailedTargetingService
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingComponent implements OnInit {
+  private _defaultLang: string = 'en_US';
+  private _lang: string        = this._defaultLang;
 
   @Input('spec') spec: TargetingSpec    = {};
   @Input('onChange') onChange: Function = (spec?) => {};
+
+  @Input('lang')
+  set lang (lang: string) {
+    this._lang = lang || this._defaultLang;
+    // the lang to use, if the lang isn't available, it will use the current loader to get them
+    this.TranslateService.use(this.lang);
+  }
+
+  get lang () {
+    return this._lang;
+  }
 
   constructor (private TargetingSpecService: TargetingSpecService,
                private DetailedTargetingService: DetailedTargetingService,
@@ -36,7 +50,10 @@ export class DetailedTargetingComponent implements OnInit {
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
                private DetailedTargetingModeService: DetailedTargetingModeService,
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
-               private ElementRef: ElementRef) {
+               private ElementRef: ElementRef,
+               private TranslateService: TranslateService) {
+    // this language will be used as a fallback when a translation isn't found in the current language
+    this.TranslateService.setDefaultLang(this.lang);
   }
 
   /**
@@ -109,7 +126,6 @@ export class DetailedTargetingComponent implements OnInit {
         .skip(1)
         .subscribe((spec: TargetingSpec) => {
           if (!_.isEqual(this.spec, spec)) {
-            console.log('Targeting Spec updated: ', spec);
             this.onChange(spec);
           }
         });

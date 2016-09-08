@@ -1,7 +1,7 @@
 <div class="detailed-targeting-info__content"
      *ngIf="item">
   <div class="detailed-targeting-info__audience-size">{{ item.audience_size | number }}
-    <span class="detailed-targeting-info__audience-size-postfix">people</span>
+    <span class="detailed-targeting-info__audience-size-postfix">{{'detailed-targeting-info.PEOPLE' | translate}}</span>
   </div>
   <div class="detailed-targeting-info__breadcrumbs">
     <template ngFor
@@ -14,7 +14,7 @@
     </template>
   </div>
   <div class="detailed-targeting-info__description">
-    <span class="detailed-targeting-info__description-label">Description:</span>
+    <span class="detailed-targeting-info__description-label">{{'detailed-targeting-info.DESCRIPTION' | translate}}:</span>
     <span [innerHTML]="item.description || getDescription(item)"></span>
   </div>
 </div>

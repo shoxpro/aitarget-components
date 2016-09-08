@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Build app
-ng build --prod
+ng build --prod --base-href="/aitarget-components/"
 
 # Temporary create gh-pages directory and checkout to gh-pages branch in it
 mkdir gh-pages

@@ -80,10 +80,17 @@ module.exports = function (env) {
     config.devtool = 'cheap-module-source-map';
     config.watch = false;
     // Add optimization plugin for prod
-    config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-      // tmp string to fix for prod mode @see https://github.com/angular/angular/issues/10618
-      mangle: { screw_ie8: true, keep_fnames: true }
-    }));
+    config.plugins.push(
+      new webpack.optimize.UglifyJsPlugin(),
+      new webpack.NormalModuleReplacementPlugin(
+        // This plugin is responsible for swapping the environment files.
+        // Since it takes a RegExp as first parameter, we need to escape the path.
+        // See https://webpack.github.io/docs/list-of-plugins.html#normalmodulereplacementplugin
+        new RegExp(path.resolve(__dirname, parentRoot, './src/environments/environment.ts')
+                       .replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')),
+        path.resolve(__dirname, parentRoot, './src/environments/environment.prod.ts')
+      )
+    );
   }
 
   return config;

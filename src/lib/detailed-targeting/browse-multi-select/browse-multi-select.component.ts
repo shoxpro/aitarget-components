@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, Input, ElementRef } from '@angular/core';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
   selector:    'browse-multi-select',
@@ -14,6 +15,7 @@ export class BrowseMultiSelectComponent implements AfterViewInit {
   @Input('item') item: DetailedTargetingItem;
 
   constructor (el: ElementRef,
+               private TranslateService: TranslateService,
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService) {
     this.el = el.nativeElement;
   }
@@ -62,9 +64,9 @@ export class BrowseMultiSelectComponent implements AfterViewInit {
     checkbox.checked       = isIndeterminate ? false : (allChildrenSelected || null);
 
     if (checkbox.checked) {
-      label.textContent = 'Unselect All';
+      label.textContent = this.TranslateService.instant('browse-multi-select.UNSELECT_ALL');
     } else {
-      label.textContent = 'Select All';
+      label.textContent = this.TranslateService.instant('browse-multi-select.SELECT_ALL');
     }
   }
 

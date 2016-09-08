@@ -1,6 +1,8 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from './detailed-targeting-info.service';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TypeToHumanPipe } from '../type-to-human.pipe';
 
 @Component({
   selector:        'detailed-targeting-info',
@@ -23,17 +25,22 @@ export class DetailedTargetingInfoComponent implements OnInit {
   }
 
   constructor (private DetailedTargetingInfoService: DetailedTargetingInfoService,
+               private TranslateService: TranslateService,
                private ref: ChangeDetectorRef) {}
 
   public getDescription (item: DetailedTargetingItem) {
     let description: string;
-    let lastCrumb = item.path[item.path.length - 1];
+    let lastCrumb       = item.path[item.path.length - 1];
+    let typeToHumanPipe = new TypeToHumanPipe(this.TranslateService);
     switch (item.type) {
       case 'interests':
-        description = `People who have expressed an interest in or like pages related to <i>${lastCrumb}</i>`;
+        description = this.TranslateService.instant('detailed-targeting-info.DESCRIBE_INTERESTS') + ` <i>${lastCrumb}</i>`;
         break;
       default:
-        description = `People who listed their ${item.type} as <i>${lastCrumb}</i> in their Facebook profile.`;
+        description = this.TranslateService.instant('detailed-targeting-info.DESCRIBE_DEFAULT', {
+          type: typeToHumanPipe.transform(item.type),
+          name: lastCrumb
+        });
     }
     return description;
   }

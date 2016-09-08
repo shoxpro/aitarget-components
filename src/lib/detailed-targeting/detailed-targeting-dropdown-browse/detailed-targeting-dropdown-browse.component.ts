@@ -5,6 +5,7 @@ import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
   selector:        'detailed-targeting-dropdown-browse',
@@ -26,6 +27,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
                private ElementRef: ElementRef,
+               private TranslateService: TranslateService,
                private ref: ChangeDetectorRef) {
     this.openItems = this.DetailedTargetingDropdownBrowseService.getOpenItems();
   }
@@ -173,7 +175,6 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
   }
 
   ngOnInit () {
-    this.DetailedTargetingApiService.browse();
     /**
      * Update dropdown list when new items to browse
      */
@@ -247,6 +248,18 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     this.DetailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
       this.activeInfo = Boolean(item);
       this.updateTemplate();
+    });
+
+    /**
+     * Load suggestions on first init
+     */
+    this.DetailedTargetingApiService.browse();
+
+    /**
+     * Load suggestions when language changes
+     */
+    this.TranslateService.onLangChange.subscribe(() => {
+      this.DetailedTargetingApiService.browse();
     });
   }
 
