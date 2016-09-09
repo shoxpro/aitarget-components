@@ -30,18 +30,21 @@ export class AppComponent {
     "age_min":             18,
     "age_max":             65,
     "user_device":         [],
-    "interested_in":       [
-      2
-    ],
-    "interests":           [
-      {
-        "id":   "6002839660079",
-        "name": "Cosmetics"
-      },
-      {
-        "id":   "6002866718622",
-        "name": "Science"
-      }
+    //"interested_in":       [
+    //  2
+    //],
+    //"interests":           [
+    //  {
+    //    "id":   "6002839660079",
+    //    "name": "Cosmetics"
+    //  },
+    //  {
+    //    "id":   "6002866718622",
+    //    "name": "Science"
+    //  }
+    //],
+    "education_majors":    [
+      "105540346147170"
     ]
   };
 

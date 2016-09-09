@@ -1,0 +1,14 @@
+.detailed-targeting-search {
+  position:   relative;
+  display:    block;
+  overflow-y: auto;
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+  width:      100%;
+  height:     100%;
+  background: #ffffff;
+}
+
+.detailed-targeting-search_active {
+}

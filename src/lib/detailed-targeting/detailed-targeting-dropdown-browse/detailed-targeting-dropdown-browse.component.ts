@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core';
-import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { DetailedTargetingDropdownBrowseService } from './detailed-targeting-dropdown-browse.service';
 import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-targeting-api.service';
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { DetailedTargetingSearchService } from '../detailed-targeting-search/detailed-targeting-search.service';
 
 @Component({
   selector:        'detailed-targeting-dropdown-browse',
@@ -14,20 +14,20 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class DetailedTargetingDropdownBrowseComponent implements OnInit {
-  private mode;
+export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestroy {
   private items;
   private selectedItemsCombinedIds;
   private openItems;
   private activeInfo;
+  private subscriptions = [];
 
   constructor (private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
                private DetailedTargetingApiService: DetailedTargetingApiService,
-               private DetailedTargetingModeService: DetailedTargetingModeService,
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
                private DetailedTargetingInfoService: DetailedTargetingInfoService,
                private ElementRef: ElementRef,
                private TranslateService: TranslateService,
+               private DetailedTargetingSearchService: DetailedTargetingSearchService,
                private ref: ChangeDetectorRef) {
     this.openItems = this.DetailedTargetingDropdownBrowseService.getOpenItems();
   }
@@ -38,9 +38,15 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
    * Trigger change detection mechanism that updates component's template
    */
   private updateTemplate () {
-    this.ref.detach();
     this.ref.markForCheck();
     this.ref.detectChanges();
+  }
+
+  ngOnDestroy () {
+    // Unsubscribe from all Observables
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
   }
 
   /**
@@ -145,15 +151,19 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
    * @param item
    */
   public clickItem (item: DetailedTargetingItem) {
-    if (!item.id) {
-      this.toggleBranch(item);
-    } else {
+    if (item.id) {
       if (this.selectedItemsCombinedIds && this.selectedItemsCombinedIds.indexOf(this.combinedId(item)) > -1) {
         this.removeItem(item);
       } else {
         this.selectItem(item);
       }
+      return;
     }
+    if (item.searchable) {
+      this.DetailedTargetingSearchService.setVisible(true);
+      return;
+    }
+    this.toggleBranch(item);
   };
 
   /**
@@ -190,75 +200,66 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     /**
      * Update dropdown list when new items to browse
      */
-    this.DetailedTargetingDropdownBrowseService.items
-        .map(items => {
-          return items.filter(item => item.key !== '__ROOT__')
-                      .map((item, index, list) => {
-                        if (!item.id && list[index + 1].key.indexOf(item.key) === -1) {
-                          item.searchable = true;
-                        }
-                        if (!item.id && list[index + 1].id) {
-                          let children  = [];
-                          let nextIndex = index + 1;
-                          while (list[nextIndex] && list[nextIndex].id) {
-                            children.push(list[nextIndex]);
-                            nextIndex += 1;
-                          }
+    this.subscriptions.push(this.DetailedTargetingDropdownBrowseService.items
+                                .map(items => {
+                                  return items.filter(item => item.key !== '__ROOT__')
+                                              .map((item, index, list) => {
+                                                if (!item.id && list[index + 1].key.indexOf(item.key) === -1) {
+                                                  item.searchable = true;
+                                                }
+                                                if (!item.id && list[index + 1].id) {
+                                                  let children  = [];
+                                                  let nextIndex = index + 1;
+                                                  while (list[nextIndex] && list[nextIndex].id) {
+                                                    children.push(list[nextIndex]);
+                                                    nextIndex += 1;
+                                                  }
 
-                          item.isParent = true;
-                          item.children = children;
-                        }
-                        return item;
-                      });
-        })
-        .subscribe(items => {
-          this.items = items;
+                                                  item.isParent = true;
+                                                  item.children = children;
+                                                }
+                                                return item;
+                                              });
+                                })
+                                .subscribe(items => {
+                                  this.items = items;
 
-          this.toggleSelected();
+                                  this.toggleSelected();
 
-          this.updateTemplate();
-        });
+                                  this.updateTemplate();
+                                }));
 
     /**
      * Update items from dropdown (toggle checkboxes) when selected items changes
      */
-    this.DetailedTargetingSelectedService.items
-        .map((items: DetailedTargetingItem[]) => items.map(item => this.combinedId(item)))
-        .subscribe((selectedItems: Array<string>) => {
-          this.selectedItemsCombinedIds = selectedItems;
+    this.subscriptions.push(this.DetailedTargetingSelectedService.items
+                                .map((items: DetailedTargetingItem[]) => items.map(item => this.combinedId(item)))
+                                .subscribe((selectedItems: Array<string>) => {
+                                  this.selectedItemsCombinedIds = selectedItems;
 
-          this.toggleSelected();
+                                  this.toggleSelected();
 
-          this.updateTemplate();
-        });
-
-    /**
-     * Toggle mode if changed
-     */
-    this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
-      this.mode = mode;
-
-      this.updateTemplate();
-    });
+                                  this.updateTemplate();
+                                }));
 
     /**
      * If openItems change reflect these changes it in a template.
      */
-    this.DetailedTargetingDropdownBrowseService.openItems.subscribe((openItems) => {
+    this.subscriptions.push(this.DetailedTargetingDropdownBrowseService.openItems.subscribe((openItems) => {
       this.openItems = openItems;
       this.updateTemplate();
       setTimeout(() => {
         this.scrollTo(openItems._scrollTo);
       });
-    });
+    }));
 
     /**
      * Indicate that info is open. Needed to set proper border-radius to dropdown.
      */
-    this.DetailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
+    this.subscriptions.push(this.DetailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
       this.activeInfo = Boolean(item);
       this.updateTemplate();
-    });
+    }));
 
     /**
      * Load suggestions on first init
@@ -268,9 +269,9 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit {
     /**
      * Load suggestions when language changes
      */
-    this.TranslateService.onLangChange.subscribe(() => {
+    this.subscriptions.push(this.TranslateService.onLangChange.subscribe(() => {
       this.DetailedTargetingApiService.browse();
-    });
+    }));
   }
 
 }

@@ -1,19 +1,14 @@
 .detailed-targeting-dropdown-browse__list {
-  position:      relative;
-  display:       block;
-  overflow-y:    auto;
-  box-sizing:    border-box;
-  margin:        0;
-  padding:       0;
-  max-height:    200px;
-  width:         100%;
-  height:        auto;
-
-  border:        1px solid #d0d0d0;
-  border-top:    none;
-  border-radius: 0 0 3px 3px;
-  background:    #ffffff;
-  box-shadow:    0 1px 3px rgba(0, 0, 0, 0.1);
+  position:   relative;
+  display:    block;
+  overflow-y: auto;
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+  max-height: 200px;
+  width:      100%;
+  height:     auto;
+  background: #ffffff;
 }
 
 .detailed-targeting-dropdown-browse__list_active-info {

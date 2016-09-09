@@ -9,6 +9,8 @@ import { DetailedTargetingModeComponent } from './detailed-targeting-mode/detail
 import { BrowseMultiSelectComponent } from './browse-multi-select/browse-multi-select.component';
 import { TypeToHumanPipe } from './type-to-human.pipe';
 import { CoreModule } from '../core.module';
+import { DetailedTargetingSearchComponent } from './detailed-targeting-search/detailed-targeting-search.component';
+import { DetailedTargetingBrowseComponent } from './detailed-targeting-browse/detailed-targeting-browse.component';
 
 @NgModule({
   imports:      [
@@ -23,6 +25,8 @@ import { CoreModule } from '../core.module';
     DetailedTargetingInfoComponent,
     DetailedTargetingModeComponent,
     BrowseMultiSelectComponent,
+    DetailedTargetingSearchComponent,
+    DetailedTargetingBrowseComponent,
     TypeToHumanPipe
   ],
   exports:      [
