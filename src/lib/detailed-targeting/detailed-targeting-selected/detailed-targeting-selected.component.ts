@@ -4,6 +4,7 @@ import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingDropdownBrowseService } from '../detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
 import { DetailedTargetingService } from '../detailed-targeting.service';
+import { DetailedTargetingSearchService } from '../detailed-targeting-search/detailed-targeting-search.service';
 
 @Component({
   selector:        'detailed-targeting-selected',
@@ -31,6 +32,7 @@ export class DetailedTargetingSelectedComponent implements OnInit {
                private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
                private DetailedTargetingModeService: DetailedTargetingModeService,
                private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
+               private DetailedTargetingSearchService: DetailedTargetingSearchService,
                private ref: ChangeDetectorRef) {
   }
 
@@ -54,6 +56,9 @@ export class DetailedTargetingSelectedComponent implements OnInit {
         openItems[openItemKey] = true;
       }
     });
+
+    // Close search mode before opening browse tree
+    this.DetailedTargetingSearchService.update({isVisible: false, type: null});
 
     this.DetailedTargetingModeService.set('browse');
     this.DetailedTargetingDropdownBrowseService.updateOpenItems(openItems);
