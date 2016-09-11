@@ -27,6 +27,9 @@ export class DetailedTargetingModeComponent implements OnInit {
   }
 
   public setMode = (mode: string) => {
+    if (this.mode === mode) {
+      mode = null;
+    }
     this.DetailedTargetingModeService.set(mode);
   };
 
