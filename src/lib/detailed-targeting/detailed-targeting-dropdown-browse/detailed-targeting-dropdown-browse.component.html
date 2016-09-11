@@ -23,6 +23,7 @@
           <div class="detailed-targeting-dropdown-browse__row-cell detailed-targeting-dropdown-browse__row-addon"
                [ngClass]='{"detailed-targeting-dropdown-browse__row-addon_parent": item.isParent}'>
             <div class="detailed-targeting-dropdown-browse__row-search"
+                 (click)="clickItem(item)"
                  *ngIf="item.searchable">
               <svg fill="#51a9c9"
                    height="20"
