@@ -79,4 +79,20 @@ export class DetailedTargetingApiService {
     return _response.asObservable();
   };
 
+  public filteredSearch (q: string, limit_type: string, adaccountId = 'act_944874195534529') {
+    let _response = new Subject<DetailedTargetingItem[]>();
+
+    this.api.subscribe((FB: FB) => {
+      FB.api(`/${adaccountId}/targetingsearch`, {
+        q:          q,
+        limit_type: limit_type,
+        locale:     this.lang
+      }, (response) => {
+        _response.next(response.data);
+      });
+    });
+
+    return _response.asObservable();
+  };
+
 }

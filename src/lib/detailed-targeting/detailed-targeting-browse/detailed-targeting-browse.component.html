@@ -1,4 +1,5 @@
 <div class="detailed-targeting-browse-wrapper"
+     [ngClass]="{'detailed-targeting-browse-wrapper_active-info': activeInfo}"
      [hidden]="mode !== 'browse'">
   <div class="detailed-targeting-browse"
        [ngClass]="{'detailed-targeting-browse_search-visible': isVisible}">

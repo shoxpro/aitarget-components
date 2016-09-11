@@ -11,10 +11,6 @@
   background: #ffffff;
 }
 
-.detailed-targeting-dropdown-browse__list_active-info {
-  border-radius: 0 0 0 3px;
-}
-
 .detailed-targeting-dropdown-browse__row {
   position:      relative;
   height:        31px;
@@ -103,4 +99,9 @@
 
 .dropdown-row-addon_parent {
   width: 110px;
+}
+
+.detailed-targeting-dropdown-browse__row-search {
+  width:  20px;
+  height: 20px;
 }

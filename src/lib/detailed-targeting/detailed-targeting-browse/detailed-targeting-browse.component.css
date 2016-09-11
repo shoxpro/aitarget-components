@@ -2,6 +2,7 @@
   display:       block;
   overflow:      hidden;
   box-sizing:    border-box;
+  max-height:    200px;
   width:         100%;
   border:        1px solid #d0d0d0;
   border-top:    none;
@@ -24,6 +25,10 @@
 
 .detailed-targeting-browse_search-visible {
   left: -100%;
+}
+
+.detailed-targeting-browse-wrapper_active-info {
+  border-radius: 0 0 0 3px;
 }
 
 detailed-targeting-dropdown-browse,

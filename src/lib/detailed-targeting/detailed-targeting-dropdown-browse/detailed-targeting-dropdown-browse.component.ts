@@ -18,7 +18,6 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
   private items;
   private selectedItemsCombinedIds;
   private openItems;
-  private activeInfo;
   private subscriptions = [];
 
   constructor (private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
@@ -160,7 +159,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
       return;
     }
     if (item.searchable) {
-      this.DetailedTargetingSearchService.setVisible(true);
+      this.DetailedTargetingSearchService.update({isVisible: true, type: item.type});
       return;
     }
     this.toggleBranch(item);
@@ -251,14 +250,6 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
       setTimeout(() => {
         this.scrollTo(openItems._scrollTo);
       });
-    }));
-
-    /**
-     * Indicate that info is open. Needed to set proper border-radius to dropdown.
-     */
-    this.subscriptions.push(this.DetailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
-      this.activeInfo = Boolean(item);
-      this.updateTemplate();
     }));
 
     /**

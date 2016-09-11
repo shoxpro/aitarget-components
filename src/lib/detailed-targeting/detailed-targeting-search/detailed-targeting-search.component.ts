@@ -1,5 +1,7 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, ElementRef } from '@angular/core';
 import { DetailedTargetingSearchService } from './detailed-targeting-search.service';
+import { Subject, Observable } from 'rxjs/Rx';
+import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-targeting-api.service';
 
 @Component({
   selector:        'detailed-targeting-search',
@@ -8,8 +10,12 @@ import { DetailedTargetingSearchService } from './detailed-targeting-search.serv
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
-  private isVisible;
   private subscriptions = [];
+  private _term         = new Subject();
+  public term           = this._term.asObservable();
+  private items;
+  private type;
+  private searchValue;
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -20,12 +26,22 @@ export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
   }
 
   constructor (private DetailedTargetingSearchService: DetailedTargetingSearchService,
-               private ref: ChangeDetectorRef) { }
+               private DetailedTargetingApiService: DetailedTargetingApiService,
+               private ElementRef: ElementRef,
+               private ref: ChangeDetectorRef) {
+  }
 
   public closeSearch = () => {
-    this.isVisible = false;
-    this.DetailedTargetingSearchService.setVisible(this.isVisible);
+    this.DetailedTargetingSearchService.update({isVisible: false, type: this.type});
   };
+
+  /**
+   * On key up handler.
+   * @param term
+   */
+  public keyup (term: string) {
+    this._term.next(term);
+  }
 
   ngOnDestroy () {
     // Unsubscribe from all Observables
@@ -35,10 +51,36 @@ export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
-    this.subscriptions.push(this.DetailedTargetingSearchService.visible.subscribe((isVisible: boolean) => {
-      this.isVisible = isVisible;
-      this.updateTemplate();
-    }));
+    this.subscriptions.push(
+      this.DetailedTargetingSearchService.data.subscribe((data) => {
+        this.type = data.type;
+
+        if (data.isVisible) {
+          let elm     = this.ElementRef.nativeElement;
+          let input   = elm.querySelector('input');
+          input.value = null;
+          input.focus();
+        }
+
+        this.items = Observable.of(null);
+
+        this.updateTemplate();
+      })
+    );
+
+    this.term
+        .debounceTime(500)
+        .distinctUntilChanged()
+        .subscribe((value: string) => {
+          if (value) {
+            this.items = this.DetailedTargetingApiService
+                             .filteredSearch(value, this.type);
+          } else {
+            this.items = Observable.of(null);
+          }
+
+          this.updateTemplate();
+        });
   }
 
 }
