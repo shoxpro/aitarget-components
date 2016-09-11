@@ -9,7 +9,11 @@ export class TypeToHumanPipe implements PipeTransform {
   constructor (private TranslateService: TranslateService) {}
 
   transform (value: any, args?: any): any {
-    return this.TranslateService.instant(`detailed-targeting-dropdown-suggested.${value.toUpperCase()}`) || value;
+    if (value && typeof value === 'string') {
+      return this.TranslateService.instant(`detailed-targeting-dropdown-suggested.${value.toUpperCase()}`) || value;
+    } else {
+      return value;
+    }
   }
 
 }

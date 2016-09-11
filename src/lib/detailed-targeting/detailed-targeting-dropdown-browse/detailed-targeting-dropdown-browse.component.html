@@ -1,47 +1,54 @@
-<ul class="detailed-targeting-dropdown-browse__list"
-    [ngClass]="{'detailed-targeting-dropdown-browse__list_active-info': activeInfo}"
-    *ngIf="items && items.length && mode === 'browse'">
-  <template ngFor
-            let-item
-            [ngForOf]="items">
-    <li class="detailed-targeting-dropdown-browse__row"
-        *ngIf="openItems[item.parent]"
-        [attr.data-key]="item?.key"
-        (mouseover)="setDropdownInfoItem(item)"
-        (mouseout)="setDropdownInfoItem(null)">
-      <div class="detailed-targeting-dropdown-browse__row-content">
-        <div class="detailed-targeting-dropdown-browse__row-cell detailed-targeting-dropdown-browse__row-tick"
-             (click)="clickItem(item)"
-             [ngClass]="{'detailed-targeting-dropdown-browse__row-tick_open': openItems[item.key]}"
-             [ngStyle]="{'width': 23 + 15 * item.path?.length + 'px'}">
-          <div class="detailed-targeting-dropdown-browse__row-tick-content"
-               *ngIf="!item.id && !item.searchable"></div>
-        </div>
-        <div class="detailed-targeting-dropdown-browse__row-cell detailed-targeting-dropdown-browse__row-name"
-             (click)="clickItem(item)">{{item.name}}
-        </div>
-        <div class="detailed-targeting-dropdown-browse__row-cell detailed-targeting-dropdown-browse__row-addon"
-             [ngClass]='{"detailed-targeting-dropdown-browse__row-addon_parent": item.isParent}'>
-          <div class="detailed-targeting-dropdown-browse__row-search"
-               *ngIf="item.searchable">
-            <img src="https://static.xx.fbcdn.net/rsrc.php/v2/yZ/r/xcjB9wqvY-g.png"
-                 width="16"
-                 height="16"
-                 alt="search icon">
+<div class="detailed-targeting-dropdown-browse">
+  <ul class="detailed-targeting-dropdown-browse__list"
+      *ngIf="items && items.length">
+    <template ngFor
+              let-item
+              [ngForOf]="items">
+      <li class="detailed-targeting-dropdown-browse__row"
+          *ngIf="openItems[item.parent]"
+          [attr.data-key]="item?.key"
+          (mouseover)="setDropdownInfoItem(item)"
+          (mouseout)="setDropdownInfoItem(null)">
+        <div class="detailed-targeting-dropdown-browse__row-content">
+          <div class="detailed-targeting-dropdown-browse__row-cell detailed-targeting-dropdown-browse__row-tick"
+               (click)="clickItem(item)"
+               [ngClass]="{'detailed-targeting-dropdown-browse__row-tick_open': openItems[item.key]}"
+               [ngStyle]="{'width': 23 + 15 * item.path?.length + 'px'}">
+            <div class="detailed-targeting-dropdown-browse__row-tick-content"
+                 *ngIf="!item.id && !item.searchable"></div>
           </div>
-          <div class="detailed-targeting-dropdown-browse__row-checkbox-parent"
-               *ngIf="item.isParent">
-            <browse-multi-select [item]="item"></browse-multi-select>
+          <div class="detailed-targeting-dropdown-browse__row-cell detailed-targeting-dropdown-browse__row-name"
+               (click)="clickItem(item)">{{item.name}}
           </div>
-          <div class="detailed-targeting-dropdown-browse__row-checkbox"
-               (click)="clickItem(item)">
-            <label *ngIf="item.id">
-              <input type="checkbox"
-                     [(ngModel)]="item.selected">
-            </label>
+          <div class="detailed-targeting-dropdown-browse__row-cell detailed-targeting-dropdown-browse__row-addon"
+               [ngClass]='{"detailed-targeting-dropdown-browse__row-addon_parent": item.isParent}'>
+            <div class="detailed-targeting-dropdown-browse__row-search"
+                 (click)="clickItem(item)"
+                 *ngIf="item.searchable">
+              <svg fill="#51a9c9"
+                   height="20"
+                   viewBox="0 0 24 24"
+                   width="20"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                <path d="M0 0h24v24H0z"
+                      fill="none"></path>
+              </svg>
+            </div>
+            <div class="detailed-targeting-dropdown-browse__row-checkbox-parent"
+                 *ngIf="item.isParent">
+              <browse-multi-select [item]="item"></browse-multi-select>
+            </div>
+            <div class="detailed-targeting-dropdown-browse__row-checkbox"
+                 (click)="clickItem(item)">
+              <label *ngIf="item.id">
+                <input type="checkbox"
+                       [(ngModel)]="item.selected">
+              </label>
+            </div>
           </div>
         </div>
-      </div>
-    </li>
-  </template>
-</ul>
+      </li>
+    </template>
+  </ul>
+</div>

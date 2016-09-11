@@ -1,0 +1,39 @@
+.detailed-targeting-browse-wrapper {
+  display:       block;
+  overflow:      hidden;
+  box-sizing:    border-box;
+  max-height:    200px;
+  width:         100%;
+  border:        1px solid #d0d0d0;
+  border-top:    none;
+  border-radius: 0 0 3px 3px;
+  box-shadow:    0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.detailed-targeting-browse-wrapper[hidden] {
+  display: none !important;
+}
+
+.detailed-targeting-browse {
+  position:   relative;
+  left:       0;
+  display:    table;
+  width:      200%;
+  background: #ffffff;
+  transition: left 0.5s;
+}
+
+.detailed-targeting-browse_search-visible {
+  left: -100%;
+}
+
+.detailed-targeting-browse-wrapper_active-info {
+  border-radius: 0 0 0 3px;
+}
+
+detailed-targeting-dropdown-browse,
+detailed-targeting-search {
+  display:        table-cell;
+  width:          50%;
+  vertical-align: top;
+}

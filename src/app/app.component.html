@@ -1,10 +1,15 @@
 <div class="app__content">
-  <div *ngIf="!hideDetailedTargeting">
-    <detailed-targeting [lang]="lang"></detailed-targeting>
-  </div>
-  <br>
   <button (click)="hideDetailedTargeting = !hideDetailedTargeting">Toggle</button>
   <button (click)="lang = 'en_US'">EN</button>
   <button (click)="lang = 'ru_RU'">RU</button>
   <button (click)="lang = 'zh_CN'">CN</button>
+  <br>
+  <br>
+  <div *ngIf="!hideDetailedTargeting">
+    <detailed-targeting [spec]="spec"
+                        [onChange]="onChange"
+                        [lang]="lang"></detailed-targeting>
+  </div>
+  <h3>Spec:</h3>
+  <pre>{{ spec | json}}</pre>
 </div>

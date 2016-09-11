@@ -13,6 +13,7 @@ import { DetailedTargetingDropdownSuggestedService } from './detailed-targeting-
 import { DetailedTargetingDropdownBrowseService } from './detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
 import { DetailedTargetingInputService } from './detailed-targeting-input/detailed-targeting-input.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { DetailedTargetingSearchService } from './detailed-targeting-search/detailed-targeting-search.service';
 
 @Component({
   selector:        'detailed-targeting',
@@ -22,7 +23,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
     DetailedTargetingApiService, DetailedTargetingDropdownSuggestedService,
     DetailedTargetingDropdownBrowseService, DetailedTargetingInfoService,
     DetailedTargetingSelectedService, DetailedTargetingModeService, DetailedTargetingInputService,
-    DetailedTargetingService
+    DetailedTargetingService, DetailedTargetingSearchService
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -90,8 +91,8 @@ export class DetailedTargetingComponent implements OnInit {
     let targetingList = [];
     for (let type in defaultDetailedTargetingSpec) {
       if (this.spec[type] && this.spec[type].length) {
-        this.spec[type].forEach((id) => {
-          targetingList.push({type: type, id: id});
+        this.spec[type].forEach((item) => {
+          targetingList.push({type: type, id: item.id || item});
         });
       }
     }

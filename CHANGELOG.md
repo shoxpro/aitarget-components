@@ -1,3 +1,34 @@
+<a name="0.0.6"></a>
+## [0.0.6](https://github.com/aitarget/aitarget-components/compare/v0.0.7-0...0.0.6) (2016-09-11)
+
+
+### Bug Fixes
+
+* **browse:** always switch to browse when clicking on crumbs, even from browse search mode ([cb2959c](https://github.com/aitarget/aitarget-components/commit/cb2959c))
+* **browse:** specify fields when requesting for browse list, close #60 ([f976a43](https://github.com/aitarget/aitarget-components/commit/f976a43)), closes [#60](https://github.com/aitarget/aitarget-components/issues/60)
+* **dropdown:** set fixed suggested dropdown height ([648fc6f](https://github.com/aitarget/aitarget-components/commit/648fc6f))
+* **edit:** fix showing previously selected items, #54 ([7cb7fa0](https://github.com/aitarget/aitarget-components/commit/7cb7fa0)), closes [#54](https://github.com/aitarget/aitarget-components/issues/54)
+* **enum values:** use ids instead of objects in value arrays in resulting spec, close #56 ([0056575](https://github.com/aitarget/aitarget-components/commit/0056575)), closes [#56](https://github.com/aitarget/aitarget-components/issues/56)
+* **enums:** distinct enums in detailed targeting spec, close #49 ([bb89cc3](https://github.com/aitarget/aitarget-components/commit/bb89cc3)), closes [#49](https://github.com/aitarget/aitarget-components/issues/49)
+* **exception:** workaround for 'Attempt to use a destroyed view: detectChanges' exception, close #46 ([4794e79](https://github.com/aitarget/aitarget-components/commit/4794e79)), closes [#46](https://github.com/aitarget/aitarget-components/issues/46)
+* **info:** close all info blocks when clicked ourside, close #48 ([92f0c80](https://github.com/aitarget/aitarget-components/commit/92f0c80)), closes [#48](https://github.com/aitarget/aitarget-components/issues/48)
+* **mode:** if clicked of the current mode, set mode to null ([f7fe54b](https://github.com/aitarget/aitarget-components/commit/f7fe54b))
+* updating external spec, #54 ([64173eb](https://github.com/aitarget/aitarget-components/commit/64173eb))
+* **placeholder:** make input font-weight: normal, close #38 ([8ad7333](https://github.com/aitarget/aitarget-components/commit/8ad7333)), closes [#38](https://github.com/aitarget/aitarget-components/issues/38)
+* **search:** open browse search mode when clicking on search icon ([e7f32a3](https://github.com/aitarget/aitarget-components/commit/e7f32a3))
+* **selected:** support both types of selected values, #56 ([c8d468f](https://github.com/aitarget/aitarget-components/commit/c8d468f))
+* **style:** improve style of detailed-targeting-selected component, close #45 ([3d879c3](https://github.com/aitarget/aitarget-components/commit/3d879c3)), closes [#45](https://github.com/aitarget/aitarget-components/issues/45)
+* **style:** small style fix ([1f3bdf6](https://github.com/aitarget/aitarget-components/commit/1f3bdf6))
+* **sync selected:** toggle selected property after browse items loaded or selected items change, close #59 ([9519bb8](https://github.com/aitarget/aitarget-components/commit/9519bb8)), closes [#59](https://github.com/aitarget/aitarget-components/issues/59)
+
+
+### Features
+
+* **onchange:** trigger spec onchange function if it is really changed and skip triggering on initialization ([47cb9c6](https://github.com/aitarget/aitarget-components/commit/47cb9c6))
+* **spec:** when updating spec with new detailed targeting, don't leave properties with empty arrays ([0f0670e](https://github.com/aitarget/aitarget-components/commit/0f0670e))
+
+
+
 <a name="0.0.6-13"></a>
 ## [0.0.6-13](https://github.com/aitarget/aitarget-components/compare/v0.0.7-0...0.0.6-13) (2016-09-08)
 

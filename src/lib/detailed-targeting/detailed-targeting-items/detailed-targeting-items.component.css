@@ -1,0 +1,45 @@
+.detailed-targeting-items__list {
+  position:   relative;
+  display:    block;
+  overflow-y: auto;
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+  max-height: 200px;
+  width:      100%;
+
+  background: #ffffff;
+}
+
+.detailed-targeting-items__list_active-info {
+  border-radius: 0 0 0 3px;
+}
+
+.detailed-targeting-items__row {
+  position:        relative;
+  display:         flex;
+  overflow:        hidden;
+  padding-right:   12px;
+  padding-left:    8px;
+  height:          28px;
+  background:      white;
+  text-overflow:   ellipsis;
+  white-space:     nowrap;
+  font-weight:     bold;
+  cursor:          pointer;
+  align-items:     center;
+  justify-content: space-between;
+}
+
+.detailed-targeting-items__row:hover {
+  background-color: #f5fafd;
+}
+
+.detailed-targeting-items__name {
+  color: #1d2129;
+}
+
+.detailed-targeting-items__type {
+  color:       #b2b2b2;
+  font-weight: normal;
+}
