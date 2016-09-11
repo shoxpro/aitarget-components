@@ -49,6 +49,7 @@
 
 .detailed-targeting-search__label-icon {
   display:     inline-block;
+  box-sizing:  content-box;
   padding:     0 8px;
   width:       20px;
   height:      20px;
