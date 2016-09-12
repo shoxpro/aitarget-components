@@ -16,15 +16,15 @@
 
 .detailed-targeting-browse {
   position:   relative;
-  left:       0;
+  right:      0;
   display:    table;
   width:      200%;
   background: #ffffff;
-  transition: left 0.5s;
+  transition: right 0.5s;
 }
 
 .detailed-targeting-browse_search-visible {
-  left: -100%;
+  right: 100%;
 }
 
 .detailed-targeting-browse-wrapper_active-info {
