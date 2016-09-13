@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { Subject, BehaviorSubject } from 'rxjs/Rx';
 
-interface _defaultOpenItems {
+interface DefaultOpenItems {
   __ROOT__: boolean;
   _scrollTo: string;
 }
@@ -11,7 +11,7 @@ interface _defaultOpenItems {
 export class DetailedTargetingDropdownBrowseService {
   private _items = new Subject<DetailedTargetingItem[]>();
 
-  private _defaultOpenItems: _defaultOpenItems = {
+  private _defaultOpenItems: DefaultOpenItems = {
     __ROOT__:  true,
     _scrollTo: null
   };
@@ -20,7 +20,7 @@ export class DetailedTargetingDropdownBrowseService {
     return this._defaultOpenItems;
   }
 
-  private _openItems = new BehaviorSubject<_defaultOpenItems>(this.defaultOpenItems);
+  private _openItems = new BehaviorSubject<DefaultOpenItems>(this.defaultOpenItems);
 
   public items = this._items.asObservable();
 

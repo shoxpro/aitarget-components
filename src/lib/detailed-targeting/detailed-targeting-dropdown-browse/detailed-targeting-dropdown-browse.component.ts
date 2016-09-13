@@ -79,17 +79,17 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
    * @param item
    */
   private toggleBranch (item: DetailedTargetingItem) {
-    //Get all open keys
+    // Get all open keys
     let openItems = this.DetailedTargetingDropdownBrowseService.getOpenItems();
     let openKeys  = Object.keys(openItems);
 
-    //Toggle branch by item.key
+    // Toggle branch by item.key
     openItems[item.key] = !Boolean(openItems[item.key]);
 
-    //Toggle Nodes
+    // Toggle Nodes
     this.closeChildrenNodes(item, openItems, openKeys);
 
-    //Decide where to scroll
+    // Decide where to scroll
     openItems._scrollTo = this.getScrollToItemKey(item, openItems);
 
     this.DetailedTargetingDropdownBrowseService.updateOpenItems(openItems);

@@ -1,3 +1,4 @@
+/* tslint:disable:max-line-length */
 import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef } from '@angular/core';
 import { TargetingSpecService } from '../targeting/targeting-spec.service';
 import { DetailedTargetingSelectedService } from './detailed-targeting-selected/detailed-targeting-selected.service';
@@ -14,6 +15,7 @@ import { DetailedTargetingDropdownBrowseService } from './detailed-targeting-dro
 import { DetailedTargetingInputService } from './detailed-targeting-input/detailed-targeting-input.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { DetailedTargetingSearchService } from './detailed-targeting-search/detailed-targeting-search.service';
+/* tslint:enable:max-line-length */
 
 @Component({
   selector:        'detailed-targeting',
@@ -120,7 +122,7 @@ export class DetailedTargetingComponent implements OnInit {
     // Skip first initialization subject and second with passed spec
         .skip(2)
         .subscribe((detailedTargetingSpec: DetailedTargetingSpec) => {
-          //noinspection TypeScriptUnresolvedFunction
+          // noinspection TypeScriptUnresolvedFunction
           let newTargetingSpec = Object.assign({}, this.spec, detailedTargetingSpec);
           let cleanSpec        = this.TargetingSpecService.clean(newTargetingSpec);
           this.TargetingSpecService.update(cleanSpec);

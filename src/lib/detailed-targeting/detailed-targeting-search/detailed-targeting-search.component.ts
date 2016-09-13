@@ -15,7 +15,6 @@ export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
   public term           = this._term.asObservable();
   private items;
   private type;
-  private searchValue;
 
   /**
    * Trigger change detection mechanism that updates component's template
