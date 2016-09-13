@@ -1,3 +1,13 @@
+<a name="0.0.7-1"></a>
+## [0.0.7-1](https://github.com/aitarget/aitarget-components/compare/v0.0.7-1...0.0.7-1) (2016-09-12)
+
+
+### Bug Fixes
+
+* **remove:** fix removing items ([903b05c](https://github.com/aitarget/aitarget-components/commit/903b05c))
+
+
+
 <a name="0.0.7-0"></a>
 ## [0.0.7-0](https://github.com/aitarget/aitarget-components/compare/v0.0.7-0...0.0.7-0) (2016-09-12)
 

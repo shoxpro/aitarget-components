@@ -79,8 +79,8 @@ export class DetailedTargetingSelectedComponent implements OnInit {
 
   public removeItem (itemToRemove: DetailedTargetingItem) {
     let selectedItems = this.DetailedTargetingSelectedService.get();
-    let shouldRemove  = (item) => item.id !== itemToRemove.id && item.type === itemToRemove.type;
-    selectedItems     = selectedItems.filter(item => shouldRemove(item));
+    let shouldRemove  = (item) => item.id === itemToRemove.id && item.type === itemToRemove.type;
+    selectedItems     = selectedItems.filter(item => !shouldRemove(item));
 
     this.DetailedTargetingSelectedService.updateSelected(selectedItems);
   }
