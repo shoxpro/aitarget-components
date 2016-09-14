@@ -1,3 +1,14 @@
+<a name="0.0.7-2"></a>
+## [0.0.7-2](https://github.com/aitarget/aitarget-components/compare/v0.0.7-2...0.0.7-2) (2016-09-14)
+
+
+### Bug Fixes
+
+* **adaccount:** use adaccount passed to detailed-targeting component, #67 ([2f177a5](https://github.com/aitarget/aitarget-components/commit/2f177a5))
+* **remove:** fix removing items ([903b05c](https://github.com/aitarget/aitarget-components/commit/903b05c))
+
+
+
 <a name="0.0.7-1"></a>
 ## [0.0.7-1](https://github.com/aitarget/aitarget-components/compare/v0.0.7-1...0.0.7-1) (2016-09-12)
 
