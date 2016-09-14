@@ -17,6 +17,7 @@ export class DetailedTargetingApiService {
 
   private api = this.FbService.api
                     .filter((FB: FB) => Boolean(FB));
+  private adaccountId;
 
   constructor (private FbService: FbService,
                private DetailedTargetingDropdownSuggestedService: DetailedTargetingDropdownSuggestedService,
@@ -27,7 +28,15 @@ export class DetailedTargetingApiService {
     });
   }
 
-  public search (q: string, adaccountId = 'act_944874195534529') {
+  /**
+   * Set adaccount id to be used for api calls
+   * @param adaccountId
+   */
+  public setAdaccount (adaccountId) {
+    this.adaccountId = adaccountId;
+  };
+
+  public search (q: string, adaccountId = this.adaccountId) {
     this.api.subscribe((FB: FB) => {
       FB.api(`/${adaccountId}/targetingsearch`, {q: q, locale: this.lang}, (response) => {
         this.DetailedTargetingDropdownSuggestedService.updateDropdown(response.data);
@@ -35,7 +44,7 @@ export class DetailedTargetingApiService {
     });
   };
 
-  public browse (adaccountId = 'act_944874195534529') {
+  public browse (adaccountId = this.adaccountId) {
     this.api.subscribe((FB: FB) => {
       FB.api(`/${adaccountId}/targetingbrowse`, {
         include_headers: false,
@@ -52,7 +61,7 @@ export class DetailedTargetingApiService {
     });
   };
 
-  public suggest (targetingList: Array<Object> = this.suggestedTargetingList, adaccountId = 'act_944874195534529') {
+  public suggest (targetingList: Array<Object> = this.suggestedTargetingList, adaccountId = this.adaccountId) {
     this.suggestedTargetingList = targetingList;
     this.api.subscribe((FB: FB) => {
       FB.api(`/${adaccountId}/targetingsuggestions`, {
@@ -64,7 +73,7 @@ export class DetailedTargetingApiService {
     });
   };
 
-  public validate (targetingList: Array<Object> = [], adaccountId = 'act_944874195534529') {
+  public validate (targetingList: Array<Object> = [], adaccountId = this.adaccountId) {
     let _response = new Subject<DetailedTargetingItem[]>();
 
     this.api.subscribe((FB: FB) => {
@@ -79,7 +88,7 @@ export class DetailedTargetingApiService {
     return _response.asObservable();
   };
 
-  public filteredSearch (q: string, limit_type: string, adaccountId = 'act_944874195534529') {
+  public filteredSearch (q: string, limit_type: string, adaccountId = this.adaccountId) {
     let _response = new Subject<DetailedTargetingItem[]>();
 
     this.api.subscribe((FB: FB) => {

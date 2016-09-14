@@ -31,6 +31,7 @@ export class DetailedTargetingComponent implements OnInit {
   private _defaultLang: string = 'en_US';
   private _lang: string        = this._defaultLang;
 
+  @Input('adaccountId') adaccountId: string;
   @Input('spec') spec: TargetingSpec    = {};
   @Input('onChange') onChange: Function = (spec?) => {};
 
@@ -87,6 +88,12 @@ export class DetailedTargetingComponent implements OnInit {
   };
 
   ngOnInit () {
+    if (this.adaccountId) {
+      this.DetailedTargetingApiService.setAdaccount(this.adaccountId);
+    } else {
+      throw 'Adaccout ID must be provided for this detailed targeting component!';
+    }
+
     // Set targetingList array for validation
     let targetingList = [];
     for (let type in defaultDetailedTargetingSpec) {
