@@ -48,9 +48,10 @@ export class FbService {
        */
       let aitargetSelfserviceAppId = '683082315084696';
       let FB: FB                   = (<any>window).FB;
+      let appId                    = `${(<any>window).app_id || aitargetSelfserviceAppId}`;
 
       FB.init({
-        appId:   `${(<any>window).app_id || aitargetSelfserviceAppId}`,
+        appId:   appId,
         status:  true,
         cookie:  true,
         xfbml:   true,
