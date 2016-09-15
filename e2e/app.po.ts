@@ -1,11 +1,11 @@
 import { browser, element, by } from 'protractor/globals';
 
-export class WebpackPage {
+export class AitargetComponentsPage {
   navigateTo() {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getToggleButtonText() {
+    return element(by.css('app-root button')).getText();
   }
 }
