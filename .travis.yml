@@ -5,12 +5,16 @@ node_js:
   - '6'
 
 addons:
-apt:
-  sources:
-    - google-chrome
-  packages:
-    - google-chrome-stable
-    - google-chrome-beta
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+      - google-chrome-beta
+
+cache:
+  directories:
+     - ./node_modules
 
 before_install:
   - export CHROME_BIN=chromium-browser
@@ -23,4 +27,7 @@ before_script:
 - npm install
 - ng build
 
-script: karma start karma.conf.js --single-run
+script:
+- karma start karma.conf.js --single-run
+- ng e2e
+- ng lint
