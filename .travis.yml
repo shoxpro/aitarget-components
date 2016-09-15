@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-  - '6'
+  - '5.6.0'
 
 addons:
   apt:
@@ -28,6 +28,6 @@ before_script:
 - ng build
 
 script:
+- ng lint
 - karma start karma.conf.js --single-run
 - ng e2e
-- ng lint
