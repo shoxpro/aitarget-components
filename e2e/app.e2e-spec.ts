@@ -1,14 +1,14 @@
-import { WebpackPage } from './app.po';
+import { AitargetComponentsPage } from './app.po';
 
-describe('webpack App', function() {
-  let page: WebpackPage;
+describe('aitarget-components App', function() {
+  let page: AitargetComponentsPage;
 
   beforeEach(() => {
-    page = new WebpackPage();
+    page = new AitargetComponentsPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display toggle button', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getToggleButtonText()).toEqual('Toggle');
   });
 });

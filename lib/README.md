@@ -1,5 +1,7 @@
 # AitargetComponents
 
+[![Build Status](https://travis-ci.org/aitarget/aitarget-components.svg?branch=master)](https://travis-ci.org/aitarget/aitarget-components)
+
 Angular 2 components for fb.aitarget.com tool.
 
 #Install

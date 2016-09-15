@@ -1,3 +1,4 @@
+/* tslint:disable:max-line-length */
 import { NgModule } from '@angular/core';
 import { DetailedTargetingComponent } from './detailed-targeting.component';
 import { DetailedTargetingInfoComponent } from './detailed-targeting-info/detailed-targeting-info.component';
@@ -12,6 +13,7 @@ import { CoreModule } from '../core.module';
 import { DetailedTargetingSearchComponent } from './detailed-targeting-search/detailed-targeting-search.component';
 import { DetailedTargetingBrowseComponent } from './detailed-targeting-browse/detailed-targeting-browse.component';
 import { DetailedTargetingItemsComponent } from './detailed-targeting-items/detailed-targeting-items.component';
+/* tslint:enable:max-line-length */
 
 @NgModule({
   imports:      [

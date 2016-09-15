@@ -1,3 +1,4 @@
+/* tslint:disable:max-line-length */
 import { Injectable } from '@angular/core';
 import { FbService } from '../../fb/fb.service';
 import { DetailedTargetingDropdownSuggestedService } from '../detailed-targeting-dropdown-suggested/detailed-targeting-dropdown-suggested.service';
@@ -6,6 +7,7 @@ import { FB } from '../../fb/fb.interface';
 import { Subject } from 'rxjs';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
+/* tslint:enable:max-line-length */
 
 @Injectable()
 export class DetailedTargetingApiService {
@@ -50,10 +52,10 @@ export class DetailedTargetingApiService {
         include_headers: false,
         include_nodes:   true,
         fields:          [
-          "id", "name", "type",
-          "path", "audience_size", "key",
-          "parent", "info", "info_title",
-          "img", "link"],
+          'id', 'name', 'type',
+          'path', 'audience_size', 'key',
+          'parent', 'info', 'info_title',
+          'img', 'link'],
         locale:          this.lang
       }, (response) => {
         this.DetailedTargetingDropdownBrowseService.updateDropdown(response.data);
