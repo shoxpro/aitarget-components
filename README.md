@@ -1,5 +1,7 @@
 # AitargetComponents
 
+[![Build Status](https://travis-ci.org/aitarget/aitarget-components.svg?branch=master)](https://travis-ci.org/aitarget/aitarget-components)
+
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.14.
 
 ## Development server
