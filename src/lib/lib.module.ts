@@ -4,6 +4,7 @@ import { DetailedTargetingModule } from './detailed-targeting/detailed-targeting
 import { TargetingSpecService } from './targeting/targeting-spec.service';
 import { FbService } from './fb/fb.service';
 import { environment } from '../environments/environment';
+import { GeoTargetingModule } from './geo-targeting/geo-targeting.module';
 
 if (environment.production) {
   enableProdMode();
@@ -13,10 +14,11 @@ if (environment.production) {
   declarations: [],
   imports:      [
     BrowserModule,
-    DetailedTargetingModule
+    DetailedTargetingModule,
+    GeoTargetingModule
   ],
   providers:    [FbService, TargetingSpecService],
-  exports:      [BrowserModule, DetailedTargetingModule]
+  exports:      [BrowserModule, DetailedTargetingModule, GeoTargetingModule]
 })
 export class LibModule {
 }
