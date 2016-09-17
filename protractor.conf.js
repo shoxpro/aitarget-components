@@ -5,28 +5,41 @@
 var SpecReporter = require('jasmine-spec-reporter');
 
 exports.config = {
-  allScriptsTimeout: 11000,
-  specs: [
+  allScriptsTimeout:      120000,
+  specs:                  [
     './e2e/**/*.e2e-spec.ts'
   ],
-  capabilities: {
+  capabilities:           {
     'browserName': 'chrome'
   },
-  directConnect: true,
-  baseUrl: 'http://localhost:4200/',
-  framework: 'jasmine',
-  jasmineNodeOpts: {
-    showColors: true,
+  directConnect:          true,
+  baseUrl:                'http://localhost:4200/',
+  framework:              'jasmine',
+  jasmineNodeOpts:        {
+    showColors:             true,
     defaultTimeoutInterval: 30000,
-    print: function() {}
+    print:                  function () {}
   },
   useAllAngular2AppRoots: true,
-  beforeLaunch: function() {
-    require('ts-node').register({
-      project: 'e2e'
-    });
+  // The params object will be passed directly to the protractor instance,
+  // and can be accessed from your test. It is an arbitrary object and can
+  // contain anything you may need in your test.
+  // This can be changed via the command line as:
+  //   --params.login.email 'me@example.com'
+  params:                 {
+    login: {
+      email: '',
+      pass:  ''
+    }
   },
-  onPrepare: function() {
-    jasmine.getEnv().addReporter(new SpecReporter());
+  beforeLaunch:           function () {
+    require('ts-node')
+      .register({
+        project: 'e2e'
+      });
+  },
+  onPrepare:              function () {
+    jasmine.getEnv()
+           .addReporter(new SpecReporter());
   }
 };

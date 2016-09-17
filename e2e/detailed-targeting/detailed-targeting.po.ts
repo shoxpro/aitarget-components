@@ -1,11 +1,15 @@
 import { browser, element, by } from 'protractor/globals';
 
 export class DetailedTargetingPage {
-  navigateTo() {
+  static navigateTo () {
     return browser.get('/detailed-targeting');
   }
 
-  getToggleButtonText() {
-    return element(by.css('app-root button')).getText();
+  static getDetailedTargetingSelectedGroups () {
+    return element.all(by.css('.detailed-targeting-selected__group'));
+  }
+
+  static getDetailedTargetingSelectedItems () {
+    return element.all(by.css('.detailed-targeting-selected__item'));
   }
 }
