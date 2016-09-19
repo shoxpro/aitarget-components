@@ -2,6 +2,10 @@
 import { NgModule } from '@angular/core';
 import { CoreModule } from '../core.module';
 import { GeoTargetingComponent } from './geo-targeting.component';
+import { GeoTargetingSelectedComponent } from './geo-targeting-selected/geo-targeting-selected.component';
+import { GeoTargetingInputComponent } from './geo-targeting-input/geo-targeting-input.component';
+import { GeoTargetingDropdownComponent } from './geo-targeting-dropdown/geo-targeting-dropdown.component';
+import { GeoTargetingMapComponent } from './geo-targeting-map/geo-targeting-map.component';
 /* tslint:enable:max-line-length */
 
 @NgModule({
@@ -9,7 +13,11 @@ import { GeoTargetingComponent } from './geo-targeting.component';
     CoreModule
   ],
   declarations: [
-    GeoTargetingComponent
+    GeoTargetingComponent,
+    GeoTargetingSelectedComponent,
+    GeoTargetingInputComponent,
+    GeoTargetingDropdownComponent,
+    GeoTargetingMapComponent
   ],
   exports:      [
     GeoTargetingComponent

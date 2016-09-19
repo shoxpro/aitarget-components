@@ -3,6 +3,7 @@ var path = require('path');
 module.exports = function (parentRoot) {
   return {
     'detailed-targeting': path.resolve(parentRoot, './src/lib/detailed-targeting/detailed-targeting.component.ts'),
+    'geo-targeting':      path.resolve(parentRoot, './src/lib/geo-targeting/geo-targeting.component.ts'),
     'core':               [
       path.resolve(parentRoot, './src/polyfills.ts'),
       'rxjs/Rx',
