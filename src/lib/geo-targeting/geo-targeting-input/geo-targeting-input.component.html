@@ -1,3 +1,16 @@
-<p>
-  geo-targeting-input works!
-</p>
+<div class="geo-targeting-input__table"
+     [ngClass]="{
+     'geo-targeting-input_dropdown-active': false,
+     'geo-targeting-input_selected-items': false,
+     'geo-targeting-input_focus': false
+     }">
+  <label class="geo-targeting-input__label geo-targeting-input__table-cell">
+    <input class="geo-targeting-input__input"
+           type="text"
+           [(ngModel)]="term"
+           (keyup)="keyup(term)"
+           (focus)="focus()"
+           (blur)="blur()"
+           placeholder="{{'geo-targeting-input.PLACEHOLDER' | translate}}">
+  </label>
+</div>

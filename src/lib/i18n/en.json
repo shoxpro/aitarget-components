@@ -40,5 +40,8 @@
     "EDUCATION_MAJORS": "Fields Of Study",
     "WORK_EMPLOYERS": "Employers",
     "WORK_POSITIONS": "Job Titles"
+  },
+  "geo-targeting-input": {
+    "PLACEHOLDER": "Add locations"
   }
 }

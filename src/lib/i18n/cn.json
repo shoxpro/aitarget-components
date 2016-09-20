@@ -40,5 +40,8 @@
     "EDUCATION_MAJORS": "研究领域",
     "WORK_EMPLOYERS": "雇主",
     "WORK_POSITIONS": "职位"
+  },
+  "geo-targeting-input": {
+    "PLACEHOLDER": "Add locations"
   }
 }

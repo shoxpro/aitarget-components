@@ -40,5 +40,8 @@
     "EDUCATION_MAJORS": "Области изучения",
     "WORK_EMPLOYERS": "Работодатели",
     "WORK_POSITIONS": "Должности"
+  },
+  "geo-targeting-input": {
+    "PLACEHOLDER": "Add locations"
   }
 }
