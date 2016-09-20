@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestro
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 import { GeoTargetingInputService } from './geo-targeting-input.service';
+import { GeoTargetingDropdownService } from '../geo-targeting-dropdown/geo-targeting-dropdown.service';
 
 @Component({
   selector:        'geo-targeting-input',
@@ -50,6 +51,7 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
   constructor (private GeoTargetingApiService: GeoTargetingApiService,
                private GeoTargetingInputService: GeoTargetingInputService,
                private TranslateService: TranslateService,
+               private GeoTargetingDropdownService: GeoTargetingDropdownService,
                private ref: ChangeDetectorRef) {
   }
 
@@ -69,7 +71,10 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
             this.term = term;
 
             if (term) {
-              this.GeoTargetingApiService.search(term);
+              this.GeoTargetingApiService.search(term)
+                  .subscribe((items) => {
+                    this.GeoTargetingDropdownService.update(items);
+                  });
             }
 
             this.updateTemplate();

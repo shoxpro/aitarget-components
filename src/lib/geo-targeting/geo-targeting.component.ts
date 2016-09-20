@@ -3,12 +3,13 @@ import { GeoTargetingApiService } from './geo-targeting-api/geo-targeting-api.se
 import { GeoTargetingInputService } from './geo-targeting-input/geo-targeting-input.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { TargetingSpec } from '../targeting/targeting-spec.interface';
+import { GeoTargetingDropdownService } from './geo-targeting-dropdown/geo-targeting-dropdown.service';
 
 @Component({
   selector:    'geo-targeting',
   templateUrl: './geo-targeting.component.html',
   styleUrls:   ['./geo-targeting.component.css'],
-  providers:   [GeoTargetingApiService, GeoTargetingInputService]
+  providers:   [GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService]
 })
 export class GeoTargetingComponent implements OnInit {
 
