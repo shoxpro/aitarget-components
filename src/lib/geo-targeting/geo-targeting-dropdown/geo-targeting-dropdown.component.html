@@ -1,5 +1,5 @@
 <ul class="geo-targeting-items__list"
-    *ngIf="items && items.length">
+    *ngIf="isOpen && items && items.length">
   <li class="geo-targeting-items__row"
       *ngFor="let item of items"
       (click)="selectItem(item)">

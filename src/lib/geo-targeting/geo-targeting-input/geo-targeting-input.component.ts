@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, ElementRef } from '@angular/core';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 import { GeoTargetingInputService } from './geo-targeting-input.service';
@@ -15,6 +15,8 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
   private term;
   private hasFocus;
   private subscriptions = [];
+  private dropdownActive;
+  private foundItems;
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -36,22 +38,22 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
    * Open dropdown with suggestions when gets focus
    */
   public focus () {
-    this.hasFocus = true;
-    this.updateTemplate();
+    this.GeoTargetingInputService.focus();
+    this.GeoTargetingDropdownService.open();
   }
 
   /**
    * Process focus lost
    */
   public blur () {
-    this.hasFocus = false;
-    this.updateTemplate();
+    this.GeoTargetingInputService.blur();
   }
 
   constructor (private GeoTargetingApiService: GeoTargetingApiService,
                private GeoTargetingInputService: GeoTargetingInputService,
                private TranslateService: TranslateService,
                private GeoTargetingDropdownService: GeoTargetingDropdownService,
+               private ElementRef: ElementRef,
                private ref: ChangeDetectorRef) {
   }
 
@@ -73,14 +75,50 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
             if (term) {
               this.GeoTargetingApiService.search(term)
                   .subscribe((items) => {
-                    this.GeoTargetingDropdownService.update(items);
+                    this.foundItems = items;
+                    this.GeoTargetingDropdownService.update(this.foundItems);
                   });
+            } else {
+              this.foundItems = null;
+              this.GeoTargetingDropdownService.update(this.foundItems);
+              this.GeoTargetingDropdownService.close();
             }
 
             this.updateTemplate();
           })
     );
 
+    /**
+     * Process dropdown open/close for proper ngClasses
+     */
+    this.subscriptions.push(
+      this.GeoTargetingDropdownService.isOpen.subscribe((isOpen) => {
+        this.dropdownActive = isOpen && this.foundItems && this.foundItems.length;
+        this.updateTemplate();
+      })
+    );
+
+    /**
+     * Process input focus/blur for proper ngClasses
+     */
+    this.subscriptions.push(
+      this.GeoTargetingInputService.hasFocus.subscribe((hasFocus) => {
+        this.hasFocus    = hasFocus;
+        let inputElement = this.ElementRef.nativeElement.querySelector('input');
+
+        if (hasFocus) {
+          inputElement.focus();
+        } else {
+          inputElement.blur();
+        }
+
+        this.updateTemplate();
+      })
+    );
+
+    /**
+     * Update component's translations on language change
+     */
     this.subscriptions.push(
       this.TranslateService.onLangChange.subscribe(() => {
         this.updateTemplate();
