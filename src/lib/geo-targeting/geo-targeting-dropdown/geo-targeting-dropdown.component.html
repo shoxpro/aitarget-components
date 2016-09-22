@@ -2,7 +2,7 @@
     *ngIf="isOpen && filteredItems && filteredItems.length">
   <li class="geo-targeting-items__row"
       *ngFor="let item of filteredItems"
-      (click)="selectItem(item)">
+      (click)="selectItem(item, $event)">
     <div class="geo-targeting-items__name">{{item.name}}</div>
     <div class="geo-targeting-items__type">{{item.type}}</div>
   </li>

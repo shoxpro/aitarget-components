@@ -47,7 +47,7 @@ fdescribe('Service: GeoTargetingSelected', () => {
         .toEqual(jasmine.any(Function));
     });
 
-    it('should add new country', () => {
+    xit('should add new country', () => {
       this.service.update(countries);
       this.service.add(country);
 

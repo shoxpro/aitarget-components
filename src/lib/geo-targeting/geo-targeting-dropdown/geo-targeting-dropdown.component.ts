@@ -20,8 +20,8 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
    * Trigger change detection mechanism that updates component's template
    */
   private updateTemplate () {
-    this.ref.markForCheck();
-    this.ref.detectChanges();
+    this.ChangeDetectorRef.markForCheck();
+    this.ChangeDetectorRef.detectChanges();
   }
 
   /**
@@ -50,14 +50,15 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
    * Select location handler
    * @param item
    */
-  public selectItem (item: GeoTargetingItem) {
+  public selectItem (item: GeoTargetingItem, event: any) {
+    event.stopPropagation();
     console.log(`Select item:`, item);
     this.GeoTargetingSelectedService.add(item);
   }
 
   constructor (private GeoTargetingDropdownService: GeoTargetingDropdownService,
                private GeoTargetingSelectedService: GeoTargetingSelectedService,
-               private ref: ChangeDetectorRef) { }
+               private ChangeDetectorRef: ChangeDetectorRef) { }
 
   ngOnDestroy () {
     // Unsubscribe from all Observables
@@ -78,6 +79,7 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
         if (items && items.length) {
           this.GeoTargetingDropdownService.open();
         }
+
         this.updateTemplate();
       })
     );
@@ -98,10 +100,7 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.GeoTargetingSelectedService.items.subscribe(() => {
         this.filteredItems = this.filterOutSelected(this.items);
-        setTimeout(() => {
-          this.isOpen = true;
-          this.updateTemplate();
-        });
+        this.updateTemplate();
       })
     );
   }

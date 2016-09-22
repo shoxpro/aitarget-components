@@ -3,6 +3,8 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 import { GeoTargetingInputService } from './geo-targeting-input.service';
 import { GeoTargetingDropdownService } from '../geo-targeting-dropdown/geo-targeting-dropdown.service';
+import { GeoTargetingItem } from '../geo-targeting-item.interface';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 
 @Component({
   selector:        'geo-targeting-input',
@@ -17,13 +19,14 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
   private subscriptions = [];
   private dropdownActive;
   private foundItems;
+  private hasSelected;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
   private updateTemplate () {
-    this.ref.markForCheck();
-    this.ref.detectChanges();
+    this.ChangeDetectorRef.markForCheck();
+    this.ChangeDetectorRef.detectChanges();
   }
 
   /**
@@ -53,8 +56,9 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
                private GeoTargetingInputService: GeoTargetingInputService,
                private TranslateService: TranslateService,
                private GeoTargetingDropdownService: GeoTargetingDropdownService,
+               private GeoTargetingSelectedService: GeoTargetingSelectedService,
                private ElementRef: ElementRef,
-               private ref: ChangeDetectorRef) {
+               private ChangeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnDestroy () {
@@ -112,6 +116,16 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
           inputElement.blur();
         }
 
+        this.updateTemplate();
+      })
+    );
+
+    /**
+     * Update component's translations on language change
+     */
+    this.subscriptions.push(
+      this.GeoTargetingSelectedService.items.subscribe((items: GeoTargetingItem[]) => {
+        this.hasSelected = items && items.length;
         this.updateTemplate();
       })
     );

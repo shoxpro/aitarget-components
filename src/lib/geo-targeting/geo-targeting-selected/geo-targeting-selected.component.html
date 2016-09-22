@@ -1,40 +1,23 @@
 <div *ngIf="items && items.length"
      class="geo-targeting-selected__content">
-  <div class="geo-targeting-selected__items">
-    <div class="geo-targeting-selected__item"
-         *ngFor="let item of items">
-      <span>{{ item.name }} </span> <span class="geo-targeting-selected__remove geo-targeting-selected__remove-item"
-                                          (click)="removeItem(item)">&times;</span>
+  <div class="geo-targeting-selected__group"
+       [ngClass]='{"geo-targeting-selected__group_hover": groupHovered[key]}'
+       *ngFor="let key of itemsGroupedByCountryKeys; let last = last">
+    <div class="geo-targeting-selected__group-title"
+         (mouseenter)="hoverGroup(key, true)"
+         (mouseleave)="hoverGroup(key, false)">
+      <span class="geo-targeting-selected__group-name">{{ itemsGroupedByCountry[key].name }}</span>
+      <span class="geo-targeting-selected__remove geo-targeting-selected__remove-group"
+            (click)="removeGroup(key)">&times;</span>
     </div>
+    <div class="geo-targeting-selected__items">
+      <div class="geo-targeting-selected__item"
+           *ngFor="let item of itemsGroupedByCountry[key].items">
+        <span>{{ item.name }} </span> <span class="geo-targeting-selected__remove geo-targeting-selected__remove-item"
+                                            (click)="removeItem(item)">&times;</span>
+      </div>
+    </div>
+    <div class="geo-targeting-selected__group-devider"
+         *ngIf="!last"></div>
   </div>
-
-  <!--<div class="geo-targeting-selected__group"-->
-  <!--[ngClass]='{"geo-targeting-selected__group_hover": groupHovered[key]}'-->
-  <!--*ngFor="let key of structuredSelectedItems.keys; let last = last">-->
-  <!--<div class="geo-targeting-selected__group-title"-->
-  <!--(mouseenter)="hoverGroup(key, true)"-->
-  <!--(mouseleave)="hoverGroup(key, false)">-->
-  <!--<div>-->
-  <!--<template ngFor-->
-  <!--let-crumb-->
-  <!--[ngForOf]="key.split(' > ')"-->
-  <!--let-last="last"-->
-  <!--let-index="index">-->
-  <!--<span class="geo-targeting-selected__crumb"-->
-  <!--(click)="showCrumb(key, index)">{{ crumb }} </span> <span *ngIf="!last"> &gt; </span>-->
-  <!--</template>-->
-  <!--</div>-->
-  <!--<span class="geo-targeting-selected__remove geo-targeting-selected__remove-group"-->
-  <!--(click)="removeGroup(key)">&times;</span>-->
-  <!--</div>-->
-  <!--<div class="geo-targeting-selected__items">-->
-  <!--<div class="geo-targeting-selected__item"-->
-  <!--*ngFor="let item of structuredSelectedItems.map[key]">-->
-  <!--<span>{{ item.name }} </span> <span class="geo-targeting-selected__remove geo-targeting-selected__remove-item"-->
-  <!--(click)="removeItem(item)">&times;</span>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div class="geo-targeting-selected__group-devider"-->
-  <!--*ngIf="!last"></div>-->
-  <!--</div>-->
 </div>

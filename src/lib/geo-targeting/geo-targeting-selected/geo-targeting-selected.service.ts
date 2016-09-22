@@ -43,7 +43,7 @@ export class GeoTargetingSelectedService {
 
     // Filter out passed item
     selectedItems = selectedItems.filter((selectedItem: GeoTargetingItem) => {
-      return selectedItem.key === item.key;
+      return selectedItem.key !== item.key;
     });
 
     this.update(selectedItems);

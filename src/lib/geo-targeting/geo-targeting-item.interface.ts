@@ -20,11 +20,11 @@ export interface GeoTargetingItem {
    */
   supports_city: boolean;
   /**
-   * Property of Regions|Cities|Zip Code|DMA Codes|Electoral Districts
+   * Property of Countries|Regions|Cities|Zip Code|DMA Codes|Electoral Districts
    */
   country_code?: string;
   /**
-   * Property of Regions|Cities|Zip Code|DMA Codes|Electoral Districts
+   * Property of Countries|Regions|Cities|Zip Code|DMA Codes|Electoral Districts
    */
   country_name?: string;
   /**
