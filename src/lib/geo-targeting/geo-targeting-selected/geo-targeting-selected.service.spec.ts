@@ -4,7 +4,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { GeoTargetingSelectedService } from './geo-targeting-selected.service';
 import { countries, country } from '../geo-targeting-items.example';
 
-fdescribe('Service: GeoTargetingSelected', () => {
+describe('Service: GeoTargetingSelected', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -33,7 +33,7 @@ fdescribe('Service: GeoTargetingSelected', () => {
 
   it('should `update` selected items', () => {
     expect(this.service.get())
-      .toBeNull();
+      .toEqual([]);
 
     this.service.update(countries);
 
@@ -41,7 +41,7 @@ fdescribe('Service: GeoTargetingSelected', () => {
       .toEqual(countries);
   });
 
-  fdescribe('`add` api method', () => {
+  describe('`add` api method', () => {
     it('should have `add` api method', () => {
       expect(this.service.update)
         .toEqual(jasmine.any(Function));
