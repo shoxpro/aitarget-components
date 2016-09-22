@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { GeoTargetingDropdownService } from './geo-targeting-dropdown.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingItem } from '../geo-targeting-item.interface';
 
 @Component({
   selector:        'geo-targeting-dropdown',
@@ -12,6 +14,7 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
   private subscriptions = [];
   private items;
   private isOpen;
+  private filteredItems;
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -22,14 +25,38 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Filter out already selected items
+   * @param items
+   * @returns {GeoTargetingItem[]}
+   */
+  private filterOutSelected (items: GeoTargetingItem[]) {
+    if (!items || !items.length) {
+      return items;
+    }
+
+    let selectedItemsKeys = this.GeoTargetingSelectedService
+                                .get()
+                                .map((selectedItem: GeoTargetingItem) => {
+                                  return selectedItem.key;
+                                });
+
+    // Filter out already selected items
+    return items.filter((item: GeoTargetingItem) => {
+      return selectedItemsKeys.indexOf(item.key) < 0;
+    });
+  }
+
+  /**
    * Select location handler
    * @param item
    */
-  public selectItem (item) {
+  public selectItem (item: GeoTargetingItem) {
     console.log(`Select item:`, item);
+    this.GeoTargetingSelectedService.add(item);
   }
 
   constructor (private GeoTargetingDropdownService: GeoTargetingDropdownService,
+               private GeoTargetingSelectedService: GeoTargetingSelectedService,
                private ref: ChangeDetectorRef) { }
 
   ngOnDestroy () {
@@ -45,7 +72,9 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
      */
     this.subscriptions.push(
       this.GeoTargetingDropdownService.items.subscribe((items) => {
-        this.items = items;
+        this.items         = items;
+        this.filteredItems = this.filterOutSelected(items);
+
         if (items && items.length) {
           this.GeoTargetingDropdownService.open();
         }
@@ -60,6 +89,19 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
       this.GeoTargetingDropdownService.isOpen.subscribe((isOpen: boolean) => {
         this.isOpen = isOpen;
         this.updateTemplate();
+      })
+    );
+
+    /**
+     * Update items from dropdown when selected changes
+     */
+    this.subscriptions.push(
+      this.GeoTargetingSelectedService.items.subscribe(() => {
+        this.filteredItems = this.filterOutSelected(this.items);
+        setTimeout(() => {
+          this.isOpen = true;
+          this.updateTemplate();
+        });
       })
     );
   }
