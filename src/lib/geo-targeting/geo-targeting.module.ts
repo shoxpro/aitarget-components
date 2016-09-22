@@ -6,6 +6,7 @@ import { GeoTargetingSelectedComponent } from './geo-targeting-selected/geo-targ
 import { GeoTargetingInputComponent } from './geo-targeting-input/geo-targeting-input.component';
 import { GeoTargetingDropdownComponent } from './geo-targeting-dropdown/geo-targeting-dropdown.component';
 import { GeoTargetingMapComponent } from './geo-targeting-map/geo-targeting-map.component';
+import { FullNamePipe } from './full-name.pipe';
 /* tslint:enable:max-line-length */
 
 @NgModule({
@@ -17,7 +18,8 @@ import { GeoTargetingMapComponent } from './geo-targeting-map/geo-targeting-map.
     GeoTargetingSelectedComponent,
     GeoTargetingInputComponent,
     GeoTargetingDropdownComponent,
-    GeoTargetingMapComponent
+    GeoTargetingMapComponent,
+    FullNamePipe
   ],
   exports:      [
     GeoTargetingComponent

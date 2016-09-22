@@ -3,7 +3,7 @@
   <li class="geo-targeting-items__row"
       *ngFor="let item of filteredItems"
       (click)="selectItem(item, $event)">
-    <div class="geo-targeting-items__name">{{item.name}}</div>
-    <div class="geo-targeting-items__type">{{item.type}}</div>
+    <div class="geo-targeting-items__name">{{ item | fullName }}</div>
+    <div class="geo-targeting-items__type">{{ item.type }}</div>
   </li>
 </ul>
