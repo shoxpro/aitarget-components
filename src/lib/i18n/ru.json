@@ -43,5 +43,14 @@
   },
   "geo-targeting-input": {
     "PLACEHOLDER": "Add locations"
+  },
+  "geo-targeting-dropdown": {
+    "country": "Страна",
+    "country_group": "Группа стран",
+    "region": "Регион",
+    "city": "Город",
+    "zip": "Индекс",
+    "electoral_district": "Electoral District",
+    "geo_market": "Geo Market"
   }
 }

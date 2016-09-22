@@ -4,6 +4,6 @@
       *ngFor="let item of filteredItems"
       (click)="selectItem(item, $event)">
     <div class="geo-targeting-items__name">{{ item | fullName }}</div>
-    <div class="geo-targeting-items__type">{{ item.type }}</div>
+    <div class="geo-targeting-items__type">{{ 'geo-targeting-dropdown.' + item.type | translate }}</div>
   </li>
 </ul>

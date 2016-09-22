@@ -43,5 +43,14 @@
   },
   "geo-targeting-input": {
     "PLACEHOLDER": "Add locations"
+  },
+  "geo-targeting-dropdown": {
+    "country": "Country",
+    "country_group": "Country Group",
+    "region": "State",
+    "city": "City",
+    "zip": "Zip",
+    "electoral_district": "Electoral District",
+    "geo_market": "Geo Market"
   }
 }
