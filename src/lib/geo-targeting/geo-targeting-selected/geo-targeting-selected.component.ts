@@ -64,10 +64,11 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
         this.itemsGroupedByCountry = {};
 
         this.items.forEach((item: GeoTargetingItem) => {
-          this.itemsGroupedByCountry[item.country_code]       = this.itemsGroupedByCountry[item.country_code] || {};
-          this.itemsGroupedByCountry[item.country_code].name  = item.country_name;
-          this.itemsGroupedByCountry[item.country_code].items = this.itemsGroupedByCountry[item.country_code].items || [];
-          this.itemsGroupedByCountry[item.country_code].items.push(item);
+          let countryCode                               = item.type === 'country' ? item.key : item.country_code;
+          this.itemsGroupedByCountry[countryCode]       = this.itemsGroupedByCountry[countryCode] || {};
+          this.itemsGroupedByCountry[countryCode].name  = item.type === 'country' ? item.name : item.country_name;
+          this.itemsGroupedByCountry[countryCode].items = this.itemsGroupedByCountry[countryCode].items || [];
+          this.itemsGroupedByCountry[countryCode].items.push(item);
         });
 
         this.itemsGroupedByCountryKeys = Object.keys(this.itemsGroupedByCountry);

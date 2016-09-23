@@ -6,6 +6,7 @@ import { TargetingSpec } from '../targeting/targeting-spec.interface';
 import { GeoTargetingDropdownService } from './geo-targeting-dropdown/geo-targeting-dropdown.service';
 import { GeoTargetingSelectedService } from './geo-targeting-selected/geo-targeting-selected.service';
 import { TargetingSpecService } from '../targeting/targeting-spec.service';
+import { GeoTargetingItem } from './geo-targeting-item.interface';
 
 @Component({
   selector:    'geo-targeting',
@@ -81,6 +82,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
   }
 
   constructor (private TranslateService: TranslateService,
+               private GeoTargetingApiService: GeoTargetingApiService,
                private GeoTargetingDropdownService: GeoTargetingDropdownService,
                private GeoTargetingInputService: GeoTargetingInputService,
                private TargetingSpecService: TargetingSpecService,
@@ -99,6 +101,14 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
 
   ngOnInit () {
     /**
+     * Get geo location metadata for passed targeting spec and update selected items
+     */
+    this.GeoTargetingApiService
+        .metaData(this.spec)
+        .subscribe((items: GeoTargetingItem[]) => {
+          this.GeoTargetingSelectedService.update(items);
+        });
+    /**
      * Bind/unbind different events depending on geo-targeting dropdown state.
      */
     this.subscriptions.push(
@@ -116,7 +126,6 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.GeoTargetingSelectedService.items
           .subscribe(() => {
-            // noinspection TypeScriptUnresolvedFunction
             let newTargetingSpec = Object.assign({}, this.spec,
               {
                 geo_locations: this.GeoTargetingSelectedService.getSpec()

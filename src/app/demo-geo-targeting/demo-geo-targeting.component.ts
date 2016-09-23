@@ -8,71 +8,98 @@ import { Component, OnInit } from '@angular/core';
 export class DemoGeoTargetingComponent implements OnInit {
 
   spec = {
-    'age_max':             65,
-    'age_min':             18,
-    'app_install_state':   'not_installed',
-    'education_majors':    [
-      {
-        'id':   '108180979203954',
-        'name': 'Economics'
-      }
-    ],
-    'education_schools':   [
-      {
-        'id':   '112070142203026',
-        'name': 'Harvard Medical School'
-      },
-      {
-        'id':   '208357009185713',
-        'name': 'Stanford Graduate School of Business'
-      },
-      {
-        'id':   '268833636515481',
-        'name': 'Harobanda'
-      },
-      {
-        'id':   '66459568171',
-        'name': 'Harvard Business School'
-      }
-    ],
-    'genders':             [
-      1
-    ],
-    'geo_locations':       {
-      'countries':      [
-        'RU'
+    'geo_locations':          {
+      'zips':                [
+        {
+          'key':     'US:13439',
+          'name':    '13439',
+          'country': 'US'
+        },
+        {
+          'key':     'US:94062',
+          'name':    '94062',
+          'country': 'US'
+        },
+        {
+          'key':     'US:90028',
+          'name':    '90028',
+          'country': 'US'
+        }
       ],
-      'location_types': [
-        'home'
+      'location_types':      [
+        'home',
+        'recent'
+      ],
+      'regions':             [
+        {
+          'key':     '3153',
+          'name':    'Omsk Oblast',
+          'country': 'RU'
+        },
+        {
+          'key':     '3147',
+          'name':    'Moscow Oblast',
+          'country': 'RU'
+        },
+        {
+          'key':     '3146',
+          'name':    'Moscow',
+          'country': 'RU'
+        }
+      ],
+      'cities':              [
+        {
+          'distance_unit': 'mile',
+          'key':           '2421862',
+          'name':          'San Mateo',
+          'region':        'California',
+          'region_id':     '3847',
+          'radius':        25,
+          'country':       'US'
+        },
+        {
+          'distance_unit': 'mile',
+          'key':           '2490299',
+          'name':          'New York',
+          'region':        'New York',
+          'region_id':     '3875',
+          'radius':        25,
+          'country':       'US'
+        }
+      ],
+      'geo_markets':         [
+        {
+          'key':     'DMA:501',
+          'name':    'New York',
+          'country': 'US'
+        },
+        {
+          'key':     'DMA:803',
+          'name':    'Los Angeles',
+          'country': 'US'
+        }
+      ],
+      'electoral_districts': [
+        {
+          'key':     'US:CA14',
+          'name':    `California's 14th District`,
+          'country': 'US'
+        }
       ]
     },
-    'interests':           [
-      {
-        'id':   '6002839660079',
-        'name': 'Cosmetics'
-      },
-      {
-        'id':   '6003088846792',
-        'name': 'Beauty salons'
-      },
-      {
-        'id':   '6003423248519',
-        'name': 'Hair care'
-      }
-    ],
-    'user_os':             [
-      'iOS'
-    ],
-    'publisher_platforms': [
-      'facebook',
-      'instagram'
-    ],
-    'facebook_positions':  [
-      'feed'
-    ],
-    'device_platforms':    [
-      'mobile'
-    ]
+    'excluded_geo_locations': {
+      'cities': [
+        {
+          'distance_unit': 'mile',
+          'key':           '2036122',
+          'name':          'Omsk',
+          'region':        'Omsk Oblast',
+          'region_id':     '3153',
+          'radius':        25,
+          'country':       'RU'
+        }
+      ]
+    }
   };
 
   onChange = (spec) => {
