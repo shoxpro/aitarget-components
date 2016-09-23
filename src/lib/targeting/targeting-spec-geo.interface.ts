@@ -1,15 +1,15 @@
-interface Key {
+export interface Key {
   key: string;
   name?: string;
 }
 
-interface City {
+export interface City {
   key: string;
   radius?: number;
   distance_unit?: 'mile' | 'kilometer';
 }
 
-interface CustomLocation {
+export interface CustomLocation {
   latitude?: number; /*float*/
   longitude?: number; /*float*/
   /**
@@ -48,9 +48,9 @@ interface CustomLocation {
  * device, and are more than 100 miles away from their stated current city from their Facebook profiles.
  * This value is not available when excluding location types.
  */
-type LocationType = 'recent' | 'home' | 'travel_in';
+export type LocationType = 'recent' | 'home' | 'travel_in';
 
-type CountryGroup = 'worldwide' | 'africa' | 'south_america'
+export type CountryGroup = 'worldwide' | 'africa' | 'south_america'
   | 'central_america' | 'caribbean' | 'north_america' | 'europe' | 'asia' | 'oceania'
   | 'eea' /*for European Economic Area*/ | 'nafta' /*for North American Free Trade Agreement*/
   | 'afta' /*for ASEAN Free Trade Area*/ | 'mercosur' | 'gcc' /*Gulf Cooperation Council*/

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
+import { GeoTargetingSpec, Key, City } from '../../targeting/targeting-spec-geo.interface';
 
 @Injectable()
 export class GeoTargetingSelectedService {
@@ -69,7 +70,44 @@ export class GeoTargetingSelectedService {
     this.update(selectedItems);
   }
 
-  public getSpec () {}
+  public getSpec () {
+    let typeMap = {
+      country:            'countries',
+      region:             'regions',
+      city:               'cities',
+      zip:                'zips',
+      geo_market:         'geo_markets',
+      electoral_district: 'electoral_districts',
+    };
+
+    let geoLocations: GeoTargetingSpec = {
+      location_types: ['home']
+    };
+
+    let selectedItems: GeoTargetingItem[] = this.get();
+
+    selectedItems.forEach((item: GeoTargetingItem) => {
+      geoLocations[typeMap[item.type]] = geoLocations[typeMap[item.type]] || [];
+
+      if (item.type === 'country') {
+        geoLocations[typeMap[item.type]].push(item.key);
+      } else {
+        let selectedValue: Key = {key: item.key, name: item.name};
+
+        if (item.type === 'city' && item.radius) {
+          (<City>selectedValue).radius = item.radius;
+        }
+
+        if (item.type === 'city' && item.distance_unit) {
+          (<City>selectedValue).distance_unit = item.distance_unit;
+        }
+
+        geoLocations[typeMap[item.type]].push(selectedValue);
+      }
+    });
+
+    return geoLocations;
+  }
 
   constructor () { }
 

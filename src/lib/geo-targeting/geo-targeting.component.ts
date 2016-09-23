@@ -5,13 +5,14 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { TargetingSpec } from '../targeting/targeting-spec.interface';
 import { GeoTargetingDropdownService } from './geo-targeting-dropdown/geo-targeting-dropdown.service';
 import { GeoTargetingSelectedService } from './geo-targeting-selected/geo-targeting-selected.service';
+import { TargetingSpecService } from '../targeting/targeting-spec.service';
 
 @Component({
   selector:    'geo-targeting',
   templateUrl: './geo-targeting.component.html',
   styleUrls:   ['./geo-targeting.component.css'],
   providers:   [GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
-    GeoTargetingSelectedService]
+    GeoTargetingSelectedService, TargetingSpecService]
 })
 export class GeoTargetingComponent implements OnInit, OnDestroy {
 
@@ -82,6 +83,8 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
   constructor (private TranslateService: TranslateService,
                private GeoTargetingDropdownService: GeoTargetingDropdownService,
                private GeoTargetingInputService: GeoTargetingInputService,
+               private TargetingSpecService: TargetingSpecService,
+               private GeoTargetingSelectedService: GeoTargetingSelectedService,
                private ElementRef: ElementRef) {
     // this language will be used as a fallback when a translation isn't found in the current language
     this.TranslateService.setDefaultLang(this.lang);
@@ -105,6 +108,33 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
           this.bindAll();
         }
       })
+    );
+
+    /**
+     * Subscribe for changes in selected items and update targeting spec when changed
+     */
+    this.subscriptions.push(
+      this.GeoTargetingSelectedService.items
+          .subscribe(() => {
+            // noinspection TypeScriptUnresolvedFunction
+            let newTargetingSpec = Object.assign({}, this.spec,
+              {
+                geo_locations: this.GeoTargetingSelectedService.getSpec()
+              });
+            this.TargetingSpecService.update(newTargetingSpec);
+          })
+    );
+
+    /**
+     * Subscribe for targeting spec changes and if differ from previous,
+     * trigger onChange handler
+     */
+    this.subscriptions.push(
+      this.TargetingSpecService.spec
+          .distinctUntilChanged()
+          .subscribe((spec: TargetingSpec) => {
+            this.onChange(spec);
+          })
     );
   }
 

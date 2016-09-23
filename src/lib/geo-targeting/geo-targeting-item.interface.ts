@@ -1,4 +1,5 @@
-export interface GeoTargetingItem {
+import { City, CustomLocation } from '../targeting/targeting-spec-geo.interface';
+export interface GeoTargetingItem extends City, CustomLocation {
   /**
    * Property of all types of locations
    */
@@ -10,7 +11,7 @@ export interface GeoTargetingItem {
   /**
    * Property of all types of locations
    */
-  type: string;
+    type: string;
   /**
    * Property of all types of locations
    */
@@ -50,5 +51,5 @@ export interface GeoTargetingItem {
   /**
    * Property of Zip Code
    */
-  primary_city_id: number;
+  primary_city_id?: number;
 }
