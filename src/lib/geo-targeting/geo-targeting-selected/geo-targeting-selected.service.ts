@@ -5,20 +5,31 @@ import { GeoTargetingItem } from '../geo-targeting-item.interface';
 @Injectable()
 export class GeoTargetingSelectedService {
 
-  private _items = new BehaviorSubject<GeoTargetingItem[]>([]);
-  public items   = this._items.asObservable();
+  private _items                             = new BehaviorSubject<GeoTargetingItem[]>([]);
+  public items                               = this._items.asObservable();
+  private _prevItems: GeoTargetingItem[]     = [];
+  private _replacedItems: GeoTargetingItem[] = [];
 
   public get () {
     return this._items.getValue();
   }
 
+  public getPrevItems () {
+    return this._prevItems;
+  }
+
+  public getReplacedItems () {
+    return this._replacedItems;
+  }
+
   public update (items: GeoTargetingItem[]) {
+    this._prevItems = this.get();
     this._items.next(items);
   }
 
   public add (item: GeoTargetingItem) {
-    let selectedItems = this._items.getValue();
-    let replacedItems = [];
+    let selectedItems   = this._items.getValue();
+    this._replacedItems = [];
 
     selectedItems = selectedItems.filter((selectedItem: GeoTargetingItem) => {
       let toReplace =
@@ -36,7 +47,7 @@ export class GeoTargetingSelectedService {
             (selectedItem.primary_city_id && selectedItem.primary_city_id.toString() === item.key);
 
       if (toReplace) {
-        replacedItems.push(selectedItem);
+        this._replacedItems.push(selectedItem);
       }
 
       return !toReplace;
