@@ -52,5 +52,8 @@
     "zip": "Индекс",
     "electoral_district": "Electoral District",
     "geo_market": "Geo Market"
+  },
+  "geo-targeting-info": {
+    "MESSAGE": "Your audience location has been changed from {{ fromNames }} to {{ toName }}."
   }
 }

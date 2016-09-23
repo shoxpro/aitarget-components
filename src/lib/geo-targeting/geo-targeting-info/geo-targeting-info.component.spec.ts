@@ -1,11 +1,11 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed } from '@angular/core/testing';
-import { GeoTargetingSelectedService } from './geo-targeting-selected.service';
-import { GeoTargetingSelectedComponent } from './geo-targeting-selected.component';
+import { GeoTargetingInfoComponent } from './geo-targeting-info.component';
 import { LibModule } from '../../lib.module';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 
-describe('Component: GeoTargetingSelected', () => {
+describe('Component: GeoTargetingInfo', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:   [LibModule],
@@ -14,7 +14,7 @@ describe('Component: GeoTargetingSelected', () => {
   });
 
   it('should create an instance', () => {
-    let fixture = TestBed.createComponent(GeoTargetingSelectedComponent);
+    let fixture = TestBed.createComponent(GeoTargetingInfoComponent);
     let app     = fixture.debugElement.componentInstance;
     expect(app)
       .toBeTruthy();
