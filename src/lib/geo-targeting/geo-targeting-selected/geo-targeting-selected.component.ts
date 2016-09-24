@@ -68,7 +68,12 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
           this.itemsGroupedByCountry[countryCode]       = this.itemsGroupedByCountry[countryCode] || {};
           this.itemsGroupedByCountry[countryCode].name  = item.type === 'country' ? item.name : item.country_name;
           this.itemsGroupedByCountry[countryCode].items = this.itemsGroupedByCountry[countryCode].items || [];
-          this.itemsGroupedByCountry[countryCode].items.push(item);
+          // Put excluded items after included
+          if (item.excluded) {
+            this.itemsGroupedByCountry[countryCode].items.push(item);
+          } else {
+            this.itemsGroupedByCountry[countryCode].items.unshift(item);
+          }
         });
 
         this.itemsGroupedByCountryKeys = Object.keys(this.itemsGroupedByCountry);

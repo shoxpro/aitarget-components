@@ -14,90 +14,187 @@ export class GeoTargetingSelectedService {
   private _prevItems: GeoTargetingItem[]     = [];
   private _replacedItems: GeoTargetingItem[] = [];
 
-  private informAboutReplaced () {
+  /**
+   * Show info message that excluding is impossible without included locations
+   */
+  private informAboutMissingBroader () {
+    let message = this.TranslateService.instant(`geo-targeting-info.MESSAGE_MISSING_BROADER`);
+
+    this.GeoTargetingInfoService.update('error', message, false);
+    this.GeoTargetingInfoService.show();
+  }
+
+  /**
+   * Show info message that it is impossible to exclude location that is broader that included one
+   */
+  private informAboutNarrow (narrowerLocations) {
+    let message = this.TranslateService.instant(`geo-targeting-info.MESSAGE_NARROW`, {
+      narrowerLocationNames: narrowerLocations.map(item => item.name)
+                                              .join(', ')
+    });
+
+    this.GeoTargetingInfoService.update('error', message, false);
+    this.GeoTargetingInfoService.show();
+  }
+
+  /**
+   * Show info message that some locations were replaced
+   */
+  private informAboutReplaced (item: GeoTargetingItem) {
     let replacedItems = this.getReplacedItems();
-    let items         = this.get();
-    let lastAddedItem = items[items.length - 1];
     let fromNames     = replacedItems
       .map((replacedItem) => replacedItem.name)
       .join(', ');
 
     let message = this.TranslateService.instant(`geo-targeting-info.MESSAGE`, {
       fromNames: fromNames,
-      toName:    lastAddedItem ? lastAddedItem.name : ''
+      toName:    item.name
     });
 
     this.GeoTargetingInfoService.update('info', message, true);
     this.GeoTargetingInfoService.show();
   }
 
+  /**
+   * Get list of broader locations for passed item
+   * @param item
+   * @returns {GeoTargetingItem[]}
+   */
+  private getBroaderLocations (item: GeoTargetingItem) {
+    return this.get()
+               .filter((selectedItem: GeoTargetingItem) => {
+                 return (
+                   /*country of passed item is selected*/
+                   selectedItem.key === item.country_code ||
+                   /*region of passed item is selected*/
+                   (item.region_id && selectedItem.key === item.region_id.toString()) ||
+                   /*city of passed item is selected*/
+                   (item.primary_city_id && selectedItem.key === item.primary_city_id.toString())
+                 );
+               });
+  }
+
+  /**
+   * Fet list of narrower locations for passed item
+   * @param item
+   * @returns {GeoTargetingItem[]}
+   */
+  private getNarrowerLocations (item: GeoTargetingItem) {
+    return this.get()
+               .filter((selectedItem: GeoTargetingItem) => {
+                 return (
+                   /*passed item is a country of selected item*/
+                   selectedItem.country_code === item.key ||
+                   /*passed item is a region of selected item*/
+                   (selectedItem.region_id && selectedItem.region_id.toString() === item.key) ||
+                   /*passed item is a zip code of selected item*/
+                   (selectedItem.primary_city_id && selectedItem.primary_city_id.toString() === item.key)
+                 );
+               });
+  }
+
+  /**
+   * Return list of selected items
+   * @returns {GeoTargetingItem[]}
+   */
   public get () {
     return this._items.getValue();
   }
 
+  /**
+   * Return list of previously selected items
+   * @returns {GeoTargetingItem[]}
+   */
   public getPrevItems () {
     return this._prevItems;
   }
 
+  /**
+   * Return list of items that were replaced by last added item
+   * @returns {GeoTargetingItem[]}
+   */
   public getReplacedItems () {
     return this._replacedItems;
   }
 
+  /**
+   * Update selected items and save previous selection
+   * @param items
+   */
   public update (items: GeoTargetingItem[]) {
     this._prevItems = this.get();
     this._items.next(items);
   }
 
+  /**
+   * Add new item to selected list
+   * Check for broader and narrower locations if item is excluded
+   * Replace broader
+   * @param item
+   * @returns {undefined}
+   */
   public add (item: GeoTargetingItem) {
-    let selectedItems   = this._items.getValue();
-    this._replacedItems = [];
+    let broaderLocations  = this.getBroaderLocations(item);
+    let narrowerLocations = this.getNarrowerLocations(item);
 
-    selectedItems = selectedItems.filter((selectedItem: GeoTargetingItem) => {
-      let hasSameMode = selectedItem.excluded === item.excluded;
-      let toReplace   =
-            hasSameMode &&
-            (
-              /*replace selected region, city, zip, geo_market and electoral_district*/
-              selectedItem.country_code === item.key ||
-              /*replace selected country*/
-              selectedItem.key === item.country_code ||
-              /*replace selected region*/
-              (item.region_id && selectedItem.key === item.region_id.toString()) ||
-              /*replace selected city and zip*/
-              (selectedItem.region_id && selectedItem.region_id.toString() === item.key) ||
-              /*replace selected city*/
-              (item.primary_city_id && selectedItem.key === item.primary_city_id.toString()) ||
-              /*replace selected zip*/
-              (selectedItem.primary_city_id && selectedItem.primary_city_id.toString() === item.key)
-            );
-
-      if (toReplace) {
-        this._replacedItems.push(selectedItem);
-      }
-
-      return !toReplace;
-    });
-
-    selectedItems.push(item);
-
-    this.update(selectedItems);
-
-    if (this._replacedItems.length) {
-      this.informAboutReplaced();
+    // If has narrower locations that are included
+    let includedNarrowerLocations = narrowerLocations.filter(narrowerItem => !narrowerItem.excluded);
+    if (item.excluded && includedNarrowerLocations.length) {
+      return this.informAboutNarrow(includedNarrowerLocations);
     }
+
+    // If has no broader locations that are included
+    let includedBroaderLocations = broaderLocations.filter(broaderItem => !broaderItem.excluded);
+    if (item.excluded && !includedBroaderLocations.length) {
+      return this.informAboutMissingBroader();
+    }
+
+    // Hide all existing info messages
+    this.GeoTargetingInfoService.hide();
+
+    // Replaced item is an item that is broader or narrower than passed item and has the same mode (excluded flag)
+    this._replacedItems = broaderLocations.concat(narrowerLocations)
+                                          .filter((replacedItem) => {
+                                            return replacedItem.excluded === item.excluded;
+                                          });
+    // Inform that some items were replaced
+    if (this._replacedItems.length) {
+      this.informAboutReplaced(item);
+    }
+
+    // Filter out selected items from broader and narrower items
+    let selectedItems = this.get()
+                            .filter((selectedItem: GeoTargetingItem) => {
+                              let hasSameMode = selectedItem.excluded === item.excluded;
+                              let toReplace   = hasSameMode && this._replacedItems.indexOf(selectedItem) > -1;
+                              return !toReplace;
+                            });
+
+    selectedItems.unshift(item);
+
+    this.update(selectedItems);
   }
 
+  /**
+   * Remove passed item from selected list
+   * @param item
+   */
   public remove (item: GeoTargetingItem) {
-    let selectedItems = this._items.getValue();
+    let selectedItems     = this._items.getValue();
+    let narrowerLocations = this.getNarrowerLocations(item);
 
-    // Filter out passed item
+    // Filter out passed item and narrower excluded locations
     selectedItems = selectedItems.filter((selectedItem: GeoTargetingItem) => {
-      return selectedItem.key !== item.key;
+      return selectedItem.key !== item.key && narrowerLocations.indexOf(selectedItem) < 0;
     });
 
     this.update(selectedItems);
   }
 
+  /**
+   * Return final targeting spec with included and excluded locations
+   * @returns {TargetingSpec}
+   */
   public getSpec () {
     let typeMap = {
       country:            'countries',
