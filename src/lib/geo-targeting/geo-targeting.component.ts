@@ -127,10 +127,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.GeoTargetingSelectedService.items
           .subscribe(() => {
-            let newTargetingSpec = Object.assign({}, this.spec,
-              {
-                geo_locations: this.GeoTargetingSelectedService.getSpec()
-              });
+            let newTargetingSpec = Object.assign(this.spec, this.GeoTargetingSelectedService.getSpec());
             this.TargetingSpecService.update(newTargetingSpec);
           })
     );

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSpec, Key, City } from '../../targeting/targeting-spec-geo.interface';
+import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 
 @Injectable()
 export class GeoTargetingSelectedService {
@@ -33,19 +34,23 @@ export class GeoTargetingSelectedService {
     this._replacedItems = [];
 
     selectedItems = selectedItems.filter((selectedItem: GeoTargetingItem) => {
-      let toReplace =
-            /*replace selected region, city, zip, geo_market and electoral_district*/
-            selectedItem.country_code === item.key ||
-            /*replace selected country*/
-            selectedItem.key === item.country_code ||
-            /*replace selected region*/
-            (item.region_id && selectedItem.key === item.region_id.toString()) ||
-            /*replace selected city and zip*/
-            (selectedItem.region_id && selectedItem.region_id.toString() === item.key) ||
-            /*replace selected city*/
-            (item.primary_city_id && selectedItem.key === item.primary_city_id.toString()) ||
-            /*replace selected zip*/
-            (selectedItem.primary_city_id && selectedItem.primary_city_id.toString() === item.key);
+      let hasSameMode = selectedItem.excluded === item.excluded;
+      let toReplace   =
+            hasSameMode &&
+            (
+              /*replace selected region, city, zip, geo_market and electoral_district*/
+              selectedItem.country_code === item.key ||
+              /*replace selected country*/
+              selectedItem.key === item.country_code ||
+              /*replace selected region*/
+              (item.region_id && selectedItem.key === item.region_id.toString()) ||
+              /*replace selected city and zip*/
+              (selectedItem.region_id && selectedItem.region_id.toString() === item.key) ||
+              /*replace selected city*/
+              (item.primary_city_id && selectedItem.key === item.primary_city_id.toString()) ||
+              /*replace selected zip*/
+              (selectedItem.primary_city_id && selectedItem.primary_city_id.toString() === item.key)
+            );
 
       if (toReplace) {
         this._replacedItems.push(selectedItem);
@@ -84,13 +89,26 @@ export class GeoTargetingSelectedService {
       location_types: ['home']
     };
 
+    let excludedGeoLocations: GeoTargetingSpec = {
+      location_types: ['home']
+    };
+
+    let locations: GeoTargetingSpec = {};
+
     let selectedItems: GeoTargetingItem[] = this.get();
 
     selectedItems.forEach((item: GeoTargetingItem) => {
-      geoLocations[typeMap[item.type]] = geoLocations[typeMap[item.type]] || [];
+      // Switch location types depending on item mode
+      if (item.excluded) {
+        locations = excludedGeoLocations;
+      } else {
+        locations = geoLocations;
+      }
+
+      locations[typeMap[item.type]] = locations[typeMap[item.type]] || [];
 
       if (item.type === 'country') {
-        geoLocations[typeMap[item.type]].push(item.key);
+        locations[typeMap[item.type]].push(item.key);
       } else {
         let selectedValue: Key = {key: item.key, name: item.name};
 
@@ -102,11 +120,14 @@ export class GeoTargetingSelectedService {
           (<City>selectedValue).distance_unit = item.distance_unit;
         }
 
-        geoLocations[typeMap[item.type]].push(selectedValue);
+        locations[typeMap[item.type]].push(selectedValue);
       }
     });
 
-    return geoLocations;
+    return <TargetingSpec> {
+      geo_locations:          geoLocations,
+      excluded_geo_locations: excludedGeoLocations
+    };
   }
 
   constructor () { }
