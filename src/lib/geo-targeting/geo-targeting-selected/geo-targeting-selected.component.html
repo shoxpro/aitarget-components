@@ -13,7 +13,8 @@
     <div class="geo-targeting-selected__items">
       <div class="geo-targeting-selected__item"
            *ngFor="let item of itemsGroupedByCountry[key].items">
-        <span>{{ item | fullName }} </span>
+        <geo-targeting-pin [excluded]="item.excluded"></geo-targeting-pin>
+        <span>{{ item | fullName }}</span>
         <span class="geo-targeting-selected__remove geo-targeting-selected__remove-item"
               (click)="removeItem(item)">&times;</span>
       </div>

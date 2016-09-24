@@ -1,13 +1,11 @@
 .geo-targeting-selected__content {
-  overflow-y:                 auto;
-  max-height:                 200px;
-  border:                     1px solid #d9dfe7;
-  border-bottom:              none;
-  border-radius:              3px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius:  0;
-  background:                 #ffffff;
-  opacity:                    1;
+  overflow-y:    auto;
+  max-height:    200px;
+  border:        1px solid #d9dfe7;
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  background:    #ffffff;
+  opacity:       1;
 }
 
 .geo-targeting-selected__group_hover {
@@ -45,13 +43,16 @@
 }
 
 .geo-targeting-selected__item {
-  position:        relative;
-  display:         flex;
-  margin-left:     22px;
-  padding:         6px 0 6px 8px;
-  font-weight:     bold;
-  justify-content: space-between;
-  align-content:   center;
+  position:      relative;
+  display:       flex;
+  padding:       6px 0 6px 30px;
+  font-weight:   bold;
+  align-content: center;
+}
+
+.geo-targeting-selected__item geo-targeting-pin {
+  position: absolute;
+  left:     4px;
 }
 
 .geo-targeting-selected__item:hover {

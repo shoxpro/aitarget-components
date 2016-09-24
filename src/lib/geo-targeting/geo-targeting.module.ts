@@ -8,6 +8,7 @@ import { GeoTargetingDropdownComponent } from './geo-targeting-dropdown/geo-targ
 import { GeoTargetingMapComponent } from './geo-targeting-map/geo-targeting-map.component';
 import { FullNamePipe } from './full-name.pipe';
 import { GeoTargetingInfoComponent } from './geo-targeting-info/geo-targeting-info.component';
+import { GeoTargetingPinComponent } from './geo-targeting-pin/geo-targeting-pin.component';
 /* tslint:enable:max-line-length */
 
 @NgModule({
@@ -21,6 +22,7 @@ import { GeoTargetingInfoComponent } from './geo-targeting-info/geo-targeting-in
     GeoTargetingDropdownComponent,
     GeoTargetingMapComponent,
     GeoTargetingInfoComponent,
+    GeoTargetingPinComponent,
     FullNamePipe
   ],
   exports:      [

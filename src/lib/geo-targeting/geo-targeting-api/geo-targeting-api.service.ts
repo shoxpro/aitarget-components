@@ -20,25 +20,29 @@ export class GeoTargetingApiService {
    * Simplify geo locations for receiving adgeolocationmeta
    * @see https://developers.facebook.com/docs/marketing-api/targeting-search/v2.7#geo-meta
    * @param geoLocations
+   * @param excludedGeoLocations
    * @returns {{}}
    */
-  private processGeoLocations (geoLocations: GeoTargetingSpec) {
+  private processGeoLocations (geoLocations: GeoTargetingSpec, excludedGeoLocations: GeoTargetingSpec) {
     let simplifiedGeoLocations = {};
 
-    for (let type in geoLocations) {
-      if (geoLocations.hasOwnProperty(type)) {
-        geoLocations[type].forEach((item: GeoTargetingItem) => {
-          simplifiedGeoLocations[type] = simplifiedGeoLocations[type] || [];
-          let key: string | number     = item.key;
+    let types = ['countries', 'regions', 'cities', 'zips', 'geo_markets', 'electoral_districts'];
 
-          if (type === 'regions' || type === 'cities') {
-            key = Number(item.key);
-          }
+    types.forEach((type: string) => {
+      // Combine items from included and excluded locations
+      let items: GeoTargetingItem[] = (geoLocations[type] || []).concat(excludedGeoLocations[type] || []);
 
-          simplifiedGeoLocations[type].push(key);
-        });
-      }
-    }
+      items.forEach((item: GeoTargetingItem) => {
+        simplifiedGeoLocations[type] = simplifiedGeoLocations[type] || [];
+        let key: string | number     = item.key;
+
+        if (type === 'regions' || type === 'cities') {
+          key = Number(item.key);
+        }
+
+        simplifiedGeoLocations[type].push(key);
+      });
+    });
 
     return simplifiedGeoLocations;
   }
@@ -75,9 +79,19 @@ export class GeoTargetingApiService {
     let params = Object.assign({
       type:   'adgeolocationmeta',
       locale: this.lang
-    }, this.processGeoLocations(spec.geo_locations), {
+    }, this.processGeoLocations(spec.geo_locations, spec.excluded_geo_locations), {
       location_types: null
     });
+
+    // Get all excluded keys
+    let excludedKeys = [];
+    for (let type in spec.excluded_geo_locations) {
+      if (spec.excluded_geo_locations.hasOwnProperty(type)) {
+        spec.excluded_geo_locations[type].forEach((item: GeoTargetingItem) => {
+          excludedKeys.push(item.key);
+        });
+      }
+    }
 
     this.api.subscribe((FB: FB) => {
       FB.api(`/search`, params, (response) => {
@@ -91,11 +105,17 @@ export class GeoTargetingApiService {
           if (response.data.hasOwnProperty(type)) {
             for (let key in response.data[type]) {
               if (response.data[type].hasOwnProperty(key)) {
-                items.push(response.data[type][key]);
+                let item      = response.data[type][key];
+                item.excluded = excludedKeys.indexOf(key) > -1;
+                items.push(item);
               }
             }
           }
         }
+
+        console.info(`excludedKeys:`, excludedKeys);
+
+        console.info(`items:`, items);
 
         _response.next(items);
       });

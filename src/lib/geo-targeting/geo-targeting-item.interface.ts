@@ -52,4 +52,8 @@ export interface GeoTargetingItem extends City, CustomLocation {
    * Property of Zip Code
    */
   primary_city_id?: number;
+  /**
+   * Flag for excluded locations
+   */
+  excluded?: boolean;
 }
