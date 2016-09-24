@@ -1,0 +1,24 @@
+.demo-geo-targeting__content {
+  display: table;
+  width:   100%;
+}
+
+.demo-geo-targeting__sidebar {
+  display: table-cell;
+  width:   40%;
+}
+
+.demo-geo-targeting__component {
+  display: table-cell;
+  padding: 20px;
+  width:   60%;
+}
+
+.demo-geo-targeting__component-buttons {
+  padding-bottom: 20px;
+}
+
+.demo-geo-targeting__spec {
+  overflow: auto;
+  height:   400px;
+}

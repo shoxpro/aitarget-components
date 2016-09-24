@@ -1,0 +1,76 @@
+.geo-targeting-selected__content {
+  overflow-y:    auto;
+  max-height:    200px;
+  border:        1px solid #d9dfe7;
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  background:    #ffffff;
+  opacity:       1;
+}
+
+.geo-targeting-selected__group_hover {
+  background: #f5fafd
+}
+
+.geo-targeting-selected__remove {
+  position:    absolute;
+  top:         0;
+  right:       0;
+  display:     none;
+  padding:     0 5px;
+  height:      100%;
+  color:       #bdc0c8;
+  font-weight: bold;
+  font-size:   15px;
+  line-height: 24px;
+  cursor:      pointer;
+}
+
+.geo-targeting-selected__group_hover .geo-targeting-selected__remove-group {
+  display: inline-block;
+}
+
+.geo-targeting-selected__group-title {
+  position:        relative;
+  display:         flex;
+  padding:         6px 0px 6px 10px;
+  justify-content: space-between;
+  align-content:   center;
+}
+
+.geo-targeting-selected__group-title .geo-targeting-selected__group-name {
+  color: #50a9c9;
+}
+
+.geo-targeting-selected__item {
+  position:      relative;
+  display:       flex;
+  padding:       6px 0 6px 30px;
+  font-weight:   bold;
+  align-content: center;
+}
+
+.geo-targeting-selected__item geo-targeting-pin {
+  position: absolute;
+  left:     6px;
+}
+
+.geo-targeting-selected__item:hover {
+  background: #f5fafd
+}
+
+.geo-targeting-selected__item:hover .geo-targeting-selected__remove-item {
+  display: inline-block;
+}
+
+.geo-targeting-selected__group-devider {
+  padding: 0 8px;
+  height:  1px;
+}
+
+.geo-targeting-selected__group-devider:after {
+  display:    block;
+  height:     100%;
+  background: #d9dfe7;
+  content:    "";
+}

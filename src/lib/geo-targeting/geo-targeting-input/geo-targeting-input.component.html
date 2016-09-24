@@ -1,0 +1,17 @@
+<div class="geo-targeting-input__table"
+     [ngClass]="{
+     'geo-targeting-input_dropdown-active': dropdownActive,
+     'geo-targeting-input_selected-items': hasSelected,
+     'geo-targeting-input_focus': hasFocus
+     }">
+  <geo-targeting-mode class="geo-targeting-input__table-cell"></geo-targeting-mode>
+  <label class="geo-targeting-input__label geo-targeting-input__table-cell">
+    <input class="geo-targeting-input__input"
+           type="text"
+           [(ngModel)]="term"
+           (keyup)="keyup(term)"
+           (focus)="focus()"
+           (blur)="blur()"
+           placeholder="{{'geo-targeting-input.PLACEHOLDER' | translate}}">
+  </label>
+</div>

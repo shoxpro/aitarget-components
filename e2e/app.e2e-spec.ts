@@ -1,14 +1,23 @@
-import { AitargetComponentsPage } from './app.po';
+import { AitargetComponentsPage as page } from './app.po';
 
-describe('aitarget-components App', function() {
-  let page: AitargetComponentsPage;
+describe('aitarget-components Demo', function () {
 
-  beforeEach(() => {
-    page = new AitargetComponentsPage();
+  beforeAll(() => {
+    page.navigateTo();
   });
 
-  it('should display toggle button', () => {
-    page.navigateTo();
-    expect(page.getToggleButtonText()).toEqual('Toggle');
+  it('should display proper title', () => {
+    expect(page.getAppTitleLinkText())
+      .toEqual('Aitarget Components');
+  });
+
+  it('should have links to available components', () => {
+    let components = ['Detailed Targeting', 'Geo Targeting'];
+
+    components.forEach((text) => {
+      expect(page.getLinkFor(text)
+                 .isPresent())
+        .toBeTruthy();
+    });
   });
 });

@@ -1,0 +1,20 @@
+<div class="demo-geo-targeting__content">
+  <div class="demo-geo-targeting__component"
+       *ngIf="!hideDetailedTargeting">
+    <div class="demo-geo-targeting__component-buttons">
+      <button (click)="hideDetailedTargeting = !hideDetailedTargeting">Toggle</button>
+      <button (click)="lang = 'en_US'">EN</button>
+      <button (click)="lang = 'ru_RU'">RU</button>
+      <button (click)="lang = 'zh_CN'">CN</button>
+    </div>
+    <geo-targeting [spec]="spec"
+                   [onChange]="onChange"
+                   [adaccountId]="'act_944874195534529'"
+                   [lang]="lang"></geo-targeting>
+  </div>
+
+  <div class="demo-geo-targeting__sidebar">
+    <h3>Spec:</h3>
+    <pre class="demo-geo-targeting__spec">{{ spec | json}}</pre>
+  </div>
+</div>

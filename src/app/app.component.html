@@ -1,16 +1,14 @@
+<div class="app__header">
+  <h1 class="app__title">
+    <a class="app__title-link"
+       routerLink="/"> {{ title }}
+    </a>
+  </h1>
+  <app-navbar></app-navbar>
+</div>
+
+<hr>
+
 <div class="app__content">
-  <button (click)="hideDetailedTargeting = !hideDetailedTargeting">Toggle</button>
-  <button (click)="lang = 'en_US'">EN</button>
-  <button (click)="lang = 'ru_RU'">RU</button>
-  <button (click)="lang = 'zh_CN'">CN</button>
-  <br>
-  <br>
-  <div *ngIf="!hideDetailedTargeting">
-    <detailed-targeting [spec]="spec"
-                        [onChange]="onChange"
-                        [adaccountId]="'act_944874195534529'"
-                        [lang]="lang"></detailed-targeting>
-  </div>
-  <h3>Spec:</h3>
-  <pre>{{ spec | json}}</pre>
+  <router-outlet></router-outlet>
 </div>

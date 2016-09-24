@@ -1,14 +1,25 @@
 :host {
   position:    absolute;
   display:     block;
-  height:      100%;
+  overflow:    auto;
   width:       100%;
+  height:      100%;
+  color:       #232323;
   font-size:   12px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  overflow:    auto;
+}
+
+.app__header {
+  text-align: center;
+}
+
+.app__title-link {
+  color:           inherit;
+  text-decoration: none;
 }
 
 .app__content {
-  width:  500px;
   margin: 50px auto;
+  width:  1080px;
 }
+

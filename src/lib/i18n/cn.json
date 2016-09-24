@@ -40,5 +40,26 @@
     "EDUCATION_MAJORS": "研究领域",
     "WORK_EMPLOYERS": "雇主",
     "WORK_POSITIONS": "职位"
+  },
+  "geo-targeting-input": {
+    "PLACEHOLDER": "Add locations"
+  },
+  "geo-targeting-dropdown": {
+    "country": "Country",
+    "country_group": "Country Group",
+    "region": "State",
+    "city": "City",
+    "zip": "Zip",
+    "electoral_district": "Electoral District",
+    "geo_market": "Geo Market"
+  },
+  "geo-targeting-info": {
+    "MESSAGE": "Your audience location has been changed from {{ fromNames }} to {{ toName }}.",
+    "MESSAGE_MISSING_BROADER": "You have to include at least one broader location before you can exclude this location.",
+    "MESSAGE_NARROW": "Your audience location is set to {{ narrowerLocationNames }}, so everything outside of this location is automatically excluded."
+  },
+  "geo-targeting-mode": {
+    "include": "Include",
+    "exclude": "Exclude"
   }
 }
