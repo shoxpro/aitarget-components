@@ -1,9 +1,6 @@
-:host {
-  display:    inline-block;
-  width:      22px;
-  text-align: center;
-}
-
-.geo-targeting-pin {
-  display: inline-block;
+.geo-targeting-pin,
+.geo-targeting-pin__icon {
+  display: block;
+  width:   18px;
+  height:  18px;
 }

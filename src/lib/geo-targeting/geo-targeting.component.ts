@@ -7,13 +7,14 @@ import { GeoTargetingDropdownService } from './geo-targeting-dropdown/geo-target
 import { GeoTargetingSelectedService } from './geo-targeting-selected/geo-targeting-selected.service';
 import { TargetingSpecService } from '../targeting/targeting-spec.service';
 import { GeoTargetingItem } from './geo-targeting-item.interface';
+import { GeoTargetingModeService } from './geo-targeting-mode/geo-targeting-mode.service';
 
 @Component({
   selector:    'geo-targeting',
   templateUrl: './geo-targeting.component.html',
   styleUrls:   ['./geo-targeting.component.css'],
   providers:   [GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
-    GeoTargetingSelectedService, TargetingSpecService]
+    GeoTargetingSelectedService, TargetingSpecService, GeoTargetingModeService]
 })
 export class GeoTargetingComponent implements OnInit, OnDestroy {
 

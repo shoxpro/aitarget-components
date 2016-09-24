@@ -113,10 +113,6 @@ export class GeoTargetingApiService {
           }
         }
 
-        console.info(`excludedKeys:`, excludedKeys);
-
-        console.info(`items:`, items);
-
         _response.next(items);
       });
     });
