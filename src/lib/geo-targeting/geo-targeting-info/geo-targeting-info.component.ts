@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
-import { GeoTargetingItem } from '../geo-targeting-item.interface';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { GeoTargetingInfoService } from './geo-targeting-info.service';
 
 @Component({
   selector:        'geo-targeting-info',
@@ -11,8 +10,11 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 })
 export class GeoTargetingInfoComponent implements OnInit, OnDestroy {
 
-  private _subscriptions    = [];
+  private _subscriptions = [];
+
+  public infoLevel: 'info'|'error';
   public message: string;
+  public canRevert: boolean;
   public isVisible: boolean = false;
 
   private updateTemplate () {
@@ -20,14 +22,8 @@ export class GeoTargetingInfoComponent implements OnInit, OnDestroy {
     this.ChangeDetectorRef.detectChanges();
   }
 
-  private show () {
-    this.isVisible = true;
-    this.updateTemplate();
-  }
-
   public hide () {
-    this.isVisible = false;
-    this.updateTemplate();
+    this.GeoTargetingInfoService.hide();
   }
 
   public undoChange () {
@@ -38,7 +34,7 @@ export class GeoTargetingInfoComponent implements OnInit, OnDestroy {
   }
 
   constructor (private GeoTargetingSelectedService: GeoTargetingSelectedService,
-               private TranslateService: TranslateService,
+               private GeoTargetingInfoService: GeoTargetingInfoService,
                private ChangeDetectorRef: ChangeDetectorRef) { }
 
   ngOnDestroy () {
@@ -49,23 +45,30 @@ export class GeoTargetingInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit () {
     this._subscriptions.push(
-      this.GeoTargetingSelectedService.items.subscribe((items: GeoTargetingItem[]) => {
-        let replacedItems = this.GeoTargetingSelectedService.getReplacedItems();
-        let lastAddedItem = items[items.length - 1];
-        let fromNames     = replacedItems
-          .map((replacedItem) => replacedItem.name)
-          .join(', ');
+      this.GeoTargetingInfoService.message.subscribe((message) => {
+        this.message = message;
+        this.updateTemplate();
+      })
+    );
 
-        this.message = this.TranslateService.instant(`geo-targeting-info.MESSAGE`, {
-          fromNames: fromNames,
-          toName:    lastAddedItem ? lastAddedItem.name : ''
-        });
+    this._subscriptions.push(
+      this.GeoTargetingInfoService.infoLevel.subscribe((infoLevel) => {
+        this.infoLevel = infoLevel;
+        this.updateTemplate();
+      })
+    );
 
-        if (replacedItems.length) {
-          this.show();
-        } else {
-          this.hide();
-        }
+    this._subscriptions.push(
+      this.GeoTargetingInfoService.canRevert.subscribe((canRevert) => {
+        this.canRevert = canRevert;
+        this.updateTemplate();
+      })
+    );
+
+    this._subscriptions.push(
+      this.GeoTargetingInfoService.isVisible.subscribe((isVisible) => {
+        this.isVisible = isVisible;
+        this.updateTemplate();
       })
     );
   }

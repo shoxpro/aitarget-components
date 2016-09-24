@@ -3,6 +3,8 @@ import { BehaviorSubject } from 'rxjs/Rx';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSpec, Key, City } from '../../targeting/targeting-spec-geo.interface';
 import { TargetingSpec } from '../../targeting/targeting-spec.interface';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 
 @Injectable()
 export class GeoTargetingSelectedService {
@@ -11,6 +13,23 @@ export class GeoTargetingSelectedService {
   public items                               = this._items.asObservable();
   private _prevItems: GeoTargetingItem[]     = [];
   private _replacedItems: GeoTargetingItem[] = [];
+
+  private informAboutReplaced () {
+    let replacedItems = this.getReplacedItems();
+    let items         = this.get();
+    let lastAddedItem = items[items.length - 1];
+    let fromNames     = replacedItems
+      .map((replacedItem) => replacedItem.name)
+      .join(', ');
+
+    let message = this.TranslateService.instant(`geo-targeting-info.MESSAGE`, {
+      fromNames: fromNames,
+      toName:    lastAddedItem ? lastAddedItem.name : ''
+    });
+
+    this.GeoTargetingInfoService.update('info', message, true);
+    this.GeoTargetingInfoService.show();
+  }
 
   public get () {
     return this._items.getValue();
@@ -62,6 +81,10 @@ export class GeoTargetingSelectedService {
     selectedItems.push(item);
 
     this.update(selectedItems);
+
+    if (this._replacedItems.length) {
+      this.informAboutReplaced();
+    }
   }
 
   public remove (item: GeoTargetingItem) {
@@ -130,6 +153,7 @@ export class GeoTargetingSelectedService {
     };
   }
 
-  constructor () { }
+  constructor (private TranslateService: TranslateService,
+               private GeoTargetingInfoService: GeoTargetingInfoService) { }
 
 }
