@@ -7,7 +7,6 @@ import { TargetingSpec } from '../targeting/targeting-spec.interface';
 import { defaultDetailedTargetingSpec } from '../targeting/targeting-spec-detailed.const';
 import { DetailedTargetingService } from './detailed-targeting.service';
 import { DetailedTargetingSpec } from '../targeting/targeting-spec-detailed.interface';
-import * as _ from 'lodash';
 import { DetailedTargetingModeService } from './detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingInfoService } from './detailed-targeting-info/detailed-targeting-info.service';
 import { DetailedTargetingDropdownSuggestedService } from './detailed-targeting-dropdown-suggested/detailed-targeting-dropdown-suggested.service';
@@ -135,9 +134,7 @@ export class DetailedTargetingComponent implements OnInit {
     // Skip first initialization subject and second with passed spec
         .skip(1)
         .subscribe((spec: TargetingSpec) => {
-          if (!_.isEqual(this.spec, spec)) {
-            this.onChange(spec);
-          }
+          this.onChange(spec);
         });
 
     /**
