@@ -33,7 +33,7 @@
     <span class="geo-targeting-info__text">{{ message }}</span>
     <span class="geo-targeting-info__change"
           *ngIf="canRevert"
-          (click)="undoChange()">Undo Change
+          (click)="undoChange()">{{ 'geo-targeting-info.UNDO' | translate }}
     </span>
   </div>
 

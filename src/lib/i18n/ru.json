@@ -42,24 +42,25 @@
     "WORK_POSITIONS": "Должности"
   },
   "geo-targeting-input": {
-    "PLACEHOLDER": "Add locations"
+    "PLACEHOLDER": "Добавьте места"
   },
   "geo-targeting-dropdown": {
     "country": "Страна",
     "country_group": "Группа стран",
-    "region": "Регион",
+    "region": "Штат/Регион/Область",
     "city": "Город",
     "zip": "Индекс",
-    "electoral_district": "Electoral District",
-    "geo_market": "Geo Market"
+    "electoral_district": "Избирательный округ",
+    "geo_market": "Рынок"
   },
   "geo-targeting-info": {
-    "MESSAGE": "Your audience location has been changed from {{ fromNames }} to {{ toName }}.",
-    "MESSAGE_MISSING_BROADER": "You have to include at least one broader location before you can exclude this location.",
-    "MESSAGE_NARROW": "Your audience location is set to {{ narrowerLocationNames }}, so everything outside of this location is automatically excluded."
+    "MESSAGE": "Местоположение вашей аудитории изменено с {{ fromNames }} на {{ toName }}.",
+    "UNDO": "Отменить изменения",
+    "MESSAGE_MISSING_BROADER": "Вы должны добавить хотя бы одно место, включающее в себя выбранное вами, прежде чем сможете его исключить.",
+    "MESSAGE_NARROW": "Местонахождение вашей аудитории — {{ narrowerLocationNames }}, все остальные места автоматически исключаются."
   },
   "geo-targeting-mode": {
-    "include": "Include",
-    "exclude": "Exclude"
+    "include": "Включить",
+    "exclude": "Исключить"
   }
 }

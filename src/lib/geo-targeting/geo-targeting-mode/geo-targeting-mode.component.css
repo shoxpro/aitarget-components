@@ -9,7 +9,6 @@
 .geo-targeting-mode {
   display:      flex;
   padding:      0 6px;
-  width:        63px;
   border-right: 1px solid #bdc7d8;
   white-space:  nowrap;
   cursor:       pointer;
