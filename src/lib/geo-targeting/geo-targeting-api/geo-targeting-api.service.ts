@@ -23,18 +23,22 @@ export class GeoTargetingApiService {
    * @param excludedGeoLocations
    * @returns {{}}
    */
-  private processGeoLocations (geoLocations: GeoTargetingSpec, excludedGeoLocations: GeoTargetingSpec) {
+  private processGeoLocations (geoLocations: GeoTargetingSpec = {}, excludedGeoLocations: GeoTargetingSpec = {}) {
     let simplifiedGeoLocations = {};
 
     let types = ['countries', 'regions', 'cities', 'zips', 'geo_markets', 'electoral_districts'];
 
     types.forEach((type: string) => {
       // Combine items from included and excluded locations
-      let items: GeoTargetingItem[] = (geoLocations[type] || []).concat(excludedGeoLocations[type] || []);
+      let items = (geoLocations[type] || []).concat(excludedGeoLocations[type] || []);
 
-      items.forEach((item: GeoTargetingItem) => {
+      items.forEach((item) => {
         simplifiedGeoLocations[type] = simplifiedGeoLocations[type] || [];
         let key: string | number     = item.key;
+
+        if (type === 'countries') {
+          key = (<string>item);
+        }
 
         if (type === 'regions' || type === 'cities') {
           key = Number(item.key);

@@ -127,6 +127,8 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
      */
     this.subscriptions.push(
       this.GeoTargetingSelectedService.items
+      // Skip initialization update and update for first passed targeting spec
+          .skip(2)
           .subscribe(() => {
             let newTargetingSpec = Object.assign(this.spec, this.GeoTargetingSelectedService.getSpec());
             this.TargetingSpecService.update(newTargetingSpec);
@@ -139,7 +141,8 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
      */
     this.subscriptions.push(
       this.TargetingSpecService.spec
-          .distinctUntilChanged()
+      // Skip initialization update
+          .skip(1)
           .subscribe((spec: TargetingSpec) => {
             this.onChange(spec);
           })
