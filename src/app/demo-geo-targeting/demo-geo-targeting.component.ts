@@ -12,7 +12,8 @@ export class DemoGeoTargetingComponent implements OnInit {
       'location_types':      [
         'home'
       ],
-      'regions':             [
+      'countries':             ['RU'],
+      /*'regions':             [
         {
           'key':  '3153',
           'name': 'Omsk Oblast'
@@ -69,7 +70,7 @@ export class DemoGeoTargetingComponent implements OnInit {
           'key':  'US:CA14',
           'name': `California's 14th District`
         }
-      ]
+      ]*/
     },
     'excluded_geo_locations': {
       'location_types': [

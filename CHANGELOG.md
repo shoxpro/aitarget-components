@@ -1,3 +1,55 @@
+<a name="0.0.8"></a>
+## 0.0.8 (2016-09-25)
+
+* chore: bump version patch to v0.0.7 50c9d40
+* chore: bump version patch to v0.0.8 37db250
+* chore: bump version prerelease to v0.0.7-1 f82ee85
+* chore: bump version prerelease to v0.0.7-2 5315862
+* chore(): install packages for changelog update c0db3e3
+* chore(angular2-final): update project to angular@2.0.0, fix tests environment, close #69 b7f3f51, closes #69
+* chore(e2e): run lite-server before e2e tests, #21 7dc28e8
+* chore(gh-pages): remove custom gh-pages script 1e16115
+* chore(heo-targeting): add sample files for geo-component, #72 396c74a
+* chore(package.json): add gh-pages script shortcut 9ec592b
+* chore(test): test environment works, #17 b9032c6
+* chore(travis): add cache folder, run e2e tests, run linting a293100
+* chore(travis): add travis badge and travis support for unit tests, #21 93a4adc
+* chore(travis): remove unnecessary steps in travis build, #21 c942de0
+* fix(): remove checking for spec equality in detailed-targeting component a8e0b2d
+* fix(): some fixes and improvements before integrating to fb.aitarget.com, #87 624d5f8, closes #87
+* fix(adaccount): use adaccount passed to detailed-targeting component, #67 2f177a5
+* fix(full-name): don't include country name twice for countries 1785472
+* fix(geo-targeting-info): auto height and vertical-align middle, close #84 7242097, closes #84
+* fix(remove): fix removing items 903b05c
+* feat(excluded): update targeting spec with  included and excluded locations, #75 b851425
+* feat(geo-targeting-info): show info block when change locations from broader to narrower or visa ver 996d4b2
+* feat(geo-targeting-info): update info component, support error mode, #75 7562a40
+* feat(geo-targeting-mode): add mode component for including and excluding locations, #75 6f6fe3e
+* feat(geo-targeting-pin): add included and excluded pin icons 2e374dd
+* feat(localization): add translations, fix updating mode when language change, #83 3ed0dd7, closes #83
+* feat(selected-service): save previous items and items to replace, #74 96a9c15
+* feat(selected): validate selecting new items (included and excluded) and show proper info messages,  be4d1db
+* feat(spec): show preselected geo locations, #74 358145f
+* feat(targeting spec): update targeting spec when selected locations changes, #74 06ffefe
+* feature(): search for locations and show results in dropdown, #72 9f0b433
+* feature(full-name): add fullName pipe, #74 0815263
+* feature(geo-targeting-dropdown): add dropdown with items for searched location, #72 b79bf83
+* feature(geo-targeting): add geo-targeting-input component, improve routing, #72 a74c161
+* feature(routing): add geo-targeting component, enable routing navigation, #17 #71 e2d5928
+* feature(selected): replace broader and narrower locations when adding new item, #74 504641b
+* feature(targeting-spec-geo): add interface and default const for geo targeting spec, #74 979cf3a
+* feature(type): add location types to translations, #83 f651144
+* test(e2e): add e2e sample tetsts for detailed-targeting, #17 d57e7bb
+* test(e2e): add some e2e tests, enable login, #17 773fc4d
+* test(full-name): add tests for full-name pipe, #74 5249bd4
+* test(unit): fix unit tests, #17 c722283, closes #17
+* WIP(selected): add geo-targeting-item interface, basic selection mode, #74 add8909
+* WIP(selected): add styling for selected items, fix closing dropdown when select, #74 af3c0e2, closes #74
+* refactor(tests): remove all old tests, #17 7085677
+* refactor(tslint): ng lint all files, #17 aa07c7e
+
+
+
 <a name="0.0.7-2"></a>
 ## [0.0.7-2](https://github.com/aitarget/aitarget-components/compare/v0.0.7-2...0.0.7-2) (2016-09-14)
 
