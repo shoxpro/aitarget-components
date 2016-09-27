@@ -46,7 +46,6 @@
 }
 
 .geo-targeting-radius__select {
-  position:         absolute;
   box-sizing:       border-box;
   width:            180px;
   height:           100px;

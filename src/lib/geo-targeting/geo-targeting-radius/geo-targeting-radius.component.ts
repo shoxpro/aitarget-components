@@ -12,7 +12,10 @@ export class GeoTargetingRadiusComponent implements OnInit {
 
   private isOpen: boolean = false;
 
-  public toggle () {
+  public toggle (event?) {
+    if (event) {
+      event.stopPropagation();
+    }
     this.isOpen = !this.isOpen;
   }
 

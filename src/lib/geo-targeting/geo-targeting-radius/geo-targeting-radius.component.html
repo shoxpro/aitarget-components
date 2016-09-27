@@ -1,13 +1,13 @@
 <div class="geo-targeting-radius"
      [ngClass]="{'geo-targeting-radius_open': isOpen}"
-     (click)="toggle()">
+     (click)="toggle($event)">
   <span class="geo-targeting-radius__result"
         *ngIf="item.radius > 0">+ {{ item.radius }}{{ 'geo-targeting-radius.' + item.distance_unit | translate}}
   </span>
 
   <!--Tick-->
   <span class="geo-targeting-radius__tick geo-targeting-radius__tick_down"
-        *ngIf="isOpen">
+        *ngIf="!isOpen">
     <svg xmlns="http://www.w3.org/2000/svg"
          fill="#000000"
          height="24"
@@ -19,7 +19,7 @@
     </svg>
   </span>
   <span class="geo-targeting-radius__tick geo-targeting-radius__tick_up"
-        *ngIf="!isOpen">
+        *ngIf="isOpen">
     <svg xmlns="http://www.w3.org/2000/svg"
          fill="#000000"
          height="24"
@@ -30,8 +30,13 @@
             fill="none"></path>
     </svg>
   </span>
-  <!--Tick End-->
+  <!--End of Tick-->
 </div>
+<!--Select Radius Dropdown-->
 <div class="geo-targeting-radius__select"
-     *ngIf="isOpen"></div>
+     *ngIf="isOpen"
+     appendToBody
+     (clickOutside)="toggle()">
+</div>
+<!--End of Select Radius Dropdown-->
 

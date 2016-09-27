@@ -11,6 +11,8 @@ import { GeoTargetingInfoComponent } from './geo-targeting-info/geo-targeting-in
 import { GeoTargetingPinComponent } from './geo-targeting-pin/geo-targeting-pin.component';
 import { GeoTargetingModeComponent } from './geo-targeting-mode/geo-targeting-mode.component';
 import { GeoTargetingRadiusComponent } from './geo-targeting-radius/geo-targeting-radius.component';
+import { AppendToBodyDirective } from '../shared/directives/append-to-body.directive';
+import { ClickOutsideDirective } from '../shared/directives/click-outside.directive';
 /* tslint:enable:max-line-length */
 
 @NgModule({
@@ -27,7 +29,9 @@ import { GeoTargetingRadiusComponent } from './geo-targeting-radius/geo-targetin
     GeoTargetingPinComponent,
     GeoTargetingModeComponent,
     GeoTargetingRadiusComponent,
-    FullNamePipe
+    FullNamePipe,
+    AppendToBodyDirective,
+    ClickOutsideDirective
   ],
   exports:      [
     GeoTargetingComponent
