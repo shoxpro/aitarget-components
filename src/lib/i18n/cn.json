@@ -62,5 +62,9 @@
   "geo-targeting-mode": {
     "include": "添加地区",
     "exclude": "添加地区"
+  },
+  "geo-targeting-radius": {
+    "mile": "mi",
+    "kilometer": "km"
   }
 }

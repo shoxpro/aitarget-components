@@ -62,5 +62,9 @@
   "geo-targeting-mode": {
     "include": "Include",
     "exclude": "Exclude"
+  },
+  "geo-targeting-radius": {
+    "mile": "mi",
+    "kilometer": "km"
   }
 }
