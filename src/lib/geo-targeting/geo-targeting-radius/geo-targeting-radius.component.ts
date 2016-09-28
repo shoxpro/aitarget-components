@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component, OnInit, Input, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, ViewEncapsulation
+} from '@angular/core';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
@@ -8,7 +10,8 @@ import { Subject } from 'rxjs/Rx';
   selector:        'geo-targeting-radius',
   templateUrl:     './geo-targeting-radius.component.html',
   styleUrls:       ['./geo-targeting-radius.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation:   ViewEncapsulation.None
 })
 export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
 
