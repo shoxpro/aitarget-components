@@ -14,11 +14,11 @@ export class AppendToBodyDirective implements OnInit, OnDestroy {
   ngOnDestroy () {}
 
   ngOnInit () {
-    const previousSiblingRect = this.element.previousElementSibling.getBoundingClientRect();
+    const currentRect = this.element.getBoundingClientRect();
 
     this.element.style.position = 'absolute';
-    this.element.style.top      = `${previousSiblingRect.bottom}px`;
-    this.element.style.left     = `${previousSiblingRect.left}px`;
+    this.element.style.top      = `${currentRect.top}px`;
+    this.element.style.left     = `${currentRect.left}px`;
 
     window.document.querySelector('body')
           .appendChild(this.element);
