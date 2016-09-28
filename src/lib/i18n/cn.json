@@ -64,7 +64,10 @@
     "exclude": "添加地区"
   },
   "geo-targeting-radius": {
-    "mile": "mi",
-    "kilometer": "km"
+    "mile": "英里",
+    "kilometer": "公里",
+    "CURRENT_ONLY": "只限当前城市",
+    "USE_RADIUS": "范围内城市",
+    "USE_RADIUS_INFO": "如果城市中心在半径范围以内，周边城市也将包括在内。"
   }
 }

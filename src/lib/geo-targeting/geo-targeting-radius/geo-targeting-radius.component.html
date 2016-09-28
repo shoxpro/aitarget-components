@@ -2,7 +2,7 @@
      [ngClass]="{'geo-targeting-radius_open': isOpen}"
      (click)="toggle($event)">
   <span class="geo-targeting-radius__result"
-        *ngIf="item.radius > 0">+ {{ item.radius }}{{ 'geo-targeting-radius.' + item.distance_unit | translate}}
+        *ngIf="item.radius > 0">+ {{ item.radius }} {{ 'geo-targeting-radius.' + item.distance_unit | translate}}
   </span>
 
   <!--Tick-->
@@ -37,6 +37,59 @@
      *ngIf="isOpen"
      appendToBody
      (clickOutside)="toggle()">
+  <div class="geo-targeting-radius__mode geo-targeting-radius__mode_current">
+    <div class="geo-targeting-radius__mode-row"
+         (click)="disableRadius()">
+      <span class="geo-targeting-radius__select-tick"
+            *ngIf="item.radius === 0">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="#50a9c9"
+             height="18"
+             viewBox="0 0 24 24"
+             width="18">
+          <path d="M0 0h24v24H0z"
+                fill="none"></path>
+          <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path>
+        </svg>
+      </span>
+      <span>{{ 'geo-targeting-radius.CURRENT_ONLY' | translate }}</span>
+    </div>
+  </div>
+  <div class="geo-targeting-radius__mode geo-targeting-radius__mode_radius">
+    <div class="geo-targeting-radius__mode-row"
+         (click)="enableRadius()">
+      <span class="geo-targeting-radius__select-tick"
+            *ngIf="item.radius > 0">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="#50a9c9"
+             height="18"
+             viewBox="0 0 24 24"
+             width="18">
+          <path d="M0 0h24v24H0z"
+                fill="none"></path>
+          <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path>
+        </svg>
+      </span>
+      <span>{{ 'geo-targeting-radius.USE_RADIUS' | translate }}</span>
+    </div>
+    <div class="geo-targeting-radius__mode-row geo-targeting-radius__mode-row_slider">
+      <md-slider class="geo-targeting-radius__slider"
+                 [min]="min"
+                 [max]="max"
+                 [ngModel]="item.radius"
+                 (ngModelChange)="onChange($event)"></md-slider>
+      <label class="geo-targeting-radius__label">
+        <input type="number"
+               class="geo-targeting-radius__input"
+               [ngModel]="item.radius"
+               (ngModelChange)="onChange($event)"
+               [min]="min"
+               [max]="max"
+               required />
+        <span>{{ 'geo-targeting-radius.' + item.distance_unit | translate}}</span>
+      </label>
+    </div>
+  </div>
 </div>
 <!--End of Select Radius Dropdown-->
 

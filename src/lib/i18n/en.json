@@ -65,6 +65,9 @@
   },
   "geo-targeting-radius": {
     "mile": "mi",
-    "kilometer": "km"
+    "kilometer": "km",
+    "CURRENT_ONLY": "Current city only",
+    "USE_RADIUS": "Cities within radius",
+    "USE_RADIUS_INFO": "Surrounding cities are included if the center of the city falls within the radius."
   }
 }

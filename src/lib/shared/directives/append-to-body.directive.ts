@@ -1,11 +1,10 @@
-import { Directive, ElementRef, Output, OnInit, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, OnInit, OnDestroy } from '@angular/core';
 
 @Directive({
   selector: '[appendToBody]'
 })
 export class AppendToBodyDirective implements OnInit, OnDestroy {
 
-  @Output()
   private element;
 
   constructor (private ElementRef: ElementRef) {

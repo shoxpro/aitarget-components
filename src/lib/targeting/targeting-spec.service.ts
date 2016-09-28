@@ -30,6 +30,7 @@ export class TargetingSpecService {
   }
 
   public update (spec: TargetingSpec) {
+    console.log(`spec: `, spec);
     this._spec.next(spec);
   }
 

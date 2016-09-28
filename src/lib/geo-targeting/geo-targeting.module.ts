@@ -13,11 +13,13 @@ import { GeoTargetingModeComponent } from './geo-targeting-mode/geo-targeting-mo
 import { GeoTargetingRadiusComponent } from './geo-targeting-radius/geo-targeting-radius.component';
 import { AppendToBodyDirective } from '../shared/directives/append-to-body.directive';
 import { ClickOutsideDirective } from '../shared/directives/click-outside.directive';
+import { MdSliderModule } from '@angular2-material/slider';
 /* tslint:enable:max-line-length */
 
 @NgModule({
   imports:      [
-    CoreModule
+    CoreModule,
+    MdSliderModule.forRoot()
   ],
   declarations: [
     GeoTargetingComponent,

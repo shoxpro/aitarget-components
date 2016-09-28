@@ -176,6 +176,22 @@ export class GeoTargetingSelectedService {
   }
 
   /**
+   * Update one of selected items
+   * @param item
+   */
+  public updateItem (item: GeoTargetingItem) {
+    let selectedItems = this.get();
+    selectedItems.map((selectedItem: GeoTargetingItem) => {
+      if (selectedItem.key === item.key) {
+        // Update selectedItem
+        Object.assign(selectedItem, item);
+      }
+      return selectedItem;
+    });
+    this.update(selectedItems);
+  }
+
+  /**
    * Remove passed item from selected list
    * @param item
    */
@@ -232,11 +248,11 @@ export class GeoTargetingSelectedService {
       } else {
         let selectedValue: Key = {key: item.key, name: item.name};
 
-        if (item.type === 'city' && item.radius) {
+        if (item.type === 'city' && item.radius != null) {
           (<City>selectedValue).radius = item.radius;
         }
 
-        if (item.type === 'city' && item.distance_unit) {
+        if (item.type === 'city' && item.distance_unit != null) {
           (<City>selectedValue).distance_unit = item.distance_unit;
         }
 
