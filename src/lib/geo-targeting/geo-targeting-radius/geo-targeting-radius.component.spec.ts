@@ -5,12 +5,13 @@ import { GeoTargetingRadiusComponent } from './geo-targeting-radius.component';
 import { LibModule } from '../../lib.module';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
+import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 
 describe('Component: GeoTargetingRadius', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:   [LibModule],
-      providers: [GeoTargetingSelectedService, GeoTargetingInfoService]
+      providers: [GeoTargetingSelectedService, GeoTargetingInfoService, GeoTargetingTypeService]
     });
   });
 

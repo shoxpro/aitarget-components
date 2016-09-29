@@ -1,3 +1,17 @@
-<p>
-  geo-targeting-type works!
-</p>
+<div class="geo-targeting-type">
+  <span class="geo-targeting-type__selected">{{ selectedType.title }}</span>
+</div>
+<div class="geo-targeting-type__dropdown">
+  <div *ngFor="let type of types"
+       (mouseover)="type.showInfo = true"
+       (mouseout)="type.showInfo = false"
+       (click)="select(type)">
+    <fb-tick class="geo-targeting-type__tick"
+             *ngIf="selectedType.title === type.title">
+    </fb-tick>
+    <span class="geo-targeting-type__type-title">{{ type.title }}</span>
+    <span class="geo-targeting-type__type-info"
+          *ngIf="type.showInfo">{{ type.info }}
+    </span>
+  </div>
+</div>

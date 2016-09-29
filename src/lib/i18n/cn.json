@@ -69,5 +69,15 @@
     "CURRENT_ONLY": "只限当前城市",
     "USE_RADIUS": "范围内城市",
     "USE_RADIUS_INFO": "如果城市中心在半径范围以内，周边城市也将包括在内。"
+  },
+  "geo-targeting-type": {
+    "ALL": "该地区内的所有用户",
+    "ALL_INFO": "住址或最近出现在选定区域内的用户。",
+    "HOME": "居住在该地区的用户",
+    "HOME_INFO": "住址在选定区域内的用户。",
+    "RECENT": "最近位于该地区的用户",
+    "RECENT_INFO": "最近出现在选定区域内的用户。",
+    "TRAVEL_IN": "到该地区旅游的用户",
+    "TRAVEL_IN_INFO": "近期位于选定地区，但家庭住址距离此地区 125mi或 200 km。"
   }
 }

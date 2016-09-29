@@ -3,12 +3,15 @@
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingTypeComponent } from './geo-targeting-type.component';
 import { LibModule } from '../../lib.module';
+import { GeoTargetingTypeService } from './geo-targeting-type.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 
 describe('Component: GeoTargetingType', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:   [LibModule],
-      providers: []
+      providers: [GeoTargetingTypeService, GeoTargetingTypeService, GeoTargetingSelectedService, GeoTargetingInfoService]
     });
   });
 

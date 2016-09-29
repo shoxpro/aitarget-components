@@ -9,13 +9,15 @@ import { TargetingSpecService } from '../targeting/targeting-spec.service';
 import { GeoTargetingItem } from './geo-targeting-item.interface';
 import { GeoTargetingModeService } from './geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingInfoService } from './geo-targeting-info/geo-targeting-info.service';
+import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type.service';
 
 @Component({
   selector:    'geo-targeting',
   templateUrl: './geo-targeting.component.html',
   styleUrls:   ['./geo-targeting.component.css'],
   providers:   [GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
-    GeoTargetingSelectedService, TargetingSpecService, GeoTargetingModeService, GeoTargetingInfoService]
+    GeoTargetingSelectedService, TargetingSpecService, GeoTargetingModeService,
+    GeoTargetingInfoService, GeoTargetingTypeService]
 })
 export class GeoTargetingComponent implements OnInit, OnDestroy {
 
@@ -91,6 +93,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
                private GeoTargetingInputService: GeoTargetingInputService,
                private TargetingSpecService: TargetingSpecService,
                private GeoTargetingSelectedService: GeoTargetingSelectedService,
+               private GeoTargetingTypeService: GeoTargetingTypeService,
                private ElementRef: ElementRef) {
     // this language will be used as a fallback when a translation isn't found in the current language
     this.TranslateService.setDefaultLang(this.lang);
@@ -104,14 +107,19 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
+    if (this.spec.geo_locations && this.spec.geo_locations.location_types) {
+      this.GeoTargetingTypeService.update(this.spec.geo_locations.location_types);
+    }
     /**
      * Get geo location metadata for passed targeting spec and update selected items
      */
-    this.GeoTargetingApiService
-        .metaData(this.spec)
-        .subscribe((items: GeoTargetingItem[]) => {
-          this.GeoTargetingSelectedService.update(items);
-        });
+    this.subscriptions.push(
+      this.GeoTargetingApiService
+          .metaData(this.spec)
+          .subscribe((items: GeoTargetingItem[]) => {
+            this.GeoTargetingSelectedService.update(items);
+          })
+    );
     /**
      * Bind/unbind different events depending on geo-targeting dropdown state.
      */

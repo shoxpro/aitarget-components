@@ -5,6 +5,7 @@ import { GeoTargetingSpec, Key, City } from '../../targeting/targeting-spec-geo.
 import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
+import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 
 @Injectable()
 export class GeoTargetingSelectedService {
@@ -222,12 +223,10 @@ export class GeoTargetingSelectedService {
     };
 
     let geoLocations: GeoTargetingSpec = {
-      location_types: ['home']
+      location_types: this.GeoTargetingTypeService.get()
     };
 
-    let excludedGeoLocations: GeoTargetingSpec = {
-      location_types: ['home']
-    };
+    let excludedGeoLocations: GeoTargetingSpec = {};
 
     let locations: GeoTargetingSpec = {};
 
@@ -267,6 +266,7 @@ export class GeoTargetingSelectedService {
   }
 
   constructor (private TranslateService: TranslateService,
-               private GeoTargetingInfoService: GeoTargetingInfoService) { }
+               private GeoTargetingInfoService: GeoTargetingInfoService,
+               private GeoTargetingTypeService: GeoTargetingTypeService) { }
 
 }
