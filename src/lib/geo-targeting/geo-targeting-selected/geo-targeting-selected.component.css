@@ -48,7 +48,10 @@
 .geo-targeting-selected__item {
   position:    relative;
   display:     flex;
+  box-sizing:  border-box;
   padding:     0 0 0 30px;
+  min-height:  26px;
+  height:      auto;
   font-weight: bold;
   align-items: center;
 }

@@ -1,3 +1,8 @@
+:host {
+  position: relative;
+  display:  block;
+}
+
 .geo-targeting-type {
   display:             inline-flex;
   box-sizing:          border-box;
@@ -29,8 +34,9 @@
 }
 
 .geo-targeting-type__dropdown {
-  position:         relative;
-  top:              -40px;
+  position:         absolute;
+  top:              -5px;
+  z-index:          10;
   box-sizing:       border-box;
   padding:          4px 0 4px 0;
   width:            auto;
@@ -38,7 +44,6 @@
   border:           1px solid rgba(0, 0, 0, .15);
   background-color: #ffffff;
   box-shadow:       0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
-  font-size:        14px;
 }
 
 .geo-targeting-type__dropdown-item {
@@ -65,15 +70,15 @@
 
 .geo-targeting-type__type-info {
   position:         absolute;
+  top:              0;
   left:             100%;
+  z-index:          100;
   display:          inline-block;
-  overflow:         hidden;
   box-sizing:       border-box;
-  margin-left:      5px;
+  margin-left:      8px;
   padding:          8px;
   min-height:       22px;
-  max-width:        200px;
-  width:            auto;
+  width:            240px;
   height:           auto;
   border-radius:    4px;
   background-color: rgb(97, 97, 97);
@@ -81,4 +86,17 @@
   font-weight:      500;
   font-size:        12px;
   opacity:          0.9;
+}
+
+.geo-targeting-type__type-info:after {
+  position:      absolute;
+  top:           9px;
+  left:          -4px;
+  display:       inline-block;
+
+  border-top:    4px solid transparent;
+
+  border-right:  4px solid rgb(97, 97, 97);
+  border-bottom: 4px solid transparent;
+  content:       "";
 }

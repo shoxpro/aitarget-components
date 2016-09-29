@@ -185,11 +185,15 @@ export class GeoTargetingSelectedService {
     selectedItems.map((selectedItem: GeoTargetingItem) => {
       if (selectedItem.key === item.key) {
         // Update selectedItem
-        Object.assign(selectedItem, item);
+        selectedItem = Object.assign(selectedItem, item);
       }
       return selectedItem;
     });
+    // TODO: rethink this timeout. Without it we get exception that item if undefined
+    // TODO: It happens when we updateItem too often. Think about debounce or throttle.
+    // setTimeout(() => {
     this.update(selectedItems);
+    // });
   }
 
   /**

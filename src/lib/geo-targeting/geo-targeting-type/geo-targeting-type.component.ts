@@ -60,7 +60,12 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
    */
   public select (type) {
     this.GeoTargetingTypeService.update(type.value);
-    this.TargetingSpecService.update(this.GeoTargetingSelectedService.getSpec());
+
+    // Update targeting spec
+    let newTargetingSpec = Object.assign(this.TargetingSpecService.get(), this.GeoTargetingSelectedService.getSpec());
+    this.TargetingSpecService.update(newTargetingSpec);
+
+    // Hide info and close dropdown
     this.toggleInfo(type, false);
     this.toggleDropdown();
   }

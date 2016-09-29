@@ -4,7 +4,6 @@ import {
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
-import { Subject } from 'rxjs/Rx';
 
 @Component({
   selector:        'geo-targeting-radius',
@@ -18,8 +17,6 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   @Input() item: GeoTargetingItem = {key: ''};
 
   private _subscriptions  = [];
-  private _itemStream     = new Subject<GeoTargetingItem>();
-  private itemStream      = this._itemStream.asObservable();
   private isOpen: boolean = false;
   private max;
   private min: number     = 0;
@@ -52,7 +49,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
       this.max = 80;
     }
 
-    this._itemStream.next(this.item);
+    this.GeoTargetingSelectedService.updateItem(this.item);
   }
 
   /**
@@ -64,6 +61,9 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
       event.stopPropagation();
     }
     this.isOpen = !this.isOpen;
+
+    this.GeoTargetingSelectedService.updateItem(this.item);
+
     this.updateTemplate();
   }
 
@@ -72,7 +72,6 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
    */
   public enableRadius () {
     this.item = this.previousItem;
-    this._itemStream.next(this.item);
   }
 
   /**
@@ -81,7 +80,6 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   public disableRadius () {
     this.previousItem = Object.assign({}, this.item);
     this.item.radius  = 0;
-    this._itemStream.next(this.item);
   }
 
   /**
@@ -99,7 +97,6 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
       return this.onChange(this.max);
     }
     this.item.radius = radius;
-    this._itemStream.next(this.item);
   }
 
   constructor (private TranslateService: TranslateService,
@@ -126,15 +123,6 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
         this.setDefault(lang);
         this.updateTemplate();
       })
-    );
-
-    this._subscriptions.push(
-      this.itemStream
-          .debounceTime(100)
-          .subscribe((item: GeoTargetingItem) => {
-            this.GeoTargetingSelectedService.updateItem(item);
-            this.updateTemplate();
-          })
     );
   }
 

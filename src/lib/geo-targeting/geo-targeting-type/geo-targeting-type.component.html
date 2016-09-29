@@ -7,7 +7,6 @@
   <fb-arrow-drop [direction]="{true: 'up', false: 'down'}[isOpen]"></fb-arrow-drop>
 </div>
 <div class="geo-targeting-type__dropdown"
-     appendToBody
      (clickOutside)="toggleDropdown()"
      *ngIf="isOpen">
   <div *ngFor="let type of types"
@@ -21,8 +20,7 @@
     </fb-tick>
     <span class="geo-targeting-type__type-title">{{ type.title }}</span>
     <div class="geo-targeting-type__type-info"
-         *ngIf="type.showInfo"
-         appendToBody>
+         *ngIf="type.showInfo">
       <span>{{ type.info }}</span>
     </div>
   </div>

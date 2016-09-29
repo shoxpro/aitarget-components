@@ -46,7 +46,7 @@ export class GeoTargetingApiService {
         }
 
         simplifiedGeoLocations[type].push(key);
-        map[item.key] = item;
+        map[key] = item;
       });
     });
 
