@@ -1,0 +1,56 @@
+<div class="geo-targeting-radius"
+     [ngClass]="{'geo-targeting-radius_open': isOpen}"
+     (click)="toggleDropdown($event)">
+  <span class="geo-targeting-radius__result"
+        *ngIf="item.radius > 0">+ {{ item.radius }} {{ 'geo-targeting-radius.' + item.distance_unit | translate}}
+  </span>
+
+  <fb-arrow-drop [direction]="{true: 'up', false: 'down'}[isOpen]"></fb-arrow-drop>
+</div>
+<!--Select Radius Dropdown-->
+<div class="geo-targeting-radius__dropdown"
+     *ngIf="isOpen"
+     appendTo="geo-targeting"
+     (clickOutside)="toggleDropdown()">
+  <div class="geo-targeting-radius__mode geo-targeting-radius__mode_current">
+    <div class="geo-targeting-radius__mode-row"
+         [ngClass]="{'geo-targeting-radius__mode-row_selected': item.radius === 0}"
+         (click)="disableRadius()">
+      <fb-tick class="geo-targeting-radius__dropdown-tick"
+               *ngIf="item.radius === 0">
+      </fb-tick>
+      <span class="geo-targeting-radius__mode-text">{{ 'geo-targeting-radius.CURRENT_ONLY' | translate }}</span>
+    </div>
+  </div>
+  <div class="geo-targeting-radius__mode geo-targeting-radius__mode_radius">
+    <div class="geo-targeting-radius__mode-row"
+         [ngClass]="{'geo-targeting-radius__mode-row_selected': item.radius > 0}"
+         (click)="enableRadius()">
+      <fb-tick class="geo-targeting-radius__dropdown-tick"
+               *ngIf="item.radius > 0">
+      </fb-tick>
+      <span class="geo-targeting-radius__mode-text">{{ 'geo-targeting-radius.USE_RADIUS' | translate }}</span>
+    </div>
+    <div class="geo-targeting-radius__mode-row geo-targeting-radius__mode-row_slider">
+      <span class="geo-targeting-radius__boundary">{{ min }}</span>
+      <md-slider class="geo-targeting-radius__slider"
+                 [min]="min"
+                 [max]="max"
+                 [ngModel]="item.radius"
+                 (ngModelChange)="onChange($event)"></md-slider>
+      <span class="geo-targeting-radius__boundary">{{ max }}</span>
+      <label class="geo-targeting-radius__label">
+        <input type="number"
+               class="geo-targeting-radius__input"
+               [ngModel]="item.radius"
+               (ngModelChange)="onChange($event)"
+               [min]="min"
+               [max]="max"
+               required />
+      </label>
+      <span>{{ 'geo-targeting-radius.' + item.distance_unit | translate}}</span>
+    </div>
+  </div>
+</div>
+<!--End of Select Radius Dropdown-->
+

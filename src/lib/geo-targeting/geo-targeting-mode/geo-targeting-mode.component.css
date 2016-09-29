@@ -26,5 +26,10 @@
 }
 
 .geo-targeting-mode__title {
-  color: #50a9c9;
+  color:       #4b4f56;
+  font-weight: bold;
+}
+
+.geo-targeting-mode__title:hover {
+  color: #53aaca;
 }

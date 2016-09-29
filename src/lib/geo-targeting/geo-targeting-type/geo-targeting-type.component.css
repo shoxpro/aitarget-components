@@ -1,0 +1,102 @@
+:host {
+  position: relative;
+  display:  block;
+}
+
+.geo-targeting-type {
+  display:             inline-flex;
+  box-sizing:          border-box;
+  margin-bottom:       10px;
+  padding:             5px;
+  height:              26px;
+  border:              1px solid #d9dfe7;
+  border-radius:       3px;
+  background-color:    #e8ebf0;
+  font-weight:         normal;
+  font-size:           12px;
+  cursor:              pointer;
+  align-items:         center;
+  -webkit-user-select: none;
+  -moz-user-select:    none;
+  -ms-user-select:     none;
+}
+
+.geo-targeting-type_open {
+  border:           1px solid #d9dfe7;
+  border-radius:    3px 3px 0 0;
+  background-color: #e8ebf0;
+  box-shadow:       inset 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.geo-targeting-type__selected {
+  display:      inline-block;
+  margin-right: 5px;
+}
+
+.geo-targeting-type__dropdown {
+  position:         absolute;
+  top:              -5px;
+  z-index:          10;
+  box-sizing:       border-box;
+  padding:          4px 0 4px 0;
+  width:            auto;
+  height:           auto;
+  border:           1px solid rgba(0, 0, 0, .15);
+  background-color: #ffffff;
+  box-shadow:       0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
+}
+
+.geo-targeting-type__dropdown-item {
+  position:    relative;
+  display:     flex;
+  padding:     0 8px 0 30px;
+  height:      24px;
+  cursor:      pointer;
+  align-items: center;
+}
+
+.geo-targeting-type__dropdown-item:hover {
+  background-color: #f5fafd;
+}
+
+.geo-targeting-type__dropdown-item_selected {
+  font-weight: bold;
+}
+
+.geo-targeting-type__tick {
+  position: absolute;
+  left:     6px;
+}
+
+.geo-targeting-type__type-info {
+  position:         absolute;
+  top:              0;
+  left:             100%;
+  z-index:          100;
+  display:          inline-block;
+  box-sizing:       border-box;
+  margin-left:      8px;
+  padding:          8px;
+  min-height:       22px;
+  width:            240px;
+  height:           auto;
+  border-radius:    4px;
+  background-color: rgb(97, 97, 97);
+  color:            rgba(255, 255, 255, 0.87);
+  font-weight:      500;
+  font-size:        12px;
+  opacity:          0.9;
+}
+
+.geo-targeting-type__type-info:after {
+  position:      absolute;
+  top:           9px;
+  left:          -4px;
+  display:       inline-block;
+
+  border-top:    4px solid transparent;
+
+  border-right:  4px solid rgb(97, 97, 97);
+  border-bottom: 4px solid transparent;
+  content:       "";
+}

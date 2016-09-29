@@ -62,5 +62,22 @@
   "geo-targeting-mode": {
     "include": "Include",
     "exclude": "Exclude"
+  },
+  "geo-targeting-radius": {
+    "mile": "mi",
+    "kilometer": "km",
+    "CURRENT_ONLY": "Current city only",
+    "USE_RADIUS": "Cities within radius",
+    "USE_RADIUS_INFO": "Surrounding cities are included if the center of the city falls within the radius."
+  },
+  "geo-targeting-type": {
+    "ALL": "Everyone in this location",
+    "ALL_INFO": "People whose home or most recent location is within the selected area.",
+    "HOME": "People who live in this location",
+    "HOME_INFO": "People whose home is within the selected area.",
+    "RECENT": "People recently in this location",
+    "RECENT_INFO": "People whose most recent location is within the selected area.",
+    "TRAVEL_IN": "People traveling in this location",
+    "TRAVEL_IN_INFO": "People whose most recent location is within the selected area but whose home is more than 125 mi/200 km away."
   }
 }

@@ -25,6 +25,7 @@ export class GeoTargetingApiService {
    */
   private processGeoLocations (geoLocations: GeoTargetingSpec = {}, excludedGeoLocations: GeoTargetingSpec = {}) {
     let simplifiedGeoLocations = {};
+    let map                    = {};
 
     let types = ['countries', 'regions', 'cities', 'zips', 'geo_markets', 'electoral_districts'];
 
@@ -45,10 +46,11 @@ export class GeoTargetingApiService {
         }
 
         simplifiedGeoLocations[type].push(key);
+        map[key] = item;
       });
     });
 
-    return simplifiedGeoLocations;
+    return {simplified: simplifiedGeoLocations, map: map};
   }
 
   constructor (private FbService: FbService,
@@ -80,10 +82,12 @@ export class GeoTargetingApiService {
   public metaData (spec: TargetingSpec) {
     let _response = new Subject();
 
+    let processedGeoLocations = this.processGeoLocations(spec.geo_locations, spec.excluded_geo_locations);
+
     let params = Object.assign({
       type:   'adgeolocationmeta',
       locale: this.lang
-    }, this.processGeoLocations(spec.geo_locations, spec.excluded_geo_locations), {
+    }, processedGeoLocations.simplified, {
       location_types: null
     });
 
@@ -109,8 +113,16 @@ export class GeoTargetingApiService {
           if (response.data.hasOwnProperty(type)) {
             for (let key in response.data[type]) {
               if (response.data[type].hasOwnProperty(key)) {
-                let item      = response.data[type][key];
+                let item         = response.data[type][key];
+                let selectedItem = processedGeoLocations.map[item.key];
+
                 item.excluded = excludedKeys.indexOf(key) > -1;
+
+                if (selectedItem.radius) {
+                  item.radius        = selectedItem.radius;
+                  item.distance_unit = selectedItem.distance_unit;
+                }
+
                 items.push(item);
               }
             }

@@ -5,6 +5,7 @@ import { GeoTargetingSpec, Key, City } from '../../targeting/targeting-spec-geo.
 import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
+import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 
 @Injectable()
 export class GeoTargetingSelectedService {
@@ -176,6 +177,26 @@ export class GeoTargetingSelectedService {
   }
 
   /**
+   * Update one of selected items
+   * @param item
+   */
+  public updateItem (item: GeoTargetingItem) {
+    let selectedItems = this.get();
+    selectedItems.map((selectedItem: GeoTargetingItem) => {
+      if (selectedItem.key === item.key) {
+        // Update selectedItem
+        selectedItem = Object.assign(selectedItem, item);
+      }
+      return selectedItem;
+    });
+    // TODO: rethink this timeout. Without it we get exception that item if undefined
+    // TODO: It happens when we updateItem too often. Think about debounce or throttle.
+    // setTimeout(() => {
+    this.update(selectedItems);
+    // });
+  }
+
+  /**
    * Remove passed item from selected list
    * @param item
    */
@@ -206,12 +227,10 @@ export class GeoTargetingSelectedService {
     };
 
     let geoLocations: GeoTargetingSpec = {
-      location_types: ['home']
+      location_types: this.GeoTargetingTypeService.get()
     };
 
-    let excludedGeoLocations: GeoTargetingSpec = {
-      location_types: ['home']
-    };
+    let excludedGeoLocations: GeoTargetingSpec = {};
 
     let locations: GeoTargetingSpec = {};
 
@@ -232,11 +251,11 @@ export class GeoTargetingSelectedService {
       } else {
         let selectedValue: Key = {key: item.key, name: item.name};
 
-        if (item.type === 'city' && item.radius) {
+        if (item.type === 'city' && item.radius != null) {
           (<City>selectedValue).radius = item.radius;
         }
 
-        if (item.type === 'city' && item.distance_unit) {
+        if (item.type === 'city' && item.distance_unit != null) {
           (<City>selectedValue).distance_unit = item.distance_unit;
         }
 
@@ -251,6 +270,7 @@ export class GeoTargetingSelectedService {
   }
 
   constructor (private TranslateService: TranslateService,
-               private GeoTargetingInfoService: GeoTargetingInfoService) { }
+               private GeoTargetingInfoService: GeoTargetingInfoService,
+               private GeoTargetingTypeService: GeoTargetingTypeService) { }
 
 }

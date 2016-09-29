@@ -9,6 +9,7 @@ import { GeoTargetingDropdownService } from '../geo-targeting-dropdown/geo-targe
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
+import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 
 describe('Component: GeoTargetingInput', () => {
   beforeEach(() => {
@@ -16,7 +17,7 @@ describe('Component: GeoTargetingInput', () => {
       imports:   [LibModule],
       providers: [GeoTargetingApiService, GeoTargetingInputService,
         GeoTargetingDropdownService, GeoTargetingSelectedService,
-        GeoTargetingInfoService, GeoTargetingModeService]
+        GeoTargetingInfoService, GeoTargetingModeService, GeoTargetingTypeService]
     });
   });
 

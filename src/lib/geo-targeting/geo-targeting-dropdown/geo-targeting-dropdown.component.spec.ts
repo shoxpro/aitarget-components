@@ -7,12 +7,14 @@ import { GeoTargetingDropdownService } from './geo-targeting-dropdown.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
+import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 
 describe('Component: GeoTargetingDropdown', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:   [LibModule],
-      providers: [GeoTargetingDropdownService, GeoTargetingSelectedService, GeoTargetingModeService, GeoTargetingInfoService]
+      providers: [GeoTargetingDropdownService, GeoTargetingSelectedService,
+        GeoTargetingModeService, GeoTargetingInfoService, GeoTargetingTypeService]
     });
   });
 

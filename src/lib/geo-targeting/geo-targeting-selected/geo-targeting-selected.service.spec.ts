@@ -5,13 +5,14 @@ import { GeoTargetingSelectedService } from './geo-targeting-selected.service';
 import { countries, country } from '../geo-targeting-items.example';
 import { LibModule } from '../../lib.module';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
+import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 
 describe('Service: GeoTargetingSelected', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:   [LibModule],
-      providers: [GeoTargetingSelectedService, GeoTargetingInfoService]
+      providers: [GeoTargetingSelectedService, GeoTargetingInfoService, GeoTargetingTypeService]
     });
   });
 

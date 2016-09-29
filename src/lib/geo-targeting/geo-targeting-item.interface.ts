@@ -7,19 +7,19 @@ export interface GeoTargetingItem extends City, CustomLocation {
   /**
    * Property of all types of locations
    */
-  name: string;
+  name?: string;
   /**
    * Property of all types of locations
    */
-    type: string;
+  type?: string;
   /**
    * Property of all types of locations
    */
-  supports_region: boolean;
+  supports_region?: boolean;
   /**
    * Property of all types of locations
    */
-  supports_city: boolean;
+  supports_city?: boolean;
   /**
    * Property of Countries|Regions|Cities|Zip Code|DMA Codes|Electoral Districts
    */
