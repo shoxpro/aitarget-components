@@ -59,7 +59,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
    * Open/Close radius selection dropdown
    * @param event
    */
-  public toggle (event?) {
+  public toggleDropdown (event?) {
     if (event) {
       event.stopPropagation();
     }

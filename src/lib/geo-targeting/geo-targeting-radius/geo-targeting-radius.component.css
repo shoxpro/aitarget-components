@@ -34,20 +34,6 @@
   margin-right: 5px;
 }
 
-.geo-targeting-radius__tick {
-  position: relative;
-  display:  inline-block;
-  overflow: hidden;
-  width:    14px;
-  height:   14px;
-}
-
-.geo-targeting-radius__tick svg {
-  position: absolute;
-  top:      -5px;
-  left:     -5px;
-}
-
 .geo-targeting-radius__dropdown {
   box-sizing:       border-box;
   padding:          4px 0 4px 0;

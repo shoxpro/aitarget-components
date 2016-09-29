@@ -1,42 +1,17 @@
 <div class="geo-targeting-radius"
      [ngClass]="{'geo-targeting-radius_open': isOpen}"
-     (click)="toggle($event)">
+     (click)="toggleDropdown($event)">
   <span class="geo-targeting-radius__result"
         *ngIf="item.radius > 0">+ {{ item.radius }} {{ 'geo-targeting-radius.' + item.distance_unit | translate}}
   </span>
 
-  <!--Tick-->
-  <span class="geo-targeting-radius__tick geo-targeting-radius__tick_down"
-        *ngIf="!isOpen">
-    <svg xmlns="http://www.w3.org/2000/svg"
-         fill="#000000"
-         height="24"
-         viewBox="0 0 24 24"
-         width="24">
-      <path d="M7 10l5 5 5-5z"></path>
-      <path d="M0 0h24v24H0z"
-            fill="none"></path>
-    </svg>
-  </span>
-  <span class="geo-targeting-radius__tick geo-targeting-radius__tick_up"
-        *ngIf="isOpen">
-    <svg xmlns="http://www.w3.org/2000/svg"
-         fill="#000000"
-         height="24"
-         viewBox="0 0 24 24"
-         width="24">
-      <path d="M7 14l5-5 5 5z"></path>
-      <path d="M0 0h24v24H0z"
-            fill="none"></path>
-    </svg>
-  </span>
-  <!--End of Tick-->
+  <fb-arrow-drop [direction]="{true: 'up', false: 'down'}[isOpen]"></fb-arrow-drop>
 </div>
 <!--Select Radius Dropdown-->
 <div class="geo-targeting-radius__dropdown"
      *ngIf="isOpen"
      appendToBody
-     (clickOutside)="toggle()">
+     (clickOutside)="toggleDropdown()">
   <div class="geo-targeting-radius__mode geo-targeting-radius__mode_current">
     <div class="geo-targeting-radius__mode-row"
          [ngClass]="{'geo-targeting-radius__mode-row_selected': item.radius === 0}"

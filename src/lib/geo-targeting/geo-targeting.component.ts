@@ -48,8 +48,6 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
   private processOutsideClick = (e) => {
     let targetElement = e.target;
 
-    console.log(`this: `, this);
-
     const clickedInside = this.ElementRef.nativeElement.contains(targetElement);
 
     if (!clickedInside) {

@@ -20,9 +20,10 @@ interface Type {
 })
 export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
 
-  private _subscriptions = [];
+  private _subscriptions  = [];
   private types: Type[];
   private selectedType: Type;
+  private isOpen: boolean = false;
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -32,9 +33,36 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
     this.ChangeDetectorRef.detectChanges();
   }
 
+  /**
+   * Toggle Dropdown
+   */
+  public toggleDropdown (event?) {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.isOpen = !this.isOpen;
+    this.updateTemplate();
+  }
+
+  /**
+   * Toggle info for types from dropdown
+   * @param type
+   * @param showInfo
+   */
+  public toggleInfo (type, showInfo) {
+    type.showInfo = showInfo;
+    this.updateTemplate();
+  }
+
+  /**
+   * Select type from dropdown
+   * @param type
+   */
   public select (type) {
     this.GeoTargetingTypeService.update(type.value);
     this.TargetingSpecService.update(this.GeoTargetingSelectedService.getSpec());
+    this.toggleInfo(type, false);
+    this.toggleDropdown();
   }
 
   constructor (private ChangeDetectorRef: ChangeDetectorRef,

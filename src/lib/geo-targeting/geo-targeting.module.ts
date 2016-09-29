@@ -16,6 +16,7 @@ import { ClickOutsideDirective } from '../shared/directives/click-outside.direct
 import { MdSliderModule } from '@angular2-material/slider';
 import { FbTickComponent } from '../shared/components/tick.component';
 import { GeoTargetingTypeComponent } from './geo-targeting-type/geo-targeting-type.component';
+import { FbArrowDropComponent } from '../shared/components/arrow-drop.component';
 /* tslint:enable:max-line-length */
 
 @NgModule({
@@ -37,7 +38,8 @@ import { GeoTargetingTypeComponent } from './geo-targeting-type/geo-targeting-ty
     FullNamePipe,
     AppendToBodyDirective,
     ClickOutsideDirective,
-    FbTickComponent
+    FbTickComponent,
+    FbArrowDropComponent
   ],
   exports:      [
     GeoTargetingComponent
