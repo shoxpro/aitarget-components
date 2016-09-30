@@ -10,6 +10,7 @@ import { GeoTargetingItem } from './geo-targeting-item.interface';
 import { GeoTargetingModeService } from './geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingInfoService } from './geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type.service';
+import { GeoTargetingRadiusService } from './geo-targeting-radius/geo-targeting-radius.service';
 
 @Component({
   selector:    'geo-targeting',
@@ -17,13 +18,13 @@ import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type
   styleUrls:   ['./geo-targeting.component.css'],
   providers:   [GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
     GeoTargetingSelectedService, TargetingSpecService, GeoTargetingModeService,
-    GeoTargetingInfoService, GeoTargetingTypeService]
+    GeoTargetingInfoService, GeoTargetingTypeService, GeoTargetingRadiusService]
 })
 export class GeoTargetingComponent implements OnInit, OnDestroy {
 
   private _defaultLang: string = 'en_US';
   private _lang: string        = this._defaultLang;
-  private subscriptions        = [];
+  private _subscriptions       = [];
 
   @Input('adaccountId') adaccountId: string;
   @Input('spec') spec: TargetingSpec    = {};
@@ -99,7 +100,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy () {
     // Unsubscribe from all Observables
-    this.subscriptions.forEach((subscription) => {
+    this._subscriptions.forEach((subscription) => {
       subscription.unsubscribe();
     });
   }
@@ -111,7 +112,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
     /**
      * Get geo location metadata for passed targeting spec and update selected items
      */
-    this.subscriptions.push(
+    this._subscriptions.push(
       this.GeoTargetingApiService
           .metaData(this.spec)
           .subscribe((items: GeoTargetingItem[]) => {
@@ -121,7 +122,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
     /**
      * Bind/unbind different events depending on geo-targeting dropdown state.
      */
-    this.subscriptions.push(
+    this._subscriptions.push(
       this.GeoTargetingDropdownService.isOpen.subscribe((isOpen: boolean) => {
         this.unbindAll();
         if (isOpen) {
@@ -133,7 +134,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
     /**
      * Subscribe for changes in selected items and update targeting spec when changed
      */
-    this.subscriptions.push(
+    this._subscriptions.push(
       this.GeoTargetingSelectedService.items
       // Skip initialization update and update for first passed targeting spec
           .skip(2)
@@ -147,13 +148,26 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
      * Subscribe for targeting spec changes and if differ from previous,
      * trigger onChange handler
      */
-    this.subscriptions.push(
+    this._subscriptions.push(
       this.TargetingSpecService.spec
       // Skip initialization update
           .skip(1)
           .subscribe((spec: TargetingSpec) => {
             this.onChange(spec);
           })
+    );
+
+    /**
+     * Update selected items when language change
+     */
+    this._subscriptions.push(
+      this.TranslateService.onLangChange.subscribe(() => {
+        this.GeoTargetingApiService
+            .metaData(this.spec)
+            .subscribe((items: GeoTargetingItem[]) => {
+              this.GeoTargetingSelectedService.update(items);
+            });
+      })
     );
   }
 

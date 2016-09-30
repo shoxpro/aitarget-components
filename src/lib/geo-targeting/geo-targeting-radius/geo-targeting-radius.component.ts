@@ -31,25 +31,16 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Set default radius for passed language
-   * @param lang
+   * Set default radius min and max
    */
-  private setDefault (lang) {
-    if (lang === 'en_US') {
-      this.item.distance_unit = this.item.distance_unit || 'mile';
-      this.item.radius        = this.item.radius || 25;
-    } else {
-      this.item.distance_unit = this.item.distance_unit || 'kilometer';
-      this.item.radius        = this.item.radius || 40;
-    }
-
+  private setDefaultBoundaries () {
     if (this.item.distance_unit === 'mile') {
       this.max = 50;
     } else {
       this.max = 80;
     }
 
-    this.GeoTargetingSelectedService.updateItem(this.item);
+    this.updateTemplate();
   }
 
   /**
@@ -111,16 +102,10 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
-    /**
-     * Wrap it inside timeout to skip recursive ngOnInit
-     */
-    setTimeout(() => {
-      this.setDefault(this.TranslateService.currentLang);
-    });
+    this.setDefaultBoundaries();
 
     this._subscriptions.push(
-      this.TranslateService.onLangChange.subscribe((lang: string) => {
-        this.setDefault(lang);
+      this.TranslateService.onLangChange.subscribe(() => {
         this.updateTemplate();
       })
     );
