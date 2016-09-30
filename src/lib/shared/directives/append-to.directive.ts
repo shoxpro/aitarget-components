@@ -35,7 +35,7 @@ export class AppendToDirective implements OnInit, OnDestroy {
     }
 
     this.element.style.position = 'absolute';
-    this.element.style.zIndex   = '100';
+    this.element.style.zIndex   = '1000';
     this.element.style.top      = `${currentRect.top - appendToElementRect.top}px`;
     this.element.style.left     = `${currentRect.left - appendToElementRect.left}px`;
 
