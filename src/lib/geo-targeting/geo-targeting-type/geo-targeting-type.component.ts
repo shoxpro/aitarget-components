@@ -34,6 +34,34 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Set types to choose from
+   */
+  private setTypes = () => {
+    this.types = [
+      {
+        title: this.TranslateService.instant(`geo-targeting-type.ALL`),
+        info:  this.TranslateService.instant(`geo-targeting-type.ALL_INFO`),
+        value: ['home', 'recent']
+      },
+      {
+        title: this.TranslateService.instant(`geo-targeting-type.HOME`),
+        info:  this.TranslateService.instant(`geo-targeting-type.HOME_INFO`),
+        value: ['home']
+      },
+      {
+        title: this.TranslateService.instant(`geo-targeting-type.RECENT`),
+        info:  this.TranslateService.instant(`geo-targeting-type.RECENT_INFO`),
+        value: ['recent']
+      },
+      {
+        title: this.TranslateService.instant(`geo-targeting-type.TRAVEL_IN`),
+        info:  this.TranslateService.instant(`geo-targeting-type.TRAVEL_IN_INFO`),
+        value: ['travel_in']
+      },
+    ];
+  };
+
+  /**
    * Toggle Dropdown
    */
   public toggleDropdown (event?) {
@@ -83,34 +111,24 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
-    this.types = [
-      {
-        title: this.TranslateService.instant(`geo-targeting-type.ALL`),
-        info:  this.TranslateService.instant(`geo-targeting-type.ALL_INFO`),
-        value: ['home', 'recent']
-      },
-      {
-        title: this.TranslateService.instant(`geo-targeting-type.HOME`),
-        info:  this.TranslateService.instant(`geo-targeting-type.HOME_INFO`),
-        value: ['home']
-      },
-      {
-        title: this.TranslateService.instant(`geo-targeting-type.RECENT`),
-        info:  this.TranslateService.instant(`geo-targeting-type.RECENT_INFO`),
-        value: ['recent']
-      },
-      {
-        title: this.TranslateService.instant(`geo-targeting-type.TRAVEL_IN`),
-        info:  this.TranslateService.instant(`geo-targeting-type.TRAVEL_IN_INFO`),
-        value: ['travel_in']
-      },
-    ];
+    // Set types on init
+    this.setTypes();
 
     this._subscriptions.push(
       this.GeoTargetingTypeService.type.subscribe((selectedTypeValue: LocationType[]) => {
         this.selectedType = this.types.filter((type) => {
           return type.value.join() === selectedTypeValue.join();
         })[0];
+
+        this.updateTemplate();
+      })
+    );
+
+    this._subscriptions.push(
+      this.TranslateService.onLangChange.subscribe(() => {
+        // Update types and selectedType when language change
+        this.setTypes();
+        this.GeoTargetingTypeService.update(this.selectedType.value);
 
         this.updateTemplate();
       })

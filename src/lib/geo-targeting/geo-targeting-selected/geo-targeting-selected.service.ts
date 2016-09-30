@@ -6,6 +6,7 @@ import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
+import { GeoTargetingRadiusService } from '../geo-targeting-radius/geo-targeting-radius.service';
 
 @Injectable()
 export class GeoTargetingSelectedService {
@@ -135,6 +136,10 @@ export class GeoTargetingSelectedService {
    * @returns {undefined}
    */
   public add (item: GeoTargetingItem) {
+    // Set Default radius when adding new city item
+    if (item.type === 'city') {
+      item = GeoTargetingRadiusService.setDefaultRadius(item, this.TranslateService.currentLang);
+    }
     let broaderLocations  = this.getBroaderLocations(item);
     let narrowerLocations = this.getNarrowerLocations(item);
 
@@ -189,11 +194,8 @@ export class GeoTargetingSelectedService {
       }
       return selectedItem;
     });
-    // TODO: rethink this timeout. Without it we get exception that item if undefined
-    // TODO: It happens when we updateItem too often. Think about debounce or throttle.
-    // setTimeout(() => {
+
     this.update(selectedItems);
-    // });
   }
 
   /**
