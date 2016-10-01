@@ -114,7 +114,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
      */
     this._subscriptions.push(
       this.GeoTargetingApiService
-          .metaData(this.spec)
+          .getSelectedLocationItems(this.spec)
           .subscribe((items: GeoTargetingItem[]) => {
             this.GeoTargetingSelectedService.update(items);
           })
@@ -163,7 +163,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
     this._subscriptions.push(
       this.TranslateService.onLangChange.subscribe(() => {
         this.GeoTargetingApiService
-            .metaData(this.spec)
+            .getSelectedLocationItems(this.spec)
             .subscribe((items: GeoTargetingItem[]) => {
               this.GeoTargetingSelectedService.update(items);
             });
