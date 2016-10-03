@@ -8,6 +8,7 @@ import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-inf
 import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 import { GeoTargetingRadiusService } from '../geo-targeting-radius/geo-targeting-radius.service';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
+import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
 
 @Injectable()
 export class GeoTargetingSelectedService {
@@ -242,6 +243,8 @@ export class GeoTargetingSelectedService {
           selectedItems.unshift(extendedItem);
 
           this.update(selectedItems);
+          // Show extended new item on the map
+          this.GeoTargetingMapService.update(extendedItem);
         });
 
   }
@@ -330,6 +333,8 @@ export class GeoTargetingSelectedService {
   constructor (private TranslateService: TranslateService,
                private GeoTargetingApiService: GeoTargetingApiService,
                private GeoTargetingInfoService: GeoTargetingInfoService,
-               private GeoTargetingTypeService: GeoTargetingTypeService) { }
+               private GeoTargetingMapService: GeoTargetingMapService,
+               private GeoTargetingTypeService: GeoTargetingTypeService) {
+  }
 
 }

@@ -11,3 +11,39 @@
   height:   230px;
   outline:  none;
 }
+
+.geo-targeting-map__pin {
+  position:         relative;
+  border-radius:    6px;
+  background-color: #ffffff;
+  box-shadow:       0 0 5px 0 rgba(154, 168, 181, 0.39);
+}
+
+.geo-targeting-map__pin:before {
+  position:         absolute;
+  top:              2px;
+  left:             2px;
+  display:          block;
+  width:            8px;
+  height:           8px;
+  border-radius:    4px;
+  background-color: #4d6aa4;
+  content:          '';
+}
+
+.geo-targeting-map__pin:after {
+  position:         relative;
+  top:              -26px;
+  display:          block;
+  width:            12px;
+  height:           12px;
+  background-color: #ffffff;
+  content:          '';
+}
+
+.geo-targeting-map__pin svg {
+  transform:      translate3d(-18px, -40px, 0);
+  stroke:         #4d6aa4;
+  stroke-opacity: 1;
+  stroke-width:   1;
+}
