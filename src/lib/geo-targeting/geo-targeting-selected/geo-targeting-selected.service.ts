@@ -243,8 +243,7 @@ export class GeoTargetingSelectedService {
           selectedItems.unshift(extendedItem);
 
           this.update(selectedItems);
-          // Show extended new item on the map
-          this.GeoTargetingMapService.update(extendedItem);
+          this.GeoTargetingMapService.focusItem(item);
         });
 
   }
@@ -253,7 +252,7 @@ export class GeoTargetingSelectedService {
    * Update one of selected items
    * @param item
    */
-  public updateItem (item: GeoTargetingItem) {
+  public updateSelectedItem (item: GeoTargetingItem) {
     let selectedItems = this.get();
     selectedItems.map((selectedItem: GeoTargetingItem) => {
       if (selectedItem.key === item.key) {
@@ -264,6 +263,7 @@ export class GeoTargetingSelectedService {
     });
 
     this.update(selectedItems);
+    this.GeoTargetingMapService.focusItem(item);
   }
 
   /**

@@ -116,10 +116,8 @@ export class GeoTargetingApiService {
 
                   item.excluded = excludedKeys.indexOf(key) > -1;
 
-                  if (selectedItem.radius) {
-                    item.radius        = selectedItem.radius;
-                    item.distance_unit = selectedItem.distance_unit;
-                  }
+                  item.radius        = selectedItem.radius || 0;
+                  item.distance_unit = selectedItem.distance_unit || (this.lang === 'en_US' ? 'mile' : 'kilometer');
 
                   items.push(item);
                 }

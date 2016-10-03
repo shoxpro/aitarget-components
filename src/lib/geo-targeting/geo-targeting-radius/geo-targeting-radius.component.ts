@@ -51,9 +51,13 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     if (event) {
       event.stopPropagation();
     }
+
     this.isOpen = !this.isOpen;
 
-    this.GeoTargetingSelectedService.updateItem(this.item);
+    // Update item with current radius when closing dropdown
+    if (!this.isOpen) {
+      this.GeoTargetingSelectedService.updateSelectedItem(this.item);
+    }
 
     this.updateTemplate();
   }
