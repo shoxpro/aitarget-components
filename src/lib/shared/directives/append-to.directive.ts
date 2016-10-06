@@ -5,7 +5,8 @@ import { Directive, ElementRef, OnInit, OnDestroy, Input } from '@angular/core';
 })
 export class AppendToDirective implements OnInit, OnDestroy {
 
-  @Input() appendTo: string = 'body';
+  @Input() appendTo: string  = 'body';
+  @Input() showVeil: boolean = false;
 
   private element: HTMLElement;
   private veil: HTMLElement;
@@ -15,7 +16,9 @@ export class AppendToDirective implements OnInit, OnDestroy {
   }
 
   ngOnDestroy () {
-    this.veil.remove();
+    if (this.veil) {
+      this.veil.remove();
+    }
   }
 
   ngOnInit () {
@@ -23,15 +26,18 @@ export class AppendToDirective implements OnInit, OnDestroy {
     const appendToElementRect = targetElement.getBoundingClientRect();
     const currentRect         = this.element.getBoundingClientRect();
 
-    this.veil                = window.document.createElement('div');
-    this.veil.style.position = 'absolute';
-    this.veil.style.top      = '0';
-    this.veil.style.bottom   = '0';
-    this.veil.style.left     = '0';
-    this.veil.style.right    = '0';
-
     if (targetElement.style.position === 'static') {
       targetElement.style.position = 'relative';
+    }
+
+    if (this.showVeil) {
+      this.veil                = window.document.createElement('div');
+      this.veil.style.position = 'absolute';
+      this.veil.style.top      = '0';
+      this.veil.style.bottom   = '0';
+      this.veil.style.left     = '0';
+      this.veil.style.right    = '0';
+      targetElement.appendChild(this.veil);
     }
 
     this.element.style.position = 'absolute';
@@ -39,7 +45,6 @@ export class AppendToDirective implements OnInit, OnDestroy {
     this.element.style.top      = `${currentRect.top - appendToElementRect.top}px`;
     this.element.style.left     = `${currentRect.left - appendToElementRect.left}px`;
 
-    targetElement.appendChild(this.veil);
     targetElement.appendChild(this.element);
   }
 }

@@ -43,6 +43,7 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
    * @param item
    */
   public showItemOnMap (item: GeoTargetingItem) {
+    this.GeoTargetingMapService.showMap();
     this.GeoTargetingMapService.focusItem(item);
   }
 

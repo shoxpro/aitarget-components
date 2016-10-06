@@ -1,6 +1,4 @@
 <ul class="geo-targeting-items__list"
-    appendTo="geo-targeting"
-    (clickOutside)="closeDropdown()"
     *ngIf="isOpen && filteredItems && filteredItems.length">
   <li class="geo-targeting-items__row"
       *ngFor="let item of filteredItems"

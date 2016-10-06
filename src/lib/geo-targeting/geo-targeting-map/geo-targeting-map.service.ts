@@ -2,14 +2,31 @@ import { Injectable } from '@angular/core';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import * as L from 'leaflet';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { BehaviorSubject } from 'rxjs/Rx';
 
 @Injectable()
 export class GeoTargetingMapService {
   private map;
-  private zoom      = 1;
-  private latitude  = 51.505;
-  private longitude = -0.09;
-  public itemsMap   = {};
+  private _mapActive = new BehaviorSubject<boolean>(false);
+  public mapActive   = this._mapActive.asObservable();
+  private zoom       = 1;
+  private latitude   = 51.505;
+  private longitude  = -0.09;
+  public itemsMap    = {};
+
+  /**
+   * Show map
+   */
+  public showMap () {
+    this._mapActive.next(true);
+  }
+
+  /**
+   * Hide map
+   */
+  public hideMap () {
+    this._mapActive.next(false);
+  }
 
   /**
    * Create all item's layers, combine them to feature group and add this group to the map

@@ -1,3 +1,13 @@
 <div class="geo-targeting-map">
-  <div id="geo-targeting-map"></div>
+  <div class="geo-targeting-map__switcher"
+       (click)="toggleMap($event)">
+    <div class="geo-targeting-map__title">
+      <span>{{ mapModeText }}</span>
+    </div>
+  </div>
+
+  <div class="geo-targeting-map__container"
+       [hidden]="!mapActive">
+    <div id="geo-targeting-map"></div>
+  </div>
 </div>

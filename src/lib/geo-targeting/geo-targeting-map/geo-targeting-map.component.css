@@ -1,5 +1,44 @@
+:host {
+  display:             inline-block;
+  user-select:         none;
+  -webkit-user-select: none;
+  -moz-user-select:    none;
+  -ms-user-select:     none;
+}
+
 .geo-targeting-map {
-  display:       block;
+  display:     flex;
+  padding:     0 6px;
+  border-left: 1px solid #bdc7d8;
+  white-space: nowrap;
+  cursor:      pointer;
+  align-items: center;
+}
+
+.geo-targeting-map__switcher {
+  cursor: pointer;
+}
+
+.geo-targeting-map__title {
+  display:             inline-block;
+  color:               #4b4f56;
+  font-weight:         bold;
+  user-select:         none;
+  -webkit-user-select: none;
+  -moz-user-select:    none;
+  -ms-user-select:     none;
+}
+
+.geo-targeting-map__title:hover {
+  color: #53aaca;
+}
+
+.geo-targeting-map__container {
+  position:      absolute;
+  top:           100%;
+  left:          0;
+  box-sizing:    border-box;
+  width:         100%;
   border:        1px solid #d0d0d0;
   border-top:    none;
   border-radius: 0 0 3px 3px;

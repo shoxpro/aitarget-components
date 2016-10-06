@@ -11,6 +11,7 @@
 <div class="geo-targeting-radius__dropdown"
      *ngIf="isOpen"
      appendTo="geo-targeting"
+     [showVeil]="true"
      (clickOutside)="toggleDropdown()">
   <div class="geo-targeting-radius__mode geo-targeting-radius__mode_current">
     <div class="geo-targeting-radius__mode-row"
