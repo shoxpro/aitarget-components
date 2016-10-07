@@ -13,6 +13,7 @@ export class GeoTargetingMapService {
   private latitude   = 51.505;
   private longitude  = -0.09;
   public itemsMap    = {};
+  private tileLayer;
 
   /**
    * Show map
@@ -145,19 +146,35 @@ export class GeoTargetingMapService {
   }
 
   /**
+   * Return tile url for current lang
+   * @returns {string}
+   */
+  public getTileUrl (lang = this.TranslateService.currentLang) {
+    return `https://external.xx.fbcdn.net/map_tile.php?v=26&x={x}&y={y}&z={z}&size=512&ppi=250&language=${lang}`;
+  }
+
+  /**
+   * Update tile layer url and redraw it
+   * @param tileUrl
+   * @param noRedraw
+   */
+  public setTileUrl (tileUrl = this.getTileUrl(), noRedraw = false) {
+    this.tileLayer.setUrl(tileUrl, noRedraw);
+    this.tileLayer.redraw();
+  }
+
+  /**
    * Initialize map using default view
    */
   public initializeMap () {
-    let lang    = this.TranslateService.currentLang;
-    let tileUrl = `https://external.xx.fbcdn.net/map_tile.php?v=26&x={x}&y={y}&z={z}&size=512&ppi=250&language=${lang}`;
 
     this.map = L.map('geo-targeting-map', {
       center: [this.latitude, this.longitude],
       zoom:   this.zoom
     });
 
-    L.tileLayer(tileUrl, {})
-     .addTo(this.map);
+    this.tileLayer = L.tileLayer(this.getTileUrl(), {})
+                      .addTo(this.map);
   }
 
   constructor (private TranslateService: TranslateService) { }
