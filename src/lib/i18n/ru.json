@@ -42,7 +42,8 @@
     "WORK_POSITIONS": "Должности"
   },
   "geo-targeting-input": {
-    "PLACEHOLDER": "Добавьте места"
+    "PLACEHOLDER": "Добавьте места",
+    "INVALID_LOCATION": "Это местонахождение недоступно для таргетинга."
   },
   "geo-targeting-dropdown": {
     "country": "Страна",

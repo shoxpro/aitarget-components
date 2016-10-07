@@ -42,7 +42,8 @@
     "WORK_POSITIONS": "职位"
   },
   "geo-targeting-input": {
-    "PLACEHOLDER": "添加地区"
+    "PLACEHOLDER": "添加地区",
+    "INVALID_LOCATION": "不可定位此地区。"
   },
   "geo-targeting-dropdown": {
     "country": "国家",

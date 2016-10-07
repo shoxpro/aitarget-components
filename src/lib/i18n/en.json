@@ -42,7 +42,8 @@
     "WORK_POSITIONS": "Job Titles"
   },
   "geo-targeting-input": {
-    "PLACEHOLDER": "Add locations"
+    "PLACEHOLDER": "Add locations",
+    "INVALID_LOCATION": "This location is not available for targeting."
   },
   "geo-targeting-dropdown": {
     "country": "Country",

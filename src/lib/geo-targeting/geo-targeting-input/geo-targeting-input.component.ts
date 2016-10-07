@@ -7,6 +7,7 @@ import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
 import { CustomLocation } from '../../targeting/targeting-spec-geo.interface';
+import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 
 @Component({
   selector:        'geo-targeting-input',
@@ -59,6 +60,7 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
   constructor (private GeoTargetingApiService: GeoTargetingApiService,
                private GeoTargetingInputService: GeoTargetingInputService,
                private TranslateService: TranslateService,
+               private GeoTargetingInfoService: GeoTargetingInfoService,
                private GeoTargetingDropdownService: GeoTargetingDropdownService,
                private GeoTargetingSelectedService: GeoTargetingSelectedService,
                private GeoTargetingMapService: GeoTargetingMapService,
@@ -109,15 +111,27 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
             let longitude = Number(matches[2]);
             let key       = `(${latitude}, ${longitude})`;
             return (<CustomLocation>{
-              key:          key,
-              name:         key,
-              latitude:     latitude,
-              longitude:    longitude,
-              type:         'custom_location'
+              key:       key,
+              name:      key,
+              latitude:  latitude,
+              longitude: longitude,
+              type:      'custom_location'
             });
           })
           .flatMap(this.GeoTargetingSelectedService.setCoordinates)
           .subscribe((item: any) => {
+            console.log(`item: `, item);
+            // Show message if coordinates don't belong to any country (e.g. deep-deep ocean)
+            if (!item.country_code) {
+              console.log('should show info block');
+              let message = this.TranslateService.instant(`geo-targeting-input.INVALID_LOCATION`);
+
+              this.GeoTargetingInfoService.update('info', message);
+              this.GeoTargetingInfoService.show();
+
+              return;
+            }
+
             this.GeoTargetingDropdownService.update([item]);
             this.updateTemplate();
           })
