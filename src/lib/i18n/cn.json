@@ -51,7 +51,8 @@
     "city": "城市",
     "zip": "邮编",
     "electoral_district": "选区",
-    "geo_market": "市场"
+    "geo_market": "市场",
+    "custom_location": "GPS坐标"
   },
   "geo-targeting-info": {
     "MESSAGE": "你的定位地区已从 {{ fromNames }} 改为 {{ toName }}.",
@@ -62,6 +63,10 @@
   "geo-targeting-mode": {
     "include": "添加地区",
     "exclude": "添加地区"
+  },
+  "geo-targeting-map": {
+    "HIDE_MAP": "隐藏地图",
+    "SHOW_MAP": "显示地图"
   },
   "geo-targeting-radius": {
     "mile": "英里",

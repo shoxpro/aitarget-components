@@ -27,7 +27,7 @@ export class GeoTargetingApiService {
     let simplifiedGeoLocations = {};
     let map                    = {};
 
-    let types = ['countries', 'regions', 'cities', 'zips', 'geo_markets', 'electoral_districts'];
+    let types = ['countries', 'regions', 'cities', 'zips', 'geo_markets', 'electoral_districts', 'custom_locations'];
 
     types.forEach((type: string) => {
       // Combine items from included and excluded locations

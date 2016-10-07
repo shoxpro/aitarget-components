@@ -51,7 +51,8 @@
     "city": "Город",
     "zip": "Индекс",
     "electoral_district": "Избирательный округ",
-    "geo_market": "Рынок"
+    "geo_market": "Рынок",
+    "custom_location": "GPS координаты"
   },
   "geo-targeting-info": {
     "MESSAGE": "Местоположение вашей аудитории изменено с {{ fromNames }} на {{ toName }}.",
@@ -62,6 +63,10 @@
   "geo-targeting-mode": {
     "include": "Включить",
     "exclude": "Исключить"
+  },
+  "geo-targeting-map": {
+    "HIDE_MAP": "Скрыть карту",
+    "SHOW_MAP": "Показать карту"
   },
   "geo-targeting-radius": {
     "mile": "миль",

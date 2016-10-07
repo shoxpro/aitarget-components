@@ -16,7 +16,7 @@
            *ngFor="let item of itemsGroupedByCountry[key].items">
         <geo-targeting-pin [excluded]="item.excluded"></geo-targeting-pin>
         <span>{{ item | fullName }}</span>
-        <geo-targeting-radius *ngIf="item.type === 'city'"
+        <geo-targeting-radius *ngIf="item.type === 'city' || item.type === 'custom_location'"
                               [item]="item"></geo-targeting-radius>
         <span class="geo-targeting-selected__remove geo-targeting-selected__remove-item"
               (click)="removeItem(item, $event)">&times;</span>

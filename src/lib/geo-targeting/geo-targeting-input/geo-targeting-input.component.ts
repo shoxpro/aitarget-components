@@ -6,6 +6,7 @@ import { GeoTargetingDropdownService } from '../geo-targeting-dropdown/geo-targe
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
+import { CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 
 @Component({
   selector:        'geo-targeting-input',
@@ -22,6 +23,7 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
   private foundItems;
   private hasSelected;
   private mapActive;
+  private latLngRegex    = /[(]?([\s]*[\-]?[\s]*\d{1,3}\.\d{4,6})[\s]*\,([\s]*[\-]?[\s]*\d{1,3}\.\d{4,6})[\s]*[)]?/;
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -75,6 +77,7 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
     this._subscriptions.push(
       this.GeoTargetingInputService.term
           .debounceTime(500)
+          .filter((term: string) => !this.latLngRegex.test(term))
           .distinctUntilChanged()
           .subscribe((term: string) => {
             this.term = term;
@@ -91,6 +94,31 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
               this.GeoTargetingDropdownService.close();
             }
 
+            this.updateTemplate();
+          })
+    );
+
+    this._subscriptions.push(
+      this.GeoTargetingInputService.term
+          .filter((term: string) => this.latLngRegex.test(term))
+          .map((term: string) => term.replace(/[\s]*/, ''))
+          .distinctUntilChanged()
+          .map((term: string) => {
+            let matches   = term.match(this.latLngRegex);
+            let latitude  = Number(matches[1]);
+            let longitude = Number(matches[2]);
+            let key       = `(${latitude}, ${longitude})`;
+            return (<CustomLocation>{
+              key:          key,
+              name:         key,
+              latitude:     latitude,
+              longitude:    longitude,
+              type:         'custom_location'
+            });
+          })
+          .flatMap(this.GeoTargetingSelectedService.setCoordinates)
+          .subscribe((item: any) => {
+            this.GeoTargetingDropdownService.update([item]);
             this.updateTemplate();
           })
     );

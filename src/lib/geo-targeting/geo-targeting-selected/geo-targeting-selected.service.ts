@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs/Rx';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
-import { GeoTargetingSpec, Key, City } from '../../targeting/targeting-spec-geo.interface';
+import { GeoTargetingSpec, Key, City, CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
@@ -24,6 +24,7 @@ export class GeoTargetingSelectedService {
     zip:                'zips',
     geo_market:         'geo_markets',
     electoral_district: 'electoral_districts',
+    custom_location:    'custom_locations'
   };
 
   /**
@@ -113,7 +114,7 @@ export class GeoTargetingSelectedService {
     let _item = new Subject();
     this.GeoTargetingApiService.suggestRadius(item)
         .subscribe((suggestedRadius: null | Array<{suggested_radius: number, distance_unit: 'mile' | 'kilometer'}>) => {
-          if (suggestedRadius === null || !suggestedRadius[0]) {
+          if (!suggestedRadius || !suggestedRadius[0]) {
             if (item.type === 'city') {
               item = GeoTargetingRadiusService.setDefaultRadius(item, this.TranslateService.currentLang);
             }
@@ -133,7 +134,7 @@ export class GeoTargetingSelectedService {
    * @param item
    * @returns {GeoTargetingItem}
    */
-  private setCoordinates = (item: GeoTargetingItem) => {
+  public setCoordinates = (item: GeoTargetingItem) => {
     let _item                  = new Subject();
     let simplifiedGeoLocations = {};
     let mappedType             = this.typeMap[item.type];
@@ -149,9 +150,7 @@ export class GeoTargetingSelectedService {
 
     this.GeoTargetingApiService.metaData(simplifiedGeoLocations)
         .subscribe((metaData) => {
-          item.latitude  = metaData[mappedType][item.key].latitude;
-          item.longitude = metaData[mappedType][item.key].longitude;
-          item.polygons  = metaData[mappedType][item.key].polygons;
+          item = Object.assign(item, metaData[mappedType][item.key]);
 
           _item.next(item);
         });
@@ -312,12 +311,20 @@ export class GeoTargetingSelectedService {
       } else {
         let selectedValue: Key = {key: item.key, name: item.name};
 
-        if (item.type === 'city' && item.radius != null) {
-          (<City>selectedValue).radius = item.radius;
+        if (item.type === 'city') {
+          (<City>selectedValue).radius        = item.radius;
+          (<City>selectedValue).distance_unit = item.distance_unit;
         }
 
-        if (item.type === 'city' && item.distance_unit != null) {
-          (<City>selectedValue).distance_unit = item.distance_unit;
+        if (item.type === 'custom_location') {
+          (<CustomLocation>selectedValue).radius        = item.radius;
+          (<CustomLocation>selectedValue).distance_unit = item.distance_unit;
+          (<CustomLocation>selectedValue).latitude      = item.latitude;
+          (<CustomLocation>selectedValue).longitude     = item.longitude;
+          (<CustomLocation>selectedValue).name          = item.name;
+          if (item.address_string !== item.key) {
+            (<CustomLocation>selectedValue).address_string = item.address_string;
+          }
         }
 
         locations[this.typeMap[item.type]].push(selectedValue);

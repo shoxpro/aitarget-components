@@ -9,11 +9,30 @@ export class DemoGeoTargetingComponent implements OnInit {
 
   spec = {
     'geo_locations':          {
-      'location_types': [
+      'location_types':   [
         'home'
       ],
       // 'countries':      ['RU'],
-      'cities':         [
+      'custom_locations': [
+        {
+          'key':            '(55.522412, 44.121094)',
+          'name':           '(55.5224, 44.1211)',
+          'radius':         35,
+          'distance_unit':  'mile',
+          'latitude':       '55.522412',
+          'longitude':      '44.121094',
+          'address_string': '(55.5224, 44.1211)'
+        },
+        {
+          'key':           '(54.9809, 73.3729)',
+          'name':          '(54.9809, 73.3729)',
+          'radius':        50,
+          'distance_unit': 'mile',
+          'latitude':      '54.980900',
+          'longitude':     '73.372900'
+        }
+      ],
+      'cities':           [
         {
           'key':           '2020916',
           'name':          'Moscow',
@@ -21,7 +40,7 @@ export class DemoGeoTargetingComponent implements OnInit {
           'distance_unit': 'mile'
         }
       ],
-      'regions':        [
+      'regions':          [
         {
           'key':  '3153',
           'name': 'Omsk Oblast'
