@@ -12,13 +12,12 @@ import { GeoTargetingInfoService } from './geo-targeting-info/geo-targeting-info
 import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type.service';
 import { GeoTargetingRadiusService } from './geo-targeting-radius/geo-targeting-radius.service';
 import { GeoTargetingMapService } from './geo-targeting-map/geo-targeting-map.service';
-import { GeoTargetingService } from './geo-targeting.service';
 
 @Component({
   selector:    'geo-targeting',
   templateUrl: './geo-targeting.component.html',
   styleUrls:   ['./geo-targeting.component.css'],
-  providers:   [GeoTargetingApiService, GeoTargetingService, GeoTargetingInputService, GeoTargetingDropdownService,
+  providers:   [GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
     GeoTargetingSelectedService, TargetingSpecService, GeoTargetingModeService,
     GeoTargetingInfoService, GeoTargetingTypeService, GeoTargetingRadiusService,
     GeoTargetingMapService]

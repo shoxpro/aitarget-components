@@ -7,7 +7,6 @@ import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
 import { CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
-import { GeoTargetingService } from '../geo-targeting.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 
 @Component({
@@ -64,7 +63,6 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
                private GeoTargetingInfoService: GeoTargetingInfoService,
                private GeoTargetingDropdownService: GeoTargetingDropdownService,
                private GeoTargetingSelectedService: GeoTargetingSelectedService,
-               private GeoTargetingService: GeoTargetingService,
                private GeoTargetingMapService: GeoTargetingMapService,
                private ElementRef: ElementRef,
                private ChangeDetectorRef: ChangeDetectorRef) {
@@ -120,7 +118,7 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
               type:      'custom_location'
             });
           })
-          .flatMap(this.GeoTargetingService.setCoordinates)
+          .flatMap(this.GeoTargetingSelectedService.setCoordinates)
           .subscribe((item: any) => {
             console.log(`item: `, item);
             // Show message if coordinates don't belong to any country (e.g. deep-deep ocean)

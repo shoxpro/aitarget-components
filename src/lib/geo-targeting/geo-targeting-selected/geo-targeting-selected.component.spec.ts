@@ -8,13 +8,14 @@ import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-inf
 import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
+import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 
 describe('Component: GeoTargetingSelected', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:   [LibModule],
       providers: [GeoTargetingSelectedService, GeoTargetingInfoService, GeoTargetingTypeService,
-        GeoTargetingApiService, GeoTargetingMapService]
+        GeoTargetingApiService, GeoTargetingMapService, GeoTargetingModeService!]
     });
   });
 

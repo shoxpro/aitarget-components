@@ -319,7 +319,7 @@ export class GeoTargetingSelectedService {
           (<CustomLocation>selectedValue).latitude      = item.latitude;
           (<CustomLocation>selectedValue).longitude     = item.longitude;
           (<CustomLocation>selectedValue).name          = item.name;
-          if (item.address_string !== item.key) {
+          if (item.address_string !== item.name) {
             (<CustomLocation>selectedValue).address_string = item.address_string;
           }
         }
