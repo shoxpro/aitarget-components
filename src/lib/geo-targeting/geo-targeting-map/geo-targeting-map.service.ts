@@ -3,17 +3,31 @@ import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import * as L from 'leaflet';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { BehaviorSubject } from 'rxjs/Rx';
+import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 
 @Injectable()
 export class GeoTargetingMapService {
   private map;
   private _mapActive = new BehaviorSubject<boolean>(false);
-  public mapActive   = this._mapActive.asObservable();
+  private _pinMode   = new BehaviorSubject<boolean>(false);
   private zoom       = 1;
   private latitude   = 51.505;
   private longitude  = -0.09;
-  public itemsMap    = {};
   private tileLayer;
+  private popup;
+
+  public itemsMap  = {};
+  public mapActive = this._mapActive.asObservable();
+  public pinMode   = this._pinMode.asObservable();
+
+  /**
+   * Toggle pin mode
+   */
+  public togglePinMode () {
+    let pinMode = this._pinMode.getValue();
+    this._pinMode.next(!pinMode);
+  }
 
   /**
    * Show map
@@ -177,8 +191,55 @@ export class GeoTargetingMapService {
 
     this.tileLayer = L.tileLayer(this.getTileUrl(), {})
                       .addTo(this.map);
+
+    this.popup = L.popup();
   }
 
-  constructor (private TranslateService: TranslateService) { }
+  public openPopup (item) {
+    this.popup
+        .setLatLng([item.latitude, item.longitude])
+        .setContent(`<div>${item.name}</div>`)
+        .openOn(this.map);
+  }
+
+  private onMapClick = (e) => {
+    let latitude  = e.latlng.lat;
+    let longitude = e.latlng.lng;
+    let key       = `(${latitude}, ${longitude})`;
+    let pinItem   = (<GeoTargetingItem>{
+      key:       key,
+      name:      key,
+      latitude:  latitude,
+      longitude: longitude,
+      type:      'custom_location'
+    });
+    this.GeoTargetingSelectedService
+        .setCoordinates(pinItem)
+        .subscribe((item: GeoTargetingItem) => {
+          // Show message if coordinates don't belong to any country (e.g. deep-deep ocean)
+          if (!item.country_code) {
+            let message = this.TranslateService.instant(`geo-targeting-input.INVALID_LOCATION`);
+
+            this.GeoTargetingInfoService.update('info', message);
+            this.GeoTargetingInfoService.show();
+
+            return;
+          }
+
+          this.GeoTargetingSelectedService.add(item);
+        });
+  };
+
+  public enterPinMode () {
+    this.map.on('click', this.onMapClick);
+  }
+
+  public exitPinMode () {
+    this.map.off('click', this.onMapClick);
+  }
+
+  constructor (private TranslateService: TranslateService,
+               private GeoTargetingInfoService: GeoTargetingInfoService,
+               private GeoTargetingSelectedService: GeoTargetingSelectedService) { }
 
 }

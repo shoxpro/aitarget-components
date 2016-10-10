@@ -3,6 +3,7 @@ import { GeoTargetingDropdownService } from './geo-targeting-dropdown.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
+import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
 
 @Component({
   selector:        'geo-targeting-dropdown',
@@ -62,7 +63,9 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     let mode      = this.GeoTargetingModeService.get();
     item.excluded = mode === 'exclude';
+
     this.GeoTargetingSelectedService.add(item);
+
     this.closeDropdown();
   }
 

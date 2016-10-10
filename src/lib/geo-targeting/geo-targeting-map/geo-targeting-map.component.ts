@@ -16,7 +16,8 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 export class GeoTargetingMapComponent implements OnInit, OnDestroy {
   private _subscriptions = [];
   private mapActive;
-  private mapModeText    = 'Show Map';
+  private mapModeText    = this.TranslateService.instant(`geo-targeting-map.SHOW_MAP`);
+  private pinMode;
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -100,6 +101,19 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
       this.GeoTargetingMapService.mapActive.subscribe((mapActive) => {
         this.mapActive = mapActive;
         this.setMapModeText(mapActive);
+        this.updateTemplate();
+      })
+    );
+
+    // Subscribe to map's visibility flag
+    this._subscriptions.push(
+      this.GeoTargetingMapService.pinMode.subscribe((pinMode) => {
+        this.pinMode = pinMode;
+        if (pinMode) {
+          this.GeoTargetingMapService.enterPinMode();
+        } else {
+          this.GeoTargetingMapService.exitPinMode();
+        }
         this.updateTemplate();
       })
     );

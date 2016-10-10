@@ -7,7 +7,9 @@
   </div>
 
   <div class="geo-targeting-map__container"
+       [ngClass]="{'geo-targeting-map__container_pin-mode': pinMode}"
        [hidden]="!mapActive">
     <div id="geo-targeting-map"></div>
+    <geo-targeting-map-controls></geo-targeting-map-controls>
   </div>
 </div>
