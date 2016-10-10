@@ -69,6 +69,9 @@
     "HIDE_MAP": "Hide Map",
     "SHOW_MAP": "Show Map"
   },
+  "geo-targeting-map-controls": {
+    "DROP_PIN": "Drop Pin"
+  },
   "geo-targeting-radius": {
     "mile": "mi",
     "kilometer": "km",

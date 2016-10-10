@@ -105,7 +105,7 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
       })
     );
 
-    // Subscribe to map's visibility flag
+    // Subscribe to map's pin mode flag
     this._subscriptions.push(
       this.GeoTargetingMapService.pinMode.subscribe((pinMode) => {
         this.pinMode = pinMode;

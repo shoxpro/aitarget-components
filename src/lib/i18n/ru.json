@@ -69,6 +69,9 @@
     "HIDE_MAP": "Скрыть карту",
     "SHOW_MAP": "Показать карту"
   },
+  "geo-targeting-map-controls": {
+    "DROP_PIN": "Отметить булавкой"
+  },
   "geo-targeting-radius": {
     "mile": "миль",
     "kilometer": "км",

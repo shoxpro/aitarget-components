@@ -5,6 +5,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 
 @Injectable()
 export class GeoTargetingMapService {
@@ -226,7 +227,11 @@ export class GeoTargetingMapService {
             return;
           }
 
+          item.excluded = this.GeoTargetingModeService.get() === 'exclude';
+
           this.GeoTargetingSelectedService.add(item);
+
+          this.togglePinMode();
         });
   };
 
@@ -240,6 +245,7 @@ export class GeoTargetingMapService {
 
   constructor (private TranslateService: TranslateService,
                private GeoTargetingInfoService: GeoTargetingInfoService,
+               private GeoTargetingModeService: GeoTargetingModeService,
                private GeoTargetingSelectedService: GeoTargetingSelectedService) { }
 
 }

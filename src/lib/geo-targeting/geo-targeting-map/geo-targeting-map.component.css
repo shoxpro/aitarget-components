@@ -44,7 +44,8 @@
   border-radius: 0 0 3px 3px;
 }
 
-.geo-targeting-map__container_pin-mode .leaflet-grab {
+.geo-targeting-map__container_pin-mode .leaflet-grab,
+.geo-targeting-map__container_pin-mode .leaflet-interactive {
   cursor: crosshair !important;
 }
 
@@ -53,6 +54,10 @@
   width:    100%;
   height:   230px;
   outline:  none;
+}
+
+#geo-targeting-map .leaflet-bar {
+  border-radius: 3px;
 }
 
 .geo-targeting-map__pin {

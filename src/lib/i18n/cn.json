@@ -69,6 +69,9 @@
     "HIDE_MAP": "隐藏地图",
     "SHOW_MAP": "显示地图"
   },
+  "geo-targeting-map-controls": {
+    "DROP_PIN": "放置大头针"
+  },
   "geo-targeting-radius": {
     "mile": "英里",
     "kilometer": "公里",
