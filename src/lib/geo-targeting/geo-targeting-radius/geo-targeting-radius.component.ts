@@ -40,6 +40,8 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
       this.max = 80;
     }
 
+    this.min = this.item.type === 'custom_location' ? 1 : 0;
+
     this.updateTemplate();
   }
 

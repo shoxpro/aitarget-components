@@ -13,7 +13,8 @@
      appendTo="geo-targeting"
      [showVeil]="true"
      (clickOutside)="toggleDropdown()">
-  <div class="geo-targeting-radius__mode geo-targeting-radius__mode_current">
+  <div class="geo-targeting-radius__mode geo-targeting-radius__mode_current"
+       *ngIf="item.type === 'city'">
     <div class="geo-targeting-radius__mode-row"
          [ngClass]="{'geo-targeting-radius__mode-row_selected': item.radius === 0}"
          (click)="disableRadius()">
@@ -26,7 +27,8 @@
   <div class="geo-targeting-radius__mode geo-targeting-radius__mode_radius">
     <div class="geo-targeting-radius__mode-row"
          [ngClass]="{'geo-targeting-radius__mode-row_selected': item.radius > 0}"
-         (click)="enableRadius()">
+         (click)="enableRadius()"
+         *ngIf="item.type === 'city'">
       <fb-tick class="geo-targeting-radius__dropdown-tick"
                *ngIf="item.radius > 0">
       </fb-tick>
