@@ -44,6 +44,17 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Change distance unit
+   * @param distanceUnit
+   */
+  public setDistanceUnit (distanceUnit) {
+    this.item.distance_unit = distanceUnit;
+    this.setDefaultBoundaries();
+    this.onChange(this.item.radius);
+    this.updateTemplate();
+  }
+
+  /**
    * Open/Close radius selection dropdown
    * @param event
    */

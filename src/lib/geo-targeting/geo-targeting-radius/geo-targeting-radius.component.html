@@ -49,7 +49,19 @@
                [max]="max"
                required />
       </label>
-      <span>{{ 'geo-targeting-radius.' + item.distance_unit | translate}}</span>
+      <div class="geo-targeting-radius__distance-unit-wrapper">
+        <span class="geo-targeting-radius__distance-unit"
+              [ngClass]="{'geo-targeting-radius__distance-unit_active': item.distance_unit === 'mile'}"
+              (click)="setDistanceUnit('mile')">
+          {{ 'geo-targeting-radius.mile' | translate}}
+        </span>
+        <span>/</span>
+        <span class="geo-targeting-radius__distance-unit"
+              [ngClass]="{'geo-targeting-radius__distance-unit_active': item.distance_unit === 'kilometer'}"
+              (click)="setDistanceUnit('kilometer')">
+          {{ 'geo-targeting-radius.kilometer' | translate}}
+        </span>
+      </div>
     </div>
   </div>
 </div>
