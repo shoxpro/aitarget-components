@@ -40,6 +40,19 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
       this.max = 80;
     }
 
+    this.min = this.item.type === 'custom_location' ? 1 : 0;
+
+    this.updateTemplate();
+  }
+
+  /**
+   * Change distance unit
+   * @param distanceUnit
+   */
+  public setDistanceUnit (distanceUnit) {
+    this.item.distance_unit = distanceUnit;
+    this.setDefaultBoundaries();
+    this.onChange(this.item.radius);
     this.updateTemplate();
   }
 
@@ -51,9 +64,13 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     if (event) {
       event.stopPropagation();
     }
+
     this.isOpen = !this.isOpen;
 
-    this.GeoTargetingSelectedService.updateItem(this.item);
+    // Update item with current radius when closing dropdown
+    if (!this.isOpen) {
+      this.GeoTargetingSelectedService.updateSelectedItem(this.item);
+    }
 
     this.updateTemplate();
   }

@@ -133,3 +133,19 @@
   border-color: #abbdd4;
   box-shadow:   0 0 5px 0 rgba(154, 168, 181, 0.39);
 }
+
+.geo-targeting-radius__distance-unit-wrapper {
+  display: inline-block;
+}
+
+.geo-targeting-radius__distance-unit {
+  cursor: pointer;
+}
+
+.geo-targeting-radius__distance-unit:hover {
+  color: #289ac9;
+}
+
+.geo-targeting-radius__distance-unit_active {
+  color: #50a9c9;
+}

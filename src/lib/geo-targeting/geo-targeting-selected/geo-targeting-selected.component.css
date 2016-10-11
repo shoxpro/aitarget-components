@@ -53,6 +53,7 @@
   min-height:  26px;
   height:      auto;
   font-weight: bold;
+  cursor:      pointer;
   align-items: center;
 }
 

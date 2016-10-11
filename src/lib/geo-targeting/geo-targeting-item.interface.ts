@@ -11,7 +11,7 @@ export interface GeoTargetingItem extends City, CustomLocation {
   /**
    * Property of all types of locations
    */
-  type?: string;
+    type?: string;
   /**
    * Property of all types of locations
    */
@@ -56,4 +56,5 @@ export interface GeoTargetingItem extends City, CustomLocation {
    * Flag for excluded locations
    */
   excluded?: boolean;
+  polygons?: Array<Array<{lng: string, lat: string}>>;
 }

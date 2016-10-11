@@ -1,6 +1,7 @@
 <div class="geo-targeting-input__table"
      [ngClass]="{
      'geo-targeting-input_dropdown-active': dropdownActive,
+     'geo-targeting-input_map-active': mapActive,
      'geo-targeting-input_selected-items': hasSelected,
      'geo-targeting-input_focus': hasFocus
      }">
@@ -14,4 +15,5 @@
            (blur)="blur()"
            placeholder="{{'geo-targeting-input.PLACEHOLDER' | translate}}">
   </label>
+  <geo-targeting-map class="geo-targeting-input__table-cell"></geo-targeting-map>
 </div>

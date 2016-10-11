@@ -6,12 +6,15 @@ import { LibModule } from '../../lib.module';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingInfoService } from './geo-targeting-info.service';
 import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
+import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
+import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
 
 describe('Component: GeoTargetingInfo', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:   [LibModule],
-      providers: [GeoTargetingSelectedService, GeoTargetingInfoService, GeoTargetingTypeService]
+      providers: [GeoTargetingSelectedService, GeoTargetingInfoService,
+        GeoTargetingTypeService, GeoTargetingApiService, GeoTargetingMapService]
     });
   });
 

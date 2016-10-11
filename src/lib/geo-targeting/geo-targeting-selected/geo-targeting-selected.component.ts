@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { GeoTargetingSelectedService } from './geo-targeting-selected.service';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
+import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
 
 @Component({
   selector:        'geo-targeting-selected',
@@ -16,6 +17,7 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
   private itemsGroupedByCountryKeys     = [];
 
   constructor (private GeoTargetingSelectedService: GeoTargetingSelectedService,
+               private GeoTargetingMapService: GeoTargetingMapService,
                private ChangeDetectorRef: ChangeDetectorRef) { }
 
   /**
@@ -37,16 +39,37 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Show item on the map
+   * @param item
+   */
+  public showItemOnMap (item: GeoTargetingItem) {
+    this.GeoTargetingMapService.showMap();
+    this.GeoTargetingMapService.focusItem(item);
+  }
+
+  /**
    * Remove all items in country group
    * @param key
+   * @param event
    */
-  public removeGroup (key) {
+  public removeGroup (key, event?) {
+    if (event) {
+      event.stopPropagation();
+    }
     this.itemsGroupedByCountry[key].items.forEach((item: GeoTargetingItem) => {
       this.GeoTargetingSelectedService.remove(item);
     });
   }
 
-  public removeItem (item: GeoTargetingItem) {
+  /**
+   * Remove passed item from selected items list
+   * @param item
+   * @param event
+   */
+  public removeItem (item: GeoTargetingItem, event?) {
+    if (event) {
+      event.stopPropagation();
+    }
     this.GeoTargetingSelectedService.remove(item);
   }
 

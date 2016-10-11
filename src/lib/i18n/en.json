@@ -42,7 +42,8 @@
     "WORK_POSITIONS": "Job Titles"
   },
   "geo-targeting-input": {
-    "PLACEHOLDER": "Add locations"
+    "PLACEHOLDER": "Add locations",
+    "INVALID_LOCATION": "This location is not available for targeting."
   },
   "geo-targeting-dropdown": {
     "country": "Country",
@@ -51,7 +52,8 @@
     "city": "City",
     "zip": "Zip",
     "electoral_district": "Electoral District",
-    "geo_market": "Geo Market"
+    "geo_market": "Geo Market",
+    "custom_location": "GPS Coordinates"
   },
   "geo-targeting-info": {
     "MESSAGE": "Your audience location has been changed from {{ fromNames }} to {{ toName }}.",
@@ -62,6 +64,13 @@
   "geo-targeting-mode": {
     "include": "Include",
     "exclude": "Exclude"
+  },
+  "geo-targeting-map": {
+    "HIDE_MAP": "Hide Map",
+    "SHOW_MAP": "Show Map"
+  },
+  "geo-targeting-map-controls": {
+    "DROP_PIN": "Drop Pin"
   },
   "geo-targeting-radius": {
     "mile": "mi",

@@ -1,0 +1,10 @@
+<div class="geo-targeting-map-controls">
+  <div class="geo-targeting-map-controls__button-wrapper">
+    <button class="geo-targeting-map-controls__button geo-targeting-map-controls__button_pin"
+            [ngClass]="{'geo-targeting-map-controls__button_active': pinMode}"
+            (click)="togglePinMode()">
+      <geo-targeting-pin [excluded]="mode === 'exclude'"></geo-targeting-pin>
+      {{ 'geo-targeting-map-controls.DROP_PIN' | translate }}
+    </button>
+  </div>
+</div>

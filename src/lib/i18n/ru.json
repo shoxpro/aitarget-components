@@ -42,7 +42,8 @@
     "WORK_POSITIONS": "Должности"
   },
   "geo-targeting-input": {
-    "PLACEHOLDER": "Добавьте места"
+    "PLACEHOLDER": "Добавьте места",
+    "INVALID_LOCATION": "Это местонахождение недоступно для таргетинга."
   },
   "geo-targeting-dropdown": {
     "country": "Страна",
@@ -51,7 +52,8 @@
     "city": "Город",
     "zip": "Индекс",
     "electoral_district": "Избирательный округ",
-    "geo_market": "Рынок"
+    "geo_market": "Рынок",
+    "custom_location": "GPS координаты"
   },
   "geo-targeting-info": {
     "MESSAGE": "Местоположение вашей аудитории изменено с {{ fromNames }} на {{ toName }}.",
@@ -62,6 +64,13 @@
   "geo-targeting-mode": {
     "include": "Включить",
     "exclude": "Исключить"
+  },
+  "geo-targeting-map": {
+    "HIDE_MAP": "Скрыть карту",
+    "SHOW_MAP": "Показать карту"
+  },
+  "geo-targeting-map-controls": {
+    "DROP_PIN": "Отметить булавкой"
   },
   "geo-targeting-radius": {
     "mile": "миль",

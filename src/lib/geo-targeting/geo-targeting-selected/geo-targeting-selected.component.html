@@ -8,16 +8,18 @@
          (mouseleave)="hoverGroup(key, false)">
       <span class="geo-targeting-selected__group-name">{{ itemsGroupedByCountry[key].name }}</span>
       <span class="geo-targeting-selected__remove geo-targeting-selected__remove-group"
-            (click)="removeGroup(key)">&times;</span>
+            (click)="removeGroup(key, $event)">&times;</span>
     </div>
     <div class="geo-targeting-selected__items">
       <div class="geo-targeting-selected__item"
+           (click)="showItemOnMap(item)"
            *ngFor="let item of itemsGroupedByCountry[key].items">
         <geo-targeting-pin [excluded]="item.excluded"></geo-targeting-pin>
         <span>{{ item | fullName }}</span>
-        <geo-targeting-radius *ngIf="item.type === 'city'" [item]="item"></geo-targeting-radius>
+        <geo-targeting-radius *ngIf="item.type === 'city' || item.type === 'custom_location'"
+                              [item]="item"></geo-targeting-radius>
         <span class="geo-targeting-selected__remove geo-targeting-selected__remove-item"
-              (click)="removeItem(item)">&times;</span>
+              (click)="removeItem(item, $event)">&times;</span>
       </div>
     </div>
     <div class="geo-targeting-selected__group-devider"

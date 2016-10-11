@@ -48,6 +48,13 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Close dropdown handler
+   */
+  public closeDropdown () {
+    this.GeoTargetingDropdownService.close();
+  }
+
+  /**
    * Select location handler
    * @param item
    */
@@ -55,7 +62,10 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     let mode      = this.GeoTargetingModeService.get();
     item.excluded = mode === 'exclude';
+
     this.GeoTargetingSelectedService.add(item);
+
+    this.closeDropdown();
   }
 
   constructor (private GeoTargetingDropdownService: GeoTargetingDropdownService,

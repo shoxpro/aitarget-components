@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { BehaviorSubject, Subject } from 'rxjs/Rx';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
-import { GeoTargetingSpec, Key, City } from '../../targeting/targeting-spec-geo.interface';
+import { GeoTargetingSpec, Key, City, CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 import { GeoTargetingRadiusService } from '../geo-targeting-radius/geo-targeting-radius.service';
+import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 
 @Injectable()
 export class GeoTargetingSelectedService {
@@ -15,6 +16,15 @@ export class GeoTargetingSelectedService {
   public items                               = this._items.asObservable();
   private _prevItems: GeoTargetingItem[]     = [];
   private _replacedItems: GeoTargetingItem[] = [];
+  private typeMap                            = {
+    country:            'countries',
+    region:             'regions',
+    city:               'cities',
+    zip:                'zips',
+    geo_market:         'geo_markets',
+    electoral_district: 'electoral_districts',
+    custom_location:    'custom_locations'
+  };
 
   /**
    * Show info message that excluding is impossible without included locations
@@ -96,6 +106,58 @@ export class GeoTargetingSelectedService {
   }
 
   /**
+   * Set suggested radius for passed location
+   * @param item
+   */
+  private setSuggestedRadius = (item: GeoTargetingItem) => {
+    let _item = new Subject();
+    this.GeoTargetingApiService.suggestRadius(item)
+        .subscribe((suggestedRadius: null | Array<{suggested_radius: number, distance_unit: 'mile' | 'kilometer'}>) => {
+          if (!suggestedRadius || !suggestedRadius[0]) {
+            if (item.type === 'city') {
+              item = GeoTargetingRadiusService.setDefaultRadius(item, this.TranslateService.currentLang);
+            }
+          } else {
+            item.radius        = suggestedRadius[0].suggested_radius;
+            item.distance_unit = suggestedRadius[0].distance_unit;
+          }
+
+          _item.next(item);
+        });
+
+    return _item.asObservable();
+  };
+
+  /**
+   * Set latitude, longitude or optional polygons for passed item
+   * @param item
+   * @returns {GeoTargetingItem}
+   */
+  public setCoordinates = (item: GeoTargetingItem) => {
+    let _item                  = new Subject();
+    let simplifiedGeoLocations = {};
+    let mappedType             = this.typeMap[item.type];
+    let key: string | number   = item.key;
+
+    simplifiedGeoLocations[mappedType] = [];
+
+    if (item.type === 'regions' || item.type === 'cities') {
+      key = Number(item.key);
+    }
+
+    simplifiedGeoLocations[mappedType].push(key);
+
+    this.GeoTargetingApiService.metaData(simplifiedGeoLocations)
+        .subscribe((metaData) => {
+          item = Object.assign(item, metaData[mappedType][item.key]);
+
+          _item.next(item);
+        });
+
+    return _item.asObservable();
+  };
+
+  /**
    * Return list of selected items
    * @returns {GeoTargetingItem[]}
    */
@@ -136,10 +198,6 @@ export class GeoTargetingSelectedService {
    * @returns {undefined}
    */
   public add (item: GeoTargetingItem) {
-    // Set Default radius when adding new city item
-    if (item.type === 'city') {
-      item = GeoTargetingRadiusService.setDefaultRadius(item, this.TranslateService.currentLang);
-    }
     let broaderLocations  = this.getBroaderLocations(item);
     let narrowerLocations = this.getNarrowerLocations(item);
 
@@ -176,16 +234,22 @@ export class GeoTargetingSelectedService {
                               return !toReplace;
                             });
 
-    selectedItems.unshift(item);
+    this.setCoordinates(item)
+        .flatMap(this.setSuggestedRadius)
+        .subscribe((extendedItem: GeoTargetingItem) => {
 
-    this.update(selectedItems);
+          selectedItems.unshift(extendedItem);
+
+          this.update(selectedItems);
+        });
+
   }
 
   /**
    * Update one of selected items
    * @param item
    */
-  public updateItem (item: GeoTargetingItem) {
+  public updateSelectedItem (item: GeoTargetingItem) {
     let selectedItems = this.get();
     selectedItems.map((selectedItem: GeoTargetingItem) => {
       if (selectedItem.key === item.key) {
@@ -219,15 +283,6 @@ export class GeoTargetingSelectedService {
    * @returns {TargetingSpec}
    */
   public getSpec () {
-    let typeMap = {
-      country:            'countries',
-      region:             'regions',
-      city:               'cities',
-      zip:                'zips',
-      geo_market:         'geo_markets',
-      electoral_district: 'electoral_districts',
-    };
-
     let geoLocations: GeoTargetingSpec = {
       location_types: this.GeoTargetingTypeService.get()
     };
@@ -246,22 +301,30 @@ export class GeoTargetingSelectedService {
         locations = geoLocations;
       }
 
-      locations[typeMap[item.type]] = locations[typeMap[item.type]] || [];
+      locations[this.typeMap[item.type]] = locations[this.typeMap[item.type]] || [];
 
       if (item.type === 'country') {
-        locations[typeMap[item.type]].push(item.key);
+        locations[this.typeMap[item.type]].push(item.key);
       } else {
         let selectedValue: Key = {key: item.key, name: item.name};
 
-        if (item.type === 'city' && item.radius != null) {
-          (<City>selectedValue).radius = item.radius;
-        }
-
-        if (item.type === 'city' && item.distance_unit != null) {
+        if (item.type === 'city') {
+          (<City>selectedValue).radius        = item.radius;
           (<City>selectedValue).distance_unit = item.distance_unit;
         }
 
-        locations[typeMap[item.type]].push(selectedValue);
+        if (item.type === 'custom_location') {
+          (<CustomLocation>selectedValue).radius        = item.radius;
+          (<CustomLocation>selectedValue).distance_unit = item.distance_unit;
+          (<CustomLocation>selectedValue).latitude      = item.latitude;
+          (<CustomLocation>selectedValue).longitude     = item.longitude;
+          (<CustomLocation>selectedValue).name          = item.name;
+          if (item.address_string !== item.name) {
+            (<CustomLocation>selectedValue).address_string = item.address_string;
+          }
+        }
+
+        locations[this.typeMap[item.type]].push(selectedValue);
       }
     });
 
@@ -272,7 +335,9 @@ export class GeoTargetingSelectedService {
   }
 
   constructor (private TranslateService: TranslateService,
+               private GeoTargetingApiService: GeoTargetingApiService,
                private GeoTargetingInfoService: GeoTargetingInfoService,
-               private GeoTargetingTypeService: GeoTargetingTypeService) { }
+               private GeoTargetingTypeService: GeoTargetingTypeService) {
+  }
 
 }

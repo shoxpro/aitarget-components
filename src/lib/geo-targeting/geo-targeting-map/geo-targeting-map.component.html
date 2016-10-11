@@ -1,3 +1,15 @@
-<p>
-  geo-targeting-map works!
-</p>
+<div class="geo-targeting-map">
+  <div class="geo-targeting-map__switcher"
+       (click)="toggleMap($event)">
+    <div class="geo-targeting-map__title">
+      <span>{{ mapModeText }}</span>
+    </div>
+  </div>
+
+  <div class="geo-targeting-map__container"
+       [ngClass]="{'geo-targeting-map__container_pin-mode': pinMode}"
+       [hidden]="!mapActive">
+    <div id="geo-targeting-map"></div>
+    <geo-targeting-map-controls></geo-targeting-map-controls>
+  </div>
+</div>

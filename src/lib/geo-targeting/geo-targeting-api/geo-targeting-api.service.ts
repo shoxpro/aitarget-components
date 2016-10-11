@@ -27,7 +27,7 @@ export class GeoTargetingApiService {
     let simplifiedGeoLocations = {};
     let map                    = {};
 
-    let types = ['countries', 'regions', 'cities', 'zips', 'geo_markets', 'electoral_districts'];
+    let types = ['countries', 'regions', 'cities', 'zips', 'geo_markets', 'electoral_districts', 'custom_locations'];
 
     types.forEach((type: string) => {
       // Combine items from included and excluded locations
@@ -79,17 +79,15 @@ export class GeoTargetingApiService {
     return _response.asObservable();
   };
 
-  public metaData (spec: TargetingSpec) {
-    let _response = new Subject();
+  /**
+   * Get list of items for selected locations
+   * @param spec
+   * @returns {Observable<T>}
+   */
+  public getSelectedLocationItems (spec: TargetingSpec) {
+    let _items = new Subject();
 
     let processedGeoLocations = this.processGeoLocations(spec.geo_locations, spec.excluded_geo_locations);
-
-    let params = Object.assign({
-      type:   'adgeolocationmeta',
-      locale: this.lang
-    }, processedGeoLocations.simplified, {
-      location_types: null
-    });
 
     // Get all excluded keys
     let excludedKeys = [];
@@ -101,35 +99,87 @@ export class GeoTargetingApiService {
       }
     }
 
-    this.api.subscribe((FB: FB) => {
-      FB.api(`/search`, params, (response) => {
-        let items: GeoTargetingItem[] = [];
+    // Require metadata for locations and extract only items from the it
+    this.metaData(processedGeoLocations.simplified)
+        .subscribe((metaData: any) => {
+          let items: GeoTargetingItem[] = [];
+          /**
+           * Iterate through geo location metadata and get all available items
+           * @see https://developers.facebook.com/docs/marketing-api/targeting-search/v2.7#geo-meta
+           */
+          for (let type in metaData) {
+            if (metaData.hasOwnProperty(type)) {
+              for (let key in metaData[type]) {
+                if (metaData[type].hasOwnProperty(key)) {
+                  let item         = metaData[type][key];
+                  let selectedItem = processedGeoLocations.map[item.key];
 
-        /**
-         * Iterate through geo location metadata and get all available items
-         * @see https://developers.facebook.com/docs/marketing-api/targeting-search/v2.7#geo-meta
-         */
-        for (let type in response.data) {
-          if (response.data.hasOwnProperty(type)) {
-            for (let key in response.data[type]) {
-              if (response.data[type].hasOwnProperty(key)) {
-                let item         = response.data[type][key];
-                let selectedItem = processedGeoLocations.map[item.key];
+                  item.excluded = excludedKeys.indexOf(key) > -1;
 
-                item.excluded = excludedKeys.indexOf(key) > -1;
+                  item.radius        = selectedItem.radius || 0;
+                  item.distance_unit = selectedItem.distance_unit || (this.lang === 'en_US' ? 'mile' : 'kilometer');
 
-                if (selectedItem.radius) {
-                  item.radius        = selectedItem.radius;
-                  item.distance_unit = selectedItem.distance_unit;
+                  items.push(item);
                 }
-
-                items.push(item);
               }
             }
           }
-        }
 
-        _response.next(items);
+          _items.next(items);
+        });
+    return _items.asObservable();
+  }
+
+  /**
+   * Require metaData for simplified locations
+   * @see Geo locations metadata in https://developers.facebook.com/docs/marketing-api/targeting-search/v2.7
+   * @param simplifiedLocations
+   * @returns {Observable<T>}
+   */
+  public metaData (simplifiedLocations) {
+    let _response = new Subject();
+
+    let params = Object.assign({
+      type:                          'adgeolocationmeta',
+      show_polygons_and_coordinates: 1,
+      locale:                        this.lang
+    }, simplifiedLocations, {
+      location_types: null
+    });
+
+    this.api.subscribe((FB: FB) => {
+      FB.api(`/search`, params, (response) => {
+        _response.next(response.data);
+      });
+    });
+
+    return _response.asObservable();
+  };
+
+  /**
+   * Suggest radius for specific location
+   * @see Geo locations metadata in https://developers.facebook.com/docs/marketing-api/targeting-search/v2.7
+   * @returns {Observable<T>}
+   * @param item
+   */
+  public suggestRadius (item: GeoTargetingItem) {
+    let _response = new Subject();
+
+    if (!item.latitude || !item.longitude) {
+      _response.next(null);
+    }
+
+    let params = {
+      type:          'adradiussuggestion',
+      latitude:      item.latitude,
+      longitude:     item.longitude,
+      distance_unit: item.distance_unit,
+      locale:        this.lang
+    };
+
+    this.api.subscribe((FB: FB) => {
+      FB.api(`/search`, params, (response) => {
+        _response.next(response.data);
       });
     });
 
