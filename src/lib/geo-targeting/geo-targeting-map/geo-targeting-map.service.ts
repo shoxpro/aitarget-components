@@ -6,6 +6,9 @@ import { BehaviorSubject } from 'rxjs/Rx';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
+import { GeoTargetingModule } from '../geo-targeting.module';
+import { ComponentsHelperService } from '../../shared/services/components-helper.service';
+import { GeoTargetingPinComponent } from '../geo-targeting-pin/geo-targeting-pin.component';
 
 @Injectable()
 export class GeoTargetingMapService {
@@ -93,34 +96,27 @@ export class GeoTargetingMapService {
    * @returns {Marker}
    */
   public getMarkerLayer (item: GeoTargetingItem) {
-    let pin = `<svg xmlns="http://www.w3.org/2000/svg"
-                         fill="#67ba2f"
-                         height="48"
-                         viewBox="0 0 24 24"
-                         width="48">
-                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38
-                      0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path>
-                    </svg>`;
+    let componentRef = this.ComponentsHelperService.getComponentRef(
+      GeoTargetingModule,
+      GeoTargetingPinComponent,
+      {excluded: item.excluded}
+    );
 
-    if (item.excluded) {
-      pin = `<svg xmlns="http://www.w3.org/2000/svg"
-                 fill="#f47564"
-                 height="48"
-                 viewBox="0 0 24 24"
-                 width="48">
-              <path d="M12 6.5c1.38 0 2.5 1.12 2.5 2.5 0 .74-.33 1.39-.83 1.85l3.63 3.63c.98-1.86 1.7-3.8 1.7-5.48
-              0-3.87-3.13-7-7-7-1.98 0-3.76.83-5.04 2.15l3.19 3.19c.46-.52 1.11-.84 1.85-.84zm4.37
-              9.6l-4.63-4.63-.11-.11L3.27 3 2 4.27l3.18 3.18C5.07 7.95 5 8.47 5 9c0 5.25 7 13 7
-              13s1.67-1.85 3.38-4.35L18.73 21 20 19.73l-3.63-3.63z"></path>
-            </svg>`;
-    }
+    let pinElement: HTMLElement = componentRef.location.nativeElement;
+    let svg                     = pinElement.querySelector('svg');
 
     let myIcon = L.divIcon({
-      className: 'geo-targeting-map__pin',
-      html:      pin
+      className:   'geo-targeting-map__pin',
+      popupAnchor: [0, -35],
+      html:        (<any>svg).outerHTML
     });
 
-    return L.marker([item.latitude, item.longitude], {icon: myIcon});
+    componentRef.destroy();
+
+    return L.marker([item.latitude, item.longitude], {icon: myIcon})
+            .bindPopup(`<div>${item.name}</div>`, {
+              closeButton: false
+            });
   }
 
   /**
@@ -196,13 +192,6 @@ export class GeoTargetingMapService {
     this.popup = L.popup();
   }
 
-  public openPopup (item) {
-    this.popup
-        .setLatLng([item.latitude, item.longitude])
-        .setContent(`<div>${item.name}</div>`)
-        .openOn(this.map);
-  }
-
   private onMapClick = (e) => {
     let latitude  = e.latlng.lat;
     let longitude = e.latlng.lng;
@@ -246,6 +235,7 @@ export class GeoTargetingMapService {
   constructor (private TranslateService: TranslateService,
                private GeoTargetingInfoService: GeoTargetingInfoService,
                private GeoTargetingModeService: GeoTargetingModeService,
+               private ComponentsHelperService: ComponentsHelperService,
                private GeoTargetingSelectedService: GeoTargetingSelectedService) { }
 
 }

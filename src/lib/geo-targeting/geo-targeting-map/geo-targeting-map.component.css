@@ -57,6 +57,10 @@
   outline:  none;
 }
 
+#geo-targeting-map .leaflet-popup-content {
+  margin: 8px;
+}
+
 #geo-targeting-map .leaflet-bar {
   border-radius: 3px;
 }
@@ -91,6 +95,8 @@
 }
 
 .geo-targeting-map__pin svg {
+  width:          48px;
+  height:         48px;
   transform:      translate3d(-18px, -40px, 0);
   stroke:         #4d6aa4;
   stroke-opacity: 1;

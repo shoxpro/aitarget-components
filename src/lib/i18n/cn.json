@@ -62,8 +62,8 @@
     "MESSAGE_NARROW": "定位地区设置为 {{ narrowerLocationNames }}, 系统自动排除此地区以外的所有受众。"
   },
   "geo-targeting-mode": {
-    "include": "添加地区",
-    "exclude": "添加地区"
+    "include": "包括",
+    "exclude": "排除"
   },
   "geo-targeting-map": {
     "HIDE_MAP": "隐藏地图",
