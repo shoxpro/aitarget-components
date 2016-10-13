@@ -65,6 +65,11 @@
     "include": "包括",
     "exclude": "排除"
   },
+  "geo-targeting-map-popup": {
+    "INCLUDE": "包括",
+    "EXCLUDE": "排除",
+    "DELETE": "删除"
+  },
   "geo-targeting-map": {
     "HIDE_MAP": "隐藏地图",
     "SHOW_MAP": "显示地图"

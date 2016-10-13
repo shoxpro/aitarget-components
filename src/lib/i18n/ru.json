@@ -65,6 +65,11 @@
     "include": "Включить",
     "exclude": "Исключить"
   },
+  "geo-targeting-map-popup": {
+    "INCLUDE": "Включить",
+    "EXCLUDE": "Исключить",
+    "DELETE": "Удалить"
+  },
   "geo-targeting-map": {
     "HIDE_MAP": "Скрыть карту",
     "SHOW_MAP": "Показать карту"

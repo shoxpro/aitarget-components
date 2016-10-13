@@ -9,6 +9,7 @@ import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mod
 import { GeoTargetingModule } from '../geo-targeting.module';
 import { ComponentsHelperService } from '../../shared/services/components-helper.service';
 import { GeoTargetingPinComponent } from '../geo-targeting-pin/geo-targeting-pin.component';
+import { GeoTargetingMapPopupComponent } from '../geo-targeting-map-popup/geo-targeting-map-popup.component';
 
 @Injectable()
 export class GeoTargetingMapService {
@@ -96,13 +97,19 @@ export class GeoTargetingMapService {
    * @returns {Marker}
    */
   public getMarkerLayer (item: GeoTargetingItem) {
-    let componentRef = this.ComponentsHelperService.getComponentRef(
+    let pinRef = this.ComponentsHelperService.getComponentRef(
       GeoTargetingModule,
       GeoTargetingPinComponent,
       {excluded: item.excluded}
     );
 
-    let pinElement: HTMLElement = componentRef.location.nativeElement;
+    let popupRef = this.ComponentsHelperService.getComponentRef(
+      GeoTargetingModule,
+      GeoTargetingMapPopupComponent,
+      {item: item}
+    );
+
+    let pinElement: HTMLElement = pinRef.location.nativeElement;
     let svg                     = pinElement.querySelector('svg');
 
     let myIcon = L.divIcon({
@@ -111,10 +118,10 @@ export class GeoTargetingMapService {
       html:        (<any>svg).outerHTML
     });
 
-    componentRef.destroy();
+    pinRef.destroy();
 
     return L.marker([item.latitude, item.longitude], {icon: myIcon})
-            .bindPopup(`<div>${item.name}</div>`, {
+            .bindPopup(popupRef.location.nativeElement, {
               closeButton: false
             });
   }
@@ -125,10 +132,12 @@ export class GeoTargetingMapService {
    * @returns {Circle}
    */
   public getRadiusLayer (item: GeoTargetingItem) {
+    let radius = item.radius || 0;
+
     return L.circle([item.latitude, item.longitude], {
       color:  item.excluded ? '#f47564' : '#4d6aa4',
       weight: 1,
-      radius: item.distance_unit === 'mile' ? item.radius * 1609.34 : item.radius * 1000
+      radius: item.distance_unit === 'mile' ? radius * 1609.34 : radius * 1000
     });
   }
 

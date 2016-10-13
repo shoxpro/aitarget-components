@@ -18,6 +18,7 @@ import { GeoTargetingTypeComponent } from './geo-targeting-type/geo-targeting-ty
 import { FbArrowDropComponent } from '../shared/components/arrow-drop.component';
 import { AppendToDirective } from '../shared/directives/append-to.directive';
 import { GeoTargetingMapControlsComponent } from './geo-targeting-map-controls/geo-targeting-map-controls.component';
+import { GeoTargetingMapPopupComponent } from './geo-targeting-map-popup/geo-targeting-map-popup.component';
 /* tslint:enable:max-line-length */
 
 @NgModule({
@@ -41,7 +42,8 @@ import { GeoTargetingMapControlsComponent } from './geo-targeting-map-controls/g
     AppendToDirective,
     ClickOutsideDirective,
     FbTickComponent,
-    FbArrowDropComponent
+    FbArrowDropComponent,
+    GeoTargetingMapPopupComponent
   ],
   exports:      [
     GeoTargetingComponent

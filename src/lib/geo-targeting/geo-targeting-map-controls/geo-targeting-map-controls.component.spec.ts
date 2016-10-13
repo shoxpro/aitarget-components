@@ -9,6 +9,7 @@ import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mod
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
+import { ComponentsHelperService } from '../../shared/services/components-helper.service';
 
 describe('Component: GeoTargetingMapControls', () => {
   beforeEach(() => {
@@ -16,7 +17,7 @@ describe('Component: GeoTargetingMapControls', () => {
       imports:   [LibModule],
       providers: [GeoTargetingMapService, GeoTargetingMapService, GeoTargetingInfoService,
         GeoTargetingModeService, GeoTargetingSelectedService, GeoTargetingApiService,
-        GeoTargetingTypeService]
+        GeoTargetingTypeService, ComponentsHelperService]
     });
   });
 
