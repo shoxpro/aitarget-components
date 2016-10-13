@@ -36,7 +36,7 @@
 .geo-targeting-selected__group-title {
   position:        relative;
   display:         flex;
-  padding:         6px 0 6px 10px;
+  padding:         6px 0 6px 6px;
   justify-content: space-between;
   align-content:   center;
 }
@@ -49,7 +49,7 @@
   position:    relative;
   display:     flex;
   box-sizing:  border-box;
-  padding:     0 0 0 30px;
+  padding:     0 0 0 51px;
   min-height:  26px;
   height:      auto;
   font-weight: bold;
@@ -57,9 +57,21 @@
   align-items: center;
 }
 
-.geo-targeting-selected__item geo-targeting-pin {
+.geo-targeting-selected__mode {
+  position:     absolute;
+  left:         0;
+  display:      flex;
+  padding:      0 6px;
+  border-right: 1px solid #bdc7d8;
+  white-space:  nowrap;
+  cursor:       pointer;
+  align-items:  center;
+}
+
+.geo-targeting-selected__mode geo-targeting-mode-dropdown {
   position: absolute;
-  left:     6px;
+  top:      20px;
+  left:     0;
 }
 
 .geo-targeting-selected__item:hover {

@@ -59,6 +59,7 @@
 
 #geo-targeting-map .leaflet-popup-content {
   margin: 8px;
+  width:  auto !important;
 }
 
 #geo-targeting-map .leaflet-bar {

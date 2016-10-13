@@ -65,7 +65,7 @@
     "include": "包括",
     "exclude": "排除"
   },
-  "geo-targeting-map-popup": {
+  "geo-targeting-mode-dropdown": {
     "INCLUDE": "包括",
     "EXCLUDE": "排除",
     "DELETE": "删除"

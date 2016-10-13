@@ -65,7 +65,7 @@
     "include": "Включить",
     "exclude": "Исключить"
   },
-  "geo-targeting-map-popup": {
+  "geo-targeting-mode-dropdown": {
     "INCLUDE": "Включить",
     "EXCLUDE": "Исключить",
     "DELETE": "Удалить"

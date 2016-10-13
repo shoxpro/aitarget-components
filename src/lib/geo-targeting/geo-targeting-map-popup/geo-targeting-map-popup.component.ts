@@ -23,6 +23,11 @@ export class GeoTargetingMapPopupComponent implements OnInit, OnDestroy {
     this.ChangeDetectorRef.detectChanges();
   }
 
+  public setExcluded (item: GeoTargetingItem, excluded: boolean) {
+    item.excluded = excluded;
+    this.GeoTargetingSelectedService.updateSelectedItem(item);
+  }
+
   /**
    * Toggle Dropdown
    */
@@ -34,19 +39,8 @@ export class GeoTargetingMapPopupComponent implements OnInit, OnDestroy {
     this.updateTemplate();
   }
 
-  public setExcluded (item: GeoTargetingItem, excluded: boolean) {
-    item.excluded = excluded;
-    this.GeoTargetingSelectedService.remove(item);
-    this.GeoTargetingSelectedService.add(item);
-  }
-
-  /**
-   * Remove passed item from selected items list
-   * @param item
-   * @param event
-   */
-  public removeItem (item: GeoTargetingItem) {
-    this.GeoTargetingSelectedService.remove(item);
+  public remove () {
+    this.GeoTargetingSelectedService.remove(this.item);
   }
 
   constructor (private ChangeDetectorRef: ChangeDetectorRef,

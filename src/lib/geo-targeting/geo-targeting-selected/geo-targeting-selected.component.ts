@@ -15,6 +15,7 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
   private groupHovered: Object          = {};
   private subscriptions                 = [];
   private itemsGroupedByCountryKeys     = [];
+  private isOpen: boolean               = false;
 
   constructor (private GeoTargetingSelectedService: GeoTargetingSelectedService,
                private GeoTargetingMapService: GeoTargetingMapService,
@@ -71,6 +72,26 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
       event.stopPropagation();
     }
     this.GeoTargetingSelectedService.remove(item);
+  }
+
+  /**
+   * Toggle Dropdown
+   */
+  public toggleModeDropdown (itemMode: any, event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    itemMode.isOpen = !itemMode.isOpen;
+    this.updateTemplate();
+  }
+
+  public setExcluded (itemMode, item: GeoTargetingItem, excluded: boolean) {
+    itemMode.isOpen = false;
+
+    item.excluded = excluded;
+
+    this.GeoTargetingSelectedService.updateSelectedItem(item);
+    this.updateTemplate();
   }
 
   ngOnDestroy () {

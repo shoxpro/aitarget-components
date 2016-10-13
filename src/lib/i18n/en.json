@@ -65,7 +65,7 @@
     "include": "Include",
     "exclude": "Exclude"
   },
-  "geo-targeting-map-popup": {
+  "geo-targeting-mode-dropdown": {
     "INCLUDE": "Include",
     "EXCLUDE": "Exclude",
     "DELETE": "Delete"

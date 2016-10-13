@@ -3,29 +3,13 @@
   <div class="geo-targeting-map-popup__drop"
        (click)="toggleDropdown($event)">
     <fb-arrow-drop [direction]="{true: 'up', false: 'down'}[isOpen]"></fb-arrow-drop>
-    <div class="geo-targeting-map-popup__dropdown"
-         (clickOutside)="toggleDropdown()"
-         *ngIf="isOpen">
-      <div class="geo-targeting-map-popup__dropdown-item"
-           [ngClass]="{'geo-targeting-map-popup__dropdown-item_selected': !item.excluded}"
-           (click)="setExcluded(item, false)">
-        <fb-tick class="geo-targeting-map-popup__tick"
-                 *ngIf="!item.excluded">
-        </fb-tick>
-        <span>{{ 'geo-targeting-map-popup.INCLUDE' | translate }}</span>
-      </div>
-      <div class="geo-targeting-map-popup__dropdown-item"
-           [ngClass]="{'geo-targeting-map-popup__dropdown-item_selected': item.excluded}"
-           (click)="setExcluded(item, false)">
-        <fb-tick class="geo-targeting-map-popup__tick"
-                 *ngIf="item.excluded">
-        </fb-tick>
-        <span>{{ 'geo-targeting-map-popup.EXCLUDE' | translate }}</span>
-      </div>
-      <div class="geo-targeting-map-popup__dropdown-item"
-           (click)="removeItem(item)">
-        <span>{{ 'geo-targeting-map-popup.DELETE' | translate }}</span>
-      </div>
-    </div>
+    <geo-targeting-mode-dropdown
+      *ngIf="isOpen"
+      [excluded]="item.excluded"
+      [hasRemove]="true"
+      (toggle)="toggleDropdown()"
+      (include)="setExcluded(item, false)"
+      (exclude)="setExcluded(item, true)"
+      (remove)="remove()"></geo-targeting-mode-dropdown>
   </div>
 </div>

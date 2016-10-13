@@ -20,7 +20,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   private isOpen: boolean = false;
   private max;
   private min: number     = 0;
-  private previousItem;
+  private previousItem: GeoTargetingItem;
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -79,7 +79,8 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
    * Enable radius by returning previous item state
    */
   public enableRadius () {
-    this.item = this.previousItem;
+    // Set previous item or current item with minimum default radius
+    this.item = this.previousItem || Object.assign(this.item, {radius: 1});
   }
 
   /**
