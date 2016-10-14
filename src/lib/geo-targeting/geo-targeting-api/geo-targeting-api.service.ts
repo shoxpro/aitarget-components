@@ -66,10 +66,11 @@ export class GeoTargetingApiService {
     this.api.subscribe((FB: FB) => {
       FB.api(`/search`, {
         q:              q,
-        location_types: ['country', 'region', 'geo_market', 'city', 'electoral_district', 'political_district', 'zip',
-          'custom_location', 'place'],
+        location_types: ['country', 'region', 'geo_market', 'city', 'electoral_district',
+          'political_district', 'zip', 'custom_location', 'place'],
         type:           'adgeolocation',
         limit:          10,
+        place_fallback: true,
         locale:         this.lang
       }, (response) => {
         _response.next(response.data);

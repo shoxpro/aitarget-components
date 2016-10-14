@@ -53,7 +53,8 @@
     "zip": "Zip",
     "electoral_district": "Electoral District",
     "geo_market": "Geo Market",
-    "custom_location": "GPS Coordinates"
+    "custom_location": "GPS Coordinates",
+    "place": "Place"
   },
   "geo-targeting-info": {
     "MESSAGE": "Your audience location has been changed from {{ fromNames }} to {{ toName }}.",

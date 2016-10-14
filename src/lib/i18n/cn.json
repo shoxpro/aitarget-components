@@ -53,7 +53,8 @@
     "zip": "邮编",
     "electoral_district": "选区",
     "geo_market": "市场",
-    "custom_location": "GPS坐标"
+    "custom_location": "GPS坐标",
+    "place": "地方"
   },
   "geo-targeting-info": {
     "MESSAGE": "你的定位地区已从 {{ fromNames }} 改为 {{ toName }}.",

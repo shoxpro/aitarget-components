@@ -15,7 +15,6 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
   private groupHovered: Object          = {};
   private subscriptions                 = [];
   private itemsGroupedByCountryKeys     = [];
-  private isOpen: boolean               = false;
 
   constructor (private GeoTargetingSelectedService: GeoTargetingSelectedService,
                private GeoTargetingMapService: GeoTargetingMapService,

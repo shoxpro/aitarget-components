@@ -53,7 +53,8 @@
     "zip": "Индекс",
     "electoral_district": "Избирательный округ",
     "geo_market": "Рынок",
-    "custom_location": "GPS координаты"
+    "custom_location": "GPS координаты",
+    "place": "Место"
   },
   "geo-targeting-info": {
     "MESSAGE": "Местоположение вашей аудитории изменено с {{ fromNames }} на {{ toName }}.",
