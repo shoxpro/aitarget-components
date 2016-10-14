@@ -11,6 +11,7 @@ import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-inf
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
+import { ComponentsHelperService } from '../../shared/services/components-helper.service';
 
 describe('Component: GeoTargetingInput', () => {
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('Component: GeoTargetingInput', () => {
       providers: [GeoTargetingApiService, GeoTargetingInputService,
         GeoTargetingDropdownService, GeoTargetingSelectedService,
         GeoTargetingInfoService, GeoTargetingModeService, GeoTargetingTypeService,
-        GeoTargetingMapService]
+        GeoTargetingMapService, ComponentsHelperService]
     });
   });
 

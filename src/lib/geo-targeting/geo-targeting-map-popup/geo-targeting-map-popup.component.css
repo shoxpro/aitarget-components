@@ -1,0 +1,11 @@
+.geo-targeting-map-popup__name {
+  display: inline-block;
+}
+
+.geo-targeting-map-popup__drop {
+  display:      inline-block;
+  margin-left:  3px;
+  padding-left: 3px;
+  border-left:  1px solid #bdc7d8;
+  cursor:       pointer;
+}

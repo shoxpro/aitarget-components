@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs/Rx';
+import { BehaviorSubject, Subject, Observable } from 'rxjs/Rx';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSpec, Key, City, CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 import { TargetingSpec } from '../../targeting/targeting-spec.interface';
@@ -29,8 +29,8 @@ export class GeoTargetingSelectedService {
   /**
    * Show info message that excluding is impossible without included locations
    */
-  private informAboutMissingBroader () {
-    let message = this.TranslateService.instant(`geo-targeting-info.MESSAGE_MISSING_BROADER`);
+  private informAboutMissingIncludedLocation () {
+    let message = this.TranslateService.instant(`geo-targeting-info.MESSAGE_MISSING_INCLUDED`);
 
     this.GeoTargetingInfoService.update('error', message, false);
     this.GeoTargetingInfoService.show();
@@ -110,22 +110,26 @@ export class GeoTargetingSelectedService {
    * @param item
    */
   private setSuggestedRadius = (item: GeoTargetingItem) => {
-    let _item = new Subject();
-    this.GeoTargetingApiService.suggestRadius(item)
-        .subscribe((suggestedRadius: null | Array<{suggested_radius: number, distance_unit: 'mile' | 'kilometer'}>) => {
-          if (!suggestedRadius || !suggestedRadius[0]) {
-            if (item.type === 'city') {
-              item = GeoTargetingRadiusService.setDefaultRadius(item, this.TranslateService.currentLang);
-            }
-          } else {
-            item.radius        = suggestedRadius[0].suggested_radius;
-            item.distance_unit = suggestedRadius[0].distance_unit;
-          }
+    return Observable.create((observer) => {
+      // Request for suggested radius only for cities, custom locations and places
+      if (['city', 'custom_location', 'place'].indexOf(item.type) > -1) {
+        this.GeoTargetingApiService.suggestRadius(item)
+            .subscribe((suggestedRadius: null | Array<{suggested_radius: number, distance_unit: 'mile' | 'kilometer'}>) => {
+              if (!suggestedRadius || !suggestedRadius[0]) {
+                if (item.type === 'city') {
+                  item = GeoTargetingRadiusService.setDefaultRadius(item, this.TranslateService.currentLang);
+                }
+              } else {
+                item.radius        = suggestedRadius[0].suggested_radius;
+                item.distance_unit = suggestedRadius[0].distance_unit;
+              }
 
-          _item.next(item);
-        });
-
-    return _item.asObservable();
+              observer.next(item);
+            });
+      } else {
+        observer.next(item);
+      }
+    });
   };
 
   /**
@@ -198,6 +202,7 @@ export class GeoTargetingSelectedService {
    * @returns {undefined}
    */
   public add (item: GeoTargetingItem) {
+    let selectedLocations     = this.get();
     let broaderLocations  = this.getBroaderLocations(item);
     let narrowerLocations = this.getNarrowerLocations(item);
 
@@ -207,10 +212,10 @@ export class GeoTargetingSelectedService {
       return this.informAboutNarrow(includedNarrowerLocations);
     }
 
-    // If has no broader locations that are included
-    let includedBroaderLocations = broaderLocations.filter(broaderItem => !broaderItem.excluded);
-    if (item.excluded && !includedBroaderLocations.length) {
-      return this.informAboutMissingBroader();
+    // If has no included locations
+    let includedLocations = selectedLocations.filter(selectedItem => !selectedItem.excluded);
+    if (item.excluded && !includedLocations.length) {
+      return this.informAboutMissingIncludedLocation();
     }
 
     // Hide all existing info messages

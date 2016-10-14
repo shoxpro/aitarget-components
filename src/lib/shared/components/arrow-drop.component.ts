@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
                 <svg xmlns="http://www.w3.org/2000/svg"
                      *ngIf="direction === 'down'"
                      class="fb-arrow-drop__svg fb-arrow-drop__svg_down"
-                     fill="#000000"
+                     fill="#4b4f56"
                      height="24"
                      viewBox="0 0 24 24"
                      width="24">
@@ -17,7 +17,7 @@ import { Component, OnInit, Input } from '@angular/core';
                 <svg xmlns="http://www.w3.org/2000/svg"
                      *ngIf="direction === 'up'"
                      class="fb-arrow-drop__svg fb-arrow-drop__svg_up"
-                     fill="#000000"
+                     fill="#4b4f56"
                      height="24"
                      viewBox="0 0 24 24"
                      width="24">
@@ -27,6 +27,10 @@ import { Component, OnInit, Input } from '@angular/core';
                 </svg>
               </span>`,
   styles:   [`
+              :host {
+                width: 14px;
+                height: 14px;
+              }
               .fb-arrow-drop__wrapper {
                 position: relative;
                 display:  inline-block;

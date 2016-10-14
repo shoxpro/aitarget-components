@@ -1,0 +1,15 @@
+<div class="geo-targeting-map-popup">
+  <div class="geo-targeting-map-popup__name">{{item | fullName}}</div>
+  <div class="geo-targeting-map-popup__drop"
+       (click)="toggleDropdown($event)">
+    <fb-arrow-drop [direction]="{true: 'up', false: 'down'}[isOpen]"></fb-arrow-drop>
+    <geo-targeting-mode-dropdown
+      *ngIf="isOpen"
+      [excluded]="item.excluded"
+      [hasRemove]="true"
+      (toggle)="toggleDropdown()"
+      (include)="setExcluded(item, false)"
+      (exclude)="setExcluded(item, true)"
+      (remove)="remove()"></geo-targeting-mode-dropdown>
+  </div>
+</div>

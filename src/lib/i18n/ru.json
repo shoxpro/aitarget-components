@@ -53,17 +53,23 @@
     "zip": "Индекс",
     "electoral_district": "Избирательный округ",
     "geo_market": "Рынок",
-    "custom_location": "GPS координаты"
+    "custom_location": "GPS координаты",
+    "place": "Место"
   },
   "geo-targeting-info": {
     "MESSAGE": "Местоположение вашей аудитории изменено с {{ fromNames }} на {{ toName }}.",
     "UNDO": "Отменить изменения",
-    "MESSAGE_MISSING_BROADER": "Вы должны добавить хотя бы одно место, включающее в себя выбранное вами, прежде чем сможете его исключить.",
+    "MESSAGE_MISSING_INCLUDED": "Прежде чем вы сможете исключать места, вы должны включить хотя бы одно место.",
     "MESSAGE_NARROW": "Местонахождение вашей аудитории — {{ narrowerLocationNames }}, все остальные места автоматически исключаются."
   },
   "geo-targeting-mode": {
     "include": "Включить",
     "exclude": "Исключить"
+  },
+  "geo-targeting-mode-dropdown": {
+    "INCLUDE": "Включить",
+    "EXCLUDE": "Исключить",
+    "DELETE": "Удалить"
   },
   "geo-targeting-map": {
     "HIDE_MAP": "Скрыть карту",

@@ -1,3 +1,89 @@
+<a name="0.0.10-0"></a>
+## 0.0.10-0 (2016-10-13)
+
+* chore: bump version patch to v0.0.7 50c9d40
+* chore: bump version patch to v0.0.8 0a9278c
+* chore: bump version prepatch to v0.0.10-0 899c813
+* chore: bump version prerelease to v0.0.7-1 f82ee85
+* chore: bump version prerelease to v0.0.7-2 5315862
+* chore: bump version prerelease to v0.0.9-0 7e2f0f4
+* chore: bump version prerelease to v0.0.9-1 e1a8e70
+* chore: bump version prerelease to v0.0.9-2 ec0b307
+* chore(): install packages for changelog update c0db3e3
+* chore(angular2-final): update project to angular@2.0.0, fix tests environment, close #69 b7f3f51, closes #69
+* chore(e2e): run lite-server before e2e tests, #21 7dc28e8
+* chore(gh-pages): remove custom gh-pages script 1e16115
+* chore(heo-targeting): add sample files for geo-component, #72 396c74a
+* chore(package.json): add gh-pages script shortcut 9ec592b
+* chore(test): test environment works, #17 b9032c6
+* chore(travis): add cache folder, run e2e tests, run linting a293100
+* chore(travis): add travis badge and travis support for unit tests, #21 93a4adc
+* chore(travis): remove unnecessary steps in travis build, #21 c942de0
+* feat(coordinates, radius): set coordinates and suggested radius to newly added item, #73 c28aaf2
+* feat(include/exclude): add change items' mode dropdowns, #100 b15c316
+* feat(): add popup to markers, set marker from rendered geo-targeting-pin component, #100 0ec4d27
+* feat(): add selecting distance unit, close #102 284b541, closes #102
+* feat(): don't add locations without people, #103 6800646
+* feat(): drop pin in defferent mode, style pin button control, #77 b27b0c6
+* feat(): enable dropping pin, #77 1d62199
+* feat(): minimum radius for custom location is 1 2ead057
+* feat(appendTo): fixes to append to directive 92a636a
+* feat(coordinates): aupport selecting locations by geo coordinates, #79 fa247ca
+* feat(directives): add clickOutside and appendToBody directives and rewrite radius dropdown using the dfa7bb9
+* feat(excluded): update targeting spec with  included and excluded locations, #75 b851425
+* feat(geo-targeting-info): show info block when change locations from broader to narrower or visa ver 996d4b2
+* feat(geo-targeting-info): update info component, support error mode, #75 7562a40
+* feat(geo-targeting-map): add ability to show/hide a map, #99 1fdbd4e
+* feat(geo-targeting-map): add component update when language changes, #101 8f00f0b
+* feat(geo-targeting-map): add sample of map component, #73 595df49
+* feat(geo-targeting-map): show extended new item on the map, #73 3ae0add
+* feat(geo-targeting-map): sync changes to selected items with the map, #73 025a769
+* feat(geo-targeting-mode): add mode component for including and excluding locations, #75 6f6fe3e
+* feat(geo-targeting-pin): add included and excluded pin icons 2e374dd
+* feat(geo-targeting-radius): add component for showing and selecting radius, #76 8d3b777
+* feat(geo-targeting-radius): add styling to the component, #76 bb26834
+* feat(geo-targeting-type): add component basic functionality, #93 19d4031
+* feat(localization): add translations, fix updating mode when language change, #83 3ed0dd7, closes #83
+* feat(LocationType): add component styling, add arrow-drop component, #93 4b44c23
+* feat(locationTypes): add realization for geo-targeting-type, missing styling, #93 3344485
+* feat(map popup): add map popup for changing item mode or deleting item, #100 7048f4f
+* feat(radius): add saved radius to returned by adgeolocationmeta items, #76 cabafd6
+* feat(radius): basic geo-targeting-radius realization, #76 acbeb50
+* feat(selected-service): save previous items and items to replace, #74 96a9c15
+* feat(selected): validate selecting new items (included and excluded) and show proper info messages,  be4d1db
+* feat(spec): show preselected geo locations, #74 358145f
+* feat(targeting spec): update targeting spec when selected locations changes, #74 06ffefe
+* fix(): fix tests and linting 3e00d44
+* fix(): multiple fixes before integrating to fb.aitarget tool, #76 a8b3b71, closes #76
+* fix(): remove checking for spec equality in detailed-targeting component a8e0b2d
+* fix(): some fixes and improvements before integrating to fb.aitarget.com, #87 624d5f8, closes #87
+* fix(): template updates on language change, radius update fixes, #94 1951958
+* fix(adaccount): use adaccount passed to detailed-targeting component, #67 2f177a5
+* fix(appendToBody): change clientRect for counting position 54da142
+* fix(full-name): don't include country name twice for countries 1785472
+* fix(geo-targeting-info): auto height and vertical-align middle, close #84 7242097, closes #84
+* fix(geo-targeting-mode): make the component visualy clickable daa1c84
+* fix(remove): fix removing items 903b05c
+* fix(remove): switch off user select of remove button, #76 62abb0c
+* feature(): search for locations and show results in dropdown, #72 9f0b433
+* feature(full-name): add fullName pipe, #74 0815263
+* feature(geo-targeting-dropdown): add dropdown with items for searched location, #72 b79bf83
+* feature(geo-targeting): add geo-targeting-input component, improve routing, #72 a74c161
+* feature(routing): add geo-targeting component, enable routing navigation, #17 #71 e2d5928
+* feature(selected): replace broader and narrower locations when adding new item, #74 504641b
+* feature(targeting-spec-geo): add interface and default const for geo targeting spec, #74 979cf3a
+* feature(type): add location types to translations, #83 f651144
+* test(e2e): add e2e sample tetsts for detailed-targeting, #17 d57e7bb
+* test(e2e): add some e2e tests, enable login, #17 773fc4d
+* test(full-name): add tests for full-name pipe, #74 5249bd4
+* test(unit): fix unit tests, #17 c722283, closes #17
+* WIP(selected): add geo-targeting-item interface, basic selection mode, #74 add8909
+* WIP(selected): add styling for selected items, fix closing dropdown when select, #74 af3c0e2, closes #74
+* refactor(tests): remove all old tests, #17 7085677
+* refactor(tslint): ng lint all files, #17 aa07c7e
+
+
+
 <a name="0.0.9-2"></a>
 ## 0.0.9-2 (2016-10-11)
 

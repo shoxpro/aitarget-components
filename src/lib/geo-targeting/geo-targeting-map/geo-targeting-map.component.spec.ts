@@ -9,13 +9,15 @@ import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-inf
 import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 import { GeoTargetingMapService } from './geo-targeting-map.service';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
+import { ComponentsHelperService } from '../../shared/services/components-helper.service';
 
 describe('Component: GeoTargetingMap', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:   [LibModule],
       providers: [GeoTargetingSelectedService, GeoTargetingApiService, GeoTargetingInfoService,
-        GeoTargetingTypeService, GeoTargetingMapService, GeoTargetingModeService]
+        GeoTargetingTypeService, GeoTargetingMapService, GeoTargetingModeService,
+        ComponentsHelperService]
     });
   });
 

@@ -73,6 +73,26 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
     this.GeoTargetingSelectedService.remove(item);
   }
 
+  /**
+   * Toggle Dropdown
+   */
+  public toggleModeDropdown (itemMode: any, event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    itemMode.isOpen = !itemMode.isOpen;
+    this.updateTemplate();
+  }
+
+  public setExcluded (itemMode, item: GeoTargetingItem, excluded: boolean) {
+    itemMode.isOpen = false;
+
+    item.excluded = excluded;
+
+    this.GeoTargetingSelectedService.updateSelectedItem(item);
+    this.updateTemplate();
+  }
+
   ngOnDestroy () {
     // Unsubscribe from all Observables
     this.subscriptions.forEach((subscription) => {

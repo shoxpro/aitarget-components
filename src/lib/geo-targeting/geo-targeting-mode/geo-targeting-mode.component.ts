@@ -14,6 +14,7 @@ export class GeoTargetingModeComponent implements OnInit, OnDestroy {
   public mode;
   public modeTitle;
   public exclude;
+  private isOpen         = false;
 
   /**
    * Trigger change detection mechanism that updates component's template
@@ -27,14 +28,19 @@ export class GeoTargetingModeComponent implements OnInit, OnDestroy {
                private GeoTargetingModeService: GeoTargetingModeService,
                private ChangeDetectorRef: ChangeDetectorRef) { }
 
-  public changeMode () {
-    let mode = this.GeoTargetingModeService.get();
-    let map  = {
-      'include': 'exclude',
-      'exclude': 'include'
-    };
+  public setMode (mode) {
+    this.GeoTargetingModeService.update(mode);
+  }
 
-    this.GeoTargetingModeService.update(map[mode]);
+  /**
+   * Toggle Dropdown
+   */
+  public toggleDropdown (event?) {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.isOpen = !this.isOpen;
+    this.updateTemplate();
   }
 
   ngOnDestroy () {

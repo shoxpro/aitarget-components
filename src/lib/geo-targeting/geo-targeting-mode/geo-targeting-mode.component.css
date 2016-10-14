@@ -7,12 +7,19 @@
 }
 
 .geo-targeting-mode {
+  position:     relative;
   display:      flex;
   padding:      0 6px;
   border-right: 1px solid #bdc7d8;
   white-space:  nowrap;
   cursor:       pointer;
   align-items:  center;
+}
+
+.geo-targeting-mode geo-targeting-mode-dropdown {
+  position: absolute;
+  top:      20px;
+  left:     0;
 }
 
 .geo-targeting-mode__pin,

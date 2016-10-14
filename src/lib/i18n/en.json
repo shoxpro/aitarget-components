@@ -53,17 +53,23 @@
     "zip": "Zip",
     "electoral_district": "Electoral District",
     "geo_market": "Geo Market",
-    "custom_location": "GPS Coordinates"
+    "custom_location": "GPS Coordinates",
+    "place": "Place"
   },
   "geo-targeting-info": {
     "MESSAGE": "Your audience location has been changed from {{ fromNames }} to {{ toName }}.",
     "UNDO": "Undo Change",
-    "MESSAGE_MISSING_BROADER": "You have to include at least one broader location before you can exclude this location.",
+    "MESSAGE_MISSING_INCLUDED": "You have to include at least one location before you can exclude locations.",
     "MESSAGE_NARROW": "Your audience location is set to {{ narrowerLocationNames }}, so everything outside of this location is automatically excluded."
   },
   "geo-targeting-mode": {
     "include": "Include",
     "exclude": "Exclude"
+  },
+  "geo-targeting-mode-dropdown": {
+    "INCLUDE": "Include",
+    "EXCLUDE": "Exclude",
+    "DELETE": "Delete"
   },
   "geo-targeting-map": {
     "HIDE_MAP": "Hide Map",

@@ -135,7 +135,8 @@
 }
 
 .geo-targeting-radius__distance-unit-wrapper {
-  display: inline-block;
+  display:     inline-block;
+  white-space: nowrap;
 }
 
 .geo-targeting-radius__distance-unit {

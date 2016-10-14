@@ -1,10 +1,11 @@
 import {
-  Component, OnInit, ViewEncapsulation, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy
+  Component, OnInit, ViewEncapsulation, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, ViewContainerRef
 } from '@angular/core';
 import { GeoTargetingMapService } from './geo-targeting-map.service';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { ComponentsHelperService } from '../../shared/services/components-helper.service';
 
 @Component({
   selector:        'geo-targeting-map',
@@ -44,7 +45,11 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
   constructor (private GeoTargetingSelectedService: GeoTargetingSelectedService,
                private ChangeDetectorRef: ChangeDetectorRef,
                private TranslateService: TranslateService,
-               private GeoTargetingMapService: GeoTargetingMapService) {}
+               private ViewContainerRef: ViewContainerRef,
+               private ComponentsHelperService: ComponentsHelperService,
+               private GeoTargetingMapService: GeoTargetingMapService) {
+    this.ComponentsHelperService.setRootViewContainerRef(ViewContainerRef);
+  }
 
   /**
    * Show or hide map
