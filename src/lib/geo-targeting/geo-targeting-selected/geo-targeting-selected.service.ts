@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs/Rx';
+import { BehaviorSubject, Subject, Observable } from 'rxjs/Rx';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSpec, Key, City, CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 import { TargetingSpec } from '../../targeting/targeting-spec.interface';
@@ -110,22 +110,26 @@ export class GeoTargetingSelectedService {
    * @param item
    */
   private setSuggestedRadius = (item: GeoTargetingItem) => {
-    let _item = new Subject();
-    this.GeoTargetingApiService.suggestRadius(item)
-        .subscribe((suggestedRadius: null | Array<{suggested_radius: number, distance_unit: 'mile' | 'kilometer'}>) => {
-          if (!suggestedRadius || !suggestedRadius[0]) {
-            if (item.type === 'city') {
-              item = GeoTargetingRadiusService.setDefaultRadius(item, this.TranslateService.currentLang);
-            }
-          } else {
-            item.radius        = suggestedRadius[0].suggested_radius;
-            item.distance_unit = suggestedRadius[0].distance_unit;
-          }
+    return Observable.create((observer) => {
+      // Request for suggested radius only for cities, custom locations and places
+      if (['city', 'custom_location', 'place'].indexOf(item.type) > -1) {
+        this.GeoTargetingApiService.suggestRadius(item)
+            .subscribe((suggestedRadius: null | Array<{suggested_radius: number, distance_unit: 'mile' | 'kilometer'}>) => {
+              if (!suggestedRadius || !suggestedRadius[0]) {
+                if (item.type === 'city') {
+                  item = GeoTargetingRadiusService.setDefaultRadius(item, this.TranslateService.currentLang);
+                }
+              } else {
+                item.radius        = suggestedRadius[0].suggested_radius;
+                item.distance_unit = suggestedRadius[0].distance_unit;
+              }
 
-          _item.next(item);
-        });
-
-    return _item.asObservable();
+              observer.next(item);
+            });
+      } else {
+        observer.next(item);
+      }
+    });
   };
 
   /**
