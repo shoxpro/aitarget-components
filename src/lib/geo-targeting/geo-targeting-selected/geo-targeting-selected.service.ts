@@ -29,8 +29,8 @@ export class GeoTargetingSelectedService {
   /**
    * Show info message that excluding is impossible without included locations
    */
-  private informAboutMissingBroader () {
-    let message = this.TranslateService.instant(`geo-targeting-info.MESSAGE_MISSING_BROADER`);
+  private informAboutMissingIncludedLocation () {
+    let message = this.TranslateService.instant(`geo-targeting-info.MESSAGE_MISSING_INCLUDED`);
 
     this.GeoTargetingInfoService.update('error', message, false);
     this.GeoTargetingInfoService.show();
@@ -202,6 +202,7 @@ export class GeoTargetingSelectedService {
    * @returns {undefined}
    */
   public add (item: GeoTargetingItem) {
+    let selectedLocations     = this.get();
     let broaderLocations  = this.getBroaderLocations(item);
     let narrowerLocations = this.getNarrowerLocations(item);
 
@@ -211,10 +212,10 @@ export class GeoTargetingSelectedService {
       return this.informAboutNarrow(includedNarrowerLocations);
     }
 
-    // If has no broader locations that are included
-    let includedBroaderLocations = broaderLocations.filter(broaderItem => !broaderItem.excluded);
-    if (item.excluded && !includedBroaderLocations.length) {
-      return this.informAboutMissingBroader();
+    // If has no included locations
+    let includedLocations = selectedLocations.filter(selectedItem => !selectedItem.excluded);
+    if (item.excluded && !includedLocations.length) {
+      return this.informAboutMissingIncludedLocation();
     }
 
     // Hide all existing info messages

@@ -59,7 +59,7 @@
   "geo-targeting-info": {
     "MESSAGE": "你的定位地区已从 {{ fromNames }} 改为 {{ toName }}.",
     "UNDO": "撤销更改",
-    "MESSAGE_MISSING_BROADER": "必须指定至少一个地区才能进行排除。",
+    "MESSAGE_MISSING_INCLUDED": "必须指定至少一个地区才能进行排除。",
     "MESSAGE_NARROW": "定位地区设置为 {{ narrowerLocationNames }}, 系统自动排除此地区以外的所有受众。"
   },
   "geo-targeting-mode": {
