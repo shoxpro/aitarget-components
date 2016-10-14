@@ -27,4 +27,3 @@ before_script:
 script:
 - ng lint
 - karma start karma.conf.js --single-run
-- npm run cie2e
