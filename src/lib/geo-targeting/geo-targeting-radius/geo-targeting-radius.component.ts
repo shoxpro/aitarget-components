@@ -46,6 +46,29 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Process user press some key
+   * Close dropdown and blur input when pressing escape key
+   * @param e
+   */
+  private processKeydown = (e) => {
+    // when Escape
+    if (e.keyCode === 27) {
+      // Just close
+      this.isOpen = false;
+      // Restore previous state
+      this.restorePreviousItem();
+      // Unsubscribe
+      window.document.body.removeEventListener('keydown', this.processKeydown);
+      this.updateTemplate();
+    }
+
+    // when Enter
+    if (e.keyCode === 13) {
+      this.toggleDropdown();
+    }
+  };
+
+  /**
    * Change distance unit
    * @param distanceUnit
    */
@@ -68,7 +91,12 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     this.isOpen = !this.isOpen;
 
     // Update item with current radius when closing dropdown
-    if (!this.isOpen) {
+    // Bind/Unbind keydown event
+    if (this.isOpen) {
+      this.savePreviousItem();
+      window.document.body.addEventListener('keydown', this.processKeydown);
+    } else {
+      window.document.body.removeEventListener('keydown', this.processKeydown);
       this.GeoTargetingSelectedService.updateSelectedItem(this.item);
     }
 
@@ -76,19 +104,36 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Save item to previous
+   */
+  private savePreviousItem () {
+    this.previousItem = Object.assign({}, this.item);
+  }
+
+  /**
+   * Save item to previous
+   */
+  private restorePreviousItem () {
+    // Set previous item or current item with minimum default radius
+    this.item = this.previousItem || this.item;
+  }
+
+  /**
    * Enable radius by returning previous item state
    */
   public enableRadius () {
-    // Set previous item or current item with minimum default radius
-    this.item = this.previousItem || Object.assign(this.item, {radius: 1});
+    this.restorePreviousItem();
+    if (this.item.radius === 0) {
+      this.item.radius = 1;
+    }
   }
 
   /**
    * Disable radius by setting radius to 0
    */
   public disableRadius () {
-    this.previousItem = Object.assign({}, this.item);
-    this.item.radius  = 0;
+    this.savePreviousItem();
+    this.item.radius = 0;
   }
 
   /**
