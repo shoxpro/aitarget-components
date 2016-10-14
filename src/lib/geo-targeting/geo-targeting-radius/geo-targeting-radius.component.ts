@@ -4,6 +4,7 @@ import {
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingService } from '../geo-targeting.service';
 
 @Component({
   selector:        'geo-targeting-radius',
@@ -46,29 +47,6 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Process user press some key
-   * Close dropdown and blur input when pressing escape key
-   * @param e
-   */
-  private processKeydown = (e) => {
-    // when Escape
-    if (e.keyCode === 27) {
-      // Just close
-      this.isOpen = false;
-      // Restore previous state
-      this.restorePreviousItem();
-      // Unsubscribe
-      window.document.body.removeEventListener('keydown', this.processKeydown);
-      this.updateTemplate();
-    }
-
-    // when Enter
-    if (e.keyCode === 13) {
-      this.toggleDropdown();
-    }
-  };
-
-  /**
    * Change distance unit
    * @param distanceUnit
    */
@@ -91,12 +69,9 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     this.isOpen = !this.isOpen;
 
     // Update item with current radius when closing dropdown
-    // Bind/Unbind keydown event
     if (this.isOpen) {
       this.savePreviousItem();
-      window.document.body.addEventListener('keydown', this.processKeydown);
     } else {
-      window.document.body.removeEventListener('keydown', this.processKeydown);
       this.GeoTargetingSelectedService.updateSelectedItem(this.item);
     }
 
@@ -155,6 +130,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
 
   constructor (private TranslateService: TranslateService,
                private GeoTargetingSelectedService: GeoTargetingSelectedService,
+               private GeoTargetingService: GeoTargetingService,
                private ChangeDetectorRef: ChangeDetectorRef) {
   }
 
@@ -171,6 +147,32 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
       this.TranslateService.onLangChange.subscribe(() => {
         this.updateTemplate();
       })
+    );
+
+    /**
+     * Process Escape when dropdown is open
+     */
+    this._subscriptions.push(
+      this.GeoTargetingService.escapeStream
+          .filter(() => this.isOpen)
+          .subscribe(() => {
+            // Just close
+            this.isOpen = false;
+            // Restore previous state
+            this.restorePreviousItem();
+            this.updateTemplate();
+          })
+    );
+
+    /**
+     * Process Enter when dropdown is open
+     */
+    this._subscriptions.push(
+      this.GeoTargetingService.enterStream
+          .filter(() => this.isOpen)
+          .subscribe(() => {
+            this.toggleDropdown();
+          })
     );
   }
 

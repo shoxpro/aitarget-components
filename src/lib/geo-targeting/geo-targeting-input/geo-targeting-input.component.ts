@@ -8,6 +8,7 @@ import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.s
 import { CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingService } from '../geo-targeting.service';
 
 @Component({
   selector:        'geo-targeting-input',
@@ -60,6 +61,7 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
   constructor (private GeoTargetingApiService: GeoTargetingApiService,
                private GeoTargetingInputService: GeoTargetingInputService,
                private TranslateService: TranslateService,
+               private GeoTargetingService: GeoTargetingService,
                private GeoTargetingInfoService: GeoTargetingInfoService,
                private GeoTargetingDropdownService: GeoTargetingDropdownService,
                private GeoTargetingSelectedService: GeoTargetingSelectedService,
@@ -76,13 +78,24 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
+    /**
+     * Update term
+     */
+    this._subscriptions.push(
+      this.GeoTargetingInputService.term.subscribe((term) => {
+        this.term = term;
+      })
+    );
+
+    /**
+     * Check if input term isn't a coordinate and search for new items
+     */
     this._subscriptions.push(
       this.GeoTargetingInputService.term
           .debounceTime(500)
           .filter((term: string) => !this.latLngRegex.test(term))
           .distinctUntilChanged()
           .subscribe((term: string) => {
-            this.term = term;
 
             if (term) {
               this.GeoTargetingApiService.search(term)
@@ -100,6 +113,9 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
           })
     );
 
+    /**
+     * Check input term for matching geo coordinates
+     */
     this._subscriptions.push(
       this.GeoTargetingInputService.term
           .filter((term: string) => this.latLngRegex.test(term))
@@ -120,10 +136,8 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
           })
           .flatMap(this.GeoTargetingSelectedService.setCoordinates)
           .subscribe((item: any) => {
-            console.log(`item: `, item);
             // Show message if coordinates don't belong to any country (e.g. deep-deep ocean)
             if (!item.country_code) {
-              console.log('should show info block');
               let message = this.TranslateService.instant(`geo-targeting-input.INVALID_LOCATION`);
 
               this.GeoTargetingInfoService.update('info', message);
@@ -192,6 +206,18 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
         this.mapActive = mapActive;
         this.updateTemplate();
       })
+    );
+
+    /**
+     * Process Escape and clicked outside when dropdown is open
+     */
+    this._subscriptions.push(
+      this.GeoTargetingService.clickOutsideOfGeoStream
+          .merge(this.GeoTargetingService.escapeStream)
+          .filter(() => this.hasFocus)
+          .subscribe(() => {
+            this.GeoTargetingInputService.blur();
+          })
     );
   }
 
