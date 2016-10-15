@@ -1,6 +1,6 @@
 {
   "name": "aitarget-components",
-  "version": "0.0.10-0",
+  "version": "0.0.0-semantically-released",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
@@ -12,7 +12,8 @@
     "pree2e": "webdriver-manager update",
     "e2e": "protractor --params.login.email=$EMAIL --params.login.pass=$PASS",
     "dev": "npm run build -- --env dev",
-    "build": "webpack --config ./config/webpack.config.babel.js"
+    "build": "webpack --config ./config/webpack.config.babel.js",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "config": {
     "commitizen": {
@@ -57,7 +58,12 @@
     "typescript": "2.0.3",
     "webpack": "2.1.0-beta.25",
     "webpack-shell-plugin": "^0.4.3",
-    "zone.js": "^0.6.23"
+    "zone.js": "^0.6.23",
+    "semantic-release": "^4.3.5"
   },
-  "private": true
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aitarget/aitarget-components.git"
+  }
 }
