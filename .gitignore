@@ -31,5 +31,5 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
-lib/components
+lib
 config/webpack.options.local.js

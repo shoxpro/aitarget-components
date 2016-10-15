@@ -18,6 +18,7 @@ before_script:
 script:
   - ng lint
   - karma start karma.conf.js --single-run
+  - npm run build
 after_success:
   - npm run semantic-release
 branches:
