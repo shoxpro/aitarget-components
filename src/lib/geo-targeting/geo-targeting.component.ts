@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { GeoTargetingApiService } from './geo-targeting-api/geo-targeting-api.service';
 import { GeoTargetingInputService } from './geo-targeting-input/geo-targeting-input.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
@@ -13,12 +13,13 @@ import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type
 import { GeoTargetingRadiusService } from './geo-targeting-radius/geo-targeting-radius.service';
 import { GeoTargetingMapService } from './geo-targeting-map/geo-targeting-map.service';
 import { ComponentsHelperService } from '../shared/services/components-helper.service';
+import { GeoTargetingService } from './geo-targeting.service';
 
 @Component({
   selector:    'geo-targeting',
   templateUrl: './geo-targeting.component.html',
   styleUrls:   ['./geo-targeting.component.css'],
-  providers:   [GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
+  providers:   [GeoTargetingService, GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
     GeoTargetingSelectedService, TargetingSpecService, GeoTargetingModeService,
     GeoTargetingInfoService, GeoTargetingTypeService, GeoTargetingRadiusService,
     GeoTargetingMapService, ComponentsHelperService]
@@ -31,7 +32,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
 
   @Input('adaccountId') adaccountId: string;
   @Input('spec') spec: TargetingSpec    = {};
-  @Input('onChange') onChange: Function = (spec?) => {};
+  @Input('onChange') onChange: Function = (spec?) => spec;
 
   @Input('lang')
   set lang (lang: string) {
@@ -44,59 +45,11 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
     return this._lang;
   }
 
-  /**
-   * Process user click outside geo-targeting element
-   * Close dropdown and blur input, etc.
-   * @param e
-   */
-  private processOutsideClick = (e) => {
-    let targetElement = e.target;
-
-    const clickedInside = this.ElementRef.nativeElement.contains(targetElement);
-
-    if (!clickedInside) {
-      this.GeoTargetingDropdownService.close();
-      this.GeoTargetingInputService.blur();
-    }
-  };
-
-  /**
-   * Process user press some key
-   * Close dropdown and blur input when pressing escape key
-   * @param e
-   */
-  private processKeydown = (e) => {
-    // when Escape
-    if (e.keyCode === 27) {
-      this.GeoTargetingDropdownService.close();
-      this.GeoTargetingInputService.blur();
-    }
-  };
-
-  /**
-   * Bind to global events
-   */
-  private bindAll () {
-    window.document.body.addEventListener('click', this.processOutsideClick);
-    window.document.body.addEventListener('keydown', this.processKeydown);
-  }
-
-  /**
-   * Unbind from global events
-   */
-  private unbindAll () {
-    window.document.body.removeEventListener('click', this.processOutsideClick);
-    window.document.body.removeEventListener('keydown', this.processKeydown);
-  }
-
   constructor (private TranslateService: TranslateService,
                private GeoTargetingApiService: GeoTargetingApiService,
-               private GeoTargetingDropdownService: GeoTargetingDropdownService,
-               private GeoTargetingInputService: GeoTargetingInputService,
                private TargetingSpecService: TargetingSpecService,
                private GeoTargetingSelectedService: GeoTargetingSelectedService,
-               private GeoTargetingTypeService: GeoTargetingTypeService,
-               private ElementRef: ElementRef) {
+               private GeoTargetingTypeService: GeoTargetingTypeService) {
     // this language will be used as a fallback when a translation isn't found in the current language
     this.TranslateService.setDefaultLang(this.lang);
   }
@@ -121,17 +74,6 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
           .subscribe((items: GeoTargetingItem[]) => {
             this.GeoTargetingSelectedService.update(items);
           })
-    );
-    /**
-     * Bind/unbind different events depending on geo-targeting dropdown state.
-     */
-    this._subscriptions.push(
-      this.GeoTargetingDropdownService.isOpen.subscribe((isOpen: boolean) => {
-        this.unbindAll();
-        if (isOpen) {
-          this.bindAll();
-        }
-      })
     );
 
     /**

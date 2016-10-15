@@ -1,25 +1,17 @@
 <div class="demo-geo-targeting__content">
-  <div class="demo-geo-targeting__component"
-       *ngIf="!hideDetailedTargeting">
+  <div class="demo-geo-targeting__component">
     <div class="demo-geo-targeting__component-buttons">
       <button (click)="hideDetailedTargeting = !hideDetailedTargeting">Toggle</button>
       <button (click)="lang = 'en_US'">EN</button>
       <button (click)="lang = 'ru_RU'">RU</button>
       <button (click)="lang = 'zh_CN'">CN</button>
     </div>
-    <div>
-      <pre>
-        (40.638967, -95.449219)
-        (56.1578, 47.2467)
-        (-2.558963, 20.917969)
-        (55.522412, 44.121094)
-        (-57.189855, 5.800781)
-      </pre>
-    </div>
-    <geo-targeting [spec]="spec"
-                   [onChange]="onChange"
-                   [adaccountId]="'act_944874195534529'"
-                   [lang]="lang"></geo-targeting>
+    <geo-targeting
+      *ngIf="!hideDetailedTargeting"
+      [spec]="spec"
+      [onChange]="onChange"
+      [adaccountId]="'act_944874195534529'"
+      [lang]="lang"></geo-targeting>
   </div>
 
   <div class="demo-geo-targeting__sidebar">

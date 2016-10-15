@@ -2,22 +2,29 @@
 
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingDropdownComponent } from './geo-targeting-dropdown.component';
-import { LibModule } from '../../lib.module';
+import { FullTypePipe } from '../full-type.pipe';
+import { FullNamePipe } from '../full-name.pipe';
 import { GeoTargetingDropdownService } from './geo-targeting-dropdown.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
-import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
-import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
-import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
-import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
+import { GeoTargetingService } from '../geo-targeting.service';
+import { GeoTargetingInputService } from '../geo-targeting-input/geo-targeting-input.service';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 describe('Component: GeoTargetingDropdown', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports:   [LibModule],
-      providers: [GeoTargetingDropdownService, GeoTargetingSelectedService,
-        GeoTargetingModeService, GeoTargetingInfoService, GeoTargetingTypeService,
-        GeoTargetingApiService, GeoTargetingMapService]
+      imports:      [],
+      declarations: [GeoTargetingDropdownComponent,
+        FullTypePipe, FullNamePipe],
+      providers:    [
+        {provide: GeoTargetingDropdownService, useValue: {}},
+        {provide: GeoTargetingSelectedService, useValue: {}},
+        {provide: GeoTargetingModeService, useValue: {}},
+        {provide: GeoTargetingService, useValue: {}},
+        {provide: GeoTargetingInputService, useValue: {}},
+        {provide: TranslateService, useValue: {}},
+      ]
     });
   });
 
