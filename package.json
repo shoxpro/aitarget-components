@@ -4,13 +4,15 @@
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "commit": "git-cz",
+    "commit": "git add --all . && git-cz",
     "start": "ng serve",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
+    "test:single": "karma start karma.conf.js --single-run",
     "gh-pages": "ng github-pages:deploy",
-    "pree2e": "webdriver-manager update",
+    "pree2e": "ng build && (lite-server -c config/bs-config.js &) && webdriver-manager update",
     "e2e": "protractor --params.login.email=$EMAIL --params.login.pass=$PASS",
+    "poste2e": "killall lite-server",
     "dev": "npm run build -- --env dev",
     "build": "webpack --config ./config/webpack.config.babel.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
@@ -18,6 +20,9 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
+    },
+    "ghooks": {
+      "pre-commit": "npm run lint && npm run test:single && npm run e2e"
     }
   },
   "dependencies": {},
@@ -38,9 +43,11 @@
     "@types/leaflet": "1.0.35",
     "@types/lodash": "^4.14.34",
     "angular-cli": "1.0.0-beta.17",
+    "codelyzer": "^1.0.0-beta.2",
     "commitizen": "^2.8.6",
     "core-js": "^2.4.1",
     "cz-conventional-changelog": "^1.2.0",
+    "ghooks": "^1.3.2",
     "hammerjs": "2.0.8",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "2.7.0",
@@ -50,16 +57,17 @@
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
     "leaflet": "1.0.1",
+    "lite-server": "^2.2.2",
     "ng2-translate": "^3.1.2",
     "protractor": "4.0.9",
     "rxjs": "5.0.0-beta.12",
+    "semantic-release": "^4.3.5",
     "ts-node": "1.5.2",
     "tslint": "3.15.1",
     "typescript": "2.0.3",
     "webpack": "2.1.0-beta.25",
     "webpack-shell-plugin": "^0.4.3",
-    "zone.js": "^0.6.23",
-    "semantic-release": "^4.3.5"
+    "zone.js": "^0.6.23"
   },
   "private": true,
   "repository": {

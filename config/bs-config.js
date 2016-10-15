@@ -1,6 +1,6 @@
 module.exports = {
   open:     false,
-  port:     4200,
+  port:     8080,
   files:    ['./dist/**/*.{html,htm,css,js}'],
   server:   {
     baseDir:    './dist',
