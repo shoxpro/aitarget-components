@@ -20,8 +20,7 @@ module.exports = function (env) {
     devtool: 'inline-source-map',
     watch:   true,
     resolve: {
-      extensions: ['', '.ts', '.js'],
-      root:       path.resolve(__dirname, parentRoot, './src')
+      extensions: ['.ts', '.js'],
     },
     entry:   require('./components.entry')(path.resolve(__dirname, parentRoot)),
     output:  {
@@ -57,7 +56,6 @@ module.exports = function (env) {
       ]
     },
     plugins: [
-      new webpack.optimize.CommonsChunkPlugin({ name: 'core', filename: 'core.js' }),
       new WebpackShellPlugin(options.WebpackShellPlugin),
       // https://github.com/AngularClass/angular2-webpack-starter/issues/993
       new webpack.ContextReplacementPlugin(
@@ -67,7 +65,7 @@ module.exports = function (env) {
     ],
     node:    {
       fs:             'empty',
-      global:         'window',
+      global:         true,
       crypto:         'empty',
       module:         false,
       clearImmediate: false,
