@@ -29,7 +29,6 @@ before_script:
 script:
   - ng lint
   - karma start karma.conf.js --single-run
-  - npm run e2e
   - npm run build
 after_success:
   - npm run semantic-release
