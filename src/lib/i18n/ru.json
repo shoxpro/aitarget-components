@@ -72,8 +72,7 @@
     "DELETE": "Удалить"
   },
   "geo-targeting-map": {
-    "HIDE_MAP": "Скрыть карту",
-    "SHOW_MAP": "Показать карту"
+    "MAP": "Карта"
   },
   "geo-targeting-map-controls": {
     "DROP_PIN": "Отметить булавкой"

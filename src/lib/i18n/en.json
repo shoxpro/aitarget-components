@@ -72,8 +72,7 @@
     "DELETE": "Delete"
   },
   "geo-targeting-map": {
-    "HIDE_MAP": "Hide Map",
-    "SHOW_MAP": "Show Map"
+    "MAP": "Map"
   },
   "geo-targeting-map-controls": {
     "DROP_PIN": "Drop Pin"

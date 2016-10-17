@@ -72,8 +72,7 @@
     "DELETE": "删除"
   },
   "geo-targeting-map": {
-    "HIDE_MAP": "隐藏地图",
-    "SHOW_MAP": "显示地图"
+    "MAP": "地图"
   },
   "geo-targeting-map-controls": {
     "DROP_PIN": "放置大头针"
