@@ -1,0 +1,19 @@
+.geo-targeting-type {
+  display:     flex;
+  padding:     0 4px 0 6px;
+  border-left: 1px solid #bdc7d8;
+  white-space: nowrap;
+  cursor:      pointer;
+  align-items: center;
+}
+
+.geo-targeting-type__title {
+  display:             inline-block;
+  margin-right:        4px;
+  color:               #4b4f56;
+  font-weight:         bold;
+  user-select:         none;
+  -webkit-user-select: none;
+  -moz-user-select:    none;
+  -ms-user-select:     none;
+}

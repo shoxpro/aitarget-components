@@ -22,7 +22,7 @@ import { GeoTargetingService } from './geo-targeting.service';
   providers:   [GeoTargetingService, GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
     GeoTargetingSelectedService, TargetingSpecService, GeoTargetingModeService,
     GeoTargetingInfoService, GeoTargetingTypeService, GeoTargetingRadiusService,
-    GeoTargetingMapService, ComponentsHelperService]
+    GeoTargetingMapService, ComponentsHelperService, GeoTargetingTypeService]
 })
 export class GeoTargetingComponent implements OnInit, OnDestroy {
 

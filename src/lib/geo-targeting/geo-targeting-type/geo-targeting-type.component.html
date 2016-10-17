@@ -1,0 +1,13 @@
+<div class="geo-targeting-type"
+     (click)="toggleDropdown($event)">
+  <div class="geo-targeting-type__title">
+    <span>{{ typeTitle }}</span>
+  </div>
+  <fb-arrow-drop [direction]="{true: 'up', false: 'down'}[isOpen]"></fb-arrow-drop>
+  <!--<geo-targeting-dropdown-->
+    <!--*ngIf="isOpen"-->
+    <!--[excluded]="mode === 'exclude'"-->
+    <!--(toggle)="toggleDropdown()"-->
+    <!--(include)="setMode('include')"-->
+    <!--(exclude)="setMode('exclude')"></geo-targeting-dropdown>-->
+</div>

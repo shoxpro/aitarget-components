@@ -19,6 +19,7 @@ import { GeoTargetingModeDropdownComponent } from './geo-targeting-mode-dropdown
 import { FullTypePipe } from './full-type.pipe';
 import { FbTickComponent } from '../shared/components/tick.component';
 import { FbArrowDropComponent } from '../shared/components/arrow-drop.component';
+import { GeoTargetingTypeComponent } from './geo-targeting-type/geo-targeting-type.component';
 /* tslint:enable:max-line-length */
 
 @NgModule({
@@ -43,7 +44,8 @@ import { FbArrowDropComponent } from '../shared/components/arrow-drop.component'
     FbTickComponent,
     FbArrowDropComponent,
     GeoTargetingMapPopupComponent,
-    GeoTargetingModeDropdownComponent
+    GeoTargetingModeDropdownComponent,
+    GeoTargetingTypeComponent
   ],
   exports:      [
     GeoTargetingComponent
