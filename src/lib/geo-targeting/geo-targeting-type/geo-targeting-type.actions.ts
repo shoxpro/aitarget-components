@@ -1,0 +1,1 @@
+export const SELECT_SEARCH_TYPE = 'SELECT_SEARCH_TYPE';

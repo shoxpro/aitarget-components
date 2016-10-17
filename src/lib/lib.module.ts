@@ -5,6 +5,8 @@ import { TargetingSpecService } from './targeting/targeting-spec.service';
 import { FbService } from './fb/fb.service';
 import { environment } from '../environments/environment';
 import { GeoTargetingModule } from './geo-targeting/geo-targeting.module';
+import { StoreModule } from '@ngrx/store';
+import { geoTargetingReducer } from './geo-targeting/geo-trageting.reducer';
 
 if (environment.production) {
   enableProdMode();
@@ -14,6 +16,7 @@ if (environment.production) {
   declarations: [],
   imports:      [
     BrowserModule,
+    StoreModule.provideStore({geoTargeting: geoTargetingReducer}),
     DetailedTargetingModule,
     GeoTargetingModule
   ],
