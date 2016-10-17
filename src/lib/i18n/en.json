@@ -85,7 +85,7 @@
     "USE_RADIUS": "Cities within radius",
     "USE_RADIUS_INFO": "Surrounding cities are included if the center of the city falls within the radius."
   },
-  "geo-targeting-type": {
+  "geo-targeting-location-type": {
     "ALL": "Everyone in this location",
     "ALL_INFO": "People whose home or most recent location is within the selected area.",
     "HOME": "People who live in this location",

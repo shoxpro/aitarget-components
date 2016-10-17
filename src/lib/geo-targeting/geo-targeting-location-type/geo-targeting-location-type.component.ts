@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { GeoTargetingTypeService } from './geo-targeting-type.service';
+import { GeoTargetingTypeService } from './geo-targeting-location-type.service';
 import { LocationType } from '../../targeting/targeting-spec-geo.interface';
 import { TargetingSpecService } from '../../targeting/targeting-spec.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
@@ -13,12 +13,12 @@ interface Type {
 }
 
 @Component({
-  selector:        'geo-targeting-type',
-  templateUrl:     './geo-targeting-type.component.html',
-  styleUrls:       ['./geo-targeting-type.component.css'],
+  selector:        'geo-targeting-location-type',
+  templateUrl:     './geo-targeting-location-type.component.html',
+  styleUrls:       ['./geo-targeting-location-type.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
+export class GeoTargetingLocationTypeComponent implements OnInit, OnDestroy {
 
   _subscriptions  = [];
   types: Type[];
