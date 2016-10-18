@@ -12,7 +12,7 @@ describe('Component: GeoTargetingType', () => {
     TestBed.configureTestingModule({
       imports:      [],
       providers:    [
-        {provide: Store, useValue: {select: () => new Subject()}},
+        {provide: Store, useValue: {let: () => new Subject()}},
         {provide: TranslateService, useValue: {}}
       ],
       declarations: [GeoTargetingTypeComponent],

@@ -9,6 +9,9 @@ import { CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingService } from '../geo-targeting.service';
+import { LibState } from '../../lib-state.interface';
+import { Store } from '@ngrx/store';
+import { typeModel } from '../geo-targeting-type/geo-targeting-type.model';
 
 @Component({
   selector:        'geo-targeting-input',
@@ -36,6 +39,24 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Search locations for passed term
+   * @param term
+   */
+  private searchTerm (term = this.term) {
+    if (term) {
+      this.GeoTargetingApiService.search(term)
+          .subscribe((items) => {
+            this.foundItems = items;
+            this.GeoTargetingDropdownService.update(this.foundItems);
+          });
+    } else {
+      this.foundItems = null;
+      this.GeoTargetingDropdownService.update(this.foundItems);
+      this.GeoTargetingDropdownService.close();
+    }
+  }
+
+  /**
    * On key up handler.
    * @param term
    */
@@ -58,7 +79,8 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
     this.geoTargetingInputService.blur();
   }
 
-  constructor (private geoTargetingApiService: GeoTargetingApiService,
+  constructor (private _store: Store<LibState>,
+               private geoTargetingApiService: GeoTargetingApiService,
                private geoTargetingInputService: GeoTargetingInputService,
                private translateService: TranslateService,
                private geoTargetingService: GeoTargetingService,
@@ -88,6 +110,16 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
     );
 
     /**
+     * Update dropdown when type for search changes
+     */
+    this._subscriptions.push(
+      this._store.let(typeModel)
+          .map(({selectedType}) => selectedType)
+          .distinctUntilChanged()
+          .subscribe(() => this.searchTerm())
+    );
+
+    /**
      * Check if input term isn't a coordinate and search for new items
      */
     this._subscriptions.push(
@@ -97,17 +129,7 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
           .distinctUntilChanged()
           .subscribe((term: string) => {
 
-            if (term) {
-              this.geoTargetingApiService.search(term)
-                  .subscribe((items) => {
-                    this.foundItems = items;
-                    this.geoTargetingDropdownService.update(this.foundItems);
-                  });
-            } else {
-              this.foundItems = null;
-              this.geoTargetingDropdownService.update(this.foundItems);
-              this.geoTargetingDropdownService.close();
-            }
+            this.searchTerm(term);
 
             this.updateTemplate();
           })

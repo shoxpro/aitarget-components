@@ -1,10 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { GeoTargetingState, GEO_TARGETING_STATE_KEY } from '../geo-targeting.interface';
 import { LibState } from '../../lib-state.interface';
 import { Store } from '@ngrx/store';
-import { GEO_TARGETING_TYPE_STATE_KEY } from './geo-targeting-type.interface';
 import { TOGGLE_SEARCH_TYPE_DROPDOWN, SELECT_SEARCH_TYPE, TRANSLATE_SEARCH_TYPES } from './geo-targeting-type.actions';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { typeModel } from './geo-targeting-type.model';
 
 @Component({
   selector:        'geo-targeting-type',
@@ -31,9 +30,7 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
 
   constructor (private _store: Store<LibState>,
                private TranslateService: TranslateService) {
-    this.model = _store.select(GEO_TARGETING_STATE_KEY)
-                       .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_TYPE_STATE_KEY])
-                       .distinctUntilChanged();
+    this.model = _store.let(typeModel);
   }
 
   ngOnDestroy () {

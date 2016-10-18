@@ -22,7 +22,7 @@ export const geoTargetingTypeReducer: ActionReducer<GeoTargetingTypeState> = (st
       const translateService = action.payload.translateService;
       const translateType    = (type) => {
         return Object.assign({}, type, {
-          name: translateService.instant(`geo-targeting-dropdown.${type.name}`)
+          name: translateService.instant(`geo-targeting-dropdown.${type.id}`)
         });
       };
 
