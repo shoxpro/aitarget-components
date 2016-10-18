@@ -1,13 +1,14 @@
-<div class="geo-targeting-type"
-     (click)="toggleDropdown($event)">
-  <div class="geo-targeting-type__title">
-    <span>{{ typeTitle }}</span>
+<div class="geo-targeting-type">
+  <div class="geo-targeting-type__toggler" (click)="toggleDropdown(true, $event)">
+    <div class="geo-targeting-type__title">
+      <span>{{ (model | async).selectedType.name }}</span>
+    </div>
+    <fb-arrow-drop [direction]="{true: 'up', false: 'down'}[(model | async).isOpen]"></fb-arrow-drop>
   </div>
-  <fb-arrow-drop [direction]="{true: 'up', false: 'down'}[isOpen]"></fb-arrow-drop>
-  <!--<geo-targeting-dropdown-->
-    <!--*ngIf="isOpen"-->
-    <!--[excluded]="mode === 'exclude'"-->
-    <!--(toggle)="toggleDropdown()"-->
-    <!--(include)="setMode('include')"-->
-    <!--(exclude)="setMode('exclude')"></geo-targeting-dropdown>-->
+  <fb-dropdown-list
+    *ngIf="(model | async).isOpen"
+    (clickOutside)="toggleDropdown(false)"
+    [items]="(model | async).available"
+    [selectedItem]="(model | async).selectedType"
+    (onClick)="selectType($event)"></fb-dropdown-list>
 </div>

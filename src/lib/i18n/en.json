@@ -46,12 +46,14 @@
     "INVALID_LOCATION": "This location is not available for targeting."
   },
   "geo-targeting-dropdown": {
+    "all": "All",
     "country": "Country",
     "country_group": "Country Group",
     "region": "State",
     "city": "City",
     "zip": "Zip",
     "electoral_district": "Electoral District",
+    "political_district": "Political District",
     "geo_market": "Geo Market",
     "custom_location": "GPS Coordinates",
     "place": "Place"

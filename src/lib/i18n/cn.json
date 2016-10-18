@@ -46,12 +46,14 @@
     "INVALID_LOCATION": "不可定位此地区。"
   },
   "geo-targeting-dropdown": {
+    "all": "全选",
     "country": "国家",
     "country_group": "Country Group",
     "region": "地区",
     "city": "城市",
     "zip": "邮编",
     "electoral_district": "选区",
+    "political_district": "政治区",
     "geo_market": "市场",
     "custom_location": "GPS坐标",
     "place": "地方"

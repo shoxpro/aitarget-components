@@ -2,7 +2,9 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/
 import { GeoTargetingState, GEO_TARGETING_STATE_KEY } from '../geo-targeting.interface';
 import { LibState } from '../../lib-state.interface';
 import { Store } from '@ngrx/store';
-import { GEO_TARGETING_TYPE_STATE_KEY, GeoTargetingTypeState } from './geo-targeting-type.interface';
+import { GEO_TARGETING_TYPE_STATE_KEY } from './geo-targeting-type.interface';
+import { TOGGLE_SEARCH_TYPE_DROPDOWN, SELECT_SEARCH_TYPE, TRANSLATE_SEARCH_TYPES } from './geo-targeting-type.actions';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
   selector:        'geo-targeting-type',
@@ -13,24 +15,22 @@ import { GEO_TARGETING_TYPE_STATE_KEY, GeoTargetingTypeState } from './geo-targe
 export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
 
   private _subscriptions = [];
-  public typeTitle       = 'All';
-  public isOpen          = false;
   private model;
 
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  // private updateTemplate () {
-  //   this.ChangeDetectorRef.markForCheck();
-  //   this.ChangeDetectorRef.detectChanges();
-  // }
+  public toggleDropdown (isOpen, event?) {
+    if (event) {
+      event.stopPropagation();
+    }
+    this._store.dispatch({type: TOGGLE_SEARCH_TYPE_DROPDOWN, payload: {isOpen: isOpen}});
+  }
 
-  public toggleDropdown () {
-    this._store.dispatch({type: 'TEST'});
+  public selectType (type) {
+    this._store.dispatch({type: SELECT_SEARCH_TYPE, payload: {selectedType: type}});
+    this.toggleDropdown(false);
   }
 
   constructor (private _store: Store<LibState>,
-               /*private ChangeDetectorRef: ChangeDetectorRef*/) {
+               private TranslateService: TranslateService) {
     this.model = _store.select(GEO_TARGETING_STATE_KEY)
                        .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_TYPE_STATE_KEY])
                        .distinctUntilChanged();
@@ -43,9 +43,17 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
+    /**
+     * Translate types on init
+     */
+    this._store.dispatch({type: TRANSLATE_SEARCH_TYPES, payload: {translateService: this.TranslateService}});
+
+    /**
+     * Translate types when language change
+     */
     this._subscriptions.push(
-      this.model.subscribe((geoTargetingType: GeoTargetingTypeState) => {
-        console.log('geoTargetingType: ', geoTargetingType);
+      this.TranslateService.onLangChange.subscribe(() => {
+        this._store.dispatch({type: TRANSLATE_SEARCH_TYPES, payload: {translateService: this.TranslateService}});
       })
     );
   }

@@ -46,12 +46,14 @@
     "INVALID_LOCATION": "Это местонахождение недоступно для таргетинга."
   },
   "geo-targeting-dropdown": {
+    "all": "Все",
     "country": "Страна",
     "country_group": "Группа стран",
     "region": "Штат/Регион/Область",
     "city": "Город",
     "zip": "Индекс",
     "electoral_district": "Избирательный округ",
+    "political_district": "Политический округ",
     "geo_market": "Рынок",
     "custom_location": "GPS координаты",
     "place": "Место"

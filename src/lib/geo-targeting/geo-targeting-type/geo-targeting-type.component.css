@@ -1,9 +1,19 @@
+:host {
+  position: relative;
+  height:   100%;
+}
+
 .geo-targeting-type {
   display:     flex;
   padding:     0 4px 0 6px;
   border-left: 1px solid #bdc7d8;
   white-space: nowrap;
   cursor:      pointer;
+  align-items: center;
+}
+
+.geo-targeting-type__toggler {
+  display:     flex;
   align-items: center;
 }
 
