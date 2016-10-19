@@ -1,21 +1,22 @@
-<div class="demo-detailed-targeting__content">
-  <div class="demo-detailed-targeting__component">
-    <div class="demo-detailed-targeting__component-buttons">
-      <button (click)="hideDetailedTargeting = !hideDetailedTargeting">Toggle</button>
-      <button (click)="lang = 'en_US'">EN</button>
-      <button (click)="lang = 'ru_RU'">RU</button>
-      <button (click)="lang = 'zh_CN'">CN</button>
-    </div>
-    <detailed-targeting
-      *ngIf="!hideDetailedTargeting"
-      [spec]="spec"
-      [onChange]="onChange"
-      [adaccountId]="'act_944874195534529'"
-      [lang]="lang"></detailed-targeting>
-  </div>
-
-  <div class="demo-detailed-targeting__sidebar">
-    <h3>Spec:</h3>
-    <pre class="demo-detailed-targeting__spec">{{ spec | json}}</pre>
-  </div>
+<div class="demo-detailed-targeting__component-buttons">
+  <button md-raised-button
+          (click)="hideDetailedTargeting = !hideDetailedTargeting">Toggle</button>
+  <button md-raised-button
+          (click)="lang = 'en_US'">EN</button>
+  <button md-raised-button
+          (click)="lang = 'ru_RU'">RU</button>
+  <button md-raised-button
+          (click)="lang = 'zh_CN'">CN</button>
+  <button md-raised-button
+          (click)="showSpec = !showSpec">Show Spec</button>
 </div>
+
+<detailed-targeting
+  *ngIf="!hideDetailedTargeting"
+  [spec]="spec"
+  [onChange]="onChange"
+  [adaccountId]="'act_944874195534529'"
+  [lang]="lang"></detailed-targeting>
+
+<pre class="demo-detailed-targeting__spec"
+     *ngIf="showSpec">{{ spec | json}}</pre>

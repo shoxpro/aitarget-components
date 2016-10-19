@@ -1,5 +1,3 @@
-import { browser, element, by } from 'protractor';
-
 export class UtilsE2E {
   /**
    * Pause browser for debug purposes

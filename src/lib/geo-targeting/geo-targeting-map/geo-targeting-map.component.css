@@ -29,13 +29,7 @@
   -ms-user-select:     none;
 }
 
-.geo-targeting-map__title_inactive,
-.geo-targeting-map__title.geo-targeting-map__title_active:hover:not(.geo-targeting-map__title_inactive) {
-  color: #4b4f56;
-}
-
-.geo-targeting-map__title_active,
-.geo-targeting-map__title.geo-targeting-map__title_inactive:hover:not(.geo-targeting-map__title_active) {
+.geo-targeting-map__title:hover {
   color: #53aaca;
 }
 

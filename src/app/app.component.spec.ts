@@ -1,56 +1,36 @@
-/* tslint:disable:no-unused-variable */
-
+/* tslint:disable: max-line-length */
 import { TestBed, async } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AppComponent } from './app.component';
-import { LibModule } from '../lib/lib.module';
-import { NavbarComponent } from './navbar/navbar.component';
-import { DemoComponent } from './demo/demo.component';
-import { DemoDetailedTargetingComponent } from './demo-detailed-targeting/demo-detailed-targeting.component';
-import { DemoGeoTargetingComponent } from './demo-geo-targeting/demo-geo-targeting.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
-describe('App: AitargetComponents', () => {
+import { MaterialModule } from '@angular/material';
+
+import { AppComponent } from './app.component';
+import { DashboardComponent } from './features/dashboard.component';
+import { NotFound404Component } from './not-found404.component';
+import { routes } from './app.routing';
+import { StoreDevToolsModule } from './features/store-devtools.module';
+
+import 'rxjs/add/operator/takeUntil';
+
+describe('App Component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports:      [
-        LibModule
-      ],
-      schemas:      [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [
-        AppComponent,
-        NavbarComponent,
-        DemoComponent,
-        DemoDetailedTargetingComponent,
-        DemoGeoTargetingComponent
-      ],
+      imports: [
+        MaterialModule.forRoot(),
+        ReactiveFormsModule,
+        RouterTestingModule.withRoutes(routes),
+        StoreDevToolsModule
+        ],
+      providers: [],
+      declarations: [AppComponent, DashboardComponent, NotFound404Component]
     });
   });
 
-  it('should create the app', async(() => {
-    let fixture = TestBed.createComponent(AppComponent);
-    let app     = fixture.debugElement.componentInstance;
-    expect(app)
-      .toBeTruthy();
+  it('should contain Dashboard text', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    expect(fixture.nativeElement).not.toContainText('Welcome to the Dashboard');
   }));
 
-  it(`should have as title 'Aitarget Components'`, async(() => {
-    let fixture = TestBed.createComponent(AppComponent);
-    let app     = fixture.debugElement.componentInstance;
-    expect(app.title)
-      .toEqual('Aitarget Components');
-  }));
-
-  it('should have navbar', async(() => {
-    let fixture  = TestBed.createComponent(AppComponent);
-    let compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('app-navbar').tagName)
-      .toContain('APP-NAVBAR');
-  }));
-
-  it('should have router-outlet', async(() => {
-    let fixture  = TestBed.createComponent(AppComponent);
-    let compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.app__content router-outlet').tagName)
-      .toContain('ROUTER-OUTLET');
-  }));
 });

@@ -12,7 +12,6 @@ import { GeoTargetingService } from '../geo-targeting.service';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingDropdownService } from '../geo-targeting-dropdown/geo-targeting-dropdown.service';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
-import { Store } from '@ngrx/store';
 
 describe('Component: GeoTargetingInput', () => {
   beforeEach(() => {
@@ -30,7 +29,6 @@ describe('Component: GeoTargetingInput', () => {
         {provide: GeoTargetingDropdownService, useValue: {}},
         {provide: GeoTargetingSelectedService, useValue: {}},
         {provide: GeoTargetingMapService, useValue: {}},
-        {provide: Store, useValue: {}},
       ]
     });
   });

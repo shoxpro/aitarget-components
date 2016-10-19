@@ -1,10 +1,8 @@
 <div class="geo-targeting-map">
   <div class="geo-targeting-map__switcher"
        (click)="toggleMap($event)">
-    <div class="geo-targeting-map__title"
-         [ngClass]="{'geo-targeting-map__title_active': mapActive,
-         'geo-targeting-map__title_inactive': !mapActive}">
-      <span>{{ 'geo-targeting-map.MAP' | translate}}</span>
+    <div class="geo-targeting-map__title">
+      <span>{{ mapModeText }}</span>
     </div>
   </div>
 

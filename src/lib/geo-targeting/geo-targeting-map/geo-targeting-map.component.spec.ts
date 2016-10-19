@@ -1,30 +1,23 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed } from '@angular/core/testing';
+import { LibModule } from '../../lib.module';
 import { GeoTargetingMapComponent } from './geo-targeting-map.component';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
-import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
-import { GeoTargetingService } from '../geo-targeting.service';
-import { ComponentsHelperService } from '../../shared/services/components-helper.service';
+import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
+import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
+import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 import { GeoTargetingMapService } from './geo-targeting-map.service';
-import { Component } from '@angular/core';
+import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
+import { ComponentsHelperService } from '../../shared/services/components-helper.service';
 
 describe('Component: GeoTargetingMap', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports:      [],
-      declarations: [
-        GeoTargetingMapComponent,
-        GeoTargetingMapControlsComponent,
-        TranslatePipe
-      ],
-      providers:    [
-        {provide: GeoTargetingSelectedService, useValue: {}},
-        {provide: TranslateService, useValue: {}},
-        {provide: GeoTargetingService, useValue: {}},
-        {provide: ComponentsHelperService, useValue: {setRootViewContainerRef: () => {}}},
-        {provide: GeoTargetingMapService, useValue: {}},
-      ]
+      imports:   [LibModule],
+      providers: [GeoTargetingSelectedService, GeoTargetingApiService, GeoTargetingInfoService,
+        GeoTargetingTypeService, GeoTargetingMapService, GeoTargetingModeService,
+        ComponentsHelperService]
     });
   });
 
@@ -35,10 +28,3 @@ describe('Component: GeoTargetingMap', () => {
       .toBeTruthy();
   });
 });
-
-@Component({
-  selector: 'geo-targeting-map-controls',
-  template: '<div></div>'
-})
-export class GeoTargetingMapControlsComponent {
-}

@@ -1,17 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
   <title>AitargetComponents</title>
+  <meta http-equiv="x-ua-compatible"
+        content="ie=edge">
+  <meta charset='utf-8'>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
   <base href="/">
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
   <link href="http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,h_64,w_64/sbublyhbd90t0pavvb3b.png"
         rel="shortcut icon"
         type="image/x-icon">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <style>#str-dlls {
+    display: none
+  }</style>
 </head>
 <body>
-  <app-root>Loading...</app-root>
+  <app-root>
+    Loading...
+  </app-root>
+  <script type="text/javascript"
+          src="hammer.min.js"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=console.*,Intl.~locale.en&gated=1"></script>
+  <div id="str-dlls">
+    <%= '<' %>script src="/polyfill.dll.js"<%= '>' %><%= '<' %>/script<%= '>' %> <%= '<' %>script
+    src="/vendor.dll.js"<%= '>' %><%= '<' %>/script<%= '>' %>
+  </div>
+  <script src="/index.js"></script>
 </body>
 </html>

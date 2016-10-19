@@ -11,16 +11,14 @@ import { GeoTargetingInfoComponent } from './geo-targeting-info/geo-targeting-in
 import { GeoTargetingPinComponent } from './geo-targeting-pin/geo-targeting-pin.component';
 import { GeoTargetingModeComponent } from './geo-targeting-mode/geo-targeting-mode.component';
 import { GeoTargetingRadiusComponent } from './geo-targeting-radius/geo-targeting-radius.component';
-import { MdSliderModule } from '@angular2-material/slider';
-import { GeoTargetingLocationTypeComponent } from './geo-targeting-location-type/geo-targeting-location-type.component';
+import { MdSliderModule } from '@angular/material/slider';
+import { GeoTargetingTypeComponent } from './geo-targeting-type/geo-targeting-type.component';
 import { GeoTargetingMapControlsComponent } from './geo-targeting-map-controls/geo-targeting-map-controls.component';
 import { GeoTargetingMapPopupComponent } from './geo-targeting-map-popup/geo-targeting-map-popup.component';
 import { GeoTargetingModeDropdownComponent } from './geo-targeting-mode-dropdown/geo-targeting-mode-dropdown.component';
 import { FullTypePipe } from './full-type.pipe';
 import { FbTickComponent } from '../shared/components/tick.component';
 import { FbArrowDropComponent } from '../shared/components/arrow-drop.component';
-import { GeoTargetingTypeComponent } from './geo-targeting-type/geo-targeting-type.component';
-import { FbDropdownListComponent } from '../shared/components/fb-dropdown-list/fb-dropdown-list.component';
 /* tslint:enable:max-line-length */
 
 @NgModule({
@@ -38,16 +36,14 @@ import { FbDropdownListComponent } from '../shared/components/fb-dropdown-list/f
     GeoTargetingPinComponent,
     GeoTargetingModeComponent,
     GeoTargetingRadiusComponent,
-    GeoTargetingLocationTypeComponent,
+    GeoTargetingTypeComponent,
     GeoTargetingMapControlsComponent,
     FullNamePipe,
     FullTypePipe,
     FbTickComponent,
     FbArrowDropComponent,
     GeoTargetingMapPopupComponent,
-    GeoTargetingModeDropdownComponent,
-    GeoTargetingTypeComponent,
-    FbDropdownListComponent
+    GeoTargetingModeDropdownComponent
   ],
   exports:      [
     GeoTargetingComponent

@@ -6,7 +6,6 @@ import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { ComponentsHelperService } from '../../shared/services/components-helper.service';
-import { GeoTargetingService } from '../geo-targeting.service';
 
 @Component({
   selector:        'geo-targeting-map',
@@ -18,6 +17,7 @@ import { GeoTargetingService } from '../geo-targeting.service';
 export class GeoTargetingMapComponent implements OnInit, OnDestroy {
   private _subscriptions = [];
   private mapActive;
+  private mapModeText    = this.TranslateService.instant(`geo-targeting-map.SHOW_MAP`);
   private pinMode;
 
   /**
@@ -28,11 +28,24 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
     this.ChangeDetectorRef.detectChanges();
   }
 
+  /**
+   * Set map mode text depending on whether map is active or not
+   * @param mapActive
+   */
+  private setMapModeText (mapActive = this.mapActive) {
+    if (mapActive) {
+      this.mapModeText = this.TranslateService.instant(`geo-targeting-map.HIDE_MAP`);
+    } else {
+      this.mapModeText = this.TranslateService.instant(`geo-targeting-map.SHOW_MAP`);
+    }
+
+    this.updateTemplate();
+  }
+
   constructor (private GeoTargetingSelectedService: GeoTargetingSelectedService,
                private ChangeDetectorRef: ChangeDetectorRef,
                private TranslateService: TranslateService,
                private ViewContainerRef: ViewContainerRef,
-               private GeoTargetingService: GeoTargetingService,
                private ComponentsHelperService: ComponentsHelperService,
                private GeoTargetingMapService: GeoTargetingMapService) {
     this.ComponentsHelperService.setRootViewContainerRef(ViewContainerRef);
@@ -92,6 +105,7 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
     this._subscriptions.push(
       this.GeoTargetingMapService.mapActive.subscribe((mapActive) => {
         this.mapActive = mapActive;
+        this.setMapModeText(mapActive);
         this.updateTemplate();
       })
     );
@@ -110,22 +124,11 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
     );
 
     /**
-     * Process Escape and outside click and hide map if it is open
-     */
-    this._subscriptions.push(
-      this.GeoTargetingService.clickOutsideOfGeoStream
-          .merge(this.GeoTargetingService.escapeStream)
-          .filter(() => this.mapActive)
-          .subscribe(() => {
-            this.GeoTargetingMapService.hideMap();
-          })
-    );
-
-    /**
      * Update map when language change
      */
     this._subscriptions.push(
       this.TranslateService.onLangChange.subscribe((event) => {
+        this.setMapModeText(this.mapActive);
         this.GeoTargetingMapService.setTileUrl(this.GeoTargetingMapService.getTileUrl(event.lang), false);
         this.updateTemplate();
       })
