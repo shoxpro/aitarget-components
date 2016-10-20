@@ -114,8 +114,6 @@ export class GeoTargetingLocationTypeComponent implements OnInit, OnDestroy {
     // Set types on init
     this.setTypes();
 
-    console.log('this.types: ', this.types);
-
     this._subscriptions.push(
       this.geoTargetingTypeService.type.subscribe((selectedTypeValue: LocationType[]) => {
         this.selectedType = this.types.filter((type) => {
