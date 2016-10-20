@@ -18,9 +18,9 @@ require('core-js/es7/reflect');
 
 // Typescript emit helpers polyfill
 require('ts-helpers');
-require('./matchers')
+require('./matchers');
 
-require('zone.js/dist/zone');;
+require('zone.js/dist/zone');
 require('zone.js/dist/long-stack-trace-zone');
 require('zone.js/dist/async-test');
 require('zone.js/dist/fake-async-test');
@@ -49,7 +49,7 @@ testing.getTestBed().initTestEnvironment(
  * any file that ends with spec.js and get its path. By passing in true
  * we say do this recursively
  */
-const testContext = require.context('../src/app', true, /\.spec\.ts/);
+const testContext = require.context('../src', true, /\.spec\.ts/);
 
 /*
  * get all the files, for each file, call the context function
