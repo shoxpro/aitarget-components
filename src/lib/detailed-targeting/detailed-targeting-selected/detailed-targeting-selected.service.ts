@@ -5,18 +5,18 @@ import { BehaviorSubject } from 'rxjs/Rx';
 @Injectable()
 export class DetailedTargetingSelectedService {
 
-  private _items = new BehaviorSubject<DetailedTargetingItem[]>([]);
-  public items   = this._items.asObservable();
+  _items = new BehaviorSubject<DetailedTargetingItem[]>([]);
+  items  = this._items.asObservable();
 
-  public get (): DetailedTargetingItem[] {
+  get (): DetailedTargetingItem[] {
     return this._items.getValue();
   }
 
-  public updateSelected (items: DetailedTargetingItem[]) {
+  updateSelected (items: DetailedTargetingItem[]) {
     this._items.next(items);
   }
 
-  public structureSelectedItems (items: DetailedTargetingItem[]) {
+  structureSelectedItems (items: DetailedTargetingItem[]) {
     let structuredSelectedMap  = {};
     let structuredSelectedKeys = [];
     items.forEach((item) => {

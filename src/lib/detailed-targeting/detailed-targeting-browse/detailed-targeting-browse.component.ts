@@ -10,22 +10,22 @@ import { DetailedTargetingInfoService } from '../detailed-targeting-info/detaile
   styleUrls:   ['./detailed-targeting-browse.component.css']
 })
 export class DetailedTargetingBrowseComponent implements OnInit, OnDestroy {
-  private mode;
-  private isVisible;
-  private subscriptions = [];
-  private activeInfo;
+  mode;
+  isVisible;
+  subscriptions = [];
+  activeInfo;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
+  updateTemplate () {
     this.ref.markForCheck();
     this.ref.detectChanges();
   }
 
-  constructor (private DetailedTargetingModeService: DetailedTargetingModeService,
-               private DetailedTargetingSearchService: DetailedTargetingSearchService,
-               private DetailedTargetingInfoService: DetailedTargetingInfoService,
+  constructor (private detailedTargetingModeService: DetailedTargetingModeService,
+               private detailedTargetingSearchService: DetailedTargetingSearchService,
+               private detailedTargetingInfoService: DetailedTargetingInfoService,
                private ref: ChangeDetectorRef) { }
 
   ngOnDestroy () {
@@ -39,12 +39,12 @@ export class DetailedTargetingBrowseComponent implements OnInit, OnDestroy {
     /**
      * Toggle mode if changed
      */
-    this.subscriptions.push(this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
+    this.subscriptions.push(this.detailedTargetingModeService.mode.subscribe((mode: string) => {
       this.mode = mode;
       this.updateTemplate();
     }));
 
-    this.subscriptions.push(this.DetailedTargetingSearchService.data.subscribe((data) => {
+    this.subscriptions.push(this.detailedTargetingSearchService.data.subscribe((data) => {
       this.isVisible = data.isVisible;
       this.updateTemplate();
     }));
@@ -52,7 +52,7 @@ export class DetailedTargetingBrowseComponent implements OnInit, OnDestroy {
     /**
      * Indicate that info is open. Needed to set proper border-radius to dropdown.
      */
-    this.subscriptions.push(this.DetailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
+    this.subscriptions.push(this.detailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
       this.activeInfo = Boolean(item);
       this.updateTemplate();
     }));

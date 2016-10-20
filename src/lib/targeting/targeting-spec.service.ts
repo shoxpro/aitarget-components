@@ -6,10 +6,10 @@ import { defaultDetailedTargetingSpec } from './targeting-spec-detailed.const';
 @Injectable()
 export class TargetingSpecService {
 
-  private _spec = new BehaviorSubject<TargetingSpec>({});
-  public spec   = this._spec.asObservable();
+  _spec = new BehaviorSubject<TargetingSpec>({});
+  spec  = this._spec.asObservable();
 
-  public get (): TargetingSpec {
+  get (): TargetingSpec {
     return this._spec.getValue();
   }
 
@@ -17,7 +17,7 @@ export class TargetingSpecService {
    * Remove empty array properties from Targeting Spec
    * @param items
    */
-  public clean (spec) {
+  clean (spec) {
     let updatedSpec = {};
 
     for (let property in spec) {
@@ -29,7 +29,7 @@ export class TargetingSpecService {
     return updatedSpec;
   }
 
-  public update (spec: TargetingSpec) {
+  update (spec: TargetingSpec) {
     this._spec.next(spec);
   }
 

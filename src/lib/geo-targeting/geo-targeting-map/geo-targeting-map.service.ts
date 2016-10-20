@@ -13,23 +13,23 @@ import { GeoTargetingMapPopupComponent } from '../geo-targeting-map-popup/geo-ta
 
 @Injectable()
 export class GeoTargetingMapService {
-  private map;
-  private _mapActive = new BehaviorSubject<boolean>(false);
-  private _pinMode   = new BehaviorSubject<boolean>(false);
-  private zoom       = 1;
-  private latitude   = 51.505;
-  private longitude  = -0.09;
-  private tileLayer;
-  private popup;
+  map;
+  _mapActive = new BehaviorSubject<boolean>(false);
+  _pinMode   = new BehaviorSubject<boolean>(false);
+  zoom       = 1;
+  latitude   = 51.505;
+  longitude  = -0.09;
+  tileLayer;
+  popup;
 
-  public itemsMap  = {};
-  public mapActive = this._mapActive.asObservable();
-  public pinMode   = this._pinMode.asObservable();
+  itemsMap  = {};
+  mapActive = this._mapActive.asObservable();
+  pinMode   = this._pinMode.asObservable();
 
   /**
    * Toggle pin mode
    */
-  public togglePinMode () {
+  togglePinMode () {
     let pinMode = this._pinMode.getValue();
     this._pinMode.next(!pinMode);
   }
@@ -37,14 +37,14 @@ export class GeoTargetingMapService {
   /**
    * Show map
    */
-  public showMap () {
+  showMap () {
     this._mapActive.next(true);
   }
 
   /**
    * Hide map
    */
-  public hideMap () {
+  hideMap () {
     this._mapActive.next(false);
   }
 
@@ -52,7 +52,7 @@ export class GeoTargetingMapService {
    * Create all item's layers, combine them to feature group and add this group to the map
    * @param item
    */
-  public drawItem (item: GeoTargetingItem) {
+  drawItem (item: GeoTargetingItem) {
     let marker       = this.getMarkerLayer(item);
     let polygon      = this.setPolygonsLayer(item);
     let radius       = this.getRadiusLayer(item);
@@ -73,7 +73,7 @@ export class GeoTargetingMapService {
    * If this item is not on the map, draw it before focus
    * @param item
    */
-  public focusItem (item: GeoTargetingItem) {
+  focusItem (item: GeoTargetingItem) {
     // Draw item if is not drown or has no layers
     if (!this.itemsMap[item.key] || !this.itemsMap[item.key].featureGroup.getLayers().length) {
       this.drawItem(item);
@@ -87,7 +87,7 @@ export class GeoTargetingMapService {
    * @param longitude
    * @param zoom
    */
-  public setView (latitude = this.latitude, longitude = this.longitude, zoom = this.zoom) {
+  setView (latitude = this.latitude, longitude = this.longitude, zoom = this.zoom) {
     this.map.setView([latitude, longitude], zoom);
   }
 
@@ -96,14 +96,14 @@ export class GeoTargetingMapService {
    * @param item
    * @returns {Marker}
    */
-  public getMarkerLayer (item: GeoTargetingItem) {
-    let pinRef = this.ComponentsHelperService.getComponentRef(
+  getMarkerLayer (item: GeoTargetingItem) {
+    let pinRef = this.componentsHelperService.getComponentRef(
       GeoTargetingModule,
       GeoTargetingPinComponent,
       {excluded: item.excluded}
     );
 
-    let popupRef = this.ComponentsHelperService.getComponentRef(
+    let popupRef = this.componentsHelperService.getComponentRef(
       GeoTargetingModule,
       GeoTargetingMapPopupComponent,
       {item: item}
@@ -131,7 +131,7 @@ export class GeoTargetingMapService {
    * @param item
    * @returns {Circle}
    */
-  public getRadiusLayer (item: GeoTargetingItem) {
+  getRadiusLayer (item: GeoTargetingItem) {
     let radius = item.radius || 0;
 
     return L.circle([item.latitude, item.longitude], {
@@ -146,7 +146,7 @@ export class GeoTargetingMapService {
    * @param item
    * @returns {Polygon}
    */
-  public setPolygonsLayer (item: GeoTargetingItem) {
+  setPolygonsLayer (item: GeoTargetingItem) {
     // Set empty array when item.polygons is undefined
     let polygons         = item.polygons || [];
     let processedPolygon = polygons.map((coordinates) => {
@@ -171,7 +171,7 @@ export class GeoTargetingMapService {
    * Return tile url for current lang
    * @returns {string}
    */
-  public getTileUrl (lang = this.TranslateService.currentLang) {
+  getTileUrl (lang = this.translateService.currentLang) {
     return `https://external.xx.fbcdn.net/map_tile.php?v=26&x={x}&y={y}&z={z}&size=512&ppi=250&language=${lang}`;
   }
 
@@ -180,7 +180,7 @@ export class GeoTargetingMapService {
    * @param tileUrl
    * @param noRedraw
    */
-  public setTileUrl (tileUrl = this.getTileUrl(), noRedraw = false) {
+  setTileUrl (tileUrl = this.getTileUrl(), noRedraw = false) {
     this.tileLayer.setUrl(tileUrl, noRedraw);
     this.tileLayer.redraw();
   }
@@ -188,7 +188,7 @@ export class GeoTargetingMapService {
   /**
    * Initialize map using default view
    */
-  public initializeMap () {
+  initializeMap () {
 
     this.map = L.map('geo-targeting-map', {
       center: [this.latitude, this.longitude],
@@ -201,7 +201,7 @@ export class GeoTargetingMapService {
     this.popup = L.popup();
   }
 
-  private onMapClick = (e) => {
+  onMapClick = (e) => {
     let latitude  = e.latlng.lat;
     let longitude = e.latlng.lng;
     let key       = `(${latitude}, ${longitude})`;
@@ -212,39 +212,39 @@ export class GeoTargetingMapService {
       longitude: longitude,
       type:      'custom_location'
     });
-    this.GeoTargetingSelectedService
+    this.geoTargetingSelectedService
         .setCoordinates(pinItem)
         .subscribe((item: GeoTargetingItem) => {
           // Show message if coordinates don't belong to any country (e.g. deep-deep ocean)
           if (!item.country_code) {
-            let message = this.TranslateService.instant(`geo-targeting-input.INVALID_LOCATION`);
+            let message = this.translateService.instant(`geo-targeting-input.INVALID_LOCATION`);
 
-            this.GeoTargetingInfoService.update('info', message);
-            this.GeoTargetingInfoService.show();
+            this.geoTargetingInfoService.update('info', message);
+            this.geoTargetingInfoService.show();
 
             return;
           }
 
-          item.excluded = this.GeoTargetingModeService.get() === 'exclude';
+          item.excluded = this.geoTargetingModeService.get() === 'exclude';
 
-          this.GeoTargetingSelectedService.add(item);
+          this.geoTargetingSelectedService.add(item);
 
           this.togglePinMode();
         });
   };
 
-  public enterPinMode () {
+  enterPinMode () {
     this.map.on('click', this.onMapClick);
   }
 
-  public exitPinMode () {
+  exitPinMode () {
     this.map.off('click', this.onMapClick);
   }
 
-  constructor (private TranslateService: TranslateService,
-               private GeoTargetingInfoService: GeoTargetingInfoService,
-               private GeoTargetingModeService: GeoTargetingModeService,
-               private ComponentsHelperService: ComponentsHelperService,
-               private GeoTargetingSelectedService: GeoTargetingSelectedService) { }
+  constructor (private translateService: TranslateService,
+               private geoTargetingInfoService: GeoTargetingInfoService,
+               private geoTargetingModeService: GeoTargetingModeService,
+               private componentsHelperService: ComponentsHelperService,
+               private geoTargetingSelectedService: GeoTargetingSelectedService) { }
 
 }

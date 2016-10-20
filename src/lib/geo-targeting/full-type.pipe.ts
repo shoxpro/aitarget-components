@@ -6,10 +6,10 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 })
 export class FullTypePipe implements PipeTransform {
 
-  constructor (private TranslateService: TranslateService) {}
+  constructor (private translateService: TranslateService) {}
 
   transform (value: any, args?: any): any {
-    let translatedType = this.TranslateService.instant(`geo-targeting-dropdown.${value.type}`);
+    let translatedType = this.translateService.instant(`geo-targeting-dropdown.${value.type}`);
     let combinedType   = [translatedType, value.category];
     return combinedType.filter((name) => Boolean(name))
                        .join(' / ');

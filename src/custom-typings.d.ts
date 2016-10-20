@@ -2,20 +2,20 @@
  * Custom Type Definitions
  * When including 3rd party modules you also need to include the type definition for the module
  * if they don't provide one within the module. You can try to install it with typings
-typings install node --save
+ typings install node --save
  * If you can't find the type definition in the registry we can make an ambient definition in
  * this file for now. For example
-declare module "my-module" {
-  export function doesSomething(value: string): string;
-}
+ declare module "my-module" {
+ export function doesSomething(value: string): string;
+ }
  *
  * If you're prototying and you will fix the types later you can also declare it as type any
  *
-declare var assert: any;
+ declare var assert: any;
  *
  * If you're importing a module that uses Node.js modules which are CommonJS you need to import as
  *
-import * as _ from 'lodash'
+ import * as _ from 'lodash'
  * You can include your type definitions in this file until you create one for the typings registry
  * see https://github.com/typings/registry
  *
@@ -64,14 +64,12 @@ interface WebpackRequire extends NodeRequireFunction {
   context(file: string, flag?: boolean, exp?: RegExp): any;
 }
 
-
 // interface ErrorStackTraceLimit {
 //   stackTraceLimit: number;
 // }
-
 
 // Extend typings
 interface NodeRequire extends WebpackRequire {}
 // interface ErrorConstructor extends ErrorStackTraceLimit {}
 interface NodeModule extends WebpackModule {}
-interface Global extends GlobalEnvironment  {}
+interface Global extends GlobalEnvironment {}

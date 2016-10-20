@@ -5,10 +5,10 @@ import { Subject } from 'rxjs/Rx';
 @Injectable()
 export class DetailedTargetingDropdownSuggestedService {
 
-  private _items = new Subject<DetailedTargetingItem[]>();
-  public items   = this._items.asObservable();
+  _items = new Subject<DetailedTargetingItem[]>();
+  items  = this._items.asObservable();
 
-  public updateDropdown (items: DetailedTargetingItem[]) {
+  updateDropdown (items: DetailedTargetingItem[]) {
     this._items.next(items);
   };
 

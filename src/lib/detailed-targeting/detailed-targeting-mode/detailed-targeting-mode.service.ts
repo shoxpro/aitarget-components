@@ -4,15 +4,15 @@ import { BehaviorSubject } from 'rxjs/Rx';
 @Injectable()
 export class DetailedTargetingModeService {
 
-  private _mode = new BehaviorSubject<String>(null);
+  _mode = new BehaviorSubject<String>(null);
 
-  public mode = this._mode.asObservable();
+  mode = this._mode.asObservable();
 
-  public get = function () {
+  get = function () {
     return this._mode.getValue();
   };
 
-  public set = function (mode: string) {
+  set = function (mode: string) {
     this._mode.next(mode);
   };
 

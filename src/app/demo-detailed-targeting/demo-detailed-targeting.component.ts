@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DemoDetailedTargetingComponent implements OnInit {
 
+  hideDetailedTargeting = false;
+  showSpec              = false;
+  lang                  = 'en_US';
+
   spec = {
     'age_max':             65,
     'age_min':             18,

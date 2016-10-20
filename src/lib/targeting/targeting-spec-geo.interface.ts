@@ -126,7 +126,8 @@ export interface GeoTargetingSpec {
    * Please Note:
    * If location_types is not specified, the default value is ['home'].
    * `travel_in` cannot be used with other values in the location_types.
-   * If you want to target “everyone in this location”, you need to add both recent and home in the location_types field.
+   * If you want to target “everyone in this location”, you need to add both
+   * recent and home in the location_types field.
    *
    * @example
    * 'location_types':['recent', 'home']

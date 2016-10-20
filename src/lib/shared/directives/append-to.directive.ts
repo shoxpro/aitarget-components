@@ -8,11 +8,11 @@ export class AppendToDirective implements OnInit, OnDestroy {
   @Input() appendTo: string  = 'body';
   @Input() showVeil: boolean = false;
 
-  private element: HTMLElement;
-  private veil: HTMLElement;
+  element: HTMLElement;
+  veil: HTMLElement;
 
-  constructor (private ElementRef: ElementRef) {
-    this.element = this.ElementRef.nativeElement;
+  constructor (private elementRef: ElementRef) {
+    this.element = this.elementRef.nativeElement;
   }
 
   ngOnDestroy () {

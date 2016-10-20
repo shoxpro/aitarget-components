@@ -9,9 +9,9 @@ interface DefaultOpenItems {
 
 @Injectable()
 export class DetailedTargetingDropdownBrowseService {
-  private _items = new Subject<DetailedTargetingItem[]>();
+  _items = new Subject<DetailedTargetingItem[]>();
 
-  private _defaultOpenItems: DefaultOpenItems = {
+  _defaultOpenItems: DefaultOpenItems = {
     __ROOT__:  true,
     _scrollTo: null
   };
@@ -20,21 +20,21 @@ export class DetailedTargetingDropdownBrowseService {
     return this._defaultOpenItems;
   }
 
-  private _openItems = new BehaviorSubject<DefaultOpenItems>(this.defaultOpenItems);
+  _openItems = new BehaviorSubject<DefaultOpenItems>(this.defaultOpenItems);
 
-  public items = this._items.asObservable();
+  items = this._items.asObservable();
 
-  public openItems = this._openItems.asObservable();
+  openItems = this._openItems.asObservable();
 
-  public updateDropdown (items: DetailedTargetingItem[]) {
+  updateDropdown (items: DetailedTargetingItem[]) {
     this._items.next(items);
   };
 
-  public updateOpenItems (openItems) {
+  updateOpenItems (openItems) {
     this._openItems.next(openItems);
   };
 
-  public getOpenItems () {
+  getOpenItems () {
     return this._openItems.getValue();
   };
 

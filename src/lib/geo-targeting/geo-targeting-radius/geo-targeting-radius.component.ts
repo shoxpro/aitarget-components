@@ -17,24 +17,24 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
 
   @Input() item: GeoTargetingItem = {key: ''};
 
-  private _subscriptions  = [];
-  private isOpen: boolean = false;
-  private max;
-  private min: number     = 0;
-  private previousItem: GeoTargetingItem;
+  _subscriptions  = [];
+  isOpen: boolean = false;
+  max;
+  min: number     = 0;
+  previousItem: GeoTargetingItem;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
-    this.ChangeDetectorRef.markForCheck();
-    this.ChangeDetectorRef.detectChanges();
+  updateTemplate () {
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
   }
 
   /**
    * Set default radius min and max
    */
-  private setDefaultBoundaries () {
+  setDefaultBoundaries () {
     if (this.item.distance_unit === 'mile') {
       this.max = 50;
     } else {
@@ -50,7 +50,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
    * Change distance unit
    * @param distanceUnit
    */
-  public setDistanceUnit (distanceUnit) {
+  setDistanceUnit (distanceUnit) {
     this.item.distance_unit = distanceUnit;
     this.setDefaultBoundaries();
     this.onChange(this.item.radius);
@@ -61,7 +61,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
    * Open/Close radius selection dropdown
    * @param event
    */
-  public toggleDropdown (event?) {
+  toggleDropdown (event?) {
     if (event) {
       event.stopPropagation();
     }
@@ -72,7 +72,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     if (this.isOpen) {
       this.savePreviousItem();
     } else {
-      this.GeoTargetingSelectedService.updateSelectedItem(this.item);
+      this.geoTargetingSelectedService.updateSelectedItem(this.item);
     }
 
     this.updateTemplate();
@@ -81,14 +81,14 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   /**
    * Save item to previous
    */
-  private savePreviousItem () {
+  savePreviousItem () {
     this.previousItem = Object.assign({}, this.item);
   }
 
   /**
    * Save item to previous
    */
-  private restorePreviousItem () {
+  restorePreviousItem () {
     // Set previous item or current item with minimum default radius
     this.item = this.previousItem || this.item;
   }
@@ -96,7 +96,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   /**
    * Enable radius by returning previous item state
    */
-  public enableRadius () {
+  enableRadius () {
     this.restorePreviousItem();
     if (this.item.radius === 0) {
       this.item.radius = 1;
@@ -106,7 +106,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   /**
    * Disable radius by setting radius to 0
    */
-  public disableRadius () {
+  disableRadius () {
     this.savePreviousItem();
     this.item.radius = 0;
   }
@@ -115,7 +115,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
    * When radius change
    * @param radius
    */
-  public onChange (radius) {
+  onChange (radius) {
     if (radius === null) {
       return;
     }
@@ -128,10 +128,10 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     this.item.radius = radius;
   }
 
-  constructor (private TranslateService: TranslateService,
-               private GeoTargetingSelectedService: GeoTargetingSelectedService,
-               private GeoTargetingService: GeoTargetingService,
-               private ChangeDetectorRef: ChangeDetectorRef) {
+  constructor (private translateService: TranslateService,
+               private geoTargetingSelectedService: GeoTargetingSelectedService,
+               private geoTargetingService: GeoTargetingService,
+               private changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnDestroy () {
@@ -144,7 +144,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     this.setDefaultBoundaries();
 
     this._subscriptions.push(
-      this.TranslateService.onLangChange.subscribe(() => {
+      this.translateService.onLangChange.subscribe(() => {
         this.updateTemplate();
       })
     );
@@ -153,7 +153,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
      * Process Escape when dropdown is open
      */
     this._subscriptions.push(
-      this.GeoTargetingService.escapeStream
+      this.geoTargetingService.escapeStream
           .filter(() => this.isOpen)
           .subscribe(() => {
             // Just close
@@ -168,7 +168,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
      * Process Enter when dropdown is open
      */
     this._subscriptions.push(
-      this.GeoTargetingService.enterStream
+      this.geoTargetingService.enterStream
           .filter(() => this.isOpen)
           .subscribe(() => {
             this.toggleDropdown();

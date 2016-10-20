@@ -5,14 +5,14 @@ import { LocationType } from '../../targeting/targeting-spec-geo.interface';
 @Injectable()
 export class GeoTargetingTypeService {
 
-  private _type = new BehaviorSubject<LocationType[]>(['home', 'recent']);
-  public type   = this._type.asObservable();
+  _type = new BehaviorSubject<LocationType[]>(['home', 'recent']);
+  type  = this._type.asObservable();
 
-  public update (type: LocationType[]) {
+  update (type: LocationType[]) {
     this._type.next(type);
   }
 
-  public get () {
+  get () {
     return this._type.getValue();
   }
 

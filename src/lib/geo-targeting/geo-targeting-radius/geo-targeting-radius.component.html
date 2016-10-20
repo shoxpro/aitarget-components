@@ -5,7 +5,7 @@
         *ngIf="item.radius > 0">+ {{ item.radius }} {{ 'geo-targeting-radius.' + item.distance_unit | translate}}
   </span>
 
-  <fb-arrow-drop [direction]="{true: 'up', false: 'down'}[isOpen]"></fb-arrow-drop>
+  <fb-arrow-drop [direction]="isOpen ? 'up' : 'down'"></fb-arrow-drop>
 </div>
 <!--Select Radius Dropdown-->
 <div class="geo-targeting-radius__dropdown"

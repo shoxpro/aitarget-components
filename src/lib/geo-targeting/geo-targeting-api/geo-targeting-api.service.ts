@@ -10,11 +10,11 @@ import { GeoTargetingSpec } from '../../targeting/targeting-spec-geo.interface';
 @Injectable()
 export class GeoTargetingApiService {
 
-  private _defaultLang: string = 'en_US';
-  private lang: string         = this._defaultLang;
+  _defaultLang: string = 'en_US';
+  lang: string         = this._defaultLang;
 
-  private api = this.FbService.api
-                    .filter((FB: FB) => Boolean(FB));
+  api = this.fbService.api
+            .filter((FB: FB) => Boolean(FB));
 
   /**
    * Simplify geo locations for receiving adgeolocationmeta
@@ -23,7 +23,7 @@ export class GeoTargetingApiService {
    * @param excludedGeoLocations
    * @returns {{}}
    */
-  private processGeoLocations (geoLocations: GeoTargetingSpec = {}, excludedGeoLocations: GeoTargetingSpec = {}) {
+  processGeoLocations (geoLocations: GeoTargetingSpec = {}, excludedGeoLocations: GeoTargetingSpec = {}) {
     let simplifiedGeoLocations = {};
     let map                    = {};
 
@@ -53,14 +53,14 @@ export class GeoTargetingApiService {
     return {simplified: simplifiedGeoLocations, map: map};
   }
 
-  constructor (private FbService: FbService,
-               private TranslateService: TranslateService) {
-    this.TranslateService.onLangChange.subscribe((event: LangChangeEvent) => {
+  constructor (private fbService: FbService,
+               private translateService: TranslateService) {
+    this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
       this.lang = event.lang;
     });
   }
 
-  public search (q: string) {
+  search (q: string) {
     let _response = new Subject();
 
     this.api.subscribe((FB: FB) => {
@@ -85,7 +85,7 @@ export class GeoTargetingApiService {
    * @param spec
    * @returns {Observable<T>}
    */
-  public getSelectedLocationItems (spec: TargetingSpec) {
+  getSelectedLocationItems (spec: TargetingSpec) {
     let _items = new Subject();
 
     let processedGeoLocations = this.processGeoLocations(spec.geo_locations, spec.excluded_geo_locations);
@@ -137,7 +137,7 @@ export class GeoTargetingApiService {
    * @param simplifiedLocations
    * @returns {Observable<T>}
    */
-  public metaData (simplifiedLocations) {
+  metaData (simplifiedLocations) {
     let _response = new Subject();
 
     let params = Object.assign({
@@ -163,7 +163,7 @@ export class GeoTargetingApiService {
    * @returns {Observable<T>}
    * @param item
    */
-  public suggestRadius (item: GeoTargetingItem) {
+  suggestRadius (item: GeoTargetingItem) {
     let _response = new Subject();
 
     if (!item.latitude || !item.longitude) {

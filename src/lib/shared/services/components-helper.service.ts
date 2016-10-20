@@ -6,7 +6,7 @@ import { Injectable, ViewContainerRef, ApplicationRef, Compiler } from '@angular
  */
 @Injectable()
 export class ComponentsHelperService {
-  public root: ViewContainerRef;
+  root: ViewContainerRef;
 
   /**
    * In some cases, like using ngUpgrade,
@@ -14,19 +14,19 @@ export class ComponentsHelperService {
    * to made this method working you need to add:
    * ```typescript
    *  @Component({
-     *   selector: 'my-app',
-     *   ...
-     *   })
+   *     selector: 'my-app',
+   *     ...
+   *   })
    *  export class MyApp {
-     *    constructor(componentsHelper:ComponentsHelper, viewContainerRef: ViewContainerRef) {
-     *        // A Default view container ref, usually the app root container ref.
-     *        // Has to be set manually until we can find a way to get it automatically.
-     *        componentsHelper.setRootViewContainerRef(viewContainerRef)
-     *      }
-     *  }
+   *    constructor(componentsHelper:ComponentsHelper, viewContainerRef: ViewContainerRef) {
+   *        // A Default view container ref, usually the app root container ref.
+   *        // Has to be set manually until we can find a way to get it automatically.
+   *        componentsHelper.setRootViewContainerRef(viewContainerRef)
+   *      }
+   *  }
    * ```
    */
-  public setRootViewContainerRef (value: ViewContainerRef): void {
+  setRootViewContainerRef (value: ViewContainerRef): void {
     this.root = value;
   }
 
@@ -34,7 +34,7 @@ export class ComponentsHelperService {
    * This is a name conventional class to get application root view component ref
    * @returns {ViewContainerRef} - application root view component ref
    */
-  public getRootViewContainerRef (): ViewContainerRef {
+  getRootViewContainerRef (): ViewContainerRef {
     // https://github.com/angular/angular/issues/9293
     if (this.root) {
       return this.root;
@@ -56,7 +56,7 @@ export class ComponentsHelperService {
     }
   }
 
-  public getComponentRef (module, component, inputs = {}) {
+  getComponentRef (module, component, inputs = {}) {
     if (!module || !component) {
       return;
     }

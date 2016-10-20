@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { GeoTargetingTypeService } from './geo-targeting-type.service';
 
 describe('Service: GeoTargetingType', () => {
@@ -11,6 +11,7 @@ describe('Service: GeoTargetingType', () => {
   });
 
   it('should ...', inject([GeoTargetingTypeService], (service: GeoTargetingTypeService) => {
-    expect(service).toBeTruthy();
+    expect(service)
+      .toBeTruthy();
   }));
 });

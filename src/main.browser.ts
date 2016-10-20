@@ -1,6 +1,5 @@
 import './polyfills.browser';
 import './rxjs.imports';
-
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { bootloader } from '@angularclass/hmr';
@@ -11,7 +10,7 @@ if ('production' === ENV) {
   enableProdMode();
 }
 
-export function main(): Promise<any> {
+export function main (): Promise<any> {
   return platformBrowserDynamic()
     .bootstrapModule(AppModule)
     .then(decorateModuleRef)

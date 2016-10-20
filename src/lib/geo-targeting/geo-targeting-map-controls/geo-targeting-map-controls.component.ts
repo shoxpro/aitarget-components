@@ -9,25 +9,25 @@ import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mod
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingMapControlsComponent implements OnInit, OnDestroy {
-  private _subscriptions = [];
-  private pinMode        = false;
-  private mode;
+  _subscriptions = [];
+  pinMode        = false;
+  mode;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
-    this.ChangeDetectorRef.markForCheck();
-    this.ChangeDetectorRef.detectChanges();
+  updateTemplate () {
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
   }
 
-  public togglePinMode () {
-    this.GeoTargetingMapService.togglePinMode();
+  togglePinMode () {
+    this.geoTargetingMapService.togglePinMode();
   }
 
-  constructor (private GeoTargetingMapService: GeoTargetingMapService,
-               private GeoTargetingModeService: GeoTargetingModeService,
-               private ChangeDetectorRef: ChangeDetectorRef) { }
+  constructor (private geoTargetingMapService: GeoTargetingMapService,
+               private geoTargetingModeService: GeoTargetingModeService,
+               private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnDestroy () {
     this._subscriptions.forEach((subscription) => {
@@ -38,7 +38,7 @@ export class GeoTargetingMapControlsComponent implements OnInit, OnDestroy {
   ngOnInit () {
     // Subscribe to map's pin mode flag
     this._subscriptions.push(
-      this.GeoTargetingMapService.pinMode.subscribe((pinMode) => {
+      this.geoTargetingMapService.pinMode.subscribe((pinMode) => {
         this.pinMode = pinMode;
         this.updateTemplate();
       })
@@ -46,7 +46,7 @@ export class GeoTargetingMapControlsComponent implements OnInit, OnDestroy {
 
     // Subscribe to map's pin mode flag
     this._subscriptions.push(
-      this.GeoTargetingModeService.mode.subscribe((mode) => {
+      this.geoTargetingModeService.mode.subscribe((mode) => {
         this.mode = mode;
         this.updateTemplate();
       })

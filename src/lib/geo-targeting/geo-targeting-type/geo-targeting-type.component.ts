@@ -20,42 +20,42 @@ interface Type {
 })
 export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
 
-  private _subscriptions  = [];
-  private types: Type[];
-  private selectedType: Type;
-  private isOpen: boolean = false;
+  _subscriptions  = [];
+  types: Type[];
+  selectedType: Type;
+  isOpen: boolean = false;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
-    this.ChangeDetectorRef.markForCheck();
-    this.ChangeDetectorRef.detectChanges();
+  updateTemplate () {
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
   }
 
   /**
    * Set types to choose from
    */
-  private setTypes = () => {
+  setTypes = () => {
     this.types = [
       {
-        title: this.TranslateService.instant(`geo-targeting-type.ALL`),
-        info:  this.TranslateService.instant(`geo-targeting-type.ALL_INFO`),
+        title: this.translateService.instant(`geo-targeting-type.ALL`),
+        info:  this.translateService.instant(`geo-targeting-type.ALL_INFO`),
         value: ['home', 'recent']
       },
       {
-        title: this.TranslateService.instant(`geo-targeting-type.HOME`),
-        info:  this.TranslateService.instant(`geo-targeting-type.HOME_INFO`),
+        title: this.translateService.instant(`geo-targeting-type.HOME`),
+        info:  this.translateService.instant(`geo-targeting-type.HOME_INFO`),
         value: ['home']
       },
       {
-        title: this.TranslateService.instant(`geo-targeting-type.RECENT`),
-        info:  this.TranslateService.instant(`geo-targeting-type.RECENT_INFO`),
+        title: this.translateService.instant(`geo-targeting-type.RECENT`),
+        info:  this.translateService.instant(`geo-targeting-type.RECENT_INFO`),
         value: ['recent']
       },
       {
-        title: this.TranslateService.instant(`geo-targeting-type.TRAVEL_IN`),
-        info:  this.TranslateService.instant(`geo-targeting-type.TRAVEL_IN_INFO`),
+        title: this.translateService.instant(`geo-targeting-type.TRAVEL_IN`),
+        info:  this.translateService.instant(`geo-targeting-type.TRAVEL_IN_INFO`),
         value: ['travel_in']
       },
     ];
@@ -64,7 +64,7 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
   /**
    * Toggle Dropdown
    */
-  public toggleDropdown (event?) {
+  toggleDropdown (event?) {
     if (event) {
       event.stopPropagation();
     }
@@ -77,7 +77,7 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
    * @param type
    * @param showInfo
    */
-  public toggleInfo (type, showInfo) {
+  toggleInfo (type, showInfo) {
     type.showInfo = showInfo;
     this.updateTemplate();
   }
@@ -86,23 +86,23 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
    * Select type from dropdown
    * @param type
    */
-  public select (type) {
-    this.GeoTargetingTypeService.update(type.value);
+  select (type) {
+    this.geoTargetingTypeService.update(type.value);
 
     // Update targeting spec
-    let newTargetingSpec = Object.assign(this.TargetingSpecService.get(), this.GeoTargetingSelectedService.getSpec());
-    this.TargetingSpecService.update(newTargetingSpec);
+    let newTargetingSpec = Object.assign(this.targetingSpecService.get(), this.geoTargetingSelectedService.getSpec());
+    this.targetingSpecService.update(newTargetingSpec);
 
     // Hide info and close dropdown
     this.toggleInfo(type, false);
     this.toggleDropdown();
   }
 
-  constructor (private ChangeDetectorRef: ChangeDetectorRef,
-               private TranslateService: TranslateService,
-               private GeoTargetingTypeService: GeoTargetingTypeService,
-               private GeoTargetingSelectedService: GeoTargetingSelectedService,
-               private TargetingSpecService: TargetingSpecService) {}
+  constructor (private changeDetectorRef: ChangeDetectorRef,
+               private translateService: TranslateService,
+               private geoTargetingTypeService: GeoTargetingTypeService,
+               private geoTargetingSelectedService: GeoTargetingSelectedService,
+               private targetingSpecService: TargetingSpecService) {}
 
   ngOnDestroy () {
     this._subscriptions.forEach((subscription) => {
@@ -115,7 +115,7 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
     this.setTypes();
 
     this._subscriptions.push(
-      this.GeoTargetingTypeService.type.subscribe((selectedTypeValue: LocationType[]) => {
+      this.geoTargetingTypeService.type.subscribe((selectedTypeValue: LocationType[]) => {
         this.selectedType = this.types.filter((type) => {
           return type.value.join() === selectedTypeValue.join();
         })[0];
@@ -125,10 +125,10 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
     );
 
     this._subscriptions.push(
-      this.TranslateService.onLangChange.subscribe(() => {
+      this.translateService.onLangChange.subscribe(() => {
         // Update types and selectedType when language change
         this.setTypes();
-        this.GeoTargetingTypeService.update(this.selectedType.value);
+        this.geoTargetingTypeService.update(this.selectedType.value);
 
         this.updateTemplate();
       })

@@ -10,32 +10,32 @@ import { GeoTargetingInfoService } from './geo-targeting-info.service';
 })
 export class GeoTargetingInfoComponent implements OnInit, OnDestroy {
 
-  private _subscriptions = [];
+  _subscriptions = [];
 
-  public infoLevel: 'info'|'error';
-  public message: string;
-  public canRevert: boolean;
-  public isVisible: boolean = false;
+  infoLevel: 'info'|'error';
+  message: string;
+  canRevert: boolean;
+  isVisible: boolean = false;
 
-  private updateTemplate () {
-    this.ChangeDetectorRef.markForCheck();
-    this.ChangeDetectorRef.detectChanges();
+  updateTemplate () {
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
   }
 
-  public hide () {
-    this.GeoTargetingInfoService.hide();
+  hide () {
+    this.geoTargetingInfoService.hide();
   }
 
-  public undoChange () {
-    this.GeoTargetingSelectedService.update(
-      this.GeoTargetingSelectedService.getPrevItems()
+  undoChange () {
+    this.geoTargetingSelectedService.update(
+      this.geoTargetingSelectedService.getPrevItems()
     );
     this.hide();
   }
 
-  constructor (private GeoTargetingSelectedService: GeoTargetingSelectedService,
-               private GeoTargetingInfoService: GeoTargetingInfoService,
-               private ChangeDetectorRef: ChangeDetectorRef) { }
+  constructor (private geoTargetingSelectedService: GeoTargetingSelectedService,
+               private geoTargetingInfoService: GeoTargetingInfoService,
+               private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnDestroy () {
     this._subscriptions.forEach((subscription) => {
@@ -45,28 +45,28 @@ export class GeoTargetingInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit () {
     this._subscriptions.push(
-      this.GeoTargetingInfoService.message.subscribe((message) => {
+      this.geoTargetingInfoService.message.subscribe((message) => {
         this.message = message;
         this.updateTemplate();
       })
     );
 
     this._subscriptions.push(
-      this.GeoTargetingInfoService.infoLevel.subscribe((infoLevel) => {
+      this.geoTargetingInfoService.infoLevel.subscribe((infoLevel) => {
         this.infoLevel = infoLevel;
         this.updateTemplate();
       })
     );
 
     this._subscriptions.push(
-      this.GeoTargetingInfoService.canRevert.subscribe((canRevert) => {
+      this.geoTargetingInfoService.canRevert.subscribe((canRevert) => {
         this.canRevert = canRevert;
         this.updateTemplate();
       })
     );
 
     this._subscriptions.push(
-      this.GeoTargetingInfoService.isVisible.subscribe((isVisible) => {
+      this.geoTargetingInfoService.isVisible.subscribe((isVisible) => {
         this.isVisible = isVisible;
         this.updateTemplate();
       })

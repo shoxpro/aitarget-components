@@ -2,7 +2,7 @@
   <div class="geo-targeting-map-popup__name">{{item | fullName}}</div>
   <div class="geo-targeting-map-popup__drop"
        (click)="toggleDropdown($event)">
-    <fb-arrow-drop [direction]="{true: 'up', false: 'down'}[isOpen]"></fb-arrow-drop>
+    <fb-arrow-drop [direction]="isOpen ? 'up' : 'down'"></fb-arrow-drop>
     <geo-targeting-mode-dropdown
       *ngIf="isOpen"
       [excluded]="item.excluded"

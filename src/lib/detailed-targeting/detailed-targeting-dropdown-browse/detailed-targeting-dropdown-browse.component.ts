@@ -15,28 +15,28 @@ import { DetailedTargetingSearchService } from '../detailed-targeting-search/det
 })
 
 export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestroy {
-  private items;
-  private selectedItemsCombinedIds;
-  private openItems;
-  private subscriptions = [];
+  items;
+  selectedItemsCombinedIds;
+  openItems;
+  subscriptions = [];
 
-  constructor (private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
-               private DetailedTargetingApiService: DetailedTargetingApiService,
-               private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
-               private DetailedTargetingInfoService: DetailedTargetingInfoService,
-               private ElementRef: ElementRef,
-               private TranslateService: TranslateService,
-               private DetailedTargetingSearchService: DetailedTargetingSearchService,
+  constructor (private detailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
+               private detailedTargetingApiService: DetailedTargetingApiService,
+               private detailedTargetingSelectedService: DetailedTargetingSelectedService,
+               private detailedTargetingInfoService: DetailedTargetingInfoService,
+               private elementRef: ElementRef,
+               private translateService: TranslateService,
+               private detailedTargetingSearchService: DetailedTargetingSearchService,
                private ref: ChangeDetectorRef) {
-    this.openItems = this.DetailedTargetingDropdownBrowseService.getOpenItems();
+    this.openItems = this.detailedTargetingDropdownBrowseService.getOpenItems();
   }
 
-  private combinedId = (item) => [item.type, item.id].join('.');
+  combinedId = (item) => [item.type, item.id].join('.');
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
+  updateTemplate () {
     this.ref.markForCheck();
     this.ref.detectChanges();
   }
@@ -54,7 +54,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
    * @param openItems
    * @param openKeys
    */
-  private closeChildrenNodes (item, openItems, openKeys) {
+  closeChildrenNodes (item, openItems, openKeys) {
     if (openItems[item.key]) {
       return;
     }
@@ -65,7 +65,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
     });
   }
 
-  private getScrollToItemKey (item, openItems) {
+  getScrollToItemKey (item, openItems) {
     if (openItems[item.key]) {
       return item.key;
     } else {
@@ -78,9 +78,9 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
    * Open or close browse rows when clicked
    * @param item
    */
-  private toggleBranch (item: DetailedTargetingItem) {
+  toggleBranch (item: DetailedTargetingItem) {
     // Get all open keys
-    let openItems = this.DetailedTargetingDropdownBrowseService.getOpenItems();
+    let openItems = this.detailedTargetingDropdownBrowseService.getOpenItems();
     let openKeys  = Object.keys(openItems);
 
     // Toggle branch by item.key
@@ -92,18 +92,18 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
     // Decide where to scroll
     openItems._scrollTo = this.getScrollToItemKey(item, openItems);
 
-    this.DetailedTargetingDropdownBrowseService.updateOpenItems(openItems);
+    this.detailedTargetingDropdownBrowseService.updateOpenItems(openItems);
   }
 
   /**
    * Select row item from the browse list
    * @param item
    */
-  private selectItem (item: DetailedTargetingItem) {
+  selectItem (item: DetailedTargetingItem) {
     // Set selected property for checkboxes
     item.selected = true;
 
-    let selectedItems = this.DetailedTargetingSelectedService.get();
+    let selectedItems = this.detailedTargetingSelectedService.get();
 
     let selectedItemsFiltered = selectedItems.filter(selected => {
       return selected.type === item.type && selected.id === item.id;
@@ -115,33 +115,33 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
       selectedItems.push(item);
     }
 
-    this.DetailedTargetingSelectedService.updateSelected(selectedItems);
+    this.detailedTargetingSelectedService.updateSelected(selectedItems);
   }
 
   /**
    * Remove row item from previously selected
    * @param itemToRemove
    */
-  private removeItem (itemToRemove: DetailedTargetingItem) {
+  removeItem (itemToRemove: DetailedTargetingItem) {
     // Set selected property for checkboxes
     itemToRemove.selected = false;
 
-    let selectedItems = this.DetailedTargetingSelectedService.get();
+    let selectedItems = this.detailedTargetingSelectedService.get();
 
     selectedItems = selectedItems.filter(item => {
       return itemToRemove.type !== item.type || item.id !== itemToRemove.id;
     });
 
-    this.DetailedTargetingSelectedService.updateSelected(selectedItems);
+    this.detailedTargetingSelectedService.updateSelected(selectedItems);
   }
 
   /**
    * Show row's info when hovered
    * @param item
    */
-  public setDropdownInfoItem (item: DetailedTargetingItem) {
+  setDropdownInfoItem (item: DetailedTargetingItem) {
     let value = item && item.id ? item : null;
-    this.DetailedTargetingInfoService.update(value);
+    this.detailedTargetingInfoService.update(value);
   }
 
   /**
@@ -149,7 +149,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
    * Open item branch if not last item with id, select or remove clicked item to/from selected items.
    * @param item
    */
-  public clickItem (item: DetailedTargetingItem) {
+  clickItem (item: DetailedTargetingItem) {
     if (item.id) {
       if (this.selectedItemsCombinedIds && this.selectedItemsCombinedIds.indexOf(this.combinedId(item)) > -1) {
         this.removeItem(item);
@@ -159,7 +159,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
       return;
     }
     if (item.searchable) {
-      this.DetailedTargetingSearchService.update({isVisible: true, type: item.type});
+      this.detailedTargetingSearchService.update({isVisible: true, type: item.type});
       return;
     }
     this.toggleBranch(item);
@@ -169,12 +169,12 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
    * Scroll dropdown list to clicked item.key
    * @param key
    */
-  public scrollTo (key) {
+  scrollTo (key) {
     if (!key) {
       return;
     }
 
-    let elm     = this.ElementRef.nativeElement;
+    let elm     = this.elementRef.nativeElement;
     let list    = elm.querySelector('ul');
     let itemRow = elm.querySelector(`[data-key="${key}"]`);
 
@@ -186,7 +186,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
   /**
    * Add selected property to browse items that are selected
    */
-  private toggleSelected = () => {
+  toggleSelected = () => {
     if (!this.selectedItemsCombinedIds || !this.items) {
       return;
     }
@@ -199,7 +199,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
     /**
      * Update dropdown list when new items to browse
      */
-    this.subscriptions.push(this.DetailedTargetingDropdownBrowseService.items
+    this.subscriptions.push(this.detailedTargetingDropdownBrowseService.items
                                 .map(items => {
                                   return items.filter(item => item.key !== '__ROOT__')
                                               .map((item, index, list) => {
@@ -231,7 +231,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
     /**
      * Update items from dropdown (toggle checkboxes) when selected items changes
      */
-    this.subscriptions.push(this.DetailedTargetingSelectedService.items
+    this.subscriptions.push(this.detailedTargetingSelectedService.items
                                 .map((items: DetailedTargetingItem[]) => items.map(item => this.combinedId(item)))
                                 .subscribe((selectedItems: Array<string>) => {
                                   this.selectedItemsCombinedIds = selectedItems;
@@ -244,7 +244,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
     /**
      * If openItems change reflect these changes it in a template.
      */
-    this.subscriptions.push(this.DetailedTargetingDropdownBrowseService.openItems.subscribe((openItems) => {
+    this.subscriptions.push(this.detailedTargetingDropdownBrowseService.openItems.subscribe((openItems) => {
       this.openItems = openItems;
       this.updateTemplate();
       setTimeout(() => {
@@ -255,13 +255,13 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
     /**
      * Load suggestions on first init
      */
-    this.DetailedTargetingApiService.browse();
+    this.detailedTargetingApiService.browse();
 
     /**
      * Load suggestions when language changes
      */
-    this.subscriptions.push(this.TranslateService.onLangChange.subscribe(() => {
-      this.DetailedTargetingApiService.browse();
+    this.subscriptions.push(this.translateService.onLangChange.subscribe(() => {
+      this.detailedTargetingApiService.browse();
     }));
   }
 

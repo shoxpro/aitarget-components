@@ -6,16 +6,16 @@ import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
 @Injectable()
 export class FbService {
 
-  private _api = new BehaviorSubject<FB>(null);
+  _api = new BehaviorSubject<FB>(null);
 
-  public api                   = this._api.asObservable();
-  private _defaultLang: string = 'en_US';
-  private lang: string         = this._defaultLang;
+  api                  = this._api.asObservable();
+  _defaultLang: string = 'en_US';
+  lang: string         = this._defaultLang;
 
   /**
    * Load the SDK asynchronously
    */
-  private loadSdk (lang: string = this._defaultLang) {
+  loadSdk (lang: string = this._defaultLang) {
     let js,
         id  = `facebook-jssdk-${lang}`,
         s   = 'script',
@@ -30,7 +30,7 @@ export class FbService {
     fjs.parentNode.insertBefore(js, fjs);
   }
 
-  private setAsyncInit (observer) {
+  setAsyncInit (observer) {
     // Exit if fbAsyncInit was already set
     if ((<any>window).fbAsyncInit) {
       let FB = (<any>window).FB;
@@ -76,13 +76,13 @@ export class FbService {
     };
   }
 
-  private startSdk = (lang: string = this._defaultLang) => {
+  startSdk = (lang: string = this._defaultLang) => {
     this.setAsyncInit(this._api);
     this.loadSdk(lang);
   };
 
-  constructor (private TranslateService: TranslateService) {
-    this.TranslateService.onLangChange.subscribe((event: LangChangeEvent) => {
+  constructor (private translateService: TranslateService) {
+    this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
       this.lang = event.lang;
     });
     this.startSdk(this.lang);

@@ -15,55 +15,55 @@ import { ComponentsHelperService } from '../../shared/services/components-helper
   encapsulation:   ViewEncapsulation.None
 })
 export class GeoTargetingMapComponent implements OnInit, OnDestroy {
-  private _subscriptions = [];
-  private mapActive;
-  private mapModeText    = this.TranslateService.instant(`geo-targeting-map.SHOW_MAP`);
-  private pinMode;
+  _subscriptions = [];
+  mapActive;
+  mapModeText    = this.translateService.instant(`geo-targeting-map.SHOW_MAP`);
+  pinMode;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
-    this.ChangeDetectorRef.markForCheck();
-    this.ChangeDetectorRef.detectChanges();
+  updateTemplate () {
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
   }
 
   /**
    * Set map mode text depending on whether map is active or not
    * @param mapActive
    */
-  private setMapModeText (mapActive = this.mapActive) {
+  setMapModeText (mapActive = this.mapActive) {
     if (mapActive) {
-      this.mapModeText = this.TranslateService.instant(`geo-targeting-map.HIDE_MAP`);
+      this.mapModeText = this.translateService.instant(`geo-targeting-map.HIDE_MAP`);
     } else {
-      this.mapModeText = this.TranslateService.instant(`geo-targeting-map.SHOW_MAP`);
+      this.mapModeText = this.translateService.instant(`geo-targeting-map.SHOW_MAP`);
     }
 
     this.updateTemplate();
   }
 
-  constructor (private GeoTargetingSelectedService: GeoTargetingSelectedService,
-               private ChangeDetectorRef: ChangeDetectorRef,
-               private TranslateService: TranslateService,
-               private ViewContainerRef: ViewContainerRef,
-               private ComponentsHelperService: ComponentsHelperService,
-               private GeoTargetingMapService: GeoTargetingMapService) {
-    this.ComponentsHelperService.setRootViewContainerRef(ViewContainerRef);
+  constructor (private geoTargetingSelectedService: GeoTargetingSelectedService,
+               private changeDetectorRef: ChangeDetectorRef,
+               private translateService: TranslateService,
+               private viewContainerRef: ViewContainerRef,
+               private componentsHelperService: ComponentsHelperService,
+               private geoTargetingMapService: GeoTargetingMapService) {
+    this.componentsHelperService.setRootViewContainerRef(viewContainerRef);
   }
 
   /**
    * Show or hide map
    * @param event
    */
-  public toggleMap (event?) {
+  toggleMap (event?) {
     if (event) {
       event.stopPropagation();
     }
 
     if (this.mapActive) {
-      this.GeoTargetingMapService.hideMap();
+      this.geoTargetingMapService.hideMap();
     } else {
-      this.GeoTargetingMapService.showMap();
+      this.geoTargetingMapService.showMap();
     }
   }
 
@@ -74,36 +74,36 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
-    this.GeoTargetingMapService.initializeMap();
+    this.geoTargetingMapService.initializeMap();
 
     // Update map when selected items change
     this._subscriptions.push(
-      this.GeoTargetingSelectedService.items
+      this.geoTargetingSelectedService.items
           .subscribe((items: GeoTargetingItem[]) => {
             // Clear all existing items layers
-            for (let key in this.GeoTargetingMapService.itemsMap) {
-              if (this.GeoTargetingMapService.itemsMap.hasOwnProperty(key)) {
-                this.GeoTargetingMapService.itemsMap[key].featureGroup.clearLayers();
+            for (let key in this.geoTargetingMapService.itemsMap) {
+              if (this.geoTargetingMapService.itemsMap.hasOwnProperty(key)) {
+                this.geoTargetingMapService.itemsMap[key].featureGroup.clearLayers();
               }
             }
 
             // Draw selected items on the map
             items.forEach((item: GeoTargetingItem) => {
-              this.GeoTargetingMapService.drawItem(item);
+              this.geoTargetingMapService.drawItem(item);
             });
 
             // If has items focus on the fist one, if not - show world
             if (items.length) {
-              this.GeoTargetingMapService.focusItem(items[0]);
+              this.geoTargetingMapService.focusItem(items[0]);
             } else {
-              this.GeoTargetingMapService.setView();
+              this.geoTargetingMapService.setView();
             }
           })
     );
 
     // Subscribe to map's visibility flag
     this._subscriptions.push(
-      this.GeoTargetingMapService.mapActive.subscribe((mapActive) => {
+      this.geoTargetingMapService.mapActive.subscribe((mapActive) => {
         this.mapActive = mapActive;
         this.setMapModeText(mapActive);
         this.updateTemplate();
@@ -112,12 +112,12 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
 
     // Subscribe to map's pin mode flag
     this._subscriptions.push(
-      this.GeoTargetingMapService.pinMode.subscribe((pinMode) => {
+      this.geoTargetingMapService.pinMode.subscribe((pinMode) => {
         this.pinMode = pinMode;
         if (pinMode) {
-          this.GeoTargetingMapService.enterPinMode();
+          this.geoTargetingMapService.enterPinMode();
         } else {
-          this.GeoTargetingMapService.exitPinMode();
+          this.geoTargetingMapService.exitPinMode();
         }
         this.updateTemplate();
       })
@@ -127,9 +127,9 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
      * Update map when language change
      */
     this._subscriptions.push(
-      this.TranslateService.onLangChange.subscribe((event) => {
+      this.translateService.onLangChange.subscribe((event) => {
         this.setMapModeText(this.mapActive);
-        this.GeoTargetingMapService.setTileUrl(this.GeoTargetingMapService.getTileUrl(event.lang), false);
+        this.geoTargetingMapService.setTileUrl(this.geoTargetingMapService.getTileUrl(event.lang), false);
         this.updateTemplate();
       })
     );
