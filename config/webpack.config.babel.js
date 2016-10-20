@@ -37,7 +37,7 @@ module.exports = function (env) {
               loader: 'awesome-typescript-loader',
               query:  {
                 useForkChecker: true,
-                tsconfig:       path.resolve(__dirname, parentRoot, './src/tsconfig.json')
+                tsconfig:       path.resolve(__dirname, parentRoot, './tsconfig.json')
               }
             },
             {
