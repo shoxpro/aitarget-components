@@ -39,23 +39,23 @@ export class GeoTargetingLocationTypeComponent implements OnInit, OnDestroy {
   setTypes = () => {
     this.types = [
       {
-        title: this.translateService.instant(`geo-targeting-type.ALL`),
-        info:  this.translateService.instant(`geo-targeting-type.ALL_INFO`),
+        title: this.translateService.instant(`geo-targeting-location-type.ALL`),
+        info:  this.translateService.instant(`geo-targeting-location-type.ALL_INFO`),
         value: ['home', 'recent']
       },
       {
-        title: this.translateService.instant(`geo-targeting-type.HOME`),
-        info:  this.translateService.instant(`geo-targeting-type.HOME_INFO`),
+        title: this.translateService.instant(`geo-targeting-location-type.HOME`),
+        info:  this.translateService.instant(`geo-targeting-location-type.HOME_INFO`),
         value: ['home']
       },
       {
-        title: this.translateService.instant(`geo-targeting-type.RECENT`),
-        info:  this.translateService.instant(`geo-targeting-type.RECENT_INFO`),
+        title: this.translateService.instant(`geo-targeting-location-type.RECENT`),
+        info:  this.translateService.instant(`geo-targeting-location-type.RECENT_INFO`),
         value: ['recent']
       },
       {
-        title: this.translateService.instant(`geo-targeting-type.TRAVEL_IN`),
-        info:  this.translateService.instant(`geo-targeting-type.TRAVEL_IN_INFO`),
+        title: this.translateService.instant(`geo-targeting-location-type.TRAVEL_IN`),
+        info:  this.translateService.instant(`geo-targeting-location-type.TRAVEL_IN_INFO`),
         value: ['travel_in']
       },
     ];
@@ -113,6 +113,8 @@ export class GeoTargetingLocationTypeComponent implements OnInit, OnDestroy {
   ngOnInit () {
     // Set types on init
     this.setTypes();
+
+    console.log('this.types: ', this.types);
 
     this._subscriptions.push(
       this.geoTargetingTypeService.type.subscribe((selectedTypeValue: LocationType[]) => {

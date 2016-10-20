@@ -48,7 +48,8 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
                private translateService: TranslateService,
                private viewContainerRef: ViewContainerRef,
                private componentsHelperService: ComponentsHelperService,
-               private geoTargetingMapService: GeoTargetingMapService) {
+               private geoTargetingMapService: GeoTargetingMapService,
+               private geoTargetingService: GeoTargetingService) {
     this.componentsHelperService.setRootViewContainerRef(viewContainerRef);
   }
 
@@ -127,11 +128,11 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
      * Process Escape and outside click and hide map if it is open
      */
     this._subscriptions.push(
-      this.GeoTargetingService.clickOutsideOfGeoStream
-          .merge(this.GeoTargetingService.escapeStream)
+      this.geoTargetingService.clickOutsideOfGeoStream
+          .merge(this.geoTargetingService.escapeStream)
           .filter(() => this.mapActive)
           .subscribe(() => {
-            this.GeoTargetingMapService.hideMap();
+            this.geoTargetingMapService.hideMap();
           })
     );
 

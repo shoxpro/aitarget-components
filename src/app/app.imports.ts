@@ -17,7 +17,6 @@ export const APP_IMPORTS = [
   RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules}),
   RouterStoreModule.connectRouter(),
   StoreDevToolsModule,
-  StoreModule.provideStore(rootReducer),
   LibModule
 ];
 

@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { LibState } from '../../lib-state.interface';
 import { Store } from '@ngrx/store';
 import { TOGGLE_SEARCH_TYPE_DROPDOWN, SELECT_SEARCH_TYPE, TRANSLATE_SEARCH_TYPES } from './geo-targeting-type.actions';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { typeModel } from './geo-targeting-type.model';
+import { AppState } from '../../../app/reducers/index';
 
 @Component({
   selector:        'geo-targeting-type',
@@ -13,23 +13,23 @@ import { typeModel } from './geo-targeting-type.model';
 })
 export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
 
-  private _subscriptions = [];
-  private model;
+  _subscriptions = [];
+  model;
 
-  public toggleDropdown (isOpen, event?) {
+  toggleDropdown (isOpen, event?) {
     if (event) {
       event.stopPropagation();
     }
     this._store.dispatch({type: TOGGLE_SEARCH_TYPE_DROPDOWN, payload: {isOpen: isOpen}});
   }
 
-  public selectType (type) {
+  selectType (type) {
     this._store.dispatch({type: SELECT_SEARCH_TYPE, payload: {selectedType: type}});
     this.toggleDropdown(false);
   }
 
-  constructor (private _store: Store<LibState>,
-               private TranslateService: TranslateService) {
+  constructor (private _store: Store<AppState>,
+               private translateService: TranslateService) {
     this.model = _store.let(typeModel);
   }
 
@@ -43,14 +43,14 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
     /**
      * Translate types on init
      */
-    this._store.dispatch({type: TRANSLATE_SEARCH_TYPES, payload: {translateService: this.TranslateService}});
+    this._store.dispatch({type: TRANSLATE_SEARCH_TYPES, payload: {translateService: this.translateService}});
 
     /**
      * Translate types when language change
      */
     this._subscriptions.push(
-      this.TranslateService.onLangChange.subscribe(() => {
-        this._store.dispatch({type: TRANSLATE_SEARCH_TYPES, payload: {translateService: this.TranslateService}});
+      this.translateService.onLangChange.subscribe(() => {
+        this._store.dispatch({type: TRANSLATE_SEARCH_TYPES, payload: {translateService: this.translateService}});
       })
     );
   }

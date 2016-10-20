@@ -4,7 +4,7 @@
 
   <span class="geo-targeting-location-type__selected">{{ selectedType.title }}</span>
 
-  <fb-arrow-drop [direction]="{true: 'up', false: 'down'}[isOpen]"></fb-arrow-drop>
+  <fb-arrow-drop [direction]="isOpen ? 'up' : 'down'"></fb-arrow-drop>
 </div>
 <div class="geo-targeting-location-type__dropdown"
      (clickOutside)="toggleDropdown()"

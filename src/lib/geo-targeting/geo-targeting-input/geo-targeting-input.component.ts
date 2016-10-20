@@ -9,9 +9,9 @@ import { CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingService } from '../geo-targeting.service';
-import { LibState } from '../../lib-state.interface';
 import { Store } from '@ngrx/store';
 import { typeModel } from '../geo-targeting-type/geo-targeting-type.model';
+import { AppState } from '../../../app/reducers/index';
 
 @Component({
   selector:        'geo-targeting-input',
@@ -42,17 +42,17 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
    * Search locations for passed term
    * @param term
    */
-  private searchTerm (term = this.term) {
+  searchTerm (term = this.term) {
     if (term) {
-      this.GeoTargetingApiService.search(term)
+      this.geoTargetingApiService.search(term)
           .subscribe((items) => {
             this.foundItems = items;
-            this.GeoTargetingDropdownService.update(this.foundItems);
+            this.geoTargetingDropdownService.update(this.foundItems);
           });
     } else {
       this.foundItems = null;
-      this.GeoTargetingDropdownService.update(this.foundItems);
-      this.GeoTargetingDropdownService.close();
+      this.geoTargetingDropdownService.update(this.foundItems);
+      this.geoTargetingDropdownService.close();
     }
   }
 
@@ -79,7 +79,7 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
     this.geoTargetingInputService.blur();
   }
 
-  constructor (private _store: Store<LibState>,
+  constructor (private _store: Store<AppState>,
                private geoTargetingApiService: GeoTargetingApiService,
                private geoTargetingInputService: GeoTargetingInputService,
                private translateService: TranslateService,

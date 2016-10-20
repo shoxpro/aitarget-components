@@ -13,7 +13,7 @@ const types = [
   {id: 'place', name: 'place'}
 ];
 
-export const GeoTargetingTypeInitial: GeoTargetingTypeState = {
+export const geoTargetingTypeInitial: GeoTargetingTypeState = {
   selectedType: all,
   available:    [
     all,
