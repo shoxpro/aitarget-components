@@ -12,13 +12,15 @@ import { GeoTargetingPinComponent } from './geo-targeting-pin/geo-targeting-pin.
 import { GeoTargetingModeComponent } from './geo-targeting-mode/geo-targeting-mode.component';
 import { GeoTargetingRadiusComponent } from './geo-targeting-radius/geo-targeting-radius.component';
 import { MdSliderModule } from '@angular/material/slider';
-import { GeoTargetingTypeComponent } from './geo-targeting-type/geo-targeting-type.component';
+import { GeoTargetingLocationTypeComponent } from './geo-targeting-location-type/geo-targeting-location-type.component';
 import { GeoTargetingMapControlsComponent } from './geo-targeting-map-controls/geo-targeting-map-controls.component';
 import { GeoTargetingMapPopupComponent } from './geo-targeting-map-popup/geo-targeting-map-popup.component';
 import { GeoTargetingModeDropdownComponent } from './geo-targeting-mode-dropdown/geo-targeting-mode-dropdown.component';
 import { FullTypePipe } from './full-type.pipe';
 import { FbTickComponent } from '../shared/components/tick.component';
 import { FbArrowDropComponent } from '../shared/components/arrow-drop.component';
+import { GeoTargetingTypeComponent } from './geo-targeting-type/geo-targeting-type.component';
+import { FbDropdownListComponent } from '../shared/components/fb-dropdown-list/fb-dropdown-list.component';
 /* tslint:enable:max-line-length */
 
 @NgModule({
@@ -36,14 +38,16 @@ import { FbArrowDropComponent } from '../shared/components/arrow-drop.component'
     GeoTargetingPinComponent,
     GeoTargetingModeComponent,
     GeoTargetingRadiusComponent,
-    GeoTargetingTypeComponent,
+    GeoTargetingLocationTypeComponent,
     GeoTargetingMapControlsComponent,
     FullNamePipe,
     FullTypePipe,
     FbTickComponent,
     FbArrowDropComponent,
     GeoTargetingMapPopupComponent,
-    GeoTargetingModeDropdownComponent
+    GeoTargetingModeDropdownComponent,
+    GeoTargetingTypeComponent,
+    FbDropdownListComponent
   ],
   exports:      [
     GeoTargetingComponent

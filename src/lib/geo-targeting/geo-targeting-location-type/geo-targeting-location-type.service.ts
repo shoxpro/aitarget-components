@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs/Rx';
 import { LocationType } from '../../targeting/targeting-spec-geo.interface';
 
 @Injectable()
-export class GeoTargetingTypeService {
+export class GeoTargetingLocationTypeService {
 
   _type = new BehaviorSubject<LocationType[]>(['home', 'recent']);
   type  = this._type.asObservable();

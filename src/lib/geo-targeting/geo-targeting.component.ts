@@ -9,7 +9,7 @@ import { TargetingSpecService } from '../targeting/targeting-spec.service';
 import { GeoTargetingItem } from './geo-targeting-item.interface';
 import { GeoTargetingModeService } from './geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingInfoService } from './geo-targeting-info/geo-targeting-info.service';
-import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type.service';
+import { GeoTargetingLocationTypeService } from './geo-targeting-location-type/geo-targeting-location-type.service';
 import { GeoTargetingRadiusService } from './geo-targeting-radius/geo-targeting-radius.service';
 import { GeoTargetingMapService } from './geo-targeting-map/geo-targeting-map.service';
 import { ComponentsHelperService } from '../shared/services/components-helper.service';
@@ -21,8 +21,8 @@ import { GeoTargetingService } from './geo-targeting.service';
   styleUrls:   ['./geo-targeting.component.css'],
   providers:   [GeoTargetingService, GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
     GeoTargetingSelectedService, TargetingSpecService, GeoTargetingModeService,
-    GeoTargetingInfoService, GeoTargetingTypeService, GeoTargetingRadiusService,
-    GeoTargetingMapService, ComponentsHelperService]
+    GeoTargetingInfoService, GeoTargetingLocationTypeService, GeoTargetingRadiusService,
+    GeoTargetingMapService, ComponentsHelperService, GeoTargetingLocationTypeService]
 })
 export class GeoTargetingComponent implements OnInit, OnDestroy {
 
@@ -49,7 +49,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
                private geoTargetingApiService: GeoTargetingApiService,
                private targetingSpecService: TargetingSpecService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
-               private geoTargetingTypeService: GeoTargetingTypeService) {
+               private geoTargetingTypeService: GeoTargetingLocationTypeService) {
     // this language will be used as a fallback when a translation isn't found in the current language
     this.translateService.setDefaultLang(this.lang);
   }

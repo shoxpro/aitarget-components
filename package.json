@@ -12,7 +12,7 @@
     "npm": "3.10.9"
   },
   "scripts": {
-    "postinstall": "npm run clean:overlaycss && npm run sass && npm run build:dll && npm run compile",
+    "postinstall": "npm run clean:overlaycss && npm run sass && npm run build:dll && npm run build:prod",
     "rimraf": "rimraf",
     "webdev": "webpack-dev-server",
     "webdev:hmr": "npm run webdev -- --inline --hot",

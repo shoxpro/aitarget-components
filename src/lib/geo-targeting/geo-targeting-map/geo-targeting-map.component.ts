@@ -6,6 +6,7 @@ import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { ComponentsHelperService } from '../../shared/services/components-helper.service';
+import { GeoTargetingService } from '../geo-targeting.service';
 
 @Component({
   selector:        'geo-targeting-map',
@@ -47,7 +48,8 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
                private translateService: TranslateService,
                private viewContainerRef: ViewContainerRef,
                private componentsHelperService: ComponentsHelperService,
-               private geoTargetingMapService: GeoTargetingMapService) {
+               private geoTargetingMapService: GeoTargetingMapService,
+               private geoTargetingService: GeoTargetingService) {
     this.componentsHelperService.setRootViewContainerRef(viewContainerRef);
   }
 
@@ -105,7 +107,6 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
     this._subscriptions.push(
       this.geoTargetingMapService.mapActive.subscribe((mapActive) => {
         this.mapActive = mapActive;
-        this.setMapModeText(mapActive);
         this.updateTemplate();
       })
     );
@@ -121,6 +122,18 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
         }
         this.updateTemplate();
       })
+    );
+
+    /**
+     * Process Escape and outside click and hide map if it is open
+     */
+    this._subscriptions.push(
+      this.geoTargetingService.clickOutsideOfGeoStream
+          .merge(this.geoTargetingService.escapeStream)
+          .filter(() => this.mapActive)
+          .subscribe(() => {
+            this.geoTargetingMapService.hideMap();
+          })
     );
 
     /**

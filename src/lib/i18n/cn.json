@@ -46,12 +46,14 @@
     "INVALID_LOCATION": "不可定位此地区。"
   },
   "geo-targeting-dropdown": {
+    "all": "全选",
     "country": "国家",
     "country_group": "Country Group",
     "region": "地区",
     "city": "城市",
     "zip": "邮编",
     "electoral_district": "选区",
+    "political_district": "政治区",
     "geo_market": "市场",
     "custom_location": "GPS坐标",
     "place": "地方"
@@ -72,8 +74,7 @@
     "DELETE": "删除"
   },
   "geo-targeting-map": {
-    "HIDE_MAP": "隐藏地图",
-    "SHOW_MAP": "显示地图"
+    "MAP": "地图"
   },
   "geo-targeting-map-controls": {
     "DROP_PIN": "放置大头针"
@@ -85,7 +86,7 @@
     "USE_RADIUS": "范围内城市",
     "USE_RADIUS_INFO": "如果城市中心在半径范围以内，周边城市也将包括在内。"
   },
-  "geo-targeting-type": {
+  "geo-targeting-location-type": {
     "ALL": "该地区内的所有用户",
     "ALL_INFO": "住址或最近出现在选定区域内的用户。",
     "HOME": "居住在该地区的用户",

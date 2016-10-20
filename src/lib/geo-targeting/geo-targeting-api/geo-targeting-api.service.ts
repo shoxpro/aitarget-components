@@ -6,6 +6,9 @@ import { Subject } from 'rxjs';
 import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSpec } from '../../targeting/targeting-spec-geo.interface';
+import { Store } from '@ngrx/store';
+import { typeModel } from '../geo-targeting-type/geo-targeting-type.model';
+import { AppState } from '../../../app/reducers/index';
 
 @Injectable()
 export class GeoTargetingApiService {
@@ -54,7 +57,8 @@ export class GeoTargetingApiService {
   }
 
   constructor (private fbService: FbService,
-               private translateService: TranslateService) {
+               private translateService: TranslateService,
+               private _store: Store<AppState>) {
     this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
       this.lang = event.lang;
     });
@@ -63,11 +67,18 @@ export class GeoTargetingApiService {
   search (q: string) {
     let _response = new Subject();
 
+    // Define locations types to search for
+    let locationTypes;
+    this._store.let(typeModel)
+        .subscribe(({selected}) => {
+          // Array of selected types' ids
+          locationTypes = selected.map(type => type.id);
+        });
+
     this.api.subscribe((FB: FB) => {
       FB.api(`/search`, {
         q:              q,
-        location_types: ['country', 'region', 'geo_market', 'city', 'electoral_district',
-          'political_district', 'zip', 'custom_location', 'place'],
+        location_types: locationTypes,
         type:           'adgeolocation',
         limit:          10,
         place_fallback: true,
