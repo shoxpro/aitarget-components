@@ -46,12 +46,14 @@
     "INVALID_LOCATION": "Это местонахождение недоступно для таргетинга."
   },
   "geo-targeting-dropdown": {
+    "all": "Все",
     "country": "Страна",
     "country_group": "Группа стран",
     "region": "Штат/Регион/Область",
     "city": "Город",
     "zip": "Индекс",
     "electoral_district": "Избирательный округ",
+    "political_district": "Политический округ",
     "geo_market": "Рынок",
     "custom_location": "GPS координаты",
     "place": "Место"
@@ -72,8 +74,7 @@
     "DELETE": "Удалить"
   },
   "geo-targeting-map": {
-    "HIDE_MAP": "Скрыть карту",
-    "SHOW_MAP": "Показать карту"
+    "MAP": "Карта"
   },
   "geo-targeting-map-controls": {
     "DROP_PIN": "Отметить булавкой"
@@ -85,7 +86,7 @@
     "USE_RADIUS": "Города в пределах радиуса",
     "USE_RADIUS_INFO": "Близлежащие города включаются в том случае, если центр город попадает в пределы радиуса."
   },
-  "geo-targeting-type": {
+  "geo-targeting-location-type": {
     "ALL": "Все в этой местности",
     "ALL_INFO": "Люди, последнее местонахождение или дом которых находятся в рамках выбранной территории.",
     "HOME": "Живущие в этом месте",

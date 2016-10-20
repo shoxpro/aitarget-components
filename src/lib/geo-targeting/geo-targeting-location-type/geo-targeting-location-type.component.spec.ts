@@ -1,25 +1,25 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed } from '@angular/core/testing';
-import { GeoTargetingInfoComponent } from './geo-targeting-info.component';
+import { GeoTargetingLocationTypeComponent } from './geo-targeting-location-type.component';
 import { LibModule } from '../../lib.module';
+import { GeoTargetingTypeService } from './geo-targeting-location-type.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
-import { GeoTargetingInfoService } from './geo-targeting-info.service';
-import { GeoTargetingTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
+import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
 
-describe('Component: GeoTargetingInfo', () => {
+describe('Component: GeoTargetingType', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:   [LibModule],
-      providers: [GeoTargetingSelectedService, GeoTargetingInfoService,
-        GeoTargetingTypeService, GeoTargetingApiService, GeoTargetingMapService]
+      providers: [GeoTargetingApiService, GeoTargetingTypeService, GeoTargetingTypeService,
+        GeoTargetingSelectedService, GeoTargetingInfoService, GeoTargetingMapService]
     });
   });
 
   it('should create an instance', () => {
-    let fixture = TestBed.createComponent(GeoTargetingInfoComponent);
+    let fixture = TestBed.createComponent(GeoTargetingLocationTypeComponent);
     let app     = fixture.debugElement.componentInstance;
     expect(app)
       .toBeTruthy();

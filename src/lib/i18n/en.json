@@ -46,12 +46,14 @@
     "INVALID_LOCATION": "This location is not available for targeting."
   },
   "geo-targeting-dropdown": {
+    "all": "All",
     "country": "Country",
     "country_group": "Country Group",
     "region": "State",
     "city": "City",
     "zip": "Zip",
     "electoral_district": "Electoral District",
+    "political_district": "Political District",
     "geo_market": "Geo Market",
     "custom_location": "GPS Coordinates",
     "place": "Place"
@@ -72,8 +74,7 @@
     "DELETE": "Delete"
   },
   "geo-targeting-map": {
-    "HIDE_MAP": "Hide Map",
-    "SHOW_MAP": "Show Map"
+    "MAP": "Map"
   },
   "geo-targeting-map-controls": {
     "DROP_PIN": "Drop Pin"
@@ -85,7 +86,7 @@
     "USE_RADIUS": "Cities within radius",
     "USE_RADIUS_INFO": "Surrounding cities are included if the center of the city falls within the radius."
   },
-  "geo-targeting-type": {
+  "geo-targeting-location-type": {
     "ALL": "Everyone in this location",
     "ALL_INFO": "People whose home or most recent location is within the selected area.",
     "HOME": "People who live in this location",
