@@ -12,26 +12,26 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 export class GeoTargetingMapPopupComponent implements OnInit, OnDestroy {
   @Input('item') item: GeoTargetingItem;
 
-  private _subscriptions = [];
-  private isOpen         = false;
+  _subscriptions = [];
+  isOpen         = false;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
-    this.ChangeDetectorRef.markForCheck();
-    this.ChangeDetectorRef.detectChanges();
+  updateTemplate () {
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
   }
 
-  public setExcluded (item: GeoTargetingItem, excluded: boolean) {
+  setExcluded (item: GeoTargetingItem, excluded: boolean) {
     item.excluded = excluded;
-    this.GeoTargetingSelectedService.updateSelectedItem(item);
+    this.geoTargetingSelectedService.updateSelectedItem(item);
   }
 
   /**
    * Toggle Dropdown
    */
-  public toggleDropdown (event?) {
+  toggleDropdown (event?) {
     if (event) {
       event.stopPropagation();
     }
@@ -39,13 +39,13 @@ export class GeoTargetingMapPopupComponent implements OnInit, OnDestroy {
     this.updateTemplate();
   }
 
-  public remove () {
-    this.GeoTargetingSelectedService.remove(this.item);
+  remove () {
+    this.geoTargetingSelectedService.remove(this.item);
   }
 
-  constructor (private ChangeDetectorRef: ChangeDetectorRef,
-               private TranslateService: TranslateService,
-               private GeoTargetingSelectedService: GeoTargetingSelectedService) { }
+  constructor (private changeDetectorRef: ChangeDetectorRef,
+               private translateService: TranslateService,
+               private geoTargetingSelectedService: GeoTargetingSelectedService) { }
 
   ngOnDestroy () {
     this._subscriptions.forEach((subscription) => {
@@ -55,7 +55,7 @@ export class GeoTargetingMapPopupComponent implements OnInit, OnDestroy {
 
   ngOnInit () {
     this._subscriptions.push(
-      this.TranslateService.onLangChange.subscribe(() => {
+      this.translateService.onLangChange.subscribe(() => {
         this.updateTemplate();
       })
     );

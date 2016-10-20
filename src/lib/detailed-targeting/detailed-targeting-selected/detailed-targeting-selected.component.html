@@ -13,7 +13,9 @@
                   let-last="last"
                   let-index="index">
           <span class="detailed-targeting-selected__crumb"
-                (click)="showCrumb(key, index)">{{ crumb }} </span> <span *ngIf="!last"> &gt; </span>
+                (click)="showCrumb(key, index)">{{ crumb }}
+          </span>
+          <span *ngIf="!last"> &gt; </span>
         </template>
       </div>
       <span class="detailed-targeting-selected__remove detailed-targeting-selected__remove-group"
@@ -22,7 +24,7 @@
     <div class="detailed-targeting-selected__items">
       <div class="detailed-targeting-selected__item"
            *ngFor="let item of structuredSelectedItems.map[key]">
-        <span>{{ item.name }} </span>
+        <span>{{ item.name }}</span>
         <span class="detailed-targeting-selected__remove detailed-targeting-selected__remove-item"
               (click)="removeItem(item)">&times;</span>
       </div>

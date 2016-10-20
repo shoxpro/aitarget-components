@@ -4,14 +4,14 @@ import { BehaviorSubject } from 'rxjs/Rx';
 @Injectable()
 export class GeoTargetingModeService {
 
-  private _mode = new BehaviorSubject<'include'|'exclude'>('include');
-  public mode   = this._mode.asObservable();
+  _mode = new BehaviorSubject<'include'|'exclude'>('include');
+  mode  = this._mode.asObservable();
 
-  public update (mode) {
+  update (mode) {
     this._mode.next(mode);
   }
 
-  public get () {
+  get () {
     return this._mode.getValue();
   }
 

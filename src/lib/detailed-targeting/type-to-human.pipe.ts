@@ -6,11 +6,11 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 })
 export class TypeToHumanPipe implements PipeTransform {
 
-  constructor (private TranslateService: TranslateService) {}
+  constructor (private translateService: TranslateService) {}
 
   transform (value: any, args?: any): any {
     if (value && typeof value === 'string') {
-      return this.TranslateService.instant(`detailed-targeting-dropdown-suggested.${value.toUpperCase()}`) || value;
+      return this.translateService.instant(`detailed-targeting-dropdown-suggested.${value.toUpperCase()}`) || value;
     } else {
       return value;
     }

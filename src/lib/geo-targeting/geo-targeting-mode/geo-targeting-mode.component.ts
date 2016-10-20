@@ -10,32 +10,32 @@ import { GeoTargetingModeService } from './geo-targeting-mode.service';
 })
 export class GeoTargetingModeComponent implements OnInit, OnDestroy {
 
-  private _subscriptions = [];
-  public mode;
-  public modeTitle;
-  public exclude;
-  private isOpen         = false;
+  _subscriptions = [];
+  mode;
+  modeTitle;
+  exclude;
+  isOpen         = false;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
-    this.ChangeDetectorRef.markForCheck();
-    this.ChangeDetectorRef.detectChanges();
+  updateTemplate () {
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
   }
 
-  constructor (private TranslateService: TranslateService,
-               private GeoTargetingModeService: GeoTargetingModeService,
-               private ChangeDetectorRef: ChangeDetectorRef) { }
+  constructor (private translateService: TranslateService,
+               private geoTargetingModeService: GeoTargetingModeService,
+               private changeDetectorRef: ChangeDetectorRef) { }
 
-  public setMode (mode) {
-    this.GeoTargetingModeService.update(mode);
+  setMode (mode) {
+    this.geoTargetingModeService.update(mode);
   }
 
   /**
    * Toggle Dropdown
    */
-  public toggleDropdown (event?) {
+  toggleDropdown (event?) {
     if (event) {
       event.stopPropagation();
     }
@@ -51,10 +51,10 @@ export class GeoTargetingModeComponent implements OnInit, OnDestroy {
 
   ngOnInit () {
     this._subscriptions.push(
-      this.GeoTargetingModeService.mode.subscribe((mode: string) => {
+      this.geoTargetingModeService.mode.subscribe((mode: string) => {
         this.mode      = mode;
         this.exclude   = mode === 'exclude';
-        this.modeTitle = this.TranslateService.instant(`geo-targeting-mode.${mode}`);
+        this.modeTitle = this.translateService.instant(`geo-targeting-mode.${mode}`);
         this.updateTemplate();
       })
     );
@@ -63,8 +63,8 @@ export class GeoTargetingModeComponent implements OnInit, OnDestroy {
      * Update component's translations on language change
      */
     this._subscriptions.push(
-      this.TranslateService.onLangChange.subscribe(() => {
-        this.GeoTargetingModeService.update(this.mode);
+      this.translateService.onLangChange.subscribe(() => {
+        this.geoTargetingModeService.update(this.mode);
       })
     );
   }

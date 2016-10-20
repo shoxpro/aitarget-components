@@ -4,21 +4,21 @@ import { Subject } from 'rxjs/Rx';
 @Injectable()
 export class GeoTargetingInputService {
 
-  private _term = new Subject();
-  public term   = this._term.asObservable();
+  _term = new Subject();
+  term  = this._term.asObservable();
 
-  private _hasFocus = new Subject();
-  public hasFocus   = this._hasFocus.asObservable();
+  _hasFocus = new Subject();
+  hasFocus  = this._hasFocus.asObservable();
 
-  public setTerm (term: string) {
+  setTerm (term: string) {
     this._term.next(term);
   }
 
-  public focus () {
+  focus () {
     this._hasFocus.next(true);
   }
 
-  public blur () {
+  blur () {
     this._hasFocus.next(false);
   }
 

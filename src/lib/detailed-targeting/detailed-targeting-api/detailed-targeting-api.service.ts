@@ -12,20 +12,20 @@ import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
 @Injectable()
 export class DetailedTargetingApiService {
 
-  private _defaultLang: string = 'en_US';
-  private lang: string         = this._defaultLang;
+  _defaultLang: string = 'en_US';
+  lang: string         = this._defaultLang;
 
-  private suggestedTargetingList = [];
+  suggestedTargetingList = [];
 
-  private api = this.FbService.api
-                    .filter((FB: FB) => Boolean(FB));
-  private adaccountId;
+  api = this.fbService.api
+            .filter((FB: FB) => Boolean(FB));
+  adaccountId;
 
-  constructor (private FbService: FbService,
-               private DetailedTargetingDropdownSuggestedService: DetailedTargetingDropdownSuggestedService,
-               private DetailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
-               private TranslateService: TranslateService) {
-    this.TranslateService.onLangChange.subscribe((event: LangChangeEvent) => {
+  constructor (private fbService: FbService,
+               private detailedTargetingDropdownSuggestedService: DetailedTargetingDropdownSuggestedService,
+               private detailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
+               private translateService: TranslateService) {
+    this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
       this.lang = event.lang;
     });
   }
@@ -34,19 +34,19 @@ export class DetailedTargetingApiService {
    * Set adaccount id to be used for api calls
    * @param adaccountId
    */
-  public setAdaccount (adaccountId) {
+  setAdaccount (adaccountId) {
     this.adaccountId = adaccountId;
   };
 
-  public search (q: string, adaccountId = this.adaccountId) {
+  search (q: string, adaccountId = this.adaccountId) {
     this.api.subscribe((FB: FB) => {
       FB.api(`/${adaccountId}/targetingsearch`, {q: q, locale: this.lang}, (response) => {
-        this.DetailedTargetingDropdownSuggestedService.updateDropdown(response.data);
+        this.detailedTargetingDropdownSuggestedService.updateDropdown(response.data);
       });
     });
   };
 
-  public browse (adaccountId = this.adaccountId) {
+  browse (adaccountId = this.adaccountId) {
     this.api.subscribe((FB: FB) => {
       FB.api(`/${adaccountId}/targetingbrowse`, {
         include_headers: false,
@@ -58,24 +58,24 @@ export class DetailedTargetingApiService {
           'img', 'link'],
         locale:          this.lang
       }, (response) => {
-        this.DetailedTargetingDropdownBrowseService.updateDropdown(response.data);
+        this.detailedTargetingDropdownBrowseService.updateDropdown(response.data);
       });
     });
   };
 
-  public suggest (targetingList: Array<Object> = this.suggestedTargetingList, adaccountId = this.adaccountId) {
+  suggest (targetingList: Array<Object> = this.suggestedTargetingList, adaccountId = this.adaccountId) {
     this.suggestedTargetingList = targetingList;
     this.api.subscribe((FB: FB) => {
       FB.api(`/${adaccountId}/targetingsuggestions`, {
         targeting_list: targetingList,
         locale:         this.lang
       }, (response) => {
-        this.DetailedTargetingDropdownSuggestedService.updateDropdown(response.data);
+        this.detailedTargetingDropdownSuggestedService.updateDropdown(response.data);
       });
     });
   };
 
-  public validate (targetingList: Array<Object> = [], adaccountId = this.adaccountId) {
+  validate (targetingList: Array<Object> = [], adaccountId = this.adaccountId) {
     let _response = new Subject<DetailedTargetingItem[]>();
 
     this.api.subscribe((FB: FB) => {
@@ -90,13 +90,13 @@ export class DetailedTargetingApiService {
     return _response.asObservable();
   };
 
-  public filteredSearch (q: string, limit_type: string, adaccountId = this.adaccountId) {
+  filteredSearch (q: string, limitType: string, adaccountId = this.adaccountId) {
     let _response = new Subject<DetailedTargetingItem[]>();
 
     this.api.subscribe((FB: FB) => {
       FB.api(`/${adaccountId}/targetingsearch`, {
         q:          q,
-        limit_type: limit_type,
+        limit_type: limitType,
         locale:     this.lang
       }, (response) => {
         _response.next(response.data);

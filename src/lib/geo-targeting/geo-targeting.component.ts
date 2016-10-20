@@ -26,9 +26,9 @@ import { GeoTargetingService } from './geo-targeting.service';
 })
 export class GeoTargetingComponent implements OnInit, OnDestroy {
 
-  private _defaultLang: string = 'en_US';
-  private _lang: string        = this._defaultLang;
-  private _subscriptions       = [];
+  _defaultLang: string = 'en_US';
+  _lang: string        = this._defaultLang;
+  _subscriptions       = [];
 
   @Input('adaccountId') adaccountId: string;
   @Input('spec') spec: TargetingSpec    = {};
@@ -38,20 +38,20 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
   set lang (lang: string) {
     this._lang = lang || this._defaultLang;
     // the lang to use, if the lang isn't available, it will use the current loader to get them
-    this.TranslateService.use(this.lang);
+    this.translateService.use(this.lang);
   }
 
   get lang () {
     return this._lang;
   }
 
-  constructor (private TranslateService: TranslateService,
-               private GeoTargetingApiService: GeoTargetingApiService,
-               private TargetingSpecService: TargetingSpecService,
-               private GeoTargetingSelectedService: GeoTargetingSelectedService,
-               private GeoTargetingTypeService: GeoTargetingTypeService) {
+  constructor (private translateService: TranslateService,
+               private geoTargetingApiService: GeoTargetingApiService,
+               private targetingSpecService: TargetingSpecService,
+               private geoTargetingSelectedService: GeoTargetingSelectedService,
+               private geoTargetingTypeService: GeoTargetingTypeService) {
     // this language will be used as a fallback when a translation isn't found in the current language
-    this.TranslateService.setDefaultLang(this.lang);
+    this.translateService.setDefaultLang(this.lang);
   }
 
   ngOnDestroy () {
@@ -63,16 +63,16 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
 
   ngOnInit () {
     if (this.spec.geo_locations && this.spec.geo_locations.location_types) {
-      this.GeoTargetingTypeService.update(this.spec.geo_locations.location_types);
+      this.geoTargetingTypeService.update(this.spec.geo_locations.location_types);
     }
     /**
      * Get geo location metadata for passed targeting spec and update selected items
      */
     this._subscriptions.push(
-      this.GeoTargetingApiService
+      this.geoTargetingApiService
           .getSelectedLocationItems(this.spec)
           .subscribe((items: GeoTargetingItem[]) => {
-            this.GeoTargetingSelectedService.update(items);
+            this.geoTargetingSelectedService.update(items);
           })
     );
 
@@ -80,12 +80,12 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
      * Subscribe for changes in selected items and update targeting spec when changed
      */
     this._subscriptions.push(
-      this.GeoTargetingSelectedService.items
+      this.geoTargetingSelectedService.items
       // Skip initialization update and update for first passed targeting spec
           .skip(2)
           .subscribe(() => {
-            let newTargetingSpec = Object.assign(this.spec, this.GeoTargetingSelectedService.getSpec());
-            this.TargetingSpecService.update(newTargetingSpec);
+            let newTargetingSpec = Object.assign(this.spec, this.geoTargetingSelectedService.getSpec());
+            this.targetingSpecService.update(newTargetingSpec);
           })
     );
 
@@ -94,7 +94,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
      * trigger onChange handler
      */
     this._subscriptions.push(
-      this.TargetingSpecService.spec
+      this.targetingSpecService.spec
       // Skip initialization update
           .skip(1)
           .subscribe((spec: TargetingSpec) => {
@@ -106,11 +106,11 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
      * Update selected items when language change
      */
     this._subscriptions.push(
-      this.TranslateService.onLangChange.subscribe(() => {
-        this.GeoTargetingApiService
+      this.translateService.onLangChange.subscribe(() => {
+        this.geoTargetingApiService
             .getSelectedLocationItems(this.spec)
             .subscribe((items: GeoTargetingItem[]) => {
-              this.GeoTargetingSelectedService.update(items);
+              this.geoTargetingSelectedService.update(items);
             });
       })
     );

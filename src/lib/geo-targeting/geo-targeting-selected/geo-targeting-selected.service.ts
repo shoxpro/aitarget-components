@@ -12,11 +12,11 @@ import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.s
 @Injectable()
 export class GeoTargetingSelectedService {
 
-  private _items                             = new BehaviorSubject<GeoTargetingItem[]>([]);
-  public items                               = this._items.asObservable();
-  private _prevItems: GeoTargetingItem[]     = [];
-  private _replacedItems: GeoTargetingItem[] = [];
-  private typeMap                            = {
+  _items                             = new BehaviorSubject<GeoTargetingItem[]>([]);
+  items                              = this._items.asObservable();
+  _prevItems: GeoTargetingItem[]     = [];
+  _replacedItems: GeoTargetingItem[] = [];
+  typeMap                            = {
     country:            'countries',
     region:             'regions',
     city:               'cities',
@@ -29,42 +29,42 @@ export class GeoTargetingSelectedService {
   /**
    * Show info message that excluding is impossible without included locations
    */
-  private informAboutMissingIncludedLocation () {
-    let message = this.TranslateService.instant(`geo-targeting-info.MESSAGE_MISSING_INCLUDED`);
+  informAboutMissingIncludedLocation () {
+    let message = this.translateService.instant(`geo-targeting-info.MESSAGE_MISSING_INCLUDED`);
 
-    this.GeoTargetingInfoService.update('error', message, false);
-    this.GeoTargetingInfoService.show();
+    this.geoTargetingInfoService.update('error', message, false);
+    this.geoTargetingInfoService.show();
   }
 
   /**
    * Show info message that it is impossible to exclude location that is broader that included one
    */
-  private informAboutNarrow (narrowerLocations) {
-    let message = this.TranslateService.instant(`geo-targeting-info.MESSAGE_NARROW`, {
+  informAboutNarrow (narrowerLocations) {
+    let message = this.translateService.instant(`geo-targeting-info.MESSAGE_NARROW`, {
       narrowerLocationNames: narrowerLocations.map(item => item.name)
                                               .join(', ')
     });
 
-    this.GeoTargetingInfoService.update('error', message, false);
-    this.GeoTargetingInfoService.show();
+    this.geoTargetingInfoService.update('error', message, false);
+    this.geoTargetingInfoService.show();
   }
 
   /**
    * Show info message that some locations were replaced
    */
-  private informAboutReplaced (item: GeoTargetingItem) {
+  informAboutReplaced (item: GeoTargetingItem) {
     let replacedItems = this.getReplacedItems();
     let fromNames     = replacedItems
       .map((replacedItem) => replacedItem.name)
       .join(', ');
 
-    let message = this.TranslateService.instant(`geo-targeting-info.MESSAGE`, {
+    let message = this.translateService.instant(`geo-targeting-info.MESSAGE`, {
       fromNames: fromNames,
       toName:    item.name
     });
 
-    this.GeoTargetingInfoService.update('info', message, true);
-    this.GeoTargetingInfoService.show();
+    this.geoTargetingInfoService.update('info', message, true);
+    this.geoTargetingInfoService.show();
   }
 
   /**
@@ -72,7 +72,7 @@ export class GeoTargetingSelectedService {
    * @param item
    * @returns {GeoTargetingItem[]}
    */
-  private getBroaderLocations (item: GeoTargetingItem) {
+  getBroaderLocations (item: GeoTargetingItem) {
     return this.get()
                .filter((selectedItem: GeoTargetingItem) => {
                  return (
@@ -91,7 +91,7 @@ export class GeoTargetingSelectedService {
    * @param item
    * @returns {GeoTargetingItem[]}
    */
-  private getNarrowerLocations (item: GeoTargetingItem) {
+  getNarrowerLocations (item: GeoTargetingItem) {
     return this.get()
                .filter((selectedItem: GeoTargetingItem) => {
                  return (
@@ -109,15 +109,16 @@ export class GeoTargetingSelectedService {
    * Set suggested radius for passed location
    * @param item
    */
-  private setSuggestedRadius = (item: GeoTargetingItem) => {
+  setSuggestedRadius = (item: GeoTargetingItem) => {
     return Observable.create((observer) => {
       // Request for suggested radius only for cities, custom locations and places
       if (['city', 'custom_location', 'place'].indexOf(item.type) > -1) {
-        this.GeoTargetingApiService.suggestRadius(item)
-            .subscribe((suggestedRadius: null | Array<{suggested_radius: number, distance_unit: 'mile' | 'kilometer'}>) => {
+        this.geoTargetingApiService.suggestRadius(item)
+            .subscribe((suggestedRadius: null | Array<{suggested_radius: number,
+              distance_unit: 'mile' | 'kilometer'}>) => {
               if (!suggestedRadius || !suggestedRadius[0]) {
                 if (item.type === 'city') {
-                  item = GeoTargetingRadiusService.setDefaultRadius(item, this.TranslateService.currentLang);
+                  item = GeoTargetingRadiusService.setDefaultRadius(item, this.translateService.currentLang);
                 }
               } else {
                 item.radius        = suggestedRadius[0].suggested_radius;
@@ -137,7 +138,7 @@ export class GeoTargetingSelectedService {
    * @param item
    * @returns {GeoTargetingItem}
    */
-  public setCoordinates = (item: GeoTargetingItem) => {
+  setCoordinates = (item: GeoTargetingItem) => {
     let _item                  = new Subject();
     let simplifiedGeoLocations = {};
     let mappedType             = this.typeMap[item.type];
@@ -151,7 +152,7 @@ export class GeoTargetingSelectedService {
 
     simplifiedGeoLocations[mappedType].push(key);
 
-    this.GeoTargetingApiService.metaData(simplifiedGeoLocations)
+    this.geoTargetingApiService.metaData(simplifiedGeoLocations)
         .subscribe((metaData) => {
           item = Object.assign(item, metaData[mappedType][item.key]);
 
@@ -165,7 +166,7 @@ export class GeoTargetingSelectedService {
    * Return list of selected items
    * @returns {GeoTargetingItem[]}
    */
-  public get () {
+  get () {
     return this._items.getValue();
   }
 
@@ -173,7 +174,7 @@ export class GeoTargetingSelectedService {
    * Return list of previously selected items
    * @returns {GeoTargetingItem[]}
    */
-  public getPrevItems () {
+  getPrevItems () {
     return this._prevItems;
   }
 
@@ -181,7 +182,7 @@ export class GeoTargetingSelectedService {
    * Return list of items that were replaced by last added item
    * @returns {GeoTargetingItem[]}
    */
-  public getReplacedItems () {
+  getReplacedItems () {
     return this._replacedItems;
   }
 
@@ -189,7 +190,7 @@ export class GeoTargetingSelectedService {
    * Update selected items and save previous selection
    * @param items
    */
-  public update (items: GeoTargetingItem[]) {
+  update (items: GeoTargetingItem[]) {
     this._prevItems = this.get();
     this._items.next(items);
   }
@@ -201,8 +202,8 @@ export class GeoTargetingSelectedService {
    * @param item
    * @returns {undefined}
    */
-  public add (item: GeoTargetingItem) {
-    let selectedLocations     = this.get();
+  add (item: GeoTargetingItem) {
+    let selectedLocations = this.get();
     let broaderLocations  = this.getBroaderLocations(item);
     let narrowerLocations = this.getNarrowerLocations(item);
 
@@ -219,7 +220,7 @@ export class GeoTargetingSelectedService {
     }
 
     // Hide all existing info messages
-    this.GeoTargetingInfoService.hide();
+    this.geoTargetingInfoService.hide();
 
     // Replaced item is an item that is broader or narrower than passed item and has the same mode (excluded flag)
     this._replacedItems = broaderLocations.concat(narrowerLocations)
@@ -254,7 +255,7 @@ export class GeoTargetingSelectedService {
    * Update one of selected items
    * @param item
    */
-  public updateSelectedItem (item: GeoTargetingItem) {
+  updateSelectedItem (item: GeoTargetingItem) {
     let selectedItems = this.get();
     selectedItems.map((selectedItem: GeoTargetingItem) => {
       if (selectedItem.key === item.key) {
@@ -271,7 +272,7 @@ export class GeoTargetingSelectedService {
    * Remove passed item from selected list
    * @param item
    */
-  public remove (item: GeoTargetingItem) {
+  remove (item: GeoTargetingItem) {
     let selectedItems     = this._items.getValue();
     let narrowerLocations = this.getNarrowerLocations(item);
 
@@ -287,9 +288,9 @@ export class GeoTargetingSelectedService {
    * Return final targeting spec with included and excluded locations
    * @returns {TargetingSpec}
    */
-  public getSpec () {
+  getSpec () {
     let geoLocations: GeoTargetingSpec = {
-      location_types: this.GeoTargetingTypeService.get()
+      location_types: this.geoTargetingTypeService.get()
     };
 
     let excludedGeoLocations: GeoTargetingSpec = {};
@@ -339,10 +340,10 @@ export class GeoTargetingSelectedService {
     };
   }
 
-  constructor (private TranslateService: TranslateService,
-               private GeoTargetingApiService: GeoTargetingApiService,
-               private GeoTargetingInfoService: GeoTargetingInfoService,
-               private GeoTargetingTypeService: GeoTargetingTypeService) {
+  constructor (private translateService: TranslateService,
+               private geoTargetingApiService: GeoTargetingApiService,
+               private geoTargetingInfoService: GeoTargetingInfoService,
+               private geoTargetingTypeService: GeoTargetingTypeService) {
   }
 
 }

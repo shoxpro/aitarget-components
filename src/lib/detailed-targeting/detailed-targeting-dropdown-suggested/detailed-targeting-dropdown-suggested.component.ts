@@ -17,39 +17,39 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
 
-  public items: DetailedTargetingItem[];
-  private mode;
-  private activeInfo;
+  items: DetailedTargetingItem[];
+  mode;
+  activeInfo;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
+  updateTemplate () {
     this.ref.detach();
     this.ref.markForCheck();
     this.ref.detectChanges();
   }
 
-  private suggest (targetingList: Array<Object> = []) {
-    this.DetailedTargetingApiService.suggest(targetingList);
+  suggest (targetingList: Array<Object> = []) {
+    this.detailedTargetingApiService.suggest(targetingList);
   }
 
-  constructor (private DetailedTargetingDropdownSuggestedService: DetailedTargetingDropdownSuggestedService,
-               private DetailedTargetingInfoService: DetailedTargetingInfoService,
-               private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
-               private DetailedTargetingModeService: DetailedTargetingModeService,
-               private DetailedTargetingApiService: DetailedTargetingApiService,
-               private DetailedTargetingInputService: DetailedTargetingInputService,
-               private TranslateService: TranslateService,
+  constructor (private detailedTargetingDropdownSuggestedService: DetailedTargetingDropdownSuggestedService,
+               private detailedTargetingInfoService: DetailedTargetingInfoService,
+               private detailedTargetingSelectedService: DetailedTargetingSelectedService,
+               private detailedTargetingModeService: DetailedTargetingModeService,
+               private detailedTargetingApiService: DetailedTargetingApiService,
+               private detailedTargetingInputService: DetailedTargetingInputService,
+               private translateService: TranslateService,
                private ref: ChangeDetectorRef) {
   }
 
-  public setDropdownInfoItem (item: DetailedTargetingItem) {
-    this.DetailedTargetingInfoService.update(item);
+  setDropdownInfoItem (item: DetailedTargetingItem) {
+    this.detailedTargetingInfoService.update(item);
   }
 
-  public selectItem (item: DetailedTargetingItem) {
-    let selectedItems = this.DetailedTargetingSelectedService.get();
+  selectItem (item: DetailedTargetingItem) {
+    let selectedItems = this.detailedTargetingSelectedService.get();
 
     let selectedItemsFiltered = selectedItems.filter(selected => {
       return selected.type === item.type && selected.id === item.id;
@@ -61,19 +61,19 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
       selectedItems.push(item);
     }
 
-    this.DetailedTargetingInputService.setTerm('');
+    this.detailedTargetingInputService.setTerm('');
 
-    this.DetailedTargetingSelectedService.updateSelected(selectedItems);
+    this.detailedTargetingSelectedService.updateSelected(selectedItems);
   }
 
   ngOnInit () {
-    this.DetailedTargetingDropdownSuggestedService.items.subscribe(items => {
+    this.detailedTargetingDropdownSuggestedService.items.subscribe(items => {
       this.items = items;
 
       this.updateTemplate();
     });
 
-    this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
+    this.detailedTargetingModeService.mode.subscribe((mode: string) => {
       this.mode = mode;
 
       this.updateTemplate();
@@ -82,7 +82,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
     /**
      * Load suggested items when list of selected items changes
      */
-    this.DetailedTargetingSelectedService.items
+    this.detailedTargetingSelectedService.items
         .filter(items => items.length > 0)
         .map((items: DetailedTargetingItem[]) => {
           return items.map(item => {
@@ -93,8 +93,8 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
           });
         })
         .subscribe((targetingList: Array<Object>) => {
-          if (this.DetailedTargetingModeService.get() === 'search') {
-            this.DetailedTargetingModeService.set('suggested');
+          if (this.detailedTargetingModeService.get() === 'search') {
+            this.detailedTargetingModeService.set('suggested');
           }
           this.suggest(targetingList);
 
@@ -104,7 +104,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
     /**
      * Indicate that info is open. Needed to set proper border-radius to dropdown.
      */
-    this.DetailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
+    this.detailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
       this.activeInfo = Boolean(item);
       this.updateTemplate();
     });
@@ -112,13 +112,13 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
     /**
      * Load suggestions on first init
      */
-    this.DetailedTargetingApiService.suggest();
+    this.detailedTargetingApiService.suggest();
 
     /**
      * Load suggestions when language changes
      */
-    this.TranslateService.onLangChange.subscribe(() => {
-      this.DetailedTargetingApiService.suggest();
+    this.translateService.onLangChange.subscribe(() => {
+      this.detailedTargetingApiService.suggest();
     });
   }
 

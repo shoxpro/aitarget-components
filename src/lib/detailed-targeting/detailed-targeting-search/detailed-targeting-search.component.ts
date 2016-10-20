@@ -10,35 +10,35 @@ import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
-  private subscriptions = [];
-  private _term         = new Subject();
-  public term           = this._term.asObservable();
-  private items;
-  private type;
+  subscriptions = [];
+  _term         = new Subject();
+  term          = this._term.asObservable();
+  items;
+  type;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
+  updateTemplate () {
     this.ref.markForCheck();
     this.ref.detectChanges();
   }
 
-  constructor (private DetailedTargetingSearchService: DetailedTargetingSearchService,
-               private DetailedTargetingApiService: DetailedTargetingApiService,
-               private ElementRef: ElementRef,
+  constructor (private detailedTargetingSearchService: DetailedTargetingSearchService,
+               private detailedTargetingApiService: DetailedTargetingApiService,
+               private elementRef: ElementRef,
                private ref: ChangeDetectorRef) {
   }
 
-  public closeSearch = () => {
-    this.DetailedTargetingSearchService.update({isVisible: false, type: this.type});
+  closeSearch = () => {
+    this.detailedTargetingSearchService.update({isVisible: false, type: this.type});
   };
 
   /**
    * On key up handler.
    * @param term
    */
-  public keyup (term: string) {
+  keyup (term: string) {
     this._term.next(term);
   }
 
@@ -51,11 +51,11 @@ export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit () {
     this.subscriptions.push(
-      this.DetailedTargetingSearchService.data.subscribe((data) => {
+      this.detailedTargetingSearchService.data.subscribe((data) => {
         this.type = data.type;
 
         if (data.isVisible) {
-          let elm     = this.ElementRef.nativeElement;
+          let elm     = this.elementRef.nativeElement;
           let input   = elm.querySelector('input');
           input.value = null;
           input.focus();
@@ -72,7 +72,7 @@ export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
         .distinctUntilChanged()
         .subscribe((value: string) => {
           if (value) {
-            this.items = this.DetailedTargetingApiService
+            this.items = this.detailedTargetingApiService
                              .filteredSearch(value, this.type);
           } else {
             this.items = Observable.of(null);

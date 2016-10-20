@@ -7,20 +7,20 @@ import { DetailedTargetingItem } from './detailed-targeting-item';
 @Injectable()
 export class DetailedTargetingService {
 
-  private _spec = new BehaviorSubject<DetailedTargetingSpec>(defaultDetailedTargetingSpec);
-  public spec   = this._spec.asObservable();
+  _spec = new BehaviorSubject<DetailedTargetingSpec>(defaultDetailedTargetingSpec);
+  spec  = this._spec.asObservable();
 
-  public get (): DetailedTargetingSpec {
+  get (): DetailedTargetingSpec {
     return this._spec.getValue();
   }
 
-  public update (spec: DetailedTargetingSpec) {
+  update (spec: DetailedTargetingSpec) {
     this._spec.next(spec);
   }
 
   constructor () { }
 
-  public updateWithSelectedItems (items: DetailedTargetingItem[]) {
+  updateWithSelectedItems (items: DetailedTargetingItem[]) {
     let detailedTargeting = {};
 
     items.forEach((item: DetailedTargetingItem) => {

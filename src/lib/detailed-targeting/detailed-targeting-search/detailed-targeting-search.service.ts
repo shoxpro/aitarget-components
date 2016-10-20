@@ -9,10 +9,10 @@ declare interface DataInterface {
 @Injectable()
 export class DetailedTargetingSearchService {
 
-  private _data = new Subject<DataInterface>();
-  public data   = this._data.asObservable();
+  _data = new Subject<DataInterface>();
+  data  = this._data.asObservable();
 
-  public update (data: DataInterface) {
+  update (data: DataInterface) {
     this._data.next({
       isVisible: data.isVisible,
       type:      data.type

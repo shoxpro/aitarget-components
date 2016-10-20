@@ -12,12 +12,12 @@ export class DetailedTargetingItemsComponent implements OnInit {
 
   @Input('items') items: Array<DetailedTargetingItem> = [];
 
-  public setDropdownInfoItem (item: DetailedTargetingItem) {
-    this.DetailedTargetingInfoService.update(item);
+  setDropdownInfoItem (item: DetailedTargetingItem) {
+    this.detailedTargetingInfoService.update(item);
   }
 
-  public selectItem (item: DetailedTargetingItem) {
-    let selectedItems = this.DetailedTargetingSelectedService.get();
+  selectItem (item: DetailedTargetingItem) {
+    let selectedItems = this.detailedTargetingSelectedService.get();
 
     let selectedItemsFiltered = selectedItems.filter(selected => {
       return selected.type === item.type && selected.id === item.id;
@@ -29,11 +29,11 @@ export class DetailedTargetingItemsComponent implements OnInit {
       selectedItems.push(item);
     }
 
-    this.DetailedTargetingSelectedService.updateSelected(selectedItems);
+    this.detailedTargetingSelectedService.updateSelected(selectedItems);
   }
 
-  constructor (private DetailedTargetingInfoService: DetailedTargetingInfoService,
-               private DetailedTargetingSelectedService: DetailedTargetingSelectedService) { }
+  constructor (private detailedTargetingInfoService: DetailedTargetingInfoService,
+               private detailedTargetingSelectedService: DetailedTargetingSelectedService) { }
 
   ngOnInit () {
   }

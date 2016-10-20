@@ -1,7 +1,9 @@
 {
   "name": "aitarget-components",
   "scripts": {},
-  "env": {},
+  "env": {
+    "NPM_CONFIG_PRODUCTION": "false"
+  },
   "formation": {},
   "addons": [],
   "buildpacks": []

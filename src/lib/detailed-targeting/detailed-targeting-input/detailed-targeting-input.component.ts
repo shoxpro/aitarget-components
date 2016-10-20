@@ -14,16 +14,16 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingInputComponent implements OnInit {
-  private term;
-  private mode;
-  private hasFocus;
-  private structuredSelectedItems;
-  private activeInfo;
+  term;
+  mode;
+  hasFocus;
+  structuredSelectedItems;
+  activeInfo;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
+  updateTemplate () {
     // TODO: rethink this timeout, but without it it throws "Attempt to use a destroyed view: detectChanges"
     setTimeout(() => {
       this.ref.detach();
@@ -36,80 +36,80 @@ export class DetailedTargetingInputComponent implements OnInit {
    * On key up handler.
    * @param term
    */
-  public keyup (term: string) {
-    this.DetailedTargetingInputService.setTerm(term);
+  keyup (term: string) {
+    this.detailedTargetingInputService.setTerm(term);
   }
 
   /**
    * Open dropdown with suggestions when gets focus
    */
-  public focus () {
+  focus () {
     this.hasFocus = true;
-    this.DetailedTargetingModeService.set('suggested');
+    this.detailedTargetingModeService.set('suggested');
     this.updateTemplate();
   }
 
   /**
    * Process focus lost
    */
-  public blur () {
+  blur () {
     this.hasFocus = false;
     this.updateTemplate();
   }
 
-  constructor (private DetailedTargetingApiService: DetailedTargetingApiService,
-               private DetailedTargetingModeService: DetailedTargetingModeService,
-               private DetailedTargetingInputService: DetailedTargetingInputService,
-               private DetailedTargetingInfoService: DetailedTargetingInfoService,
-               private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
-               private TranslateService: TranslateService,
+  constructor (private detailedTargetingApiService: DetailedTargetingApiService,
+               private detailedTargetingModeService: DetailedTargetingModeService,
+               private detailedTargetingInputService: DetailedTargetingInputService,
+               private detailedTargetingInfoService: DetailedTargetingInfoService,
+               private detailedTargetingSelectedService: DetailedTargetingSelectedService,
+               private translateService: TranslateService,
                private ref: ChangeDetectorRef) {
   }
 
   ngOnInit () {
-    this.DetailedTargetingInputService.term
+    this.detailedTargetingInputService.term
         .debounceTime(500)
         .distinctUntilChanged()
         .subscribe((term: string) => {
           this.term = term;
 
           if (!term) {
-            this.DetailedTargetingInfoService.update(null);
+            this.detailedTargetingInfoService.update(null);
           } else {
-            this.DetailedTargetingModeService.set('search');
-            this.DetailedTargetingApiService.search(term);
+            this.detailedTargetingModeService.set('search');
+            this.detailedTargetingApiService.search(term);
           }
 
           this.updateTemplate();
         });
 
-    this.DetailedTargetingModeService.mode
+    this.detailedTargetingModeService.mode
         .distinctUntilChanged()
         .subscribe(() => {
-          this.DetailedTargetingInputService.setTerm('');
+          this.detailedTargetingInputService.setTerm('');
         });
 
-    this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
+    this.detailedTargetingModeService.mode.subscribe((mode: string) => {
       this.mode = mode;
 
       this.updateTemplate();
     });
 
-    this.DetailedTargetingSelectedService.items
-        .map(this.DetailedTargetingSelectedService.structureSelectedItems)
+    this.detailedTargetingSelectedService.items
+        .map(this.detailedTargetingSelectedService.structureSelectedItems)
         .subscribe((structuredSelectedItems) => {
           this.structuredSelectedItems = structuredSelectedItems;
           this.updateTemplate();
         });
 
-    this.DetailedTargetingInfoService.item
+    this.detailedTargetingInfoService.item
         .debounceTime(50)
         .subscribe((item: DetailedTargetingItem) => {
           this.activeInfo = Boolean(item);
           this.updateTemplate();
         });
 
-    this.TranslateService.onLangChange.subscribe(() => {
+    this.translateService.onLangChange.subscribe(() => {
       this.updateTemplate();
     });
   }

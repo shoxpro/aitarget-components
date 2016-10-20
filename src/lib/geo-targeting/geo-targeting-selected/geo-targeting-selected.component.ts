@@ -10,22 +10,22 @@ import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.s
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
-  private items: GeoTargetingItem[];
-  private itemsGroupedByCountry: Object = {};
-  private groupHovered: Object          = {};
-  private subscriptions                 = [];
-  private itemsGroupedByCountryKeys     = [];
+  items: GeoTargetingItem[];
+  itemsGroupedByCountry: Object = {};
+  groupHovered: Object          = {};
+  subscriptions                 = [];
+  itemsGroupedByCountryKeys     = [];
 
-  constructor (private GeoTargetingSelectedService: GeoTargetingSelectedService,
-               private GeoTargetingMapService: GeoTargetingMapService,
-               private ChangeDetectorRef: ChangeDetectorRef) { }
+  constructor (private geoTargetingSelectedService: GeoTargetingSelectedService,
+               private geoTargetingMapService: GeoTargetingMapService,
+               private changeDetectorRef: ChangeDetectorRef) { }
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
-    this.ChangeDetectorRef.markForCheck();
-    this.ChangeDetectorRef.detectChanges();
+  updateTemplate () {
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
   }
 
   /**
@@ -33,7 +33,7 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
    * @param key
    * @param isHovered
    */
-  public hoverGroup (key, isHovered) {
+  hoverGroup (key, isHovered) {
     this.groupHovered[key] = isHovered;
     this.updateTemplate();
   }
@@ -42,9 +42,9 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
    * Show item on the map
    * @param item
    */
-  public showItemOnMap (item: GeoTargetingItem) {
-    this.GeoTargetingMapService.showMap();
-    this.GeoTargetingMapService.focusItem(item);
+  showItemOnMap (item: GeoTargetingItem) {
+    this.geoTargetingMapService.showMap();
+    this.geoTargetingMapService.focusItem(item);
   }
 
   /**
@@ -52,12 +52,12 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
    * @param key
    * @param event
    */
-  public removeGroup (key, event?) {
+  removeGroup (key, event?) {
     if (event) {
       event.stopPropagation();
     }
     this.itemsGroupedByCountry[key].items.forEach((item: GeoTargetingItem) => {
-      this.GeoTargetingSelectedService.remove(item);
+      this.geoTargetingSelectedService.remove(item);
     });
   }
 
@@ -66,17 +66,17 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
    * @param item
    * @param event
    */
-  public removeItem (item: GeoTargetingItem, event?) {
+  removeItem (item: GeoTargetingItem, event?) {
     if (event) {
       event.stopPropagation();
     }
-    this.GeoTargetingSelectedService.remove(item);
+    this.geoTargetingSelectedService.remove(item);
   }
 
   /**
    * Toggle Dropdown
    */
-  public toggleModeDropdown (itemMode: any, event) {
+  toggleModeDropdown (itemMode: any, event) {
     if (event) {
       event.stopPropagation();
     }
@@ -84,12 +84,12 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
     this.updateTemplate();
   }
 
-  public setExcluded (itemMode, item: GeoTargetingItem, excluded: boolean) {
+  setExcluded (itemMode, item: GeoTargetingItem, excluded: boolean) {
     itemMode.isOpen = false;
 
     item.excluded = excluded;
 
-    this.GeoTargetingSelectedService.updateSelectedItem(item);
+    this.geoTargetingSelectedService.updateSelectedItem(item);
     this.updateTemplate();
   }
 
@@ -102,7 +102,7 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
 
   ngOnInit () {
     this.subscriptions.push(
-      this.GeoTargetingSelectedService.items.subscribe((items: GeoTargetingItem[]) => {
+      this.geoTargetingSelectedService.items.subscribe((items: GeoTargetingItem[]) => {
         this.items                 = items;
         this.itemsGroupedByCountry = {};
 

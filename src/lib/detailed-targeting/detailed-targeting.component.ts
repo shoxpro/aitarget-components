@@ -29,8 +29,8 @@ import { DetailedTargetingSearchService } from './detailed-targeting-search/deta
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingComponent implements OnInit {
-  private _defaultLang: string = 'en_US';
-  private _lang: string        = this._defaultLang;
+  _defaultLang: string = 'en_US';
+  _lang: string        = this._defaultLang;
 
   @Input('adaccountId') adaccountId: string;
   @Input('spec') spec: TargetingSpec    = {};
@@ -40,48 +40,48 @@ export class DetailedTargetingComponent implements OnInit {
   set lang (lang: string) {
     this._lang = lang || this._defaultLang;
     // the lang to use, if the lang isn't available, it will use the current loader to get them
-    this.TranslateService.use(this.lang);
+    this.translateService.use(this.lang);
   }
 
   get lang () {
     return this._lang;
   }
 
-  constructor (private TargetingSpecService: TargetingSpecService,
-               private DetailedTargetingService: DetailedTargetingService,
-               private DetailedTargetingApiService: DetailedTargetingApiService,
-               private DetailedTargetingSelectedService: DetailedTargetingSelectedService,
-               private DetailedTargetingModeService: DetailedTargetingModeService,
-               private DetailedTargetingInfoService: DetailedTargetingInfoService,
-               private ElementRef: ElementRef,
-               private TranslateService: TranslateService) {
+  constructor (private targetingSpecService: TargetingSpecService,
+               private detailedTargetingService: DetailedTargetingService,
+               private detailedTargetingApiService: DetailedTargetingApiService,
+               private detailedTargetingSelectedService: DetailedTargetingSelectedService,
+               private detailedTargetingModeService: DetailedTargetingModeService,
+               private detailedTargetingInfoService: DetailedTargetingInfoService,
+               private elementRef: ElementRef,
+               private translateService: TranslateService) {
     // this language will be used as a fallback when a translation isn't found in the current language
-    this.TranslateService.setDefaultLang(this.lang);
+    this.translateService.setDefaultLang(this.lang);
   }
 
   /**
    * Close detailed targeting component
    */
-  private close = () => {
-    this.DetailedTargetingModeService.set(null);
-    this.DetailedTargetingInfoService.update(null);
+  close = () => {
+    this.detailedTargetingModeService.set(null);
+    this.detailedTargetingInfoService.update(null);
   };
 
   /**
    * Set mode to null if user click outside detailed-targeting element
    * @param e
    */
-  private processOutsideClick = (e) => {
+  processOutsideClick = (e) => {
     let targetElement = e.target;
 
-    const clickedInside = this.ElementRef.nativeElement.contains(targetElement);
+    const clickedInside = this.elementRef.nativeElement.contains(targetElement);
 
     if (!clickedInside) {
       this.close();
     }
   };
 
-  private processKeydown = (e) => {
+  processKeydown = (e) => {
     // when Escape
     if (e.keyCode === 27) {
       this.close();
@@ -90,7 +90,7 @@ export class DetailedTargetingComponent implements OnInit {
 
   ngOnInit () {
     if (this.adaccountId) {
-      this.DetailedTargetingApiService.setAdaccount(this.adaccountId);
+      this.detailedTargetingApiService.setAdaccount(this.adaccountId);
     } else {
       throw 'Adaccout ID must be provided for this detailed targeting component!';
     }
@@ -107,30 +107,30 @@ export class DetailedTargetingComponent implements OnInit {
 
     // If targetingList is not empty get validated items and update selected
     if (targetingList.length) {
-      this.DetailedTargetingApiService.validate(targetingList)
+      this.detailedTargetingApiService.validate(targetingList)
           .subscribe((selectedItems) => {
             let validSelectedItems = selectedItems.filter((selectedItem) => selectedItem.valid);
-            this.DetailedTargetingSelectedService.updateSelected(validSelectedItems);
+            this.detailedTargetingSelectedService.updateSelected(validSelectedItems);
           });
     }
 
     /**
      * Update global Targeting spec when detailedTargetingSpec changes
      */
-    this.DetailedTargetingService.spec
+    this.detailedTargetingService.spec
     // Skip first initialization subject and second with passed spec
         .skip(2)
         .subscribe((detailedTargetingSpec: DetailedTargetingSpec) => {
           // noinspection TypeScriptUnresolvedFunction
           let newTargetingSpec = Object.assign({}, this.spec, detailedTargetingSpec);
-          let cleanSpec        = this.TargetingSpecService.clean(newTargetingSpec);
-          this.TargetingSpecService.update(cleanSpec);
+          let cleanSpec        = this.targetingSpecService.clean(newTargetingSpec);
+          this.targetingSpecService.update(cleanSpec);
         });
 
     /**
      * Trigger onchange if global Targeting spec changed
      */
-    this.TargetingSpecService.spec
+    this.targetingSpecService.spec
     // Skip first initialization subject and second with passed spec
         .skip(1)
         .subscribe((spec: TargetingSpec) => {
@@ -141,7 +141,7 @@ export class DetailedTargetingComponent implements OnInit {
      * Bind/unbind different events depending on detailed-component mode.
      * Mode reflects component's current state.
      */
-    this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
+    this.detailedTargetingModeService.mode.subscribe((mode: string) => {
       // Process body clicks in order to close element if clicked outside and element
       window.document.body.removeEventListener('click', this.processOutsideClick);
       window.document.body.removeEventListener('keydown', this.processKeydown);

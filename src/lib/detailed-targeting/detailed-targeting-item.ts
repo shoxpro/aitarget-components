@@ -10,6 +10,8 @@ export class DetailedTargetingItem {
   children: Array<DetailedTargetingItem>; // Our custom value
   parent: string;
   path: [string];
+  /* tslint:disable:variable-name */
   audience_size: number;
+  /* tslint:disable:variable-name */
   valid: boolean;
 }

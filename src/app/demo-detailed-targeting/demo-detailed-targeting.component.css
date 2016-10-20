@@ -1,24 +1,7 @@
-.demo-detailed-targeting__content {
-  display: table;
-  width:   100%;
-}
-
-.demo-detailed-targeting__sidebar {
-  display: table-cell;
-  width:   40%;
-}
-
-.demo-detailed-targeting__component {
-  display: table-cell;
-  padding: 20px;
-  width:   60%;
-}
-
 .demo-detailed-targeting__component-buttons {
-  padding-bottom: 20px;
+  padding-bottom: 20px
 }
 
 .demo-detailed-targeting__spec {
-  overflow: auto;
-  height:   400px;
+  font-size: 14px
 }

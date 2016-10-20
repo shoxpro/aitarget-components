@@ -11,7 +11,7 @@ import { GeoTargetingInfoComponent } from './geo-targeting-info/geo-targeting-in
 import { GeoTargetingPinComponent } from './geo-targeting-pin/geo-targeting-pin.component';
 import { GeoTargetingModeComponent } from './geo-targeting-mode/geo-targeting-mode.component';
 import { GeoTargetingRadiusComponent } from './geo-targeting-radius/geo-targeting-radius.component';
-import { MdSliderModule } from '@angular2-material/slider';
+import { MdSliderModule } from '@angular/material/slider';
 import { GeoTargetingTypeComponent } from './geo-targeting-type/geo-targeting-type.component';
 import { GeoTargetingMapControlsComponent } from './geo-targeting-map-controls/geo-targeting-map-controls.component';
 import { GeoTargetingMapPopupComponent } from './geo-targeting-map-popup/geo-targeting-map-popup.component';

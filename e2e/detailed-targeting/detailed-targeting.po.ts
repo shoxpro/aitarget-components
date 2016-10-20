@@ -1,5 +1,3 @@
-import { browser, element, by } from 'protractor';
-
 export class DetailedTargetingPage {
   static navigateTo () {
     return browser.get('/detailed-targeting');

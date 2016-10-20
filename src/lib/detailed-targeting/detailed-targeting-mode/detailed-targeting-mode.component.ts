@@ -10,37 +10,37 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 })
 export class DetailedTargetingModeComponent implements OnInit {
 
-  private mode;
+  mode;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
+  updateTemplate () {
     this.ref.detach();
     this.ref.markForCheck();
     this.ref.detectChanges();
   }
 
-  constructor (private DetailedTargetingModeService: DetailedTargetingModeService,
-               private TranslateService: TranslateService,
+  constructor (private detailedTargetingModeService: DetailedTargetingModeService,
+               private translateService: TranslateService,
                private ref: ChangeDetectorRef) {
   }
 
-  public setMode = (mode: string) => {
+  setMode = (mode: string) => {
     if (this.mode === mode) {
       mode = null;
     }
-    this.DetailedTargetingModeService.set(mode);
+    this.detailedTargetingModeService.set(mode);
   };
 
   ngOnInit () {
-    this.DetailedTargetingModeService.mode.subscribe((mode: string) => {
+    this.detailedTargetingModeService.mode.subscribe((mode: string) => {
       this.mode = mode;
 
       this.updateTemplate();
     });
 
-    this.TranslateService.onLangChange.subscribe(() => {
+    this.translateService.onLangChange.subscribe(() => {
       this.updateTemplate();
     });
   }

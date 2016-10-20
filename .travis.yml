@@ -25,10 +25,8 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 before_script:
   - npm prune
-  - ng build
 script:
-  - ng lint
-  - karma start karma.conf.js --single-run
-  - npm run build
+  - npm run test:once:ci
+  - npm run build:lib
 after_success:
   - npm run semantic-release

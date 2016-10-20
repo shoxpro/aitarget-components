@@ -10,17 +10,17 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 })
 export class BrowseMultiSelectComponent implements AfterViewInit {
 
-  private el: HTMLElement;
+  el: HTMLElement;
 
   @Input('item') item: DetailedTargetingItem;
 
-  constructor (el: ElementRef,
-               private TranslateService: TranslateService,
-               private DetailedTargetingSelectedService: DetailedTargetingSelectedService) {
-    this.el = el.nativeElement;
+  constructor (private elRef: ElementRef,
+               private translateService: TranslateService,
+               private detailedTargetingSelectedService: DetailedTargetingSelectedService) {
+    this.el = elRef.nativeElement;
   }
 
-  public change (checked: boolean) {
+  change (checked: boolean) {
     // Update selected property in children items and get all children ids
     let childrenIds = this.item.children.map((item: DetailedTargetingItem) => {
       item.selected = checked;
@@ -28,7 +28,7 @@ export class BrowseMultiSelectComponent implements AfterViewInit {
     });
 
     // Get currently selected items
-    let selectedItems    = this.DetailedTargetingSelectedService.get();
+    let selectedItems    = this.detailedTargetingSelectedService.get();
     // Filter out all children items from currently selected items
     let newSelectedItems = selectedItems.filter((item: DetailedTargetingItem) => {
       return childrenIds.indexOf(item.id) === -1;
@@ -39,13 +39,13 @@ export class BrowseMultiSelectComponent implements AfterViewInit {
       newSelectedItems = newSelectedItems.concat(this.item.children);
     }
 
-    this.DetailedTargetingSelectedService.updateSelected(newSelectedItems);
+    this.detailedTargetingSelectedService.updateSelected(newSelectedItems);
   }
 
   /**
    * Set checked or indeterminate state
    */
-  public checkState () {
+  checkState () {
     let selectedChildren    = this.item.children.filter((item: DetailedTargetingItem) => {
       return item.selected;
     });
@@ -64,14 +64,14 @@ export class BrowseMultiSelectComponent implements AfterViewInit {
     checkbox.checked       = isIndeterminate ? false : (allChildrenSelected || null);
 
     if (checkbox.checked) {
-      label.textContent = this.TranslateService.instant('browse-multi-select.UNSELECT_ALL');
+      label.textContent = this.translateService.instant('browse-multi-select.UNSELECT_ALL');
     } else {
-      label.textContent = this.TranslateService.instant('browse-multi-select.SELECT_ALL');
+      label.textContent = this.translateService.instant('browse-multi-select.SELECT_ALL');
     }
   }
 
   ngAfterViewInit () {
-    this.DetailedTargetingSelectedService.items.subscribe(() => {
+    this.detailedTargetingSelectedService.items.subscribe(() => {
       this.checkState();
     });
   }

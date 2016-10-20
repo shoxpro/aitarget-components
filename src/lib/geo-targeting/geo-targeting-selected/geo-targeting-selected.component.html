@@ -18,7 +18,7 @@
              #itemMode
              (click)="toggleModeDropdown(itemMode, $event)">
           <geo-targeting-pin [excluded]="item.excluded"></geo-targeting-pin>
-          <fb-arrow-drop [direction]="{true: 'up', false: 'down'}[!!itemMode.isOpen]"></fb-arrow-drop>
+          <fb-arrow-drop [direction]="itemMode.isOpen ? 'up': 'down'"></fb-arrow-drop>
           <geo-targeting-mode-dropdown
             appendTo="geo-targeting"
             [showVeil]="true"

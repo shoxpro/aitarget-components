@@ -13,31 +13,32 @@ import { TypeToHumanPipe } from '../type-to-human.pipe';
 
 export class DetailedTargetingInfoComponent implements OnInit {
 
-  public item: DetailedTargetingItem;
+  item: DetailedTargetingItem;
 
   /**
    * Trigger change detection mechanism that updates component's template
    */
-  private updateTemplate () {
+  updateTemplate () {
     this.ref.detach();
     this.ref.markForCheck();
     this.ref.detectChanges();
   }
 
-  constructor (private DetailedTargetingInfoService: DetailedTargetingInfoService,
-               private TranslateService: TranslateService,
+  constructor (private detailedTargetingInfoService: DetailedTargetingInfoService,
+               private translateService: TranslateService,
                private ref: ChangeDetectorRef) {}
 
-  public getDescription (item: DetailedTargetingItem) {
+  getDescription (item: DetailedTargetingItem) {
     let description: string;
     let lastCrumb       = item.path[item.path.length - 1];
-    let typeToHumanPipe = new TypeToHumanPipe(this.TranslateService);
+    let typeToHumanPipe = new TypeToHumanPipe(this.translateService);
     switch (item.type) {
       case 'interests':
-        description = this.TranslateService.instant('detailed-targeting-info.DESCRIBE_INTERESTS') + ` <i>${lastCrumb}</i>`;
+        description = this.translateService.instant('detailed-targeting-info.DESCRIBE_INTERESTS') +
+          ` <i>${lastCrumb}</i>`;
         break;
       default:
-        description = this.TranslateService.instant('detailed-targeting-info.DESCRIBE_DEFAULT', {
+        description = this.translateService.instant('detailed-targeting-info.DESCRIBE_DEFAULT', {
           type: typeToHumanPipe.transform(item.type),
           name: lastCrumb
         });
@@ -46,7 +47,7 @@ export class DetailedTargetingInfoComponent implements OnInit {
   }
 
   ngOnInit () {
-    this.DetailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
+    this.detailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
       this.item = item;
       this.updateTemplate();
     });

@@ -1,5 +1,3 @@
-import { browser, element, by } from 'protractor';
-
 export class AitargetComponentsPage {
   static navigateTo () {
     return browser.get('/');

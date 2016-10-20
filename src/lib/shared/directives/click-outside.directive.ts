@@ -6,10 +6,10 @@ import { Directive, ElementRef, Output, EventEmitter, OnInit, OnDestroy } from '
 export class ClickOutsideDirective implements OnInit, OnDestroy {
 
   @Output()
-  public clickOutside = new EventEmitter();
-  private element;
+  clickOutside = new EventEmitter();
+  element;
 
-  private onClick = (e) => {
+  onClick = (e) => {
     const targetElement = e.target;
     const clickedInside = this.element
                               .contains(targetElement);
@@ -18,8 +18,8 @@ export class ClickOutsideDirective implements OnInit, OnDestroy {
     }
   };
 
-  constructor (private ElementRef: ElementRef) {
-    this.element = this.ElementRef.nativeElement;
+  constructor (private elementRef: ElementRef) {
+    this.element = this.elementRef.nativeElement;
   }
 
   ngOnDestroy () {
