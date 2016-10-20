@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { GeoTargetingTypeService } from './geo-targeting-location-type.service';
+import { GeoTargetingLocationTypeService } from './geo-targeting-location-type.service';
 import { LocationType } from '../../targeting/targeting-spec-geo.interface';
 import { TargetingSpecService } from '../../targeting/targeting-spec.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
@@ -100,7 +100,7 @@ export class GeoTargetingLocationTypeComponent implements OnInit, OnDestroy {
 
   constructor (private changeDetectorRef: ChangeDetectorRef,
                private translateService: TranslateService,
-               private geoTargetingTypeService: GeoTargetingTypeService,
+               private geoTargetingTypeService: GeoTargetingLocationTypeService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
                private targetingSpecService: TargetingSpecService) {}
 

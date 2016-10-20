@@ -20,7 +20,7 @@ describe('Component: GeoTargetingMap', () => {
       ],
       providers:    [
         {provide: GeoTargetingSelectedService, useValue: {}},
-        {provide: TranslateService, useValue: {}},
+        {provide: TranslateService, useValue: {instant: () => {}}},
         {provide: GeoTargetingService, useValue: {}},
         {provide: ComponentsHelperService, useValue: {setRootViewContainerRef: () => {}}},
         {provide: GeoTargetingMapService, useValue: {}},

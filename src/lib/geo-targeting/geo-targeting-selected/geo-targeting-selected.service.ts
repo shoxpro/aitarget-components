@@ -5,7 +5,7 @@ import { GeoTargetingSpec, Key, City, CustomLocation } from '../../targeting/tar
 import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
-import { GeoTargetingTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
+import { GeoTargetingLocationTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
 import { GeoTargetingRadiusService } from '../geo-targeting-radius/geo-targeting-radius.service';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 
@@ -343,7 +343,7 @@ export class GeoTargetingSelectedService {
   constructor (private translateService: TranslateService,
                private geoTargetingApiService: GeoTargetingApiService,
                private geoTargetingInfoService: GeoTargetingInfoService,
-               private geoTargetingTypeService: GeoTargetingTypeService) {
+               private geoTargetingTypeService: GeoTargetingLocationTypeService) {
   }
 
 }
