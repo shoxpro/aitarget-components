@@ -8,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class DemoGeoTargetingComponent implements OnInit {
 
   hideGeoTargeting = false;
-  showSpec              = false;
-  lang                  = 'en_US';
+  showSpec         = false;
+  lang             = 'en_US';
 
   spec = {
     'geo_locations':          {

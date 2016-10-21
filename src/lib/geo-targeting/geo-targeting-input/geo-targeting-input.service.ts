@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Rx';
 @Injectable()
 export class GeoTargetingInputService {
 
-  _term = new Subject();
+  _term = new Subject<string>();
   term  = this._term.asObservable();
 
   _hasFocus = new Subject();

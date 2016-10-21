@@ -1,9 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ElementRef } from '@angular/core';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 import { GeoTargetingInputService } from './geo-targeting-input.service';
 import { GeoTargetingDropdownService } from '../geo-targeting-dropdown/geo-targeting-dropdown.service';
-import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
 import { CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
@@ -12,6 +11,7 @@ import { GeoTargetingService } from '../geo-targeting.service';
 import { Store } from '@ngrx/store';
 import { typeModel } from '../geo-targeting-type/geo-targeting-type.model';
 import { AppState } from '../../../app/reducers/index';
+import { Subject } from 'rxjs/Rx';
 
 @Component({
   selector:        'geo-targeting-input',
@@ -23,20 +23,13 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
 
   term;
   hasFocus;
-  _subscriptions = [];
   dropdownActive;
   foundItems;
   hasSelected;
   mapActive;
-  latLngRegex    = /[(]?([\s]*[\-]?[\s]*\d{1,3}\.\d{4,6})[\s]*\,([\s]*[\-]?[\s]*\d{1,3}\.\d{4,6})[\s]*[)]?/;
-
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.changeDetectorRef.markForCheck();
-    this.changeDetectorRef.detectChanges();
-  }
+  inputElement;
+  latLngRegex = /[(]?([\s]*[\-]?[\s]*\d{1,3}\.\d{4,6})[\s]*,([\s]*[\-]?[\s]*\d{1,3}\.\d{4,6})[\s]*[)]?/;
+  destroy$    = new Subject();
 
   /**
    * Search locations for passed term
@@ -88,159 +81,115 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
                private geoTargetingDropdownService: GeoTargetingDropdownService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingMapService: GeoTargetingMapService,
-               private elementRef: ElementRef,
-               private changeDetectorRef: ChangeDetectorRef) {
-  }
+               private elementRef: ElementRef) {}
 
   ngOnDestroy () {
-    // Unsubscribe from all Observables
-    this._subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
+    this.destroy$.next();
   }
 
   ngOnInit () {
+    // Set input element once on init
+    this.inputElement = this.elementRef.nativeElement.querySelector('input');
+
     /**
      * Update term
      */
-    this._subscriptions.push(
-      this.geoTargetingInputService.term.subscribe((term) => {
-        this.term = term;
-      })
-    );
+    this.geoTargetingInputService.term
+        .takeUntil(this.destroy$)
+        .subscribe((term) => this.term = term);
 
     /**
      * Update dropdown when type for search changes
      */
-    this._subscriptions.push(
-      this._store.let(typeModel)
-          .map(({selectedType}) => selectedType)
-          .distinctUntilChanged()
-          .subscribe(() => this.searchTerm())
-    );
+    this._store.let(typeModel)
+        .takeUntil(this.destroy$)
+        .map(({selectedType}) => selectedType)
+        .distinctUntilChanged()
+        .subscribe(() => this.searchTerm());
 
     /**
-     * Check if input term isn't a coordinate and search for new items
+     * Check if input term is not a coordinate and search for new items
      */
-    this._subscriptions.push(
-      this.geoTargetingInputService.term
-          .debounceTime(500)
-          .filter((term: string) => !this.latLngRegex.test(term))
-          .distinctUntilChanged()
-          .subscribe((term: string) => {
-
-            this.searchTerm(term);
-
-            this.updateTemplate();
-          })
-    );
+    this.geoTargetingInputService.term
+        .takeUntil(this.destroy$)
+        .debounceTime(500)
+        .filter((term) => !this.latLngRegex.test(term))
+        .distinctUntilChanged()
+        .subscribe((term) => this.searchTerm());
 
     /**
      * Check input term for matching geo coordinates
      */
-    this._subscriptions.push(
-      this.geoTargetingInputService.term
-          .filter((term: string) => this.latLngRegex.test(term))
-          .map((term: string) => term.replace(/[\s]*/, ''))
-          .distinctUntilChanged()
-          .map((term: string) => {
-            let matches   = term.match(this.latLngRegex);
-            let latitude  = Number(matches[1]);
-            let longitude = Number(matches[2]);
-            let key       = `(${latitude}, ${longitude})`;
-            return (<CustomLocation>{
-              key:       key,
-              name:      key,
-              latitude:  latitude,
-              longitude: longitude,
-              type:      'custom_location'
-            });
-          })
-          .flatMap(this.geoTargetingSelectedService.setCoordinates)
-          .subscribe((item: any) => {
-            // Show message if coordinates don't belong to any country (e.g. deep-deep ocean)
-            if (!item.country_code) {
-              let message = this.translateService.instant(`geo-targeting-input.INVALID_LOCATION`);
+    this.geoTargetingInputService.term
+        .takeUntil(this.destroy$)
+        .filter((term: string) => this.latLngRegex.test(term))
+        .map((term: string) => term.replace(/[\s]*/, ''))
+        .distinctUntilChanged()
+        .map((term: string) => {
+          let matches   = term.match(this.latLngRegex);
+          let latitude  = Number(matches[1]);
+          let longitude = Number(matches[2]);
+          let key       = `(${latitude}, ${longitude})`;
+          return (<CustomLocation>{
+            key:       key,
+            name:      key,
+            latitude:  latitude,
+            longitude: longitude,
+            type:      'custom_location'
+          });
+        })
+        .flatMap(this.geoTargetingSelectedService.setCoordinates)
+        .subscribe((item: any) => {
+          // Show message if coordinates don't belong to any country (e.g. deep-deep ocean)
+          if (!item.country_code) {
+            let message = this.translateService.instant(`geo-targeting-input.INVALID_LOCATION`);
 
-              this.geoTargetingInfoService.update('info', message);
-              this.geoTargetingInfoService.show();
+            this.geoTargetingInfoService.update('info', message);
+            this.geoTargetingInfoService.show();
 
-              return;
-            }
+            return;
+          }
 
-            this.geoTargetingDropdownService.update([item]);
-            this.updateTemplate();
-          })
-    );
+          this.geoTargetingDropdownService.update([item]);
+        });
 
     /**
      * Process dropdown open/close for proper ngClasses
      */
-    this._subscriptions.push(
-      this.geoTargetingDropdownService.isOpen.subscribe((isOpen) => {
-        this.dropdownActive = isOpen && this.foundItems && this.foundItems.length;
-        this.updateTemplate();
-      })
-    );
+    this.dropdownActive = this.geoTargetingDropdownService.isOpen
+                              .map((isOpen) => isOpen && this.foundItems && this.foundItems.length);
 
     /**
      * Process input focus/blur for proper ngClasses
      */
-    this._subscriptions.push(
-      this.geoTargetingInputService.hasFocus.subscribe((hasFocus) => {
-        this.hasFocus    = hasFocus;
-        let inputElement = this.elementRef.nativeElement.querySelector('input');
-
-        if (hasFocus) {
-          inputElement.focus();
-        } else {
-          inputElement.blur();
-        }
-
-        this.updateTemplate();
-      })
-    );
+    this.hasFocus = this.geoTargetingInputService.hasFocus
+                        .do((hasFocus) => {
+                          if (hasFocus) {
+                            this.inputElement.focus();
+                          } else {
+                            this.inputElement.blur();
+                          }
+                        });
 
     /**
      * Subscribe to selected items change for proper input ngClasses
      */
-    this._subscriptions.push(
-      this.geoTargetingSelectedService.items.subscribe((items: GeoTargetingItem[]) => {
-        this.hasSelected = items && items.length;
-        this.updateTemplate();
-      })
-    );
-
-    /**
-     * Update component's translations on language change
-     */
-    this._subscriptions.push(
-      this.translateService.onLangChange.subscribe(() => {
-        this.updateTemplate();
-      })
-    );
+    this.hasSelected = this.geoTargetingSelectedService.items
+                           .map((items) => items && items.length);
 
     /**
      * Subscribe to map's activity change for proper input ngClasses
      */
-    this._subscriptions.push(
-      this.geoTargetingMapService.mapActive.subscribe((mapActive) => {
-        this.mapActive = mapActive;
-        this.updateTemplate();
-      })
-    );
+    this.mapActive = this.geoTargetingMapService.mapActive;
 
     /**
      * Process Escape and clicked outside when dropdown is open
      */
-    this._subscriptions.push(
-      this.geoTargetingService.clickOutsideOfGeoStream
-          .merge(this.geoTargetingService.escapeStream)
-          .filter(() => this.hasFocus)
-          .subscribe(() => {
-            this.geoTargetingInputService.blur();
-          })
-    );
+    this.geoTargetingService.clickOutsideOfGeoStream
+        .takeUntil(this.destroy$)
+        .merge(this.geoTargetingService.escapeStream)
+        .filter(() => this.hasFocus)
+        .subscribe(() => this.geoTargetingInputService.blur());
   }
 
 }
