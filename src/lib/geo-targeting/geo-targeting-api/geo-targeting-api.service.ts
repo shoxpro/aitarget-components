@@ -84,11 +84,12 @@ export class GeoTargetingApiService {
         place_fallback: true,
         locale:         this.lang
       }, (response) => {
-        _response.next(response.data);
+        _response.next(response.data || []);
       });
     });
 
-    return _response.asObservable();
+    return _response.asObservable()
+                    .take(1);
   };
 
   /**
@@ -139,7 +140,8 @@ export class GeoTargetingApiService {
 
           _items.next(items);
         });
-    return _items.asObservable();
+    return _items.asObservable()
+                 .take(1);
   }
 
   /**
@@ -165,7 +167,8 @@ export class GeoTargetingApiService {
       });
     });
 
-    return _response.asObservable();
+    return _response.asObservable()
+                    .take(1);
   };
 
   /**
@@ -195,7 +198,8 @@ export class GeoTargetingApiService {
       });
     });
 
-    return _response.asObservable();
+    return _response.asObservable()
+                    .take(1);
   };
 
 }

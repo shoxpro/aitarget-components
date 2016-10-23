@@ -12,6 +12,8 @@ import { Store } from '@ngrx/store';
 import { typeModel } from '../geo-targeting-type/geo-targeting-type.model';
 import { AppState } from '../../../app/reducers/index';
 import { Subject } from 'rxjs/Rx';
+import { GeoTargetingSearchService } from '../geo-targeting-search/geo-targeting-search.service';
+import { GeoTargetingSearchState } from '../geo-targeting-search/geo-taregting-search.reducer';
 
 @Component({
   selector:        'geo-targeting-input',
@@ -91,9 +93,11 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
     // Set input element once on init
     this.inputElement = this.elementRef.nativeElement.querySelector('input');
 
-    /**
-     * Update term
-     */
+    this._store.let(GeoTargetingSearchService.getModel)
+        .subscribe((model: GeoTargetingSearchState) => {
+          this.term = model.inputValue;
+        });
+
     this.geoTargetingInputService.term
         .takeUntil(this.destroy$)
         .subscribe((term) => this.term = term);
