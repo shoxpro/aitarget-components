@@ -72,7 +72,7 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
     this.geoTargetingSelectedService.add(item);
 
     // Reset input text, but keep focus
-    this.geoTargetingInputService.setTerm(null);
+    this.geoTargetingInputService.setTerm('');
     this.geoTargetingInputService.focus();
 
     this.closeDropdown();

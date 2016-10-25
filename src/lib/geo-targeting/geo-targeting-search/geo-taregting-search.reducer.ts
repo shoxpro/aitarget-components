@@ -13,8 +13,8 @@ export interface GeoTargetingSearchState {
   inputValue: string;
   terms: Array<Term>;
   termsGrouped: {queries: Array<string>; customLocationKeys: Array<string>};
-  termsFound: Array<string>;
-  termsNotFound: Array<string>;
+  termsFound: Array<Term>;
+  termsNotFound: Array<Term>;
   termsMatches: Array<{term: Term; item: GeoTargetingItem}>;
   items: Array<GeoTargetingItem>;
   fetching: boolean;

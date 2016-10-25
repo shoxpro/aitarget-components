@@ -4,7 +4,7 @@ import { GeoTargetingSearchActions } from './geo-targeting-search.actions';
 
 let deepFreeze = require('deep-freeze');
 
-fdescribe(`geoTargetingSearchReducer`, () => {
+describe(`geoTargetingSearchReducer`, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [GeoTargetingSearchActions]

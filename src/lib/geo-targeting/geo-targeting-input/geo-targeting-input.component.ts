@@ -4,7 +4,6 @@ import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.s
 import { GeoTargetingInputService } from './geo-targeting-input.service';
 import { GeoTargetingDropdownService } from '../geo-targeting-dropdown/geo-targeting-dropdown.service';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
-import { CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingService } from '../geo-targeting.service';
@@ -14,6 +13,7 @@ import { AppState } from '../../../app/reducers/index';
 import { Subject } from 'rxjs/Rx';
 import { GeoTargetingSearchService } from '../geo-targeting-search/geo-targeting-search.service';
 import { GeoTargetingSearchState } from '../geo-targeting-search/geo-taregting-search.reducer';
+import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 
 @Component({
   selector:        'geo-targeting-input',
@@ -30,26 +30,7 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
   hasSelected;
   mapActive;
   inputElement;
-  latLngRegex = /[(]?([\s]*[\-]?[\s]*\d{1,3}\.\d{4,6})[\s]*,([\s]*[\-]?[\s]*\d{1,3}\.\d{4,6})[\s]*[)]?/;
-  destroy$    = new Subject();
-
-  /**
-   * Search locations for passed term
-   * @param term
-   */
-  searchTerm (term = this.term) {
-    if (term) {
-      this.geoTargetingApiService.search(term)
-          .subscribe((items) => {
-            this.foundItems = items;
-            this.geoTargetingDropdownService.update(this.foundItems);
-          });
-    } else {
-      this.foundItems = null;
-      this.geoTargetingDropdownService.update(this.foundItems);
-      this.geoTargetingDropdownService.close();
-    }
-  }
+  destroy$ = new Subject();
 
   /**
    * On key up handler.
@@ -83,6 +64,8 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
                private geoTargetingDropdownService: GeoTargetingDropdownService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingMapService: GeoTargetingMapService,
+               private geoTargetingSearchService: GeoTargetingSearchService,
+               private geoTargetingModeService: GeoTargetingModeService,
                private elementRef: ElementRef) {}
 
   ngOnDestroy () {
@@ -94,13 +77,45 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
     this.inputElement = this.elementRef.nativeElement.querySelector('input');
 
     this._store.let(GeoTargetingSearchService.getModel)
+        .take(1)
         .subscribe((model: GeoTargetingSearchState) => {
+          this.term = model.inputValue;
+        });
+
+    this._store.let(GeoTargetingSearchService.getModel)
+        .subscribe((model: GeoTargetingSearchState) => {
+          if (model.terms.length <= 1) {
+            this.foundItems = model.items;
+            this.geoTargetingDropdownService.update(this.foundItems);
+          } else {
+            let mode = this.geoTargetingModeService.get();
+            model.termsMatches.forEach((matched) => {
+              matched.item.excluded = mode === 'exclude';
+              this.geoTargetingSelectedService.add(matched.item);
+              // Reset input text, but keep focus
+              this.geoTargetingInputService.setTerm('');
+              this.geoTargetingInputService.focus();
+            });
+            let notFoundInputs = model.termsNotFound.map((term) => term.input)
+                                      .join(', ');
+            this.geoTargetingInfoService.update('info',
+              `Some names wasn't found: ${notFoundInputs}.`
+              , false);
+            this.geoTargetingInfoService.show();
+            this.foundItems = [];
+            this.geoTargetingDropdownService.update(this.foundItems);
+          }
           this.term = model.inputValue;
         });
 
     this.geoTargetingInputService.term
         .takeUntil(this.destroy$)
-        .subscribe((term) => this.term = term);
+        .debounceTime(1000)
+        .subscribe((term) => {
+          this.term = term;
+          this.geoTargetingSearchService.processInputValue(term);
+          this.geoTargetingSearchService.search();
+        });
 
     /**
      * Update dropdown when type for search changes
@@ -109,53 +124,7 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
         .takeUntil(this.destroy$)
         .map(({selectedType}) => selectedType)
         .distinctUntilChanged()
-        .subscribe(() => this.searchTerm());
-
-    /**
-     * Check if input term is not a coordinate and search for new items
-     */
-    this.geoTargetingInputService.term
-        .takeUntil(this.destroy$)
-        .debounceTime(500)
-        .filter((term) => !this.latLngRegex.test(term))
-        .distinctUntilChanged()
-        .subscribe((term) => this.searchTerm());
-
-    /**
-     * Check input term for matching geo coordinates
-     */
-    this.geoTargetingInputService.term
-        .takeUntil(this.destroy$)
-        .filter((term: string) => this.latLngRegex.test(term))
-        .map((term: string) => term.replace(/[\s]*/, ''))
-        .distinctUntilChanged()
-        .map((term: string) => {
-          let matches   = term.match(this.latLngRegex);
-          let latitude  = Number(matches[1]);
-          let longitude = Number(matches[2]);
-          let key       = `(${latitude}, ${longitude})`;
-          return (<CustomLocation>{
-            key:       key,
-            name:      key,
-            latitude:  latitude,
-            longitude: longitude,
-            type:      'custom_location'
-          });
-        })
-        .flatMap(this.geoTargetingSelectedService.setCoordinates)
-        .subscribe((item: any) => {
-          // Show message if coordinates don't belong to any country (e.g. deep-deep ocean)
-          if (!item.country_code) {
-            let message = this.translateService.instant(`geo-targeting-input.INVALID_LOCATION`);
-
-            this.geoTargetingInfoService.update('info', message);
-            this.geoTargetingInfoService.show();
-
-            return;
-          }
-
-          this.geoTargetingDropdownService.update([item]);
-        });
+        .subscribe(() => this.geoTargetingSearchService.search());
 
     /**
      * Process dropdown open/close for proper ngClasses
