@@ -16,6 +16,7 @@ import { ComponentsHelperService } from '../shared/services/components-helper.se
 import { GeoTargetingService } from './geo-targeting.service';
 import { GeoTargetingSearchActions } from './geo-targeting-search/geo-targeting-search.actions';
 import { GeoTargetingSearchService } from './geo-targeting-search/geo-targeting-search.service';
+import { GeoTargetingModeActions } from './geo-targeting-mode/geo-targeting-mode.actions';
 
 @Component({
   selector:    'geo-targeting',
@@ -25,7 +26,7 @@ import { GeoTargetingSearchService } from './geo-targeting-search/geo-targeting-
     GeoTargetingSelectedService, TargetingSpecService, GeoTargetingModeService,
     GeoTargetingInfoService, GeoTargetingLocationTypeService, GeoTargetingRadiusService,
     GeoTargetingMapService, ComponentsHelperService, GeoTargetingLocationTypeService, GeoTargetingSearchActions,
-    GeoTargetingSearchService]
+    GeoTargetingSearchService, GeoTargetingModeService, GeoTargetingModeActions]
 })
 export class GeoTargetingComponent implements OnInit, OnDestroy {
 

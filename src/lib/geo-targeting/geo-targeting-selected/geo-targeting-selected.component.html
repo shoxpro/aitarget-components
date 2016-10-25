@@ -21,7 +21,6 @@
           <fb-arrow-drop [direction]="itemMode.isOpen ? 'up': 'down'"></fb-arrow-drop>
           <geo-targeting-mode-dropdown
             appendTo="geo-targeting"
-            [showVeil]="true"
             *ngIf="itemMode.isOpen"
             [excluded]="item.excluded"
             (toggle)="toggleModeDropdown(itemMode, $event)"

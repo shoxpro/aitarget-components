@@ -2,22 +2,25 @@
 
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingMapControlsComponent } from './geo-targeting-map-controls.component';
-import { LibModule } from '../../lib.module';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
-import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
-import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
-import { GeoTargetingLocationTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
-import { ComponentsHelperService } from '../../shared/services/components-helper.service';
+import { Input, Component } from '@angular/core';
+import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
 
 describe('Component: GeoTargetingMapControls', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports:   [LibModule],
-      providers: [GeoTargetingMapService, GeoTargetingMapService, GeoTargetingInfoService,
-        GeoTargetingModeService, GeoTargetingSelectedService, GeoTargetingApiService,
-        GeoTargetingLocationTypeService, ComponentsHelperService]
+      imports:      [],
+      declarations: [
+        GeoTargetingMapControlsComponent,
+        GeoTargetingPinComponent,
+        TranslatePipe
+      ],
+      providers:    [
+        {provide: TranslateService, useValue: {}},
+        {provide: GeoTargetingMapService, useValue: {}},
+        {provide: GeoTargetingModeService, useValue: {}}
+      ]
     });
   });
 
@@ -28,3 +31,11 @@ describe('Component: GeoTargetingMapControls', () => {
       .toBeTruthy();
   });
 });
+
+@Component({
+  selector: 'geo-targeting-pin',
+  template: '<div></div>'
+})
+class GeoTargetingPinComponent {
+  @Input() excluded;
+}

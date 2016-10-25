@@ -3,21 +3,26 @@
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingSelectedService } from './geo-targeting-selected.service';
 import { GeoTargetingSelectedComponent } from './geo-targeting-selected.component';
-import { LibModule } from '../../lib.module';
-import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
-import { GeoTargetingLocationTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
-import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
-import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
-import { ComponentsHelperService } from '../../shared/services/components-helper.service';
+import { Input, Component, Output, EventEmitter } from '@angular/core';
+import { FullNamePipe } from '../full-name.pipe';
 
 describe('Component: GeoTargetingSelected', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports:   [LibModule],
-      providers: [GeoTargetingSelectedService, GeoTargetingInfoService, GeoTargetingLocationTypeService,
-        GeoTargetingApiService, GeoTargetingMapService, GeoTargetingModeService,
-        {provide: ComponentsHelperService, useValue: {}}]
+      imports:      [],
+      declarations: [
+        GeoTargetingSelectedComponent,
+        GeoTargetingPinComponent,
+        FbArrowDropComponent,
+        GeoTargetingModeDropdownComponent,
+        GeoTargetingRadiusComponent,
+        FullNamePipe
+      ],
+      providers:    [
+        {provide: GeoTargetingSelectedService, useValue: {}},
+        {provide: GeoTargetingMapService, useValue: {}},
+      ]
     });
   });
 
@@ -28,3 +33,45 @@ describe('Component: GeoTargetingSelected', () => {
       .toBeTruthy();
   });
 });
+
+@Component({
+  selector: 'geo-targeting-pin',
+  template: '<div></div>'
+})
+class GeoTargetingPinComponent {
+  @Input() excluded;
+}
+
+@Component({
+  selector: 'fb-arrow-drop',
+  template: '<div></div>'
+})
+class FbArrowDropComponent {
+  @Input() direction;
+}
+
+@Component({
+  selector: 'geo-targeting-mode-dropdown',
+  template: '<div></div>'
+})
+class GeoTargetingModeDropdownComponent {
+  @Input('hasRemove') hasRemove: Boolean = false;
+  @Input('excluded') excluded: Boolean   = false;
+
+  @Output()
+  toggle  = new EventEmitter();
+  @Output()
+  include = new EventEmitter();
+  @Output()
+  exclude = new EventEmitter();
+  @Output()
+  remove  = new EventEmitter();
+}
+
+@Component({
+  selector: 'geo-targeting-radius',
+  template: '<div></div>'
+})
+class GeoTargetingRadiusComponent {
+  @Input() item;
+}

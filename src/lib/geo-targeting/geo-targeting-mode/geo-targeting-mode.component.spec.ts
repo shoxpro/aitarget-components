@@ -1,15 +1,25 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed } from '@angular/core/testing';
-import { LibModule } from '../../lib.module';
-import { GeoTargetingModeService } from './geo-targeting-mode.service';
 import { GeoTargetingModeComponent } from './geo-targeting-mode.component';
+import { Component, Input } from '@angular/core';
+import { TranslateService } from 'ng2-translate/ng2-translate';
+import { GeoTargetingModeService } from './geo-targeting-mode.service';
 
 describe('Component: GeoTargetingMode', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports:   [LibModule],
-      providers: [GeoTargetingModeService]
+      imports:      [],
+      declarations: [
+        GeoTargetingModeComponent,
+        GeoTargetingPinComponent,
+        FbArrowDropComponent,
+        GeoTargetingModeDropdownComponent
+      ],
+      providers:    [
+        {provide: TranslateService, useValue: {}},
+        {provide: GeoTargetingModeService, useValue: {}},
+      ]
     });
   });
 
@@ -20,3 +30,27 @@ describe('Component: GeoTargetingMode', () => {
       .toBeTruthy();
   });
 });
+
+@Component({
+  selector: 'geo-targeting-pin',
+  template: '<div></div>'
+})
+class GeoTargetingPinComponent {
+  @Input() excluded;
+}
+
+@Component({
+  selector: 'fb-arrow-drop',
+  template: '<div></div>'
+})
+class FbArrowDropComponent {
+  @Input() direction;
+}
+
+@Component({
+  selector: 'geo-targeting-mode-dropdown',
+  template: '<div></div>'
+})
+class GeoTargetingModeDropdownComponent {
+  @Input() excluded;
+}

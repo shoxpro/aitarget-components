@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/Rx';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../app/reducers/index';
+import { GeoTargetingModeActions } from './geo-targeting-mode.actions';
+import { GeoTargetingModeType } from './geo-targeting-mode.reducer';
 
 @Injectable()
 export class GeoTargetingModeService {
@@ -15,6 +19,11 @@ export class GeoTargetingModeService {
     return this._mode.getValue();
   }
 
-  constructor () { }
+  setMode (mode: GeoTargetingModeType) {
+    this._store.dispatch(this.geoTargetingModeActions.setMode(mode));
+  }
+
+  constructor (private _store: Store<AppState>,
+               private geoTargetingModeActions: GeoTargetingModeActions) {}
 
 }
