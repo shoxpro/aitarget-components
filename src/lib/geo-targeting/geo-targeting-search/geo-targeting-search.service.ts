@@ -9,7 +9,6 @@ import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.s
 
 @Injectable()
 export class GeoTargetingSearchService {
-  model: GeoTargetingSearchState;
   model$;
 
   static getModel = (_store): Observable<GeoTargetingSearchState> => {

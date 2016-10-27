@@ -17,13 +17,14 @@ import { GeoTargetingService } from './geo-targeting.service';
 import { GeoTargetingSearchActions } from './geo-targeting-search/geo-targeting-search.actions';
 import { GeoTargetingSearchService } from './geo-targeting-search/geo-targeting-search.service';
 import { GeoTargetingModeActions } from './geo-targeting-mode/geo-targeting-mode.actions';
+import { GeoTargetingSelectedActions } from './geo-targeting-selected/geo-targeting-selected.actions';
 
 @Component({
   selector:    'geo-targeting',
   templateUrl: './geo-targeting.component.html',
   styleUrls:   ['./geo-targeting.component.css'],
   providers:   [GeoTargetingService, GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
-    GeoTargetingSelectedService, TargetingSpecService, GeoTargetingModeService,
+    GeoTargetingSelectedService, GeoTargetingSelectedActions, TargetingSpecService, GeoTargetingModeService,
     GeoTargetingInfoService, GeoTargetingLocationTypeService, GeoTargetingRadiusService,
     GeoTargetingMapService, ComponentsHelperService, GeoTargetingLocationTypeService, GeoTargetingSearchActions,
     GeoTargetingSearchService, GeoTargetingModeService, GeoTargetingModeActions]

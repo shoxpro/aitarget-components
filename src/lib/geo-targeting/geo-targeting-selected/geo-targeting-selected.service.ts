@@ -8,6 +8,10 @@ import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-inf
 import { GeoTargetingLocationTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
 import { GeoTargetingRadiusService } from '../geo-targeting-radius/geo-targeting-radius.service';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
+import { GeoTargetingSelectedState, GEO_TARGETING_SELECTED_KEY } from './geo-targeting-selected.reducer';
+import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.interface';
+import { AppState } from '../../../app/reducers/index';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class GeoTargetingSelectedService {
@@ -24,6 +28,13 @@ export class GeoTargetingSelectedService {
     geo_market:         'geo_markets',
     electoral_district: 'electoral_districts',
     custom_location:    'custom_locations'
+  };
+  model$;
+
+  static getModel = (_store): Observable<GeoTargetingSelectedState> => {
+    return _store.select(GEO_TARGETING_STATE_KEY)
+                 .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_SELECTED_KEY])
+                 .distinctUntilChanged();
   };
 
   /**
@@ -340,10 +351,12 @@ export class GeoTargetingSelectedService {
     };
   }
 
-  constructor (private translateService: TranslateService,
+  constructor (private _store: Store<AppState>,
+               private translateService: TranslateService,
                private geoTargetingApiService: GeoTargetingApiService,
                private geoTargetingInfoService: GeoTargetingInfoService,
                private geoTargetingTypeService: GeoTargetingLocationTypeService) {
+    this.model$ = this._store.let(GeoTargetingSelectedService.getModel);
   }
 
 }
