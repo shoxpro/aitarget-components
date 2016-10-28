@@ -48,7 +48,7 @@ export interface CustomLocation {
  * device, and are more than 100 miles away from their stated current city from their Facebook profiles.
  * This value is not available when excluding location types.
  */
-export type LocationType = 'recent' | 'home' | 'travel_in';
+export type LocationTypeValue = 'recent' | 'home' | 'travel_in';
 
 export type CountryGroup = 'worldwide' | 'africa' | 'south_america'
   | 'central_america' | 'caribbean' | 'north_america' | 'europe' | 'asia' | 'oceania'
@@ -133,7 +133,7 @@ export interface GeoTargetingSpec {
    * 'location_types':['recent', 'home']
    * 'location_types':['travel_in']
    */
-  location_types?: Array<LocationType>;
+  location_types?: Array<LocationTypeValue>;
   /**
    * Values for targeting countries in global geographical regions and free trade areas.
    * It must be an array of country group codes.

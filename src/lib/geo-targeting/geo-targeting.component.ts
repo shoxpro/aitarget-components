@@ -18,6 +18,7 @@ import { GeoTargetingSearchActions } from './geo-targeting-search/geo-targeting-
 import { GeoTargetingSearchService } from './geo-targeting-search/geo-targeting-search.service';
 import { GeoTargetingModeActions } from './geo-targeting-mode/geo-targeting-mode.actions';
 import { GeoTargetingSelectedActions } from './geo-targeting-selected/geo-targeting-selected.actions';
+import { GeoTargetingLocationTypeActions } from './geo-targeting-location-type/geo-targeting-location-type.actions';
 
 @Component({
   selector:    'geo-targeting',
@@ -25,7 +26,8 @@ import { GeoTargetingSelectedActions } from './geo-targeting-selected/geo-target
   styleUrls:   ['./geo-targeting.component.css'],
   providers:   [GeoTargetingService, GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
     GeoTargetingSelectedService, GeoTargetingSelectedActions, TargetingSpecService, GeoTargetingModeService,
-    GeoTargetingInfoService, GeoTargetingLocationTypeService, GeoTargetingRadiusService,
+    GeoTargetingInfoService, GeoTargetingLocationTypeService, GeoTargetingLocationTypeActions,
+    GeoTargetingRadiusService,
     GeoTargetingMapService, ComponentsHelperService, GeoTargetingLocationTypeService, GeoTargetingSearchActions,
     GeoTargetingSearchService, GeoTargetingModeService, GeoTargetingModeActions]
 })
@@ -68,7 +70,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
 
   ngOnInit () {
     if (this.spec.geo_locations && this.spec.geo_locations.location_types) {
-      this.geoTargetingTypeService.update(this.spec.geo_locations.location_types);
+      this.geoTargetingTypeService.selectTypeByValue(this.spec.geo_locations.location_types);
     }
     /**
      * Get geo location metadata for passed targeting spec and update selected items

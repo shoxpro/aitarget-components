@@ -300,8 +300,14 @@ export class GeoTargetingSelectedService {
    * @returns {TargetingSpec}
    */
   getSpec () {
+    let locationTypes;
+    this._store.let(GeoTargetingLocationTypeService.getModel)
+        .take(1)
+        .map(({selectedType}) => selectedType)
+        .subscribe((selectedType) => locationTypes = selectedType.value);
+
     let geoLocations: GeoTargetingSpec = {
-      location_types: this.geoTargetingTypeService.get()
+      location_types: locationTypes
     };
 
     let excludedGeoLocations: GeoTargetingSpec = {};

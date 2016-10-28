@@ -1,27 +1,16 @@
 <div class="geo-targeting-location-type"
-     [ngClass]="{'geo-targeting-location-type_open': isOpen}"
-     (click)="toggleDropdown($event)">
+     [ngClass]="{'geo-targeting-location-type_open': (model$ | async)?.isOpen}">
 
-  <span class="geo-targeting-location-type__selected">{{ selectedType.title }}</span>
-
-  <fb-arrow-drop [direction]="isOpen ? 'up' : 'down'"></fb-arrow-drop>
-</div>
-<div class="geo-targeting-location-type__dropdown"
-     (clickOutside)="toggleDropdown()"
-     *ngIf="isOpen">
-  <div *ngFor="let type of types"
-       class="geo-targeting-location-type__dropdown-item"
-       [ngClass]="{'geo-targeting-location-type__dropdown-item_selected': selectedType.title === type.title}"
-       (mouseover)="toggleInfo(type, true)"
-       (mouseout)="toggleInfo(type, false)"
-       (click)="select(type)">
-    <fb-tick class="geo-targeting-location-type__tick"
-             *ngIf="selectedType.title === type.title">
-    </fb-tick>
-    <span class="geo-targeting-location-type__type-title">{{ type.title }}</span>
-    <div class="geo-targeting-location-type__type-info"
-         *ngIf="type.showInfo">
-      <span>{{ type.info }}</span>
-    </div>
+  <div class="geo-targeting-location-type__content"
+       (click)="toggleDropdown($event)">
+    <span class="geo-targeting-location-type__selected">{{ (model$ | async)?.selectedType.name }}</span>
+    <fb-arrow-drop [direction]="(model$ | async)?.isOpen ? 'up' : 'down'"></fb-arrow-drop>
   </div>
+
+  <fb-dropdown-list
+    *ngIf="(model$ | async).isOpen"
+    (clickOutside)="toggleDropdown()"
+    [items]="(model$ | async).types"
+    [selectedItem]="(model$ | async).selectedType"
+    (onClick)="selectType($event)"></fb-dropdown-list>
 </div>
