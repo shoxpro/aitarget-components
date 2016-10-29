@@ -19,7 +19,7 @@ import { DetailedTargetingSearchService } from './detailed-targeting-search/deta
 @Component({
   selector:        'detailed-targeting',
   templateUrl:     'detailed-targeting.component.html',
-  styleUrls:       ['detailed-targeting.component.css'],
+  styleUrls:       ['detailed-targeting.component.scss'],
   providers:       [
     DetailedTargetingApiService, DetailedTargetingDropdownSuggestedService,
     DetailedTargetingDropdownBrowseService, DetailedTargetingInfoService,

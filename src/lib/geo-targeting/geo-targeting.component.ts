@@ -23,7 +23,7 @@ import { GeoTargetingLocationTypeActions } from './geo-targeting-location-type/g
 @Component({
   selector:    'geo-targeting',
   templateUrl: './geo-targeting.component.html',
-  styleUrls:   ['./geo-targeting.component.css'],
+  styleUrls:   ['./geo-targeting.component.scss'],
   providers:   [GeoTargetingService, GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
     GeoTargetingSelectedService, GeoTargetingSelectedActions, TargetingSpecService, GeoTargetingModeService,
     GeoTargetingInfoService, GeoTargetingLocationTypeService, GeoTargetingLocationTypeActions,

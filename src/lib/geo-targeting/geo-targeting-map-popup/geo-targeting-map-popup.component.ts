@@ -6,7 +6,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 @Component({
   selector:        'geo-targeting-map-popup',
   templateUrl:     './geo-targeting-map-popup.component.html',
-  styleUrls:       ['./geo-targeting-map-popup.component.css'],
+  styleUrls:       ['./geo-targeting-map-popup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingMapPopupComponent implements OnInit, OnDestroy {

@@ -10,7 +10,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 @Component({
   selector:        'detailed-targeting-input',
   templateUrl:     'detailed-targeting-input.component.html',
-  styleUrls:       ['detailed-targeting-input.component.css'],
+  styleUrls:       ['detailed-targeting-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingInputComponent implements OnInit {

@@ -5,7 +5,7 @@ import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mod
 @Component({
   selector:        'geo-targeting-map-controls',
   templateUrl:     './geo-targeting-map-controls.component.html',
-  styleUrls:       ['./geo-targeting-map-controls.component.css'],
+  styleUrls:       ['./geo-targeting-map-controls.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingMapControlsComponent implements OnInit, OnDestroy {

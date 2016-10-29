@@ -5,7 +5,7 @@ import { EventEmitter } from '@angular/common/src/facade/async';
 @Component({
   selector:        'geo-targeting-mode-dropdown',
   templateUrl:     './geo-targeting-mode-dropdown.component.html',
-  styleUrls:       ['./geo-targeting-mode-dropdown.component.css'],
+  styleUrls:       ['./geo-targeting-mode-dropdown.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingModeDropdownComponent implements OnInit, OnDestroy {

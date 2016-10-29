@@ -9,7 +9,7 @@ import { GeoTargetingInputService } from '../geo-targeting-input/geo-targeting-i
 @Component({
   selector:        'geo-targeting-dropdown',
   templateUrl:     './geo-targeting-dropdown.component.html',
-  styleUrls:       ['./geo-targeting-dropdown.component.css'],
+  styleUrls:       ['./geo-targeting-dropdown.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {

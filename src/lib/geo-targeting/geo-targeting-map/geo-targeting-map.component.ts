@@ -11,7 +11,7 @@ import { GeoTargetingService } from '../geo-targeting.service';
 @Component({
   selector:        'geo-targeting-map',
   templateUrl:     './geo-targeting-map.component.html',
-  styleUrls:       ['./geo-targeting-map.component.css', '../../../../node_modules/leaflet/dist/leaflet.css'],
+  styleUrls:       ['./geo-targeting-map.component.scss', '../../../../node_modules/leaflet/dist/leaflet.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation:   ViewEncapsulation.None
 })

@@ -5,7 +5,7 @@ import { GeoTargetingInfoService } from './geo-targeting-info.service';
 @Component({
   selector:        'geo-targeting-info',
   templateUrl:     './geo-targeting-info.component.html',
-  styleUrls:       ['./geo-targeting-info.component.css'],
+  styleUrls:       ['./geo-targeting-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingInfoComponent implements OnInit, OnDestroy {

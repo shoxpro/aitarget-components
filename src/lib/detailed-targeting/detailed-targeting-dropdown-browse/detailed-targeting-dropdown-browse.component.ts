@@ -10,7 +10,7 @@ import { DetailedTargetingSearchService } from '../detailed-targeting-search/det
 @Component({
   selector:        'detailed-targeting-dropdown-browse',
   templateUrl:     'detailed-targeting-dropdown-browse.component.html',
-  styleUrls:       ['detailed-targeting-dropdown-browse.component.css'],
+  styleUrls:       ['detailed-targeting-dropdown-browse.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 

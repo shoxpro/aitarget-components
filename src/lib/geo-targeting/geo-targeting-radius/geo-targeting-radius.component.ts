@@ -9,7 +9,7 @@ import { GeoTargetingService } from '../geo-targeting.service';
 @Component({
   selector:        'geo-targeting-radius',
   templateUrl:     './geo-targeting-radius.component.html',
-  styleUrls:       ['./geo-targeting-radius.component.css'],
+  styleUrls:       ['./geo-targeting-radius.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation:   ViewEncapsulation.None
 })

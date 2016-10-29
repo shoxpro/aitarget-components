@@ -8,7 +8,7 @@ import { AppState } from '../../../app/reducers/index';
 @Component({
   selector:        'geo-targeting-type',
   templateUrl:     './geo-targeting-type.component.html',
-  styleUrls:       ['./geo-targeting-type.component.css'],
+  styleUrls:       ['./geo-targeting-type.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingTypeComponent implements OnInit, OnDestroy {

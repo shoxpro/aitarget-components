@@ -18,7 +18,7 @@ import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mod
 @Component({
   selector:        'geo-targeting-input',
   templateUrl:     './geo-targeting-input.component.html',
-  styleUrls:       ['./geo-targeting-input.component.css'],
+  styleUrls:       ['./geo-targeting-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingInputComponent implements OnInit, OnDestroy {

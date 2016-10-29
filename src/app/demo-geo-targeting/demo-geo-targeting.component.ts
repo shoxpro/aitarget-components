@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector:    'app-demo-geo-targeting',
   templateUrl: './demo-geo-targeting.component.html',
-  styleUrls:   ['./demo-geo-targeting.component.css']
+  styleUrls:   ['demo-geo-targeting.component.scss']
 })
 export class DemoGeoTargetingComponent implements OnInit {
 

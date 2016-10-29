@@ -11,7 +11,7 @@ import { DetailedTargetingSearchService } from '../detailed-targeting-search/det
 @Component({
   selector:        'detailed-targeting-selected',
   templateUrl:     'detailed-targeting-selected.component.html',
-  styleUrls:       ['detailed-targeting-selected.component.css'],
+  styleUrls:       ['detailed-targeting-selected.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingSelectedComponent implements OnInit {

@@ -5,7 +5,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 @Component({
   selector:        'detailed-targeting-mode',
   templateUrl:     'detailed-targeting-mode.component.html',
-  styleUrls:       ['detailed-targeting-mode.component.css'],
+  styleUrls:       ['detailed-targeting-mode.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingModeComponent implements OnInit {

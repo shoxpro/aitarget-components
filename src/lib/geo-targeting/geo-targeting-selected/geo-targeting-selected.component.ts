@@ -6,7 +6,7 @@ import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.s
 @Component({
   selector:        'geo-targeting-selected',
   templateUrl:     './geo-targeting-selected.component.html',
-  styleUrls:       ['./geo-targeting-selected.component.css'],
+  styleUrls:       ['./geo-targeting-selected.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
