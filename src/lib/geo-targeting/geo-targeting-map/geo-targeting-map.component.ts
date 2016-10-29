@@ -54,7 +54,7 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Show or hide map
+   * Show or hideInfo map
    * @param event
    */
   toggleMap (event?) {
@@ -125,7 +125,7 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
     );
 
     /**
-     * Process Escape and outside click and hide map if it is open
+     * Process Escape and outside click and hideInfo map if it is open
      */
     this._subscriptions.push(
       this.geoTargetingService.clickOutsideOfGeoStream

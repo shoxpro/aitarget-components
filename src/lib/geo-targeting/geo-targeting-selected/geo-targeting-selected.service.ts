@@ -43,8 +43,7 @@ export class GeoTargetingSelectedService {
   informAboutMissingIncludedLocation () {
     let message = this.translateService.instant(`geo-targeting-info.MESSAGE_MISSING_INCLUDED`);
 
-    this.geoTargetingInfoService.update('error', message, false);
-    this.geoTargetingInfoService.show();
+    this.geoTargetingInfoService.showInfo({level: 'error', message, canRevert: false});
   }
 
   /**
@@ -56,8 +55,7 @@ export class GeoTargetingSelectedService {
                                               .join(', ')
     });
 
-    this.geoTargetingInfoService.update('error', message, false);
-    this.geoTargetingInfoService.show();
+    this.geoTargetingInfoService.showInfo({level: 'error', message, canRevert: false});
   }
 
   /**
@@ -74,8 +72,7 @@ export class GeoTargetingSelectedService {
       toName:    item.name
     });
 
-    this.geoTargetingInfoService.update('info', message, true);
-    this.geoTargetingInfoService.show();
+    this.geoTargetingInfoService.showInfo({level: 'info', message, canRevert: true});
   }
 
   /**
@@ -231,7 +228,7 @@ export class GeoTargetingSelectedService {
     }
 
     // Hide all existing info messages
-    this.geoTargetingInfoService.hide();
+    this.geoTargetingInfoService.hideInfo();
 
     // Replaced item is an item that is broader or narrower than passed item and has the same mode (excluded flag)
     this._replacedItems = broaderLocations.concat(narrowerLocations)

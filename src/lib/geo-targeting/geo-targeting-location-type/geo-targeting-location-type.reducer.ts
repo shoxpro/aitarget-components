@@ -22,7 +22,7 @@ export const geoTargetingLocationTypeInitial: GeoTargetingLocationTypeState = {
   isOpen:       false
 };
 
-export const GEO_TARGETING_LOCATION_TYPE = 'geoTargetingLocationType';
+export const GEO_TARGETING_LOCATION_TYPE_KEY = 'geoTargetingLocationType';
 
 export const geoTargetingLocationTypeReducer: ActionReducer<GeoTargetingLocationTypeState> =
                (state = geoTargetingLocationTypeInitial, action: Action) => {

@@ -38,7 +38,7 @@ let typesWithKeys: Array<LocationType> = [
   },
 ];
 
-fdescribe(`geoTargetingLocationTypeReducer`, () => {
+describe(`geoTargetingLocationTypeReducer`, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [

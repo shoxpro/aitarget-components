@@ -19,6 +19,7 @@ import { GeoTargetingSearchService } from './geo-targeting-search/geo-targeting-
 import { GeoTargetingModeActions } from './geo-targeting-mode/geo-targeting-mode.actions';
 import { GeoTargetingSelectedActions } from './geo-targeting-selected/geo-targeting-selected.actions';
 import { GeoTargetingLocationTypeActions } from './geo-targeting-location-type/geo-targeting-location-type.actions';
+import { GeoTargetingInfoActions } from './geo-targeting-info/geo-targeting-info.actions';
 
 @Component({
   selector:    'geo-targeting',
@@ -26,7 +27,7 @@ import { GeoTargetingLocationTypeActions } from './geo-targeting-location-type/g
   styleUrls:   ['./geo-targeting.component.scss'],
   providers:   [GeoTargetingService, GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
     GeoTargetingSelectedService, GeoTargetingSelectedActions, TargetingSpecService, GeoTargetingModeService,
-    GeoTargetingInfoService, GeoTargetingLocationTypeService, GeoTargetingLocationTypeActions,
+    GeoTargetingInfoService, GeoTargetingInfoActions, GeoTargetingLocationTypeService, GeoTargetingLocationTypeActions,
     GeoTargetingRadiusService,
     GeoTargetingMapService, ComponentsHelperService, GeoTargetingLocationTypeService, GeoTargetingSearchActions,
     GeoTargetingSearchService, GeoTargetingModeService, GeoTargetingModeActions]

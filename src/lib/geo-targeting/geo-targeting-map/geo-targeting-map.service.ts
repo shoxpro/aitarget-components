@@ -217,10 +217,10 @@ export class GeoTargetingMapService {
         .subscribe((item: GeoTargetingItem) => {
           // Show message if coordinates don't belong to any country (e.g. deep-deep ocean)
           if (!item.country_code) {
+            let level   = 'info';
             let message = this.translateService.instant(`geo-targeting-input.INVALID_LOCATION`);
 
-            this.geoTargetingInfoService.update('info', message);
-            this.geoTargetingInfoService.show();
+            this.geoTargetingInfoService.showInfo({level, message});
 
             return;
           }

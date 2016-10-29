@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import {
-  GeoTargetingLocationTypeState, GEO_TARGETING_LOCATION_TYPE, LocationType
+  GeoTargetingLocationTypeState, GEO_TARGETING_LOCATION_TYPE_KEY, LocationType
 } from './geo-targeting-location-type.reducer';
 import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.interface';
 import { Store } from '@ngrx/store';
@@ -16,7 +16,7 @@ export class GeoTargetingLocationTypeService {
 
   static getModel = (_store): Observable<GeoTargetingLocationTypeState> => {
     return _store.select(GEO_TARGETING_STATE_KEY)
-                 .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_LOCATION_TYPE])
+                 .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_LOCATION_TYPE_KEY])
                  .distinctUntilChanged();
   };
 

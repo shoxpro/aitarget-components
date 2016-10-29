@@ -98,10 +98,11 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
             });
             let notFoundInputs = model.termsNotFound.map((term) => term.input)
                                       .join(', ');
-            this.geoTargetingInfoService.update('info',
-              `Some names wasn't found: ${notFoundInputs}.`
-              , false);
-            this.geoTargetingInfoService.show();
+            let level          = 'info';
+            let message        = `Some names wasn't found: ${notFoundInputs}.`;
+
+            this.geoTargetingInfoService.showInfo({level, message});
+
             this.foundItems = [];
             this.geoTargetingDropdownService.update(this.foundItems);
           }
