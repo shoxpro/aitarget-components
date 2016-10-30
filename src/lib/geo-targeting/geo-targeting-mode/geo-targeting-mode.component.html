@@ -1,16 +1,13 @@
 <div class="geo-targeting-mode"
-     (click)="toggleDropdown($event)">
+     (click)="toggleDropdown(true, $event)">
   <div class="geo-targeting-mode__pin">
-    <geo-targeting-pin [excluded]="exclude"></geo-targeting-pin>
+    <geo-targeting-pin [excluded]="(model$ | async).mode === 'exclude'"></geo-targeting-pin>
   </div>
-  <!--<div class="geo-targeting-mode__title">-->
-  <!--<span>{{ modeTitle }}</span>-->
-  <!--</div>-->
-  <fb-arrow-drop [direction]="isOpen ? 'up' : 'down'"></fb-arrow-drop>
+  <fb-arrow-drop [direction]="(model$ | async).isOpen ? 'up' : 'down'"></fb-arrow-drop>
   <geo-targeting-mode-dropdown
-    *ngIf="isOpen"
-    [excluded]="mode === 'exclude'"
-    (toggle)="toggleDropdown()"
+    *ngIf="(model$ | async).isOpen"
+    [excluded]="(model$ | async).mode === 'exclude'"
+    (toggle)="toggleDropdown(false)"
     (include)="setMode('include')"
     (exclude)="setMode('exclude')"></geo-targeting-mode-dropdown>
 </div>

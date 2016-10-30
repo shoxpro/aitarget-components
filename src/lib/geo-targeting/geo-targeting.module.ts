@@ -22,6 +22,7 @@ import { FbArrowDropComponent } from '../shared/components/arrow-drop.component'
 import { GeoTargetingTypeComponent } from './geo-targeting-type/geo-targeting-type.component';
 import { FbDropdownListComponent } from '../shared/components/fb-dropdown-list/fb-dropdown-list.component';
 import { GeoTargetingInfoIconComponent } from './geo-targeting-info/geo-targeting-info-icon';
+import { GeoTargetingSearchComponent } from './geo-targeting-search/geo-targeting-search.component';
 /* tslint:enable:max-line-length */
 
 @NgModule({
@@ -32,6 +33,7 @@ import { GeoTargetingInfoIconComponent } from './geo-targeting-info/geo-targetin
   declarations: [
     GeoTargetingComponent,
     GeoTargetingSelectedComponent,
+    GeoTargetingSearchComponent,
     GeoTargetingInputComponent,
     GeoTargetingDropdownComponent,
     GeoTargetingMapComponent,

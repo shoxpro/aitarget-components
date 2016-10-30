@@ -27,4 +27,19 @@ describe(`geoTargetingModeReducer`, () => {
     );
   });
 
+  describe(GeoTargetingModeActions.TOGGLE_MODE_DROPDOWN, () => {
+    it(`should set isOpen flag`, inject([GeoTargetingModeActions],
+      (geoTargetingModeActions: GeoTargetingModeActions) => {
+        let state = geoTargetingModeInitial;
+
+        deepFreeze(state);
+
+        let newState = geoTargetingModeReducer(state, geoTargetingModeActions.toggleModeDropdown(true));
+
+        expect(newState.isOpen)
+          .toBeTruthy('should set isOpen flag to be true');
+      })
+    );
+  });
+
 });

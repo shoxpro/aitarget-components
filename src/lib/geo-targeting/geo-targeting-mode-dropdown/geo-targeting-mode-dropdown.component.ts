@@ -1,5 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, Input, Output } from '@angular/core';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { Component, ChangeDetectionStrategy, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/common/src/facade/async';
 
 @Component({
@@ -8,9 +7,7 @@ import { EventEmitter } from '@angular/common/src/facade/async';
   styleUrls:       ['./geo-targeting-mode-dropdown.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GeoTargetingModeDropdownComponent implements OnInit, OnDestroy {
-  _subscriptions = [];
-
+export class GeoTargetingModeDropdownComponent {
   @Input('hasRemove') hasRemove: Boolean = false;
   @Input('excluded') excluded: Boolean   = false;
 
@@ -23,29 +20,5 @@ export class GeoTargetingModeDropdownComponent implements OnInit, OnDestroy {
   @Output()
   remove  = new EventEmitter();
 
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.changeDetectorRef.markForCheck();
-    this.changeDetectorRef.detectChanges();
-  }
-
-  constructor (private changeDetectorRef: ChangeDetectorRef,
-               private translateService: TranslateService) { }
-
-  ngOnDestroy () {
-    this._subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
-  }
-
-  ngOnInit () {
-    this._subscriptions.push(
-      this.translateService.onLangChange.subscribe(() => {
-        this.updateTemplate();
-      })
-    );
-  }
-
+  constructor () { }
 }

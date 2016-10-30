@@ -5,6 +5,8 @@ import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingService } from '../geo-targeting.service';
 import { GeoTargetingInputService } from '../geo-targeting-input/geo-targeting-input.service';
+import { AppState } from '../../../app/reducers/index';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector:        'geo-targeting-dropdown',
@@ -66,8 +68,12 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
     if (event) {
       event.stopPropagation();
     }
-    let mode      = this.geoTargetingModeService.get();
-    item.excluded = mode === 'exclude';
+
+    this._store.let(GeoTargetingModeService.getModel)
+        .take(1)
+        .subscribe(
+          (model) => item.excluded = model.mode === 'exclude'
+        );
 
     this.geoTargetingSelectedService.add(item);
 
@@ -78,9 +84,9 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
     this.closeDropdown();
   }
 
-  constructor (private geoTargetingDropdownService: GeoTargetingDropdownService,
+  constructor (private _store: Store<AppState>,
+               private geoTargetingDropdownService: GeoTargetingDropdownService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
-               private geoTargetingModeService: GeoTargetingModeService,
                private geoTargetingService: GeoTargetingService,
                private geoTargetingInputService: GeoTargetingInputService,
                private changeDetectorRef: ChangeDetectorRef) { }

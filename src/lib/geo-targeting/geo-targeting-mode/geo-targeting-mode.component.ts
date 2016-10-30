@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { GeoTargetingModeService } from './geo-targeting-mode.service';
+import { AppState } from '../../../app/reducers/index';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector:        'geo-targeting-mode',
@@ -8,65 +9,25 @@ import { GeoTargetingModeService } from './geo-targeting-mode.service';
   styleUrls:       ['./geo-targeting-mode.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GeoTargetingModeComponent implements OnInit, OnDestroy {
+export class GeoTargetingModeComponent {
 
-  _subscriptions = [];
-  mode;
-  modeTitle;
-  exclude;
-  isOpen         = false;
-
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.changeDetectorRef.markForCheck();
-    this.changeDetectorRef.detectChanges();
-  }
-
-  constructor (private translateService: TranslateService,
-               private geoTargetingModeService: GeoTargetingModeService,
-               private changeDetectorRef: ChangeDetectorRef) { }
+  model$;
 
   setMode (mode) {
-    this.geoTargetingModeService.update(mode);
+    this.geoTargetingModeService.setMode(mode);
   }
 
-  /**
-   * Toggle Dropdown
-   */
-  toggleDropdown (event?) {
+  toggleDropdown (isOpen, event?) {
     if (event) {
       event.stopPropagation();
     }
-    this.isOpen = !this.isOpen;
-    this.updateTemplate();
+    this.geoTargetingModeService.toggleModeDropdown(isOpen);
   }
 
-  ngOnDestroy () {
-    this._subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
-  }
-
-  ngOnInit () {
-    this._subscriptions.push(
-      this.geoTargetingModeService.mode.subscribe((mode: string) => {
-        this.mode      = mode;
-        this.exclude   = mode === 'exclude';
-        this.modeTitle = this.translateService.instant(`geo-targeting-mode.${mode}`);
-        this.updateTemplate();
-      })
-    );
-
-    /**
-     * Update component's translations on language change
-     */
-    this._subscriptions.push(
-      this.translateService.onLangChange.subscribe(() => {
-        this.geoTargetingModeService.update(this.mode);
-      })
-    );
+  constructor (private _store: Store<AppState>,
+               private geoTargetingModeService: GeoTargetingModeService) {
+    this.model$ = this._store.let(GeoTargetingModeService.getModel);
+    // TODO: add key navigation
   }
 
 }

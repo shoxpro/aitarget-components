@@ -10,6 +10,8 @@ import { GeoTargetingModule } from '../geo-targeting.module';
 import { ComponentsHelperService } from '../../shared/services/components-helper.service';
 import { GeoTargetingPinComponent } from '../geo-targeting-pin/geo-targeting-pin.component';
 import { GeoTargetingMapPopupComponent } from '../geo-targeting-map-popup/geo-targeting-map-popup.component';
+import { AppState } from '../../../app/reducers/index';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class GeoTargetingMapService {
@@ -225,7 +227,11 @@ export class GeoTargetingMapService {
             return;
           }
 
-          item.excluded = this.geoTargetingModeService.get() === 'exclude';
+          this._store.let(GeoTargetingModeService.getModel)
+              .take(1)
+              .subscribe(
+                (model) => item.excluded = model.mode === 'exclude'
+              );
 
           this.geoTargetingSelectedService.add(item);
 
@@ -241,7 +247,8 @@ export class GeoTargetingMapService {
     this.map.off('click', this.onMapClick);
   }
 
-  constructor (private translateService: TranslateService,
+  constructor (private _store: Store<AppState>,
+               private translateService: TranslateService,
                private geoTargetingInfoService: GeoTargetingInfoService,
                private geoTargetingModeService: GeoTargetingModeService,
                private componentsHelperService: ComponentsHelperService,

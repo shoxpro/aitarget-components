@@ -1,11 +1,4 @@
-<div class="geo-targeting-input__table"
-     [ngClass]="{
-     'geo-targeting-input_dropdown-active': dropdownActive | async,
-     'geo-targeting-input_map-active': mapActive | async,
-     'geo-targeting-input_selected-items': hasSelected | async,
-     'geo-targeting-input_focus': hasFocus | async
-     }">
-  <geo-targeting-mode class="geo-targeting-input__table-cell"></geo-targeting-mode>
+<div class="geo-targeting-input__table">
   <label class="geo-targeting-input__label geo-targeting-input__table-cell">
     <input class="geo-targeting-input__input"
            type="text"
@@ -15,6 +8,4 @@
            (blur)="blur()"
            placeholder="{{'geo-targeting-input.PLACEHOLDER' | translate}}">
   </label>
-  <geo-targeting-type class="geo-targeting-input__table-cell"></geo-targeting-type>
-  <geo-targeting-map class="geo-targeting-input__table-cell"></geo-targeting-map>
 </div>

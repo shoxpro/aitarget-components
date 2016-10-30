@@ -1,0 +1,12 @@
+<div class="geo-targeting-search"
+     [ngClass]="{
+          'geo-targeting-search_dropdown-active': dropdownActive | async,
+          'geo-targeting-search_map-active': mapActive | async,
+          'geo-targeting-search_selected-items': hasSelected | async,
+          'geo-targeting-search_focus': hasFocus | async
+          }">
+  <geo-targeting-mode></geo-targeting-mode>
+  <geo-targeting-input></geo-targeting-input>
+  <geo-targeting-type></geo-targeting-type>
+  <geo-targeting-map></geo-targeting-map>
+</div>

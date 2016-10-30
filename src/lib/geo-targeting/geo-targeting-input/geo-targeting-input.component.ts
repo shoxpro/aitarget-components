@@ -88,7 +88,11 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy {
             this.foundItems = model.items;
             this.geoTargetingDropdownService.update(this.foundItems);
           } else {
-            let mode = this.geoTargetingModeService.get();
+            let mode;
+            this._store.let(GeoTargetingModeService.getModel)
+                .take(1)
+                .subscribe((modeModel) => mode = modeModel.mode);
+
             model.termsMatches.forEach((matched) => {
               matched.item.excluded = mode === 'exclude';
               this.geoTargetingSelectedService.add(matched.item);

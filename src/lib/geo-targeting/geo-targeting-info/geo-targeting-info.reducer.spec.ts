@@ -11,7 +11,7 @@ let testInfo = {
   canRevert: true
 };
 
-fdescribe(`geoTargetingInfoReducer`, () => {
+describe(`geoTargetingInfoReducer`, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
