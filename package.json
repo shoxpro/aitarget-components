@@ -121,7 +121,7 @@
     "@ngrx/effects": "2.0.0",
     "@ngrx/router-store": "1.2.5",
     "@ngrx/store": "2.2.1",
-    "@ngrx/store-devtools": "3.1.0",
+    "@ngrx/store-devtools": "^3.2.1",
     "@ngrx/store-log-monitor": "3.0.2",
     "@types/core-js": "~0.9.33",
     "@types/express": "~4.0.33",

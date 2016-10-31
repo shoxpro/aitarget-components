@@ -17,7 +17,6 @@ if (environment.production) {
   imports:      [
     BrowserModule,
     StoreModule.provideStore(rootReducer),
-    // StoreModule.provideStore({geoTargeting: geoTargetingReducer}),
     DetailedTargetingModule,
     GeoTargetingModule
   ],
