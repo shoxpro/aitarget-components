@@ -18,6 +18,7 @@ export interface GeoTargetingSearchState {
   termsMatches: Array<{term: Term; item: GeoTargetingItem}>;
   items: Array<GeoTargetingItem>;
   fetching: boolean;
+  hasFocus: boolean;
 }
 
 export const geoTargetingSearchInitial: GeoTargetingSearchState = {
@@ -31,7 +32,8 @@ export const geoTargetingSearchInitial: GeoTargetingSearchState = {
   termsNotFound: [],
   termsMatches:  [],
   items:         [],
-  fetching:      false
+  fetching:      false,
+  hasFocus:      false
 };
 
 export const GEO_TARGETING_SEARCH_KEY = 'geoTargetingSearch';

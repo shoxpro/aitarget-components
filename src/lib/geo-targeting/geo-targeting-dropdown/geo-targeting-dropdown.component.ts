@@ -4,9 +4,9 @@ import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targe
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingService } from '../geo-targeting.service';
-import { GeoTargetingInputService } from '../geo-targeting-input/geo-targeting-input.service';
 import { AppState } from '../../../app/reducers/index';
 import { Store } from '@ngrx/store';
+import { GeoTargetingSearchService } from '../geo-targeting-search/geo-targeting-search.service';
 
 @Component({
   selector:        'geo-targeting-dropdown',
@@ -78,8 +78,8 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
     this.geoTargetingSelectedService.add(item);
 
     // Reset input text, but keep focus
-    this.geoTargetingInputService.setTerm('');
-    this.geoTargetingInputService.focus();
+    this.geoTargetingSearchService.processInputValue('');
+    this.geoTargetingSearchService.focus();
 
     this.closeDropdown();
   }
@@ -88,7 +88,7 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
                private geoTargetingDropdownService: GeoTargetingDropdownService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingService: GeoTargetingService,
-               private geoTargetingInputService: GeoTargetingInputService,
+               private geoTargetingSearchService: GeoTargetingSearchService,
                private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnDestroy () {

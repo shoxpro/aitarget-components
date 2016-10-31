@@ -5,7 +5,7 @@ import { sortItems } from './geo-targeting-selected.constants';
 
 let deepFreeze = require('deep-freeze');
 
-describe(`geoTargetingSearchReducer`, () => {
+describe(`geoTargetingSelectedReducer`, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [GeoTargetingSelectedActions]

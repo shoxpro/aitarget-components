@@ -17,6 +17,24 @@ export class GeoTargetingSearchService {
                  .distinctUntilChanged();
   };
 
+  focus () {
+    this._store.dispatch(this.geoTargetingSearchActions.updateModel({hasFocus: true}));
+  }
+
+  blur () {
+    this._store.dispatch(this.geoTargetingSearchActions.updateModel({hasFocus: false}));
+  }
+
+  /**
+   * Dispatch process input value actions with passed input value
+   * @param inputValue
+   */
+  processInputValue (inputValue) {
+    console.log('processInputValue: ', inputValue);
+    this._store.dispatch(this.geoTargetingSearchActions.processInputValue(inputValue));
+    this.search();
+  }
+
   /**
    * Request for model queries items and return updated model
    * @param model$
@@ -86,17 +104,10 @@ export class GeoTargetingSearchService {
   };
 
   /**
-   * Dispatch process input value actions with passed input value
-   * @param inputValue
-   */
-  processInputValue (inputValue) {
-    this._store.dispatch(this.geoTargetingSearchActions.processInputValue(inputValue));
-  }
-
-  /**
    * Propagate model with found items and dispatch update model action
    */
   search () {
+    console.log('search');
     this.model$
         .take(1)
         .do(() => this._store.dispatch(this.geoTargetingSearchActions.updateModel({fetching: true})))
@@ -124,6 +135,7 @@ export class GeoTargetingSearchService {
         })
         .do(() => this._store.dispatch(this.geoTargetingSearchActions.updateModel({fetching: false})))
         .subscribe((updatedModel) => {
+          console.log('subscribe updatedModel: ', updatedModel);
           this._store.dispatch(this.geoTargetingSearchActions.updateModel(updatedModel));
         });
   }

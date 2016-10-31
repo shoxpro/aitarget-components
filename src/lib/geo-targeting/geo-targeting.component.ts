@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { GeoTargetingApiService } from './geo-targeting-api/geo-targeting-api.service';
-import { GeoTargetingInputService } from './geo-targeting-input/geo-targeting-input.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { TargetingSpec } from '../targeting/targeting-spec.interface';
 import { GeoTargetingDropdownService } from './geo-targeting-dropdown/geo-targeting-dropdown.service';
@@ -25,7 +24,7 @@ import { GeoTargetingInfoActions } from './geo-targeting-info/geo-targeting-info
   selector:    'geo-targeting',
   templateUrl: './geo-targeting.component.html',
   styleUrls:   ['./geo-targeting.component.scss'],
-  providers:   [GeoTargetingService, GeoTargetingApiService, GeoTargetingInputService, GeoTargetingDropdownService,
+  providers:   [GeoTargetingService, GeoTargetingApiService, GeoTargetingDropdownService,
     GeoTargetingSelectedService, GeoTargetingSelectedActions, TargetingSpecService, GeoTargetingModeService,
     GeoTargetingInfoService, GeoTargetingInfoActions, GeoTargetingLocationTypeService, GeoTargetingLocationTypeActions,
     GeoTargetingRadiusService,
