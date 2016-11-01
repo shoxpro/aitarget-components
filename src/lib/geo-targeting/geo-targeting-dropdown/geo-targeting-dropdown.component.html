@@ -1,10 +1,10 @@
 <ul class="geo-targeting-items__list"
-    *ngIf="isOpen && filteredItems && filteredItems.length"
+    *ngIf="isOpen && items.length"
     appendTo="geo-targeting">
   <li class="geo-targeting-items__row"
-      *ngFor="let item of filteredItems; let i = index;"
+      *ngFor="let item of items; let i = index;"
       [ngClass]="{'geo-targeting-items__row_active': i === activeItemIndex}"
-      (click)="selectItem(item, $event)">
+      (click)="select.emit(item)">
     <div class="geo-targeting-items__name">{{ item | fullName }}</div>
     <div class="geo-targeting-items__type">{{ item | fullType }}</div>
   </li>

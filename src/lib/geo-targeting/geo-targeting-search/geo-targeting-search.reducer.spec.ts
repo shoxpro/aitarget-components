@@ -50,7 +50,15 @@ describe(`geoTargetingSearchReducer`, () => {
     it(`should update all model values from passed payload model`,
       inject([GeoTargetingSearchActions], (geoTargetingSearchActions: GeoTargetingSearchActions) => {
         let state        = geoTargetingSearchInitial;
-        let updatedModel = {items: [1], termsFound: [2], termsNotFound: [3], termsMatches: [4], hasFocus: true};
+        let updatedModel = {
+          items:          [1],
+          termsFound:     [2],
+          termsNotFound:  [3],
+          termsMatches:   [4],
+          hasFocus:       true,
+          isDropdownOpen: true,
+          isMapOpen:      true
+        };
 
         deepFreeze(state);
 

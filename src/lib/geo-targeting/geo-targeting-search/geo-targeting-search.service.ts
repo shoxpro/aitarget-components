@@ -3,7 +3,9 @@ import { GeoTargetingSearchActions } from './geo-targeting-search.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/reducers/index';
 import { Observable } from 'rxjs/Rx';
-import { GeoTargetingSearchState, GEO_TARGETING_SEARCH_KEY } from './geo-taregting-search.reducer';
+import {
+  GeoTargetingSearchState, GEO_TARGETING_SEARCH_KEY, geoTargetingSearchInitial
+} from './geo-taregting-search.reducer';
 import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.interface';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 
@@ -18,11 +20,19 @@ export class GeoTargetingSearchService {
   };
 
   focus () {
-    this._store.dispatch(this.geoTargetingSearchActions.updateModel({hasFocus: true}));
+    this._store.dispatch(this.geoTargetingSearchActions.updateModel({hasFocus: true, isDropdownOpen: true}));
   }
 
   blur () {
-    this._store.dispatch(this.geoTargetingSearchActions.updateModel({hasFocus: false}));
+    this._store.dispatch(this.geoTargetingSearchActions.updateModel({hasFocus: false, isDropdownOpen: false}));
+  }
+
+  toggleDropdown (isDropdownOpen: boolean) {
+    this._store.dispatch(this.geoTargetingSearchActions.updateModel({isDropdownOpen}));
+  }
+
+  toggleMap (isMapOpen: boolean) {
+    this._store.dispatch(this.geoTargetingSearchActions.updateModel({isMapOpen}));
   }
 
   /**
@@ -31,7 +41,14 @@ export class GeoTargetingSearchService {
    */
   processInputValue (inputValue) {
     console.log('processInputValue: ', inputValue);
-    this._store.dispatch(this.geoTargetingSearchActions.processInputValue(inputValue));
+    if (!inputValue) {
+      // Reset to initial but remain focus
+      this._store.dispatch(this.geoTargetingSearchActions.updateModel(
+        Object.assign(geoTargetingSearchInitial, {hasFocus: true})
+      ));
+    } else {
+      this._store.dispatch(this.geoTargetingSearchActions.processInputValue(inputValue));
+    }
     this.search();
   }
 
@@ -136,7 +153,11 @@ export class GeoTargetingSearchService {
         .do(() => this._store.dispatch(this.geoTargetingSearchActions.updateModel({fetching: false})))
         .subscribe((updatedModel) => {
           console.log('subscribe updatedModel: ', updatedModel);
-          this._store.dispatch(this.geoTargetingSearchActions.updateModel(updatedModel));
+          this._store.dispatch(
+            this.geoTargetingSearchActions.updateModel(
+              Object.assign(updatedModel, {isDropdownOpen: true})
+            )
+          );
         });
   }
 

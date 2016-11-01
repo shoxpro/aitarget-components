@@ -19,21 +19,25 @@ export interface GeoTargetingSearchState {
   items: Array<GeoTargetingItem>;
   fetching: boolean;
   hasFocus: boolean;
+  isDropdownOpen: boolean;
+  isMapOpen: boolean;
 }
 
 export const geoTargetingSearchInitial: GeoTargetingSearchState = {
-  inputValue:    '',
-  terms:         [],
-  termsGrouped:  {
+  inputValue:     '',
+  terms:          [],
+  termsGrouped:   {
     queries:            [],
     customLocationKeys: []
   },
-  termsFound:    [],
-  termsNotFound: [],
-  termsMatches:  [],
-  items:         [],
-  fetching:      false,
-  hasFocus:      false
+  termsFound:     [],
+  termsNotFound:  [],
+  termsMatches:   [],
+  items:          [],
+  fetching:       false,
+  hasFocus:       false,
+  isDropdownOpen: false,
+  isMapOpen:      false
 };
 
 export const GEO_TARGETING_SEARCH_KEY = 'geoTargetingSearch';

@@ -1,12 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { GeoTargetingDropdownService } from './geo-targeting-dropdown.service';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import {
+  Component, OnInit, OnDestroy, ChangeDetectionStrategy, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef
+} from '@angular/core';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
-import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingService } from '../geo-targeting.service';
-import { AppState } from '../../../app/reducers/index';
-import { Store } from '@ngrx/store';
-import { GeoTargetingSearchService } from '../geo-targeting-search/geo-targeting-search.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector:        'geo-targeting-dropdown',
@@ -14,180 +11,58 @@ import { GeoTargetingSearchService } from '../geo-targeting-search/geo-targeting
   styleUrls:       ['./geo-targeting-dropdown.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GeoTargetingDropdownComponent implements OnInit, OnDestroy {
+export class GeoTargetingDropdownComponent implements OnInit, OnDestroy, OnChanges {
 
-  _subscriptions                    = [];
-  items;
-  isOpen;
-  filteredItems: GeoTargetingItem[] = [];
-  activeItemIndex                   = 0;
+  destroy$ = new Subject();
 
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.changeDetectorRef.markForCheck();
+  @Input() items: GeoTargetingItem[];
+  @Input() isOpen;
+
+  @Output() select = new EventEmitter();
+
+  activeItemIndex = 0;
+
+  constructor (private geoTargetingService: GeoTargetingService,
+               private changeDetectorRef: ChangeDetectorRef) { }
+
+  ngOnChanges (changes) {
+    if (changes.items.currentValue !== changes.items.previousValue ||
+      changes.isOpen.currentValue !== changes.isOpen.previousValue
+    ) {
+      this.activeItemIndex = 0;
+    }
     this.changeDetectorRef.detectChanges();
   }
 
-  /**
-   * Filter out already selected items
-   * @param items
-   * @returns {GeoTargetingItem[]}
-   */
-  filterOutSelected (items: GeoTargetingItem[]) {
-    if (!items || !items.length) {
-      return items;
-    }
-
-    let selectedItemsKeys = this.geoTargetingSelectedService
-                                .get()
-                                .map((selectedItem: GeoTargetingItem) => {
-                                  return selectedItem.key;
-                                });
-
-    // Filter out already selected items
-    return items.filter((item: GeoTargetingItem) => {
-      return selectedItemsKeys.indexOf(item.key) < 0;
-    });
-  }
-
-  /**
-   * Close dropdown handler
-   */
-  closeDropdown () {
-    this.geoTargetingDropdownService.close();
-  }
-
-  /**
-   * Select location handler
-   * @param item
-   * @param event
-   */
-  selectItem (item: GeoTargetingItem, event?: MouseEvent) {
-    if (event) {
-      event.stopPropagation();
-    }
-
-    this._store.let(GeoTargetingModeService.getModel)
-        .take(1)
-        .subscribe(
-          (model) => item.excluded = model.mode === 'exclude'
-        );
-
-    this.geoTargetingSelectedService.add(item);
-
-    // Reset input text, but keep focus
-    this.geoTargetingSearchService.processInputValue('');
-    this.geoTargetingSearchService.focus();
-
-    this.closeDropdown();
-  }
-
-  constructor (private _store: Store<AppState>,
-               private geoTargetingDropdownService: GeoTargetingDropdownService,
-               private geoTargetingSelectedService: GeoTargetingSelectedService,
-               private geoTargetingService: GeoTargetingService,
-               private geoTargetingSearchService: GeoTargetingSearchService,
-               private changeDetectorRef: ChangeDetectorRef) { }
-
   ngOnDestroy () {
-    // Unsubscribe from all Observables
-    this._subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
+    this.destroy$.next();
   }
 
   ngOnInit () {
-    /**
-     * Update items list and open dropdown if has items
-     */
-    this._subscriptions.push(
-      this.geoTargetingDropdownService.items.subscribe((items) => {
-        this.items         = items;
-        this.filteredItems = this.filterOutSelected(items);
+    this.geoTargetingService.arrowUpStream.mapTo(-1)
+        .takeUntil(this.destroy$)
+        .merge(this.geoTargetingService.arrowDownStream.mapTo(1))
+        .filter(() => this.isOpen)
+        .subscribe((delta) => {
+          this.activeItemIndex += delta;
 
-        if (items && items.length) {
-          this.geoTargetingDropdownService.open();
-        }
+          if (this.activeItemIndex < 0) {
+            this.activeItemIndex = this.items.length - 1;
+          }
 
-        // Reset active index when items updated
-        this.activeItemIndex = 0;
+          if (this.activeItemIndex > this.items.length - 1) {
+            this.activeItemIndex = 0;
+          }
 
-        this.updateTemplate();
-      })
-    );
+          this.changeDetectorRef.markForCheck();
+        });
 
-    /**
-     * Update isOpen flag
-     */
-    this._subscriptions.push(
-      this.geoTargetingDropdownService.isOpen.subscribe((isOpen: boolean) => {
-        this.isOpen = isOpen;
-
-        // Reset active index when dropdown closes
-        if (!isOpen) {
-          this.activeItemIndex = 0;
-        }
-
-        this.updateTemplate();
-      })
-    );
-
-    /**
-     * Update items from dropdown when selected changes
-     */
-    this._subscriptions.push(
-      this.geoTargetingSelectedService.items.subscribe(() => {
-        this.filteredItems = this.filterOutSelected(this.items);
-        this.updateTemplate();
-      })
-    );
-
-    /**
-     * Process Escape and clicked outside when dropdown is open
-     */
-    this._subscriptions.push(
-      this.geoTargetingService.clickOutsideOfGeoStream
-          .merge(this.geoTargetingService.escapeStream)
-          .filter(() => this.isOpen)
-          .subscribe(() => {
-            this.geoTargetingDropdownService.close();
-          })
-    );
-
-    /**
-     * Process Escape and clicked outside when dropdown is open
-     */
-    this._subscriptions.push(
-      this.geoTargetingService.arrowUpStream.mapTo(-1)
-          .merge(this.geoTargetingService.arrowDownStream.mapTo(1))
-          .filter(() => this.isOpen)
-          .subscribe((delta) => {
-            this.activeItemIndex += delta;
-
-            if (this.activeItemIndex < 0) {
-              this.activeItemIndex = this.filteredItems.length - 1;
-            }
-
-            if (this.activeItemIndex > this.filteredItems.length - 1) {
-              this.activeItemIndex = 0;
-            }
-
-            this.updateTemplate();
-          })
-    );
-
-    /**
-     * Add active item on enter
-     */
-    this._subscriptions.push(
-      this.geoTargetingService.enterStream
-          .filter(() => this.isOpen)
-          .subscribe(() => {
-            this.selectItem(this.filteredItems[this.activeItemIndex]);
-          })
-    );
+    this.geoTargetingService.enterStream
+        .takeUntil(this.destroy$)
+        .filter(() => this.isOpen)
+        .subscribe(() => {
+          this.select.emit(this.items[this.activeItemIndex]);
+        });
   }
 
 }

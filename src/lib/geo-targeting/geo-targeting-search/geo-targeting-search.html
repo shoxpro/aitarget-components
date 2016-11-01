@@ -1,16 +1,26 @@
 <div class="geo-targeting-search"
      [ngClass]="{
-          'geo-targeting-search_dropdown-active': dropdownActive | async,
-          'geo-targeting-search_map-active': mapActive | async,
+          'geo-targeting-search_dropdown-active': (model$ | async).isDropdownOpen && (model$ | async).items.length,
+          'geo-targeting-search_map-active': (model$ | async).isMapOpen,
           'geo-targeting-search_selected-items': hasSelected | async,
-          'geo-targeting-search_focus': hasFocus | async
+          'geo-targeting-search_focus': (model$ | async).hasFocus
           }">
   <geo-targeting-mode></geo-targeting-mode>
+
   <geo-targeting-input [inputValue]="(model$ | async).inputValue"
                        [hasFocus]="(model$ | async).hasFocus"
                        (focus)="focus()"
                        (blur)="blur()"
                        (inputValueChange)="inputValueChange($event)"></geo-targeting-input>
+
   <geo-targeting-type></geo-targeting-type>
-  <geo-targeting-map></geo-targeting-map>
+
+  <geo-targeting-map
+    [isOpen]="(model$ | async).isMapOpen"
+    (toggleMap)="toggleMap($event)"></geo-targeting-map>
 </div>
+
+<geo-targeting-dropdown
+  [isOpen]="(model$ | async).isDropdownOpen"
+  [items]="(model$ | async).items"
+  (select)="select($event)"></geo-targeting-dropdown>
