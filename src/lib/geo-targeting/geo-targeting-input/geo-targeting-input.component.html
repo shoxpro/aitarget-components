@@ -6,6 +6,7 @@
            (keyup)="keyup(inputValue)"
            (focus)="focus.emit()"
            (blur)="blur.emit()"
+           (keyup.enter)="enter.emit(inputValue)"
            placeholder="{{'geo-targeting-input.PLACEHOLDER' | translate}}">
   </label>
 </div>

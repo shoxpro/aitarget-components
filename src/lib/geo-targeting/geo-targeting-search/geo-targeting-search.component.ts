@@ -16,6 +16,7 @@ import { GeoTargetingSelectedServiceNew } from '../geo-targeting-selected/geo-ta
 export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   model$;
+  hasSelected$;
 
   focus () {
     this.geoTargetingSearchService.focus();
@@ -34,8 +35,20 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
     this.geoTargetingSearchService.toggleMap(isOpen);
   }
 
-  inputValueChange (inputValue) {
+  inputValueEnter (inputValue) {
     this.geoTargetingSearchService.processInputValue(inputValue);
+  }
+
+  inputValueChange (inputValue) {
+    if (inputValue.indexOf(';') > -1) {
+      return;
+    }
+
+    if (inputValue) {
+      this.geoTargetingSearchService.processInputValue(inputValue);
+    } else {
+      this.geoTargetingSearchService.reset();
+    }
   }
 
   select (item) {
@@ -45,10 +58,13 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
 
   constructor (private _store: Store<AppState>,
                private geoTargetingSearchService: GeoTargetingSearchService,
-               private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingSelectedServiceNew: GeoTargetingSelectedServiceNew,
                private geoTargetingService: GeoTargetingService) {
-    this.model$ = this._store.let(GeoTargetingSearchService.getModel);
+    this.model$       = this._store.let(GeoTargetingSearchService.getModel);
+    this.hasSelected$ = this._store
+                            .let(GeoTargetingSelectedService.getModel)
+                            .map(({items}) => Boolean(items.length))
+                            .distinctUntilChanged();
   }
 
   ngOnDestroy () {

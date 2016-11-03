@@ -77,7 +77,6 @@ export const geoTargetingSearchReducer: ActionReducer<GeoTargetingSearchState> =
 
       return Object.assign({}, state, {inputValue, terms, termsGrouped});
     case GeoTargetingSearchActions.UPDATE_MODEL:
-      console.log('action.payload.model: ', action.payload.model);
       return Object.assign({}, state, action.payload.model);
     default:
       return state;

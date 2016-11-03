@@ -8,6 +8,9 @@ import {
 } from './geo-taregting-search.reducer';
 import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.interface';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
+import { GeoTargetingSelectedActions } from '../geo-targeting-selected/geo-targeting-selected.actions';
+import { TranslateService } from 'ng2-translate';
+import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 
 @Injectable()
 export class GeoTargetingSearchService {
@@ -27,12 +30,57 @@ export class GeoTargetingSearchService {
     this._store.dispatch(this.geoTargetingSearchActions.updateModel({hasFocus: false}));
   }
 
-  toggleDropdown (isDropdownOpen: boolean) {
-    this._store.dispatch(this.geoTargetingSearchActions.updateModel({isDropdownOpen}));
+  toggleDropdown (toOpen: boolean) {
+    this.model$
+        .take(1)
+        .subscribe((model) => {
+          // Open dropdown only for single search and if there are items to show
+          let isDropdownOpen = Boolean(toOpen && model.items.length && model.terms.length === 1);
+          this._store.dispatch(this.geoTargetingSearchActions.updateModel({isDropdownOpen}));
+        });
   }
 
   toggleMap (isMapOpen: boolean) {
     this._store.dispatch(this.geoTargetingSearchActions.updateModel({isMapOpen}));
+  }
+
+  setInput (inputValue) {
+    this._store.dispatch(this.geoTargetingSearchActions.updateModel(
+      Object.assign(geoTargetingSearchInitial, {inputValue, hasFocus: true})
+    ));
+  }
+
+  /**
+   * Reset to initial but remain focus
+   */
+  reset () {
+    this._store.dispatch(this.geoTargetingSearchActions.updateModel(
+      Object.assign(geoTargetingSearchInitial, {hasFocus: true})
+    ));
+  }
+
+  informAboutNotFoundTerms (model: GeoTargetingSearchState) {
+    if (!model.termsNotFound.length) {
+      this.geoTargetingInfoService.hideInfo();
+      return;
+    }
+    let notFoundInputsStr = model.termsNotFound.map((term) => term.input)
+                                 .join(', ');
+
+    let message = this.translateService.instant(
+      `geo-targeting-info.MESSAGE_NOT_FOUND`,
+      {notFoundInputsStr}
+    );
+
+    this.geoTargetingInfoService.showInfo({message});
+  }
+
+  selectFoundTerms (model: GeoTargetingSearchState) {
+    let matchedItems = model.termsMatches.map((term) => term.item);
+
+    this._store.dispatch(
+      this.geoTargetingSelectedActions.addItems(matchedItems)
+    );
   }
 
   /**
@@ -40,15 +88,7 @@ export class GeoTargetingSearchService {
    * @param inputValue
    */
   processInputValue (inputValue) {
-    console.log('processInputValue: ', inputValue);
-    if (!inputValue) {
-      // Reset to initial but remain focus
-      this._store.dispatch(this.geoTargetingSearchActions.updateModel(
-        Object.assign(geoTargetingSearchInitial, {hasFocus: true})
-      ));
-    } else {
-      this._store.dispatch(this.geoTargetingSearchActions.processInputValue(inputValue));
-    }
+    this._store.dispatch(this.geoTargetingSearchActions.processInputValue(inputValue));
     this.search();
   }
 
@@ -152,18 +192,30 @@ export class GeoTargetingSearchService {
         })
         .do(() => this._store.dispatch(this.geoTargetingSearchActions.updateModel({fetching: false})))
         .subscribe((updatedModel) => {
-          console.log('subscribe updatedModel: ', updatedModel);
+          console.log('Updated Search Model: ', updatedModel);
           this._store.dispatch(
             this.geoTargetingSearchActions.updateModel(
-              Object.assign(updatedModel, {isDropdownOpen: true})
+              Object.assign(updatedModel, {
+                isDropdownOpen: updatedModel.terms.length === 1
+              })
             )
           );
+          // If multi search, select FOUND terms and inform about NOT FOUND
+          if (updatedModel.terms.length > 1) {
+            this.informAboutNotFoundTerms(updatedModel);
+            this.selectFoundTerms(updatedModel);
+            this.setInput(updatedModel.termsNotFound.map((term) => term.input)
+                                      .join(';'));
+          }
         });
   }
 
   constructor (private _store: Store<AppState>,
                private geoTargetingSearchActions: GeoTargetingSearchActions,
-               private geoTargetingApiService: GeoTargetingApiService) {
+               private geoTargetingSelectedActions: GeoTargetingSelectedActions,
+               private geoTargetingInfoService: GeoTargetingInfoService,
+               private geoTargetingApiService: GeoTargetingApiService,
+               private translateService: TranslateService) {
     this.model$ = this._store.let(GeoTargetingSearchService.getModel);
   }
 }

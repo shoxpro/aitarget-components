@@ -15,7 +15,7 @@ export class GeoTargetingInfoService {
                  .distinctUntilChanged();
   };
 
-  showInfo ({level, message, canRevert = false, isVisible = true}) {
+  showInfo ({level = 'info', message, canRevert = false, isVisible = true}: GeoTargetingInfoState) {
     this._store.dispatch(this.geoTargetingInfoActions.showInfo({
       level, message, canRevert, isVisible
     }));

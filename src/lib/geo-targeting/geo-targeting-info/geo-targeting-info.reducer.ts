@@ -1,13 +1,13 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { GeoTargetingInfoActions } from './geo-targeting-info.actions';
 
-type InfoLevel = 'info'|'error';
+export type InfoLevel = 'info'|'error';
 
 export interface GeoTargetingInfoState {
   message: string;
-  level: InfoLevel;
-  isVisible: boolean;
-  canRevert: boolean;
+  level?: InfoLevel;
+  isVisible?: boolean;
+  canRevert?: boolean;
 }
 
 export const geoTargetingInfoInitial: GeoTargetingInfoState = {
