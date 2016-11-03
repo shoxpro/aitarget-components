@@ -3,29 +3,21 @@ import { GeoTargetingItem } from '../geo-targeting-item.interface';
 
 @Injectable()
 export class GeoTargetingSelectedActions {
-  static ADD_ITEM        = '[geo-targeting-selected] Add Item';
-  static REMOVE_ITEM     = '[geo-targeting-selected] Remove Item';
-  static SET_ACTIVE_ITEM = '[geo-targeting-selected] Set Active Item';
-  static UPDATE_ITEM     = '[geo-targeting-selected] Update Item';
+  static ADD_ITEMS    = '[geo-targeting-selected] Add Items';
+  static REMOVE_ITEMS = '[geo-targeting-selected] Remove Items';
+  static UPDATE_ITEM  = '[geo-targeting-selected] Update Item';
 
-  addItem (item: GeoTargetingItem) {
+  addItems (items: GeoTargetingItem[]) {
     return {
-      type:    GeoTargetingSelectedActions.ADD_ITEM,
-      payload: {item}
+      type:    GeoTargetingSelectedActions.ADD_ITEMS,
+      payload: {items}
     };
   }
 
-  removeItem (item: GeoTargetingItem) {
+  removeItems (items: GeoTargetingItem) {
     return {
-      type:    GeoTargetingSelectedActions.REMOVE_ITEM,
-      payload: {item}
-    };
-  }
-
-  setActiveItem (activeItem: GeoTargetingItem) {
-    return {
-      type:    GeoTargetingSelectedActions.SET_ACTIVE_ITEM,
-      payload: {activeItem}
+      type:    GeoTargetingSelectedActions.REMOVE_ITEMS,
+      payload: {items}
     };
   }
 

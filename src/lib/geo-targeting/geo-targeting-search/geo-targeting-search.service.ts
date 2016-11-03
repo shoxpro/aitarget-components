@@ -20,11 +20,11 @@ export class GeoTargetingSearchService {
   };
 
   focus () {
-    this._store.dispatch(this.geoTargetingSearchActions.updateModel({hasFocus: true, isDropdownOpen: true}));
+    this._store.dispatch(this.geoTargetingSearchActions.updateModel({hasFocus: true}));
   }
 
   blur () {
-    this._store.dispatch(this.geoTargetingSearchActions.updateModel({hasFocus: false, isDropdownOpen: false}));
+    this._store.dispatch(this.geoTargetingSearchActions.updateModel({hasFocus: false}));
   }
 
   toggleDropdown (isDropdownOpen: boolean) {

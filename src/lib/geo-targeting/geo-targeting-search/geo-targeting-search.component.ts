@@ -5,6 +5,7 @@ import { GeoTargetingSearchService } from './geo-targeting-search.service';
 import { Subject } from 'rxjs';
 import { GeoTargetingService } from '../geo-targeting.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingSelectedServiceNew } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 
 @Component({
   selector:        'geo-targeting-search',
@@ -18,10 +19,15 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
 
   focus () {
     this.geoTargetingSearchService.focus();
+    this.geoTargetingSearchService.toggleDropdown(true);
   }
 
   blur () {
     this.geoTargetingSearchService.blur();
+  }
+
+  toggleDropdown (isDropdownOpen: boolean) {
+    this.geoTargetingSearchService.toggleDropdown(isDropdownOpen);
   }
 
   toggleMap (isOpen: boolean) {
@@ -33,14 +39,14 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
   }
 
   select (item) {
-    console.log('select: ', item);
-    this.geoTargetingSelectedService.add(item);
+    this.geoTargetingSelectedServiceNew.addItems([item]);
     this.geoTargetingSearchService.processInputValue('');
   }
 
   constructor (private _store: Store<AppState>,
                private geoTargetingSearchService: GeoTargetingSearchService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
+               private geoTargetingSelectedServiceNew: GeoTargetingSelectedServiceNew,
                private geoTargetingService: GeoTargetingService) {
     this.model$ = this._store.let(GeoTargetingSearchService.getModel);
   }
@@ -63,7 +69,10 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
                                .takeUntil(hasFocus$.skip(1))
                                .take(1))
         )
-        .subscribe(() => this.blur());
+        .subscribe(() => {
+          this.blur();
+          this.toggleDropdown(false);
+        });
 
     /**
      * Close map on Escape and when click outside of geo component

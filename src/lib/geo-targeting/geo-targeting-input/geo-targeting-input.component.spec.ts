@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
-import { GeoTargetingInputService } from './geo-targeting-input.service';
 import { GeoTargetingService } from '../geo-targeting.service';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingDropdownService } from '../geo-targeting-dropdown/geo-targeting-dropdown.service';
@@ -25,7 +24,6 @@ describe('Component: GeoTargetingInput', () => {
       schemas:      [CUSTOM_ELEMENTS_SCHEMA],
       providers:    [
         {provide: GeoTargetingApiService, useValue: {}},
-        {provide: GeoTargetingInputService, useValue: {}},
         {provide: TranslateService, useValue: {}},
         {provide: GeoTargetingService, useValue: {}},
         {provide: GeoTargetingInfoService, useValue: {}},
