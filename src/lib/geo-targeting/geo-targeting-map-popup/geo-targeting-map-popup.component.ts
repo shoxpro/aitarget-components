@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input } from '@angular/core';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { AppState } from '../../../app/reducers/index';
@@ -31,10 +31,10 @@ export class GeoTargetingMapPopupComponent implements OnInit, OnDestroy {
 
   selectMode (item: GeoTargetingItem, mode: GeoTargetingModeType) {
     if (<string>mode.id === 'delete') {
-      this.geoTargetingSelectedService.remove(this.item);
+      this.geoTargetingSelectedService.removeItems([this.item]);
     } else {
       item.excluded = mode.id === (<GeoTargetingModeIdType>'exclude');
-      this.geoTargetingSelectedService.updateSelectedItem(item);
+      this.geoTargetingSelectedService.updateItems([item]);
     }
   }
 

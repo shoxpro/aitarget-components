@@ -2,7 +2,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingInputComponent } from './geo-targeting-input.component';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';

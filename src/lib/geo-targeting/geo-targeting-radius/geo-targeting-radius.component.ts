@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 import { GeoTargetingService } from '../geo-targeting.service';
 
 @Component({
@@ -72,7 +72,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     if (this.isOpen) {
       this.savePreviousItem();
     } else {
-      this.geoTargetingSelectedService.updateSelectedItem(this.item);
+      this.geoTargetingSelectedService.updateItems([this.item]);
     }
 
     this.updateTemplate();

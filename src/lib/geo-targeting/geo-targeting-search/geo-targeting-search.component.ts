@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { GeoTargetingSearchService } from './geo-targeting-search.service';
 import { Subject } from 'rxjs';
 import { GeoTargetingService } from '../geo-targeting.service';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
-import { GeoTargetingSelectedServiceNew } from '../geo-targeting-selected/geo-targeting-selected.service.new';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
+import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 
 @Component({
   selector:        'geo-targeting-search',
@@ -16,9 +16,10 @@ import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mod
 })
 export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
-  mode$;
+  modelMode$;
   model$;
   hasSelected$;
+  modelInfo$;
 
   focus () {
     this.geoTargetingSearchService.focus();
@@ -55,15 +56,16 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
 
   select (item) {
     this.geoTargetingSelectedServiceNew.addItems([item]);
-    this.geoTargetingSearchService.processInputValue('');
+    this.geoTargetingSearchService.reset();
   }
 
   constructor (private _store: Store<AppState>,
                private geoTargetingSearchService: GeoTargetingSearchService,
-               private geoTargetingSelectedServiceNew: GeoTargetingSelectedServiceNew,
+               private geoTargetingSelectedServiceNew: GeoTargetingSelectedService,
                private geoTargetingService: GeoTargetingService) {
     this.model$       = this._store.let(GeoTargetingSearchService.getModel);
-    this.mode$        = this._store.let(GeoTargetingModeService.getModel);
+    this.modelInfo$   = this._store.let(GeoTargetingInfoService.getModel);
+    this.modelMode$   = this._store.let(GeoTargetingModeService.getModel);
     this.hasSelected$ = this._store
                             .let(GeoTargetingSelectedService.getModel)
                             .map(({items}) => Boolean(items.length))

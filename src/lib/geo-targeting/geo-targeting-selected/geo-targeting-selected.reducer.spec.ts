@@ -6,11 +6,33 @@ import { country, region, zip, city } from './geo-targeting-selected.mocks';
 
 let deepFreeze = require('deep-freeze');
 
-fdescribe(`geoTargetingSelectedReducer`, () => {
+describe(`geoTargetingSelectedReducer`, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [GeoTargetingSelectedActions]
     });
+  });
+
+  describe(GeoTargetingSelectedActions.SET_ITEMS, () => {
+    it(`should set items to selected items list`,
+      inject([GeoTargetingSelectedActions], (geoTargetingSelectedActions) => {
+        let item  = {key: 'test', excluded: false};
+        let item1 = {key: 'test1', excluded: false};
+        let item2 = {key: 'test2', excluded: true};
+        let state = Object.assign({}, geoTargetingSelectedInitial, {
+          items: []
+        });
+
+        deepFreeze(state);
+
+        let newState = geoTargetingSelectedReducer(state, geoTargetingSelectedActions.setItems([item, item1, item2]));
+
+        expect(newState)
+          .toEqual(Object.assign({}, state, {
+            items:         [item, item1, item2],
+            itemsPrevious: []
+          }));
+      }));
   });
 
   describe(GeoTargetingSelectedActions.ADD_ITEMS, () => {
@@ -40,6 +62,14 @@ fdescribe(`geoTargetingSelectedReducer`, () => {
             items:         [item1, item2],
             itemsPrevious: state.items
           }), 'excluded item should be added to the end');
+
+        newState = geoTargetingSelectedReducer(newState, geoTargetingSelectedActions.addItems([item2]));
+
+        expect(newState)
+          .toEqual(Object.assign({}, state, {
+            items:         [item1, item2],
+            itemsPrevious: [item1, item2]
+          }), 'should not add items that have already been added');
       }));
 
     it(`should add items to selected items list, replacing broader locations`,
@@ -134,25 +164,29 @@ fdescribe(`geoTargetingSelectedReducer`, () => {
       }));
   });
 
-  describe(GeoTargetingSelectedActions.UPDATE_ITEM, () => {
-    it(`should update item in items list`,
+  describe(GeoTargetingSelectedActions.UPDATE_ITEMS, () => {
+    it(`should update items in items list`,
       inject([GeoTargetingSelectedActions], (geoTargetingSelectedActions) => {
-        let item        = {key: 'test', excluded: false};
-        let item1       = {key: 'test1', excluded: false};
-        let item2       = {key: 'test2', excluded: true};
-        let updatedItem = Object.assign({}, item1, {name: 'updatedItem', excluded: true});
-        let state       = Object.assign({}, geoTargetingSelectedInitial, {
+        let item         = {key: 'test', excluded: false};
+        let item1        = {key: 'test1', excluded: false};
+        let item2        = {key: 'test2', excluded: true};
+        let updatedItem1 = Object.assign({}, item1, {name: 'updatedItem1', excluded: true});
+        let updatedItem2 = Object.assign({}, item2, {name: 'updatedItem2', excluded: true});
+        let state        = Object.assign({}, geoTargetingSelectedInitial, {
           items: [item, item1, item2]
         });
 
         deepFreeze(state);
 
-        let newState = geoTargetingSelectedReducer(state, geoTargetingSelectedActions.updateItem(updatedItem));
+        let newState = geoTargetingSelectedReducer(state, geoTargetingSelectedActions.updateItems([
+          updatedItem1,
+          updatedItem2
+        ]));
 
         expect(newState)
           .toEqual(Object.assign({}, state, {
             itemsPrevious: state.items,
-            items:         sortItems([item, updatedItem, item2])
+            items:         sortItems([item, updatedItem1, updatedItem2])
           }));
       }));
   });

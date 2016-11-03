@@ -6,7 +6,7 @@ import { ComponentsHelperService } from '../../shared/services/components-helper
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 
 describe('Service: GeoTargetingMap', () => {
   beforeEach(() => {

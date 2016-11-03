@@ -12,9 +12,10 @@ import { GeoTargetingSelectedState, GEO_TARGETING_SELECTED_KEY } from './geo-tar
 import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.interface';
 import { AppState } from '../../../app/reducers/index';
 import { Store } from '@ngrx/store';
+import { GeoTargetingSelectedService } from './geo-targeting-selected.service.new';
 
 @Injectable()
-export class GeoTargetingSelectedService {
+export class GeoTargetingSelectedServiceOld {
 
   _items                             = new BehaviorSubject<GeoTargetingItem[]>([]);
   items                              = this._items.asObservable();
@@ -357,8 +358,7 @@ export class GeoTargetingSelectedService {
   constructor (private _store: Store<AppState>,
                private translateService: TranslateService,
                private geoTargetingApiService: GeoTargetingApiService,
-               private geoTargetingInfoService: GeoTargetingInfoService,
-               private geoTargetingTypeService: GeoTargetingLocationTypeService) {
+               private geoTargetingInfoService: GeoTargetingInfoService) {
     this.model$ = this._store.let(GeoTargetingSelectedService.getModel);
   }
 

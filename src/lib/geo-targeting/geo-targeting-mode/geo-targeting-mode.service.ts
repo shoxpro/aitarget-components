@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class GeoTargetingModeService {
 
-  static getModel = (_store): Observable<GeoTargetingModeState> => {
+  static getModel (_store): Observable<GeoTargetingModeState> {
     return _store.select(GEO_TARGETING_STATE_KEY)
                  .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_MODE_KEY])
                  .distinctUntilChanged();

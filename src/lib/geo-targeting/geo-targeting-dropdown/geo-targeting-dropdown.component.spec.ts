@@ -5,7 +5,7 @@ import { GeoTargetingDropdownComponent } from './geo-targeting-dropdown.componen
 import { FullTypePipe } from '../full-type.pipe';
 import { FullNamePipe } from '../full-name.pipe';
 import { GeoTargetingDropdownService } from './geo-targeting-dropdown.service';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingService } from '../geo-targeting.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';

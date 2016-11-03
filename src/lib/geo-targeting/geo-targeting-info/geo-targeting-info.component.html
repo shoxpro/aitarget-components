@@ -7,7 +7,7 @@
     <span class="geo-targeting-info__text">{{ (model$ | async).message }}</span>
     <span class="geo-targeting-info__change"
           *ngIf="(model$ | async).canRevert"
-          (click)="undoChange()">{{ 'geo-targeting-info.UNDO' | translate }}
+          (click)="revert()">{{ 'geo-targeting-info.UNDO' | translate }}
     </span>
   </div>
 

@@ -3,7 +3,7 @@
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingInfoComponent } from './geo-targeting-info.component';
 import { LibModule } from '../../lib.module';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 import { GeoTargetingInfoService } from './geo-targeting-info.service';
 import { GeoTargetingLocationTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';

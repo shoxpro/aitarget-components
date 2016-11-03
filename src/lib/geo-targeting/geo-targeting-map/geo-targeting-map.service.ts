@@ -4,7 +4,7 @@ import * as L from 'leaflet';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingModule } from '../geo-targeting.module';
 import { ComponentsHelperService } from '../../shared/services/components-helper.service';
@@ -12,6 +12,7 @@ import { GeoTargetingPinComponent } from '../geo-targeting-pin/geo-targeting-pin
 import { GeoTargetingMapPopupComponent } from '../geo-targeting-map-popup/geo-targeting-map-popup.component';
 import { AppState } from '../../../app/reducers/index';
 import { Store } from '@ngrx/store';
+import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 
 @Injectable()
 export class GeoTargetingMapService {
@@ -207,15 +208,11 @@ export class GeoTargetingMapService {
     let latitude  = e.latlng.lat;
     let longitude = e.latlng.lng;
     let key       = `(${latitude}, ${longitude})`;
-    let pinItem   = (<GeoTargetingItem>{
-      key:       key,
-      name:      key,
-      latitude:  latitude,
-      longitude: longitude,
-      type:      'custom_location'
-    });
-    this.geoTargetingSelectedService
-        .setCoordinates(pinItem)
+
+    this.geoTargetingApiService.metaData({custom_locations: [key]})
+        .map((metaData) => {
+          return Object.values(metaData['custom_locations'])[0];
+        })
         .subscribe((item: GeoTargetingItem) => {
           // Show message if coordinates don't belong to any country (e.g. deep-deep ocean)
           if (!item.country_code) {
@@ -232,7 +229,7 @@ export class GeoTargetingMapService {
                 (model) => item.excluded = model.selectedMode.id === 'exclude'
               );
 
-          this.geoTargetingSelectedService.add(item);
+          this.geoTargetingSelectedService.addItems([item]);
 
           this.togglePinMode();
         });
@@ -249,7 +246,7 @@ export class GeoTargetingMapService {
   constructor (private _store: Store<AppState>,
                private translateService: TranslateService,
                private geoTargetingInfoService: GeoTargetingInfoService,
-               private geoTargetingModeService: GeoTargetingModeService,
+               private geoTargetingApiService: GeoTargetingApiService,
                private componentsHelperService: ComponentsHelperService,
                private geoTargetingSelectedService: GeoTargetingSelectedService) { }
 

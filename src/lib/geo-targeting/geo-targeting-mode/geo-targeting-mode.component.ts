@@ -23,7 +23,7 @@ export class GeoTargetingModeComponent {
   model$;
 
   selectMode (mode) {
-    this.modeChange.emit(mode.id);
+    this.modeChange.emit(mode);
     this.selectedMode = mode;
 
     if (this.updateState) {
@@ -46,11 +46,7 @@ export class GeoTargetingModeComponent {
   constructor (private _store: Store<AppState>,
                private geoTargetingModeService: GeoTargetingModeService) {
     // TODO: add key navigation
-
     this.model$ = this._store.let(GeoTargetingModeService.getModel);
-
-    // Set modes on init
-    this.geoTargetingModeService.setTranslatedModes();
   }
 
 }

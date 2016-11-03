@@ -3,11 +3,12 @@
           'geo-targeting-search_dropdown-active': (model$ | async).isDropdownOpen,
           'geo-targeting-search_map-active': (model$ | async).isMapOpen,
           'geo-targeting-search_selected-items': hasSelected$ | async,
+          'geo-targeting-search_visible-info': (modelInfo$ | async).isVisible,
           'geo-targeting-search_focus': (model$ | async).hasFocus
           }">
   <geo-targeting-mode
-    [selectedMode]="(mode$ | async).selectedMode"
-    [isOpen]="(mode$ | async).isOpen"
+    [selectedMode]="(modelMode$ | async).selectedMode"
+    [isOpen]="(modelMode$ | async).isOpen"
     [updateState]="true"></geo-targeting-mode>
 
   <geo-targeting-input [inputValue]="(model$ | async).inputValue"

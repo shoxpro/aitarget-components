@@ -3,14 +3,15 @@
        *ngFor="let item of items"
        [ngClass]="{'fb-dropdown-list__item_selected': item.id === selectedItem.id}"
        (click)="onClick.emit(item)"
-       (mouseenter)="showInfo(item, true)"
-       (mouseleave)="showInfo(item, false)">
+       #listItem
+       (mouseenter)="showInfo(listItem, true)"
+       (mouseleave)="showInfo(listItem, false)">
     <fb-tick class="fb-dropdown-list__tick"
              *ngIf="item.id === selectedItem.id">
     </fb-tick>
     <span class="fb-dropdown-list__item-name">{{ item.name }}</span>
     <div class="fb-dropdown-list__info"
-         *ngIf="item.info && item.showInfo">
+         *ngIf="item.info && listItem.showInfo">
       <span>{{ item.info }}</span>
     </div>
   </div>

@@ -23,6 +23,10 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
                  let items;
                  let itemsPrevious;
                  switch (action.type) {
+                   case GeoTargetingSelectedActions.SET_ITEMS:
+                     items = action.payload.items;
+
+                     return Object.assign({}, state, {items});
                    case GeoTargetingSelectedActions.ADD_ITEMS:
                      let newState: GeoTargetingSelectedState = {
                        items:         [],
@@ -40,7 +44,16 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
                        });
 
                        if (index === action.payload.items.length - 1) {
-                         acc.items = sortItems([...action.payload.items, ...acc.items]);
+                         const combinedItems = [...action.payload.items, ...acc.items];
+                         items               = combinedItems.reduce((itemsMap, combinedItem, i) => {
+                           itemsMap[combinedItem.key] = combinedItem;
+                           if (i === combinedItems.length - 1) {
+                             return Object.values(itemsMap);
+                           }
+                           return itemsMap;
+                         }, {});
+
+                         acc.items = sortItems(items);
                        }
 
                        return acc;
@@ -53,11 +66,13 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
                      itemsPrevious   = state.items;
 
                      return Object.assign({}, state, {items, itemsPrevious});
-                   case GeoTargetingSelectedActions.UPDATE_ITEM:
+                   case GeoTargetingSelectedActions.UPDATE_ITEMS:
                      items = state.items.map((item) => {
-                       if (item.key === action.payload.item.key) {
-                         return Object.assign({}, item, action.payload.item);
-                       }
+                       action.payload.items.forEach((updatedItem) => {
+                         if (item.key === updatedItem.key) {
+                           item = Object.assign({}, item, updatedItem);
+                         }
+                       });
                        return item;
                      });
 

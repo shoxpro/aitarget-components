@@ -2,7 +2,7 @@
 
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingMapComponent } from './geo-targeting-map.component';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
 import { GeoTargetingService } from '../geo-targeting.service';
 import { ComponentsHelperService } from '../../shared/services/components-helper.service';

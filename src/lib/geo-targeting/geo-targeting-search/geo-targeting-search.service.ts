@@ -8,9 +8,9 @@ import {
 } from './geo-taregting-search.reducer';
 import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.interface';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
-import { GeoTargetingSelectedActions } from '../geo-targeting-selected/geo-targeting-selected.actions';
 import { TranslateService } from 'ng2-translate';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 
 @Injectable()
 export class GeoTargetingSearchService {
@@ -64,8 +64,9 @@ export class GeoTargetingSearchService {
       this.geoTargetingInfoService.hideInfo();
       return;
     }
-    let notFoundInputsStr = model.termsNotFound.map((term) => term.input)
-                                 .join(', ');
+
+    const notFoundInputs    = model.termsNotFound.map((term) => term.input);
+    const notFoundInputsStr = notFoundInputs.join(', ');
 
     let message = this.translateService.instant(
       `geo-targeting-info.MESSAGE_NOT_FOUND`,
@@ -78,9 +79,7 @@ export class GeoTargetingSearchService {
   selectFoundTerms (model: GeoTargetingSearchState) {
     let matchedItems = model.termsMatches.map((term) => term.item);
 
-    this._store.dispatch(
-      this.geoTargetingSelectedActions.addItems(matchedItems)
-    );
+    this.geoTargetingSelectedService.addItems(matchedItems);
   }
 
   /**
@@ -99,6 +98,7 @@ export class GeoTargetingSearchService {
    */
   getQueryItemsUpdatedModelStream = (model$ = this.model$) => {
     return model$
+      .take(1)
       .mergeMap((model) => {
         let updatedModel = Object.assign({}, model, {items: [], termsMatches: [], termsFound: [], termsNotFound: []});
 
@@ -133,8 +133,13 @@ export class GeoTargetingSearchService {
    */
   getCustomLocationItemsUpdatedModelStream = (model$ = this.model$) => {
     return model$
+      .take(1)
       .mergeMap((model) => {
         let updatedModel = Object.assign({}, model, {items: [], termsMatches: [], termsFound: [], termsNotFound: []});
+
+        if (!model.termsGrouped.customLocationKeys.length) {
+          return Observable.of(updatedModel);
+        }
 
         return this.geoTargetingApiService.metaData({custom_locations: model.termsGrouped.customLocationKeys})
                    .scan((acc: GeoTargetingSearchState, metaData) => {
@@ -211,7 +216,7 @@ export class GeoTargetingSearchService {
 
   constructor (private _store: Store<AppState>,
                private geoTargetingSearchActions: GeoTargetingSearchActions,
-               private geoTargetingSelectedActions: GeoTargetingSelectedActions,
+               private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingInfoService: GeoTargetingInfoService,
                private geoTargetingApiService: GeoTargetingApiService,
                private translateService: TranslateService) {

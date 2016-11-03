@@ -3,7 +3,7 @@
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingMapPopupComponent } from './geo-targeting-map-popup.component';
 import { GeoTargetingModule } from '../geo-targeting.module';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 
 describe('Component: GeoTargetingMapPopup', () => {
   beforeEach(() => {

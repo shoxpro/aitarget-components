@@ -58,14 +58,8 @@
 }
 
 .geo-targeting-selected__mode {
-  position:     absolute;
-  left:         0;
-  display:      flex;
-  padding:      0 6px;
-  border-right: 1px solid #bdc7d8;
-  white-space:  nowrap;
-  cursor:       pointer;
-  align-items:  center;
+  position: absolute;
+  left:     0;
 }
 
 .geo-targeting-selected__item:hover {

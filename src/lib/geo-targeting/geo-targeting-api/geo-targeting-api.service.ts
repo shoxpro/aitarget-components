@@ -102,6 +102,8 @@ export class GeoTargetingApiService {
 
     let processedGeoLocations = this.processGeoLocations(spec.geo_locations, spec.excluded_geo_locations);
 
+    console.log(`processedGeoLocations: `, processedGeoLocations);
+
     // Get all excluded keys
     let excludedKeys = [];
     for (let type in spec.excluded_geo_locations) {

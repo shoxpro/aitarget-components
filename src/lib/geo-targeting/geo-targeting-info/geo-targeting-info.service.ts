@@ -9,7 +9,7 @@ import { GeoTargetingInfoActions } from './geo-targeting-info.actions';
 @Injectable()
 export class GeoTargetingInfoService {
 
-  static getModel = (_store): Observable<GeoTargetingInfoState> => {
+  static getModel (_store): Observable<GeoTargetingInfoState> {
     return _store.select(GEO_TARGETING_STATE_KEY)
                  .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_INFO_KEY])
                  .distinctUntilChanged();

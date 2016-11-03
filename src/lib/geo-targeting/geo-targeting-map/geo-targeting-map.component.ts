@@ -4,10 +4,12 @@ import {
 } from '@angular/core';
 import { GeoTargetingMapService } from './geo-targeting-map.service';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { ComponentsHelperService } from '../../shared/services/components-helper.service';
 import { Subject } from 'rxjs';
+import { AppState } from '../../../app/reducers/index';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector:        'geo-targeting-map',
@@ -18,6 +20,7 @@ import { Subject } from 'rxjs';
 })
 export class GeoTargetingMapComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
+  modelSelected$;
 
   @Input() isOpen;
 
@@ -25,13 +28,15 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
 
   pinMode;
 
-  constructor (private geoTargetingSelectedService: GeoTargetingSelectedService,
+  constructor (private _store: Store<AppState>,
+               private geoTargetingSelectedService: GeoTargetingSelectedService,
                private changeDetectorRef: ChangeDetectorRef,
                private translateService: TranslateService,
                private viewContainerRef: ViewContainerRef,
                private componentsHelperService: ComponentsHelperService,
                private geoTargetingMapService: GeoTargetingMapService) {
     this.componentsHelperService.setRootViewContainerRef(viewContainerRef);
+    this.modelSelected$ = this._store.let(GeoTargetingSelectedService.getModel);
   }
 
   ngOnDestroy () {
@@ -42,8 +47,9 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
     this.geoTargetingMapService.initializeMap();
 
     // Update map when selected items change
-    this.geoTargetingSelectedService.items
+    this.modelSelected$
         .takeUntil(this.destroy$)
+        .map((model) => model.items)
         .subscribe((items: GeoTargetingItem[]) => {
           // Clear all existing items layers
           for (let key in this.geoTargetingMapService.itemsMap) {
