@@ -229,7 +229,7 @@ export class GeoTargetingMapService {
           this._store.let(GeoTargetingModeService.getModel)
               .take(1)
               .subscribe(
-                (model) => item.excluded = model.mode === 'exclude'
+                (model) => item.excluded = model.selectedMode.id === 'exclude'
               );
 
           this.geoTargetingSelectedService.add(item);

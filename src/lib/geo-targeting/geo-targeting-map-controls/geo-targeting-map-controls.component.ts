@@ -48,7 +48,7 @@ export class GeoTargetingMapControlsComponent implements OnInit, OnDestroy {
 
     this._store.let(GeoTargetingModeService.getModel)
         .subscribe((model) => {
-          this.mode = model.mode;
+          this.mode = model.selectedMode.id;
         });
   }
 

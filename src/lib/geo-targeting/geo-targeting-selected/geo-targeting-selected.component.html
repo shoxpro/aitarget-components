@@ -1,8 +1,10 @@
 <div *ngIf="items && items.length"
      class="geo-targeting-selected__content">
+  <!--Group of items which belong to the same country-->
   <div class="geo-targeting-selected__group"
        [ngClass]='{"geo-targeting-selected__group_hover": groupHovered[key]}'
        *ngFor="let key of itemsGroupedByCountryKeys; let last = last">
+    <!--Title (country name)-->
     <div class="geo-targeting-selected__group-title"
          (mouseenter)="hoverGroup(key, true)"
          (mouseleave)="hoverGroup(key, false)">
@@ -10,23 +12,15 @@
       <span class="geo-targeting-selected__remove geo-targeting-selected__remove-group"
             (click)="removeGroup(key, $event)">&times;</span>
     </div>
+    <!--List of items-->
     <div class="geo-targeting-selected__items">
       <div class="geo-targeting-selected__item"
            (click)="showItemOnMap(item)"
            *ngFor="let item of itemsGroupedByCountry[key].items">
-        <div class="geo-targeting-selected__mode"
-             #itemMode
-             (click)="toggleModeDropdown(itemMode, $event)">
-          <geo-targeting-pin [excluded]="item.excluded"></geo-targeting-pin>
-          <fb-arrow-drop [direction]="itemMode.isOpen ? 'up': 'down'"></fb-arrow-drop>
-          <geo-targeting-mode-dropdown
-            appendTo="geo-targeting"
-            *ngIf="itemMode.isOpen"
-            [excluded]="item.excluded"
-            (toggle)="toggleModeDropdown(itemMode, $event)"
-            (include)="setExcluded(itemMode, item, false)"
-            (exclude)="setExcluded(itemMode, item, true)"></geo-targeting-mode-dropdown>
-        </div>
+        <geo-targeting-mode
+          [selectedMode]="item.excluded ? 'exclude': 'include'"
+          appendTo="geo-targeting"
+          (modeChange)="setExcluded(item, $event)"></geo-targeting-mode>
         <span>{{ item | fullName }}</span>
         <geo-targeting-radius *ngIf="item.type === 'city' || item.type === 'custom_location'"
                               [item]="item"></geo-targeting-radius>

@@ -5,7 +5,10 @@
           'geo-targeting-search_selected-items': hasSelected$ | async,
           'geo-targeting-search_focus': (model$ | async).hasFocus
           }">
-  <geo-targeting-mode></geo-targeting-mode>
+  <geo-targeting-mode
+    [selectedMode]="(mode$ | async).selectedMode"
+    [isOpen]="(mode$ | async).isOpen"
+    [updateState]="true"></geo-targeting-mode>
 
   <geo-targeting-input [inputValue]="(model$ | async).inputValue"
                        [hasFocus]="(model$ | async).hasFocus"

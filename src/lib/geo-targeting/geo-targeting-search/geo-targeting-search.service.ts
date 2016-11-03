@@ -164,7 +164,6 @@ export class GeoTargetingSearchService {
    * Propagate model with found items and dispatch update model action
    */
   search () {
-    console.log('search');
     this.model$
         .take(1)
         .do(() => this._store.dispatch(this.geoTargetingSearchActions.updateModel({fetching: true})))

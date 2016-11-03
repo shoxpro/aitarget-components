@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { GeoTargetingService } from '../geo-targeting.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingSelectedServiceNew } from '../geo-targeting-selected/geo-targeting-selected.service.new';
+import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 
 @Component({
   selector:        'geo-targeting-search',
@@ -15,6 +16,7 @@ import { GeoTargetingSelectedServiceNew } from '../geo-targeting-selected/geo-ta
 })
 export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
+  mode$;
   model$;
   hasSelected$;
 
@@ -61,6 +63,7 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
                private geoTargetingSelectedServiceNew: GeoTargetingSelectedServiceNew,
                private geoTargetingService: GeoTargetingService) {
     this.model$       = this._store.let(GeoTargetingSearchService.getModel);
+    this.mode$        = this._store.let(GeoTargetingModeService.getModel);
     this.hasSelected$ = this._store
                             .let(GeoTargetingSelectedService.getModel)
                             .map(({items}) => Boolean(items.length))

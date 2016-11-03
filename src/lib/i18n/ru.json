@@ -67,12 +67,8 @@
   },
   "geo-targeting-mode": {
     "include": "Включить",
-    "exclude": "Исключить"
-  },
-  "geo-targeting-mode-dropdown": {
-    "INCLUDE": "Включить",
-    "EXCLUDE": "Исключить",
-    "DELETE": "Удалить"
+    "exclude": "Исключить",
+    "delete": "Удалить"
   },
   "geo-targeting-map": {
     "MAP": "Карта"

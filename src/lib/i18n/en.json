@@ -67,12 +67,8 @@
   },
   "geo-targeting-mode": {
     "include": "Include",
-    "exclude": "Exclude"
-  },
-  "geo-targeting-mode-dropdown": {
-    "INCLUDE": "Include",
-    "EXCLUDE": "Exclude",
-    "DELETE": "Delete"
+    "exclude": "Exclude",
+    "delete": "Delete"
   },
   "geo-targeting-map": {
     "MAP": "Map"

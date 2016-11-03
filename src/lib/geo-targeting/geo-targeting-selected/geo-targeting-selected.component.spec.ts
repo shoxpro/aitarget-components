@@ -15,7 +15,6 @@ describe('Component: GeoTargetingSelected', () => {
         GeoTargetingSelectedComponent,
         GeoTargetingPinComponent,
         FbArrowDropComponent,
-        GeoTargetingModeDropdownComponent,
         GeoTargetingRadiusComponent,
         FullNamePipe
       ],
@@ -48,24 +47,6 @@ class GeoTargetingPinComponent {
 })
 class FbArrowDropComponent {
   @Input() direction;
-}
-
-@Component({
-  selector: 'geo-targeting-mode-dropdown',
-  template: '<div></div>'
-})
-class GeoTargetingModeDropdownComponent {
-  @Input('hasRemove') hasRemove: Boolean = false;
-  @Input('excluded') excluded: Boolean   = false;
-
-  @Output()
-  toggle  = new EventEmitter();
-  @Output()
-  include = new EventEmitter();
-  @Output()
-  exclude = new EventEmitter();
-  @Output()
-  remove  = new EventEmitter();
 }
 
 @Component({

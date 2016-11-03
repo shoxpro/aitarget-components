@@ -67,12 +67,8 @@
   },
   "geo-targeting-mode": {
     "include": "包括",
-    "exclude": "排除"
-  },
-  "geo-targeting-mode-dropdown": {
-    "INCLUDE": "包括",
-    "EXCLUDE": "排除",
-    "DELETE": "删除"
+    "exclude": "排除",
+    "delete": "删除"
   },
   "geo-targeting-map": {
     "MAP": "地图"

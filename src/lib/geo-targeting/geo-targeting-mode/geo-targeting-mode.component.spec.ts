@@ -13,8 +13,7 @@ describe('Component: GeoTargetingMode', () => {
       declarations: [
         GeoTargetingModeComponent,
         GeoTargetingPinComponent,
-        FbArrowDropComponent,
-        GeoTargetingModeDropdownComponent
+        FbArrowDropComponent
       ],
       providers:    [
         {provide: TranslateService, useValue: {}},
@@ -45,12 +44,4 @@ class GeoTargetingPinComponent {
 })
 class FbArrowDropComponent {
   @Input() direction;
-}
-
-@Component({
-  selector: 'geo-targeting-mode-dropdown',
-  template: '<div></div>'
-})
-class GeoTargetingModeDropdownComponent {
-  @Input() excluded;
 }

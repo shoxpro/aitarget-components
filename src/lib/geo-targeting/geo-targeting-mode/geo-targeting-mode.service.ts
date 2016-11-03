@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/reducers/index';
 import { GeoTargetingModeActions } from './geo-targeting-mode.actions';
-import { GeoTargetingModeType, GEO_TARGETING_MODE_KEY, GeoTargetingModeState } from './geo-targeting-mode.reducer';
+import { GEO_TARGETING_MODE_KEY, GeoTargetingModeState, GeoTargetingModeType } from './geo-targeting-mode.reducer';
 import { GeoTargetingState, GEO_TARGETING_STATE_KEY } from '../geo-targeting.interface';
 import { Observable } from 'rxjs';
 
@@ -15,8 +15,12 @@ export class GeoTargetingModeService {
                  .distinctUntilChanged();
   };
 
-  setMode (mode: GeoTargetingModeType) {
-    this._store.dispatch(this.geoTargetingModeActions.setMode(mode));
+  setMode (selectedMode: GeoTargetingModeType) {
+    this._store.dispatch(this.geoTargetingModeActions.setMode(selectedMode));
+  }
+
+  setTranslatedModes () {
+    this._store.dispatch(this.geoTargetingModeActions.setTranslatedModes());
   }
 
   toggleModeDropdown (isOpen: boolean) {

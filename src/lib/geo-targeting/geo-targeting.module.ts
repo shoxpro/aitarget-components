@@ -15,7 +15,6 @@ import { MdSliderModule } from '@angular/material/slider';
 import { GeoTargetingLocationTypeComponent } from './geo-targeting-location-type/geo-targeting-location-type.component';
 import { GeoTargetingMapControlsComponent } from './geo-targeting-map-controls/geo-targeting-map-controls.component';
 import { GeoTargetingMapPopupComponent } from './geo-targeting-map-popup/geo-targeting-map-popup.component';
-import { GeoTargetingModeDropdownComponent } from './geo-targeting-mode-dropdown/geo-targeting-mode-dropdown.component';
 import { FullTypePipe } from './full-type.pipe';
 import { FbTickComponent } from '../shared/components/tick.component';
 import { FbArrowDropComponent } from '../shared/components/arrow-drop.component';
@@ -48,7 +47,6 @@ import { GeoTargetingSearchComponent } from './geo-targeting-search/geo-targetin
     FbTickComponent,
     FbArrowDropComponent,
     GeoTargetingMapPopupComponent,
-    GeoTargetingModeDropdownComponent,
     GeoTargetingTypeComponent,
     FbDropdownListComponent,
     GeoTargetingInfoIconComponent
