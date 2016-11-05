@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Rx';
 import {
   GeoTargetingLocationTypeState, GEO_TARGETING_LOCATION_TYPE_KEY, LocationType
 } from './geo-targeting-location-type.reducer';
-import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.interface';
+import { GeoTargetingState, GEO_TARGETING_STATE_KEY } from '../geo-targeting.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/reducers/index';
 import { GeoTargetingLocationTypeActions } from './geo-targeting-location-type.actions';

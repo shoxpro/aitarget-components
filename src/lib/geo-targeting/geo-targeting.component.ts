@@ -22,6 +22,8 @@ import { GeoTargetingSelectedService } from './geo-targeting-selected/geo-target
 import { AppState } from '../../app/reducers/index';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
+import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type.service';
+import { GeoTargetingTypeActions } from './geo-targeting-type/geo-targeting-type.actions';
 
 @Component({
   selector:    'geo-targeting',
@@ -29,9 +31,11 @@ import { Subject } from 'rxjs';
   styleUrls:   ['./geo-targeting.component.scss'],
   providers:   [GeoTargetingService, GeoTargetingApiService, GeoTargetingDropdownService,
     GeoTargetingSelectedActions, TargetingSpecService, GeoTargetingModeService,
-    GeoTargetingInfoService, GeoTargetingInfoActions, GeoTargetingLocationTypeService, GeoTargetingLocationTypeActions,
+    GeoTargetingInfoService, GeoTargetingInfoActions, GeoTargetingLocationTypeService,
+    GeoTargetingLocationTypeActions,
     GeoTargetingRadiusService, GeoTargetingSelectedService,
-    GeoTargetingMapService, ComponentsHelperService, GeoTargetingLocationTypeService, GeoTargetingSearchActions,
+    GeoTargetingMapService, ComponentsHelperService, GeoTargetingTypeActions, GeoTargetingTypeService,
+    GeoTargetingSearchActions,
     GeoTargetingSearchService, GeoTargetingModeService, GeoTargetingModeActions]
 })
 export class GeoTargetingComponent implements OnInit, OnDestroy {

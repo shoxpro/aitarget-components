@@ -25,9 +25,8 @@ export class GeoTargetingMapService {
   tileLayer;
   popup;
 
-  itemsMap  = {};
-  mapActive = this._mapActive.asObservable();
-  pinMode   = this._pinMode.asObservable();
+  itemsMap = {};
+  pinMode  = this._pinMode.asObservable();
 
   /**
    * Toggle pin mode
@@ -35,20 +34,6 @@ export class GeoTargetingMapService {
   togglePinMode () {
     let pinMode = this._pinMode.getValue();
     this._pinMode.next(!pinMode);
-  }
-
-  /**
-   * Show map
-   */
-  showMap () {
-    this._mapActive.next(true);
-  }
-
-  /**
-   * Hide map
-   */
-  hideMap () {
-    this._mapActive.next(false);
   }
 
   /**
@@ -211,8 +196,12 @@ export class GeoTargetingMapService {
 
     this.geoTargetingApiService.metaData({custom_locations: [key]})
         .map((metaData) => {
+          if (!metaData) {
+            return;
+          }
           return Object.values(metaData['custom_locations'])[0];
         })
+        .filter((item) => Boolean(item))
         .subscribe((item: GeoTargetingItem) => {
           // Show message if coordinates don't belong to any country (e.g. deep-deep ocean)
           if (!item.country_code) {

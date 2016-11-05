@@ -3,6 +3,7 @@ import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.s
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { AppState } from '../../../app/reducers/index';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
 @Component({
   selector:        'geo-targeting-map-controls',
@@ -11,17 +12,10 @@ import { Store } from '@ngrx/store';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingMapControlsComponent implements OnInit, OnDestroy {
-  _subscriptions = [];
-  pinMode        = false;
-  mode;
+  destroy$ = new Subject();
+  modelMode$;
 
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.changeDetectorRef.markForCheck();
-    this.changeDetectorRef.detectChanges();
-  }
+  pinMode = false;
 
   togglePinMode () {
     this.geoTargetingMapService.togglePinMode();
@@ -29,26 +23,21 @@ export class GeoTargetingMapControlsComponent implements OnInit, OnDestroy {
 
   constructor (private _store: Store<AppState>,
                private geoTargetingMapService: GeoTargetingMapService,
-               private changeDetectorRef: ChangeDetectorRef) { }
+               private changeDetectorRef: ChangeDetectorRef) {
+    this.modelMode$ = this._store.let(GeoTargetingModeService.getModel);
+  }
 
   ngOnDestroy () {
-    this._subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
+    this.destroy$.next();
   }
 
   ngOnInit () {
     // Subscribe to map's pin mode flag
-    this._subscriptions.push(
-      this.geoTargetingMapService.pinMode.subscribe((pinMode) => {
-        this.pinMode = pinMode;
-        this.updateTemplate();
-      })
-    );
-
-    this._store.let(GeoTargetingModeService.getModel)
-        .subscribe((model) => {
-          this.mode = model.selectedMode.id;
+    this.geoTargetingMapService.pinMode
+        .takeUntil(this.destroy$)
+        .subscribe((pinMode) => {
+          this.pinMode = pinMode;
+          this.changeDetectorRef.markForCheck();
         });
   }
 

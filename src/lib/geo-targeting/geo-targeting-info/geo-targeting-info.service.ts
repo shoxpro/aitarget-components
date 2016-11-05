@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { GeoTargetingInfoState, GEO_TARGETING_INFO_KEY } from './geo-targeting-info.reducer';
-import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.interface';
 import { AppState } from '../../../app/reducers/index';
 import { Store } from '@ngrx/store';
 import { GeoTargetingInfoActions } from './geo-targeting-info.actions';
+import { GeoTargetingState, GEO_TARGETING_STATE_KEY } from '../geo-targeting.reducer';
 
 @Injectable()
 export class GeoTargetingInfoService {

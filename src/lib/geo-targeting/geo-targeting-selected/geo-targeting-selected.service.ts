@@ -32,11 +32,11 @@ export class GeoTargetingSelectedServiceOld {
   };
   model$;
 
-  static getModel = (_store): Observable<GeoTargetingSelectedState> => {
+  static getModel (_store): Observable<GeoTargetingSelectedState> {
     return _store.select(GEO_TARGETING_STATE_KEY)
                  .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_SELECTED_KEY])
                  .distinctUntilChanged();
-  };
+  }
 
   /**
    * Show info message that excluding is impossible without included locations

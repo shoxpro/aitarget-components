@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { Observable } from 'rxjs';
 import { GeoTargetingSelectedState, GEO_TARGETING_SELECTED_KEY } from './geo-targeting-selected.reducer';
-import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.interface';
 import { GeoTargetingRadiusService } from '../geo-targeting-radius/geo-targeting-radius.service';
 import { typeMap } from './geo-targeting-selected.constants';
 import { AppState } from '../../../app/reducers/index';
@@ -12,6 +11,7 @@ import { TranslateService } from 'ng2-translate';
 import { GeoTargetingSelectedActions } from './geo-targeting-selected.actions';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
+import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.reducer';
 
 @Injectable()
 export class GeoTargetingSelectedService {

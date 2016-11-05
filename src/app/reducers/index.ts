@@ -3,6 +3,7 @@ import { ActionReducer, combineReducers } from '@ngrx/store';
 import { storeLogger } from 'ngrx-store-logger';
 import { routerReducer, RouterState } from '@ngrx/router-store';
 import { LibState, LIB_REDUCERS } from '../../lib/lib-reducers';
+import { storeFreeze } from 'ngrx-store-freeze';
 
 export interface AppState extends LibState {
   router: RouterState;
@@ -22,10 +23,7 @@ function stateSetter (reducer: ActionReducer<any>): ActionReducer<any> {
   };
 }
 
-/**
- * TODO: uncomment storeFreeze after refactoring geo-component using @ngrx/store
- */
-const DEV_REDUCERS = [stateSetter/*, storeFreeze*/];
+const DEV_REDUCERS = [stateSetter, storeFreeze];
 if (['logger', 'both'].includes(STORE_DEV_TOOLS)) { // set in constants.js file of project root
   DEV_REDUCERS.push(storeLogger());
 }

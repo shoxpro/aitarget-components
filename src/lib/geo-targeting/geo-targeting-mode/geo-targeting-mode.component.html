@@ -6,7 +6,7 @@
   <fb-arrow-drop [direction]="isOpen ? 'up' : 'down'"></fb-arrow-drop>
   <fb-dropdown-list
     *ngIf="isOpen"
-    [appendTo]="appendTo"
+    [appendTo]="appendTarget"
     (clickOutside)="toggleDropdown(false)"
     [items]="(model$ | async).modes.slice(0, 2)"
     [selectedItem]="selectedMode"

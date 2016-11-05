@@ -7,6 +7,7 @@ import { GeoTargetingService } from '../geo-targeting.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
+import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 
 @Component({
   selector:        'geo-targeting-search',
@@ -17,6 +18,7 @@ import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-inf
 export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   modelMode$;
+  modelSearchType$;
   model$;
   hasSelected$;
   modelInfo$;
@@ -63,13 +65,14 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
                private geoTargetingSearchService: GeoTargetingSearchService,
                private geoTargetingSelectedServiceNew: GeoTargetingSelectedService,
                private geoTargetingService: GeoTargetingService) {
-    this.model$       = this._store.let(GeoTargetingSearchService.getModel);
-    this.modelInfo$   = this._store.let(GeoTargetingInfoService.getModel);
-    this.modelMode$   = this._store.let(GeoTargetingModeService.getModel);
-    this.hasSelected$ = this._store
-                            .let(GeoTargetingSelectedService.getModel)
-                            .map(({items}) => Boolean(items.length))
-                            .distinctUntilChanged();
+    this.model$           = this._store.let(GeoTargetingSearchService.getModel);
+    this.modelInfo$       = this._store.let(GeoTargetingInfoService.getModel);
+    this.modelMode$       = this._store.let(GeoTargetingModeService.getModel);
+    this.modelSearchType$ = this._store.let(GeoTargetingTypeService.getModel);
+    this.hasSelected$     = this._store
+                                .let(GeoTargetingSelectedService.getModel)
+                                .map(({items}) => Boolean(items.length))
+                                .distinctUntilChanged();
   }
 
   ngOnDestroy () {
@@ -96,19 +99,45 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
         });
 
     /**
-     * Close map on Escape and when click outside of geo component
+     * Close map and dropdown on Escape and when click outside of geo component
      */
     this.model$
         .takeUntil(this.destroy$)
-        .map(({isMapOpen}) => isMapOpen)
+        .map(({isMapOpen, isDropdownOpen}) => ({isMapOpen, isDropdownOpen}))
         .distinctUntilChanged()
-        .let((isMapOpen$) => isMapOpen$
-          .filter((isMapOpen) => isMapOpen)
-          .switchMap(() => this.geoTargetingService.escapeStream
-                               .merge(this.geoTargetingService.clickOutsideOfGeoStream)
-                               .takeUntil(isMapOpen$.skip(1))
-                               .take(1))
+        .let((isOpen$) => isOpen$
+          .filter(({isMapOpen, isDropdownOpen}) => isMapOpen || isDropdownOpen)
+          .switchMap(({isMapOpen, isDropdownOpen}) => {
+            return this.geoTargetingService.escapeStream
+                       .merge(this.geoTargetingService.clickOutsideOfGeoStream)
+                       .takeUntil(isOpen$.skip(1))
+                       .take(1)
+                       .mapTo({isMapOpen, isDropdownOpen});
+          })
         )
-        .subscribe(() => this.toggleMap(false));
+        .subscribe(({isMapOpen, isDropdownOpen}) => {
+          if (isMapOpen) {
+            this.toggleMap(false);
+          }
+
+          if (isDropdownOpen) {
+            this.toggleDropdown(false);
+          }
+        });
+
+    /**
+     * Repeat search when search type changes
+     */
+    this.modelSearchType$
+        .takeUntil(this.destroy$)
+        .map(({selectedType}) => selectedType)
+        .distinctUntilChanged()
+        .switchMap(() => {
+          return this.model$.take(1)
+                     .filter(({inputValue}) => Boolean(inputValue))
+                     .map(({inputValue}) => inputValue);
+        })
+        .subscribe((inputValue) => this.geoTargetingSearchService.processInputValue(inputValue));
+
   }
 }

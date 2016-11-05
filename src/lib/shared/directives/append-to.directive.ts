@@ -19,6 +19,7 @@ export class AppendToDirective implements OnInit, OnDestroy {
     if (this.veil) {
       this.veil.remove();
     }
+    this.element.remove();
   }
 
   ngOnInit () {

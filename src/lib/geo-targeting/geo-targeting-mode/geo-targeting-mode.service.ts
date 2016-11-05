@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/reducers/index';
 import { GeoTargetingModeActions } from './geo-targeting-mode.actions';
 import { GEO_TARGETING_MODE_KEY, GeoTargetingModeState, GeoTargetingModeType } from './geo-targeting-mode.reducer';
-import { GeoTargetingState, GEO_TARGETING_STATE_KEY } from '../geo-targeting.interface';
+import { GeoTargetingState, GEO_TARGETING_STATE_KEY } from '../geo-targeting.reducer';
 import { Observable } from 'rxjs';
 
 @Injectable()

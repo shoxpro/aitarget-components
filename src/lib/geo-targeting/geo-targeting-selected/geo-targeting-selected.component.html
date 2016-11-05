@@ -21,6 +21,7 @@
         <geo-targeting-mode
           class="geo-targeting-selected__mode"
           #itemMode
+          [appendTarget]="'geo-targeting'"
           [selectedMode]="item.excluded ? (modelMode$ | async).modes[1] : (modelMode$ | async).modes[0]"
           [isOpen]="itemMode.isOpen"
           (toggle)="toggleModeDropdown(itemMode, $event)"

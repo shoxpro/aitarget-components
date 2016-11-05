@@ -1,5 +1,4 @@
-import { geoTargetingReducer } from './geo-targeting/geo-trageting.reducer';
-import { GeoTargetingState } from './geo-targeting/geo-targeting.interface';
+import { geoTargetingReducer, GeoTargetingState } from './geo-targeting/geo-targeting.reducer';
 
 export interface LibState {
   geoTargeting: GeoTargetingState;

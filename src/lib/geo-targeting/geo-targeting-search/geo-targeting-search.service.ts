@@ -6,11 +6,11 @@ import { Observable } from 'rxjs/Rx';
 import {
   GeoTargetingSearchState, GEO_TARGETING_SEARCH_KEY, geoTargetingSearchInitial
 } from './geo-taregting-search.reducer';
-import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.interface';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 import { TranslateService } from 'ng2-translate';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
+import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.reducer';
 
 @Injectable()
 export class GeoTargetingSearchService {
@@ -46,7 +46,7 @@ export class GeoTargetingSearchService {
 
   setInput (inputValue) {
     this._store.dispatch(this.geoTargetingSearchActions.updateModel(
-      Object.assign(geoTargetingSearchInitial, {inputValue, hasFocus: true})
+      Object.assign({}, geoTargetingSearchInitial, {inputValue, hasFocus: true})
     ));
   }
 
@@ -55,7 +55,7 @@ export class GeoTargetingSearchService {
    */
   reset () {
     this._store.dispatch(this.geoTargetingSearchActions.updateModel(
-      Object.assign(geoTargetingSearchInitial, {hasFocus: true})
+      Object.assign({}, geoTargetingSearchInitial, {hasFocus: true})
     ));
   }
 

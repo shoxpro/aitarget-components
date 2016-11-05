@@ -1,3 +1,47 @@
-export const TOGGLE_SEARCH_TYPE_DROPDOWN = 'TOGGLE_SEARCH_TYPE_DROPDOWN';
-export const SELECT_SEARCH_TYPE          = 'SELECT_SEARCH_TYPE';
-export const TRANSLATE_SEARCH_TYPES      = 'TRANSLATE_SEARCH_TYPES';
+import { Injectable } from '@angular/core';
+import { Action } from '@ngrx/store';
+import { GeoTargetingType } from './geo-targeting-type.reducer';
+import { TranslateService } from 'ng2-translate';
+
+@Injectable()
+export class GeoTargetingTypeActions {
+  static SET_TRANSLATED_SEARCH_TYPES = '[geo-targeting-type] Set Translated Search Types';
+  static SELECT_SEARCH_TYPE          = '[geo-targeting-type] Select Search Type';
+  static TOGGLE_SEARCH_TYPE_DROPDOWN = '[geo-targeting-type] Toggle Search Type Dropdown';
+
+  setTranslatedSearchType (): Action {
+    return {
+      type:    GeoTargetingTypeActions.SET_TRANSLATED_SEARCH_TYPES,
+      payload: {
+        types: [
+          {id: 'all', name: this.translateService.instant(`geo-targeting-dropdown.all`)},
+          {id: 'country', name: this.translateService.instant(`geo-targeting-dropdown.country`)},
+          {id: 'region', name: this.translateService.instant(`geo-targeting-dropdown.region`)},
+          {id: 'geo_market', name: this.translateService.instant(`geo-targeting-dropdown.geo_market`)},
+          {id: 'city', name: this.translateService.instant(`geo-targeting-dropdown.city`)},
+          {id: 'electoral_district', name: this.translateService.instant(`geo-targeting-dropdown.electoral_district`)},
+          {id: 'political_district', name: this.translateService.instant(`geo-targeting-dropdown.political_district`)},
+          {id: 'zip', name: this.translateService.instant(`geo-targeting-dropdown.zip`)},
+          {id: 'custom_location', name: this.translateService.instant(`geo-targeting-dropdown.custom_location`)},
+          {id: 'place', name: this.translateService.instant(`geo-targeting-dropdown.place`)}
+        ]
+      }
+    };
+  }
+
+  selectSearchType (selectedType: GeoTargetingType): Action {
+    return {
+      type:    GeoTargetingTypeActions.SELECT_SEARCH_TYPE,
+      payload: {selectedType}
+    };
+  }
+
+  toggleSearchTypeDropdown (isOpen: boolean): Action {
+    return {
+      type:    GeoTargetingTypeActions.TOGGLE_SEARCH_TYPE_DROPDOWN,
+      payload: {isOpen}
+    };
+  }
+
+  constructor (private translateService: TranslateService) {}
+}

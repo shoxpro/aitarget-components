@@ -7,8 +7,8 @@ import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSpec } from '../../targeting/targeting-spec-geo.interface';
 import { Store } from '@ngrx/store';
-import { typeModel } from '../geo-targeting-type/geo-targeting-type.model';
 import { AppState } from '../../../app/reducers/index';
+import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 
 @Injectable()
 export class GeoTargetingApiService {
@@ -69,7 +69,7 @@ export class GeoTargetingApiService {
 
     // Define locations types to search for
     let locationTypes;
-    this._store.let(typeModel)
+    this._store.let(GeoTargetingTypeService.getModel)
         .subscribe(({selected}) => {
           // Array of selected types' ids
           locationTypes = selected.map(type => type.id);
@@ -101,8 +101,6 @@ export class GeoTargetingApiService {
     let _items = new Subject();
 
     let processedGeoLocations = this.processGeoLocations(spec.geo_locations, spec.excluded_geo_locations);
-
-    console.log(`processedGeoLocations: `, processedGeoLocations);
 
     // Get all excluded keys
     let excludedKeys = [];

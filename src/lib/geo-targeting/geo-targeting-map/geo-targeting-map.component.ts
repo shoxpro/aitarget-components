@@ -29,7 +29,6 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
   pinMode;
 
   constructor (private _store: Store<AppState>,
-               private geoTargetingSelectedService: GeoTargetingSelectedService,
                private changeDetectorRef: ChangeDetectorRef,
                private translateService: TranslateService,
                private viewContainerRef: ViewContainerRef,

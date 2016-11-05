@@ -14,7 +14,7 @@ export class GeoTargetingModeComponent {
 
   @Input() selectedMode: GeoTargetingModeType;
   @Input() isOpen: boolean      = false;
-  @Input() appendTo: string;
+  @Input() appendTarget: string;
   @Input() updateState: boolean = false;
 
   @Output() modeChange = new EventEmitter();
