@@ -25,15 +25,6 @@ export class GeoTargetingSelectedService {
   }
 
   /**
-   * Show info message that excluding is impossible without included locations
-   */
-  informAboutMissingIncludedLocation () {
-    let message = this.translateService.instant(`geo-targeting-info.MESSAGE_MISSING_INCLUDED`);
-
-    this.geoTargetingInfoService.showInfo({level: 'error', message});
-  }
-
-  /**
    * Show info message that some locations were replaced
    */
   informAboutReplaced (items: GeoTargetingItem[]) {
@@ -52,7 +43,11 @@ export class GeoTargetingSelectedService {
                             .join(', ')
           });
 
-          this.geoTargetingInfoService.showInfo({level: 'info', message, canRevert: true});
+          this.geoTargetingInfoService.showInfo({
+                        message,
+            canRevert:  true,
+            revertKeys: [GEO_TARGETING_SELECTED_KEY]
+          });
         });
   }
 

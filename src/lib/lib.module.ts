@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 import { GeoTargetingModule } from './geo-targeting/geo-targeting.module';
 import { StoreModule } from '@ngrx/store';
 import { rootReducer } from '../app/reducers/index';
+import { SharedActions } from './shared/actions/index';
 
 if (environment.production) {
   enableProdMode();
@@ -20,7 +21,7 @@ if (environment.production) {
     DetailedTargetingModule,
     GeoTargetingModule
   ],
-  providers:    [FbService, TargetingSpecService],
+  providers:    [FbService, TargetingSpecService, SharedActions],
   exports:      [BrowserModule, DetailedTargetingModule, GeoTargetingModule]
 })
 export class LibModule {

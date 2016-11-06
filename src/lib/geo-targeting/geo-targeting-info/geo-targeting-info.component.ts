@@ -19,6 +19,12 @@ export class GeoTargetingInfoComponent implements OnInit, OnDestroy {
 
   revert () {
     this.hideInfo();
+
+    this.model$
+        .take(1)
+        .subscribe((model) => {
+          this.geoTargetingInfoService.revert(model.revertKeys);
+        });
   }
 
   constructor (private _store: Store<AppState>,

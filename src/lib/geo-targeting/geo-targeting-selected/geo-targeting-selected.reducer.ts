@@ -2,6 +2,7 @@ import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { Action, ActionReducer } from '@ngrx/store';
 import { GeoTargetingSelectedActions } from './geo-targeting-selected.actions';
 import { sortItems, isNarrower, isBroader } from './geo-targeting-selected.constants';
+import { SharedActions } from '../../shared/actions/index';
 
 export interface GeoTargetingSelectedState {
   items: Array<GeoTargetingItem>;
@@ -36,7 +37,8 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
 
                      action.payload.items.reduce((acc: GeoTargetingSelectedState, item, index) => {
                        state.items.forEach((selectedItem) => {
-                         if (isNarrower(item, selectedItem) || isBroader(item, selectedItem)) {
+                         if (item.excluded === selectedItem.excluded &&
+                           (isNarrower(item, selectedItem) || isBroader(item, selectedItem))) {
                            acc.itemsReplaced.push(selectedItem);
                          } else {
                            acc.items.push(selectedItem);
@@ -78,6 +80,13 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
 
                      items         = sortItems(items);
                      itemsPrevious = state.items;
+
+                     return Object.assign({}, state, {items, itemsPrevious});
+                   case SharedActions.REVERT:
+                     if (action.payload.revertKeys.includes(GEO_TARGETING_SELECTED_KEY)) {
+                       items         = state.itemsPrevious;
+                       itemsPrevious = state.items;
+                     }
 
                      return Object.assign({}, state, {items, itemsPrevious});
                    default:

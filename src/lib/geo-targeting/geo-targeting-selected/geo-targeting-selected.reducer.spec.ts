@@ -1,15 +1,18 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { GeoTargetingSelectedActions } from './geo-targeting-selected.actions';
-import { geoTargetingSelectedInitial, geoTargetingSelectedReducer } from './geo-targeting-selected.reducer';
+import {
+  geoTargetingSelectedInitial, geoTargetingSelectedReducer, GEO_TARGETING_SELECTED_KEY
+} from './geo-targeting-selected.reducer';
 import { sortItems } from './geo-targeting-selected.constants';
 import { country, region, zip, city } from './geo-targeting-selected.mocks';
+import { SharedActions } from '../../shared/actions/index';
 
 let deepFreeze = require('deep-freeze');
 
 describe(`geoTargetingSelectedReducer`, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [GeoTargetingSelectedActions]
+      providers: [GeoTargetingSelectedActions, SharedActions]
     });
   });
 
@@ -187,6 +190,29 @@ describe(`geoTargetingSelectedReducer`, () => {
           .toEqual(Object.assign({}, state, {
             itemsPrevious: state.items,
             items:         sortItems([item, updatedItem1, updatedItem2])
+          }));
+      }));
+  });
+
+  describe(SharedActions.REVERT, () => {
+    it(`should revert - flip items and itemsPrevious`,
+      inject([SharedActions], (sharedActions) => {
+        let item  = {key: 'test', excluded: false};
+        let item1 = {key: 'test1', excluded: false};
+        let item2 = {key: 'test2', excluded: true};
+        let state = Object.assign({}, geoTargetingSelectedInitial, {
+          items:         [item],
+          itemsPrevious: [item1, item2]
+        });
+
+        deepFreeze(state);
+
+        let newState = geoTargetingSelectedReducer(state, sharedActions.revert(GEO_TARGETING_SELECTED_KEY));
+
+        expect(newState)
+          .toEqual(Object.assign({}, state, {
+            itemsPrevious: state.items,
+            items:         state.itemsPrevious
           }));
       }));
   });

@@ -8,6 +8,7 @@ export interface GeoTargetingInfoState {
   level?: InfoLevel;
   isVisible?: boolean;
   canRevert?: boolean;
+  revertKeys?: Array<string>;
 }
 
 export const geoTargetingInfoInitial: GeoTargetingInfoState = {
