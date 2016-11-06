@@ -21,7 +21,7 @@ import { GeoTargetingInfoActions } from './geo-targeting-info/geo-targeting-info
 import { GeoTargetingSelectedService } from './geo-targeting-selected/geo-targeting-selected.service.new';
 import { AppState } from '../../app/reducers/index';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type.service';
 import { GeoTargetingTypeActions } from './geo-targeting-type/geo-targeting-type.actions';
 
@@ -94,33 +94,28 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
     /**
      * Subscribe for changes in selected items and update targeting spec when changed
      */
-    this.modelSelected$
-        .takeUntil(this.destroy$)
-        .map((model) => model.items)
-        // Skip initialization update and update for first passed targeting spec
-        .skip(2)
-        .subscribe(() => {
-          let newTargetingSpec = Object.assign(this.spec, this.geoTargetingSelectedService.getSpec());
-          this.targetingSpecService.update(newTargetingSpec);
-        });
-
-    /**
-     * Subscribe for targeting spec changes and if differ from previous,
-     * trigger onChange handler
-     */
-    this.targetingSpecService.spec
-        .takeUntil(this.destroy$)
-        // Skip initialization update
-        .skip(1)
-        .subscribe((spec: TargetingSpec) => {
-          this.onChange(spec);
-        });
+    Observable.merge(
+      this.modelSelected$
+          .map(({items}) => items)
+          .distinctUntilChanged(),
+      this._store.let(GeoTargetingLocationTypeService.getModel)
+          .map(({selectedType}) => selectedType)
+          .filter((selectedType) => Boolean(selectedType))
+          .distinctUntilChanged()
+    )
+              .takeUntil(this.destroy$)
+              .switchMap(() => this.geoTargetingSelectedService.getSpec())
+              .subscribe((spec: TargetingSpec) => {
+                let newTargetingSpec = Object.assign({}, this.spec, spec);
+                this.onChange(newTargetingSpec);
+              });
 
     /**
      * Update selected items when language change
      */
     this.translateService.onLangChange
         .takeUntil(this.destroy$)
+
         .subscribe(() => {
           this.geoTargetingApiService
               .getSelectedLocationItems(this.spec)

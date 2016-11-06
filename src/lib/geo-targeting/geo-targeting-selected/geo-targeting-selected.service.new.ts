@@ -12,6 +12,9 @@ import { GeoTargetingSelectedActions } from './geo-targeting-selected.actions';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.reducer';
+import { TargetingSpec } from '../../targeting/targeting-spec.interface';
+import { GeoTargetingLocationTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
+import { Key, City, CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 
 @Injectable()
 export class GeoTargetingSelectedService {
@@ -159,7 +162,65 @@ export class GeoTargetingSelectedService {
    * @returns {TargetingSpec}
    */
   getSpec () {
-    console.log('getSpec');
+    const initialSpec$ = this._store.let(GeoTargetingLocationTypeService.getModel)
+                             .take(1)
+                             .map(({selectedType}) => selectedType)
+                             .filter((selectedType) => Boolean(selectedType))
+                             .map((selectedType) => {
+                               return {
+                                 geo_locations:             {
+                                   location_types: selectedType.value
+                                 }, excluded_geo_locations: {}
+                               };
+                             });
+
+    const items$ = this.model$
+                       .take(1)
+                       .switchMap(({items}) => Observable.from(items));
+
+    return initialSpec$
+      .switchMap((initialSpec: TargetingSpec) => {
+        return Observable.forkJoin(
+          items$.scan((spec: TargetingSpec, item) => {
+            let locations;
+            // Switch location types depending on item mode
+            if (item.excluded) {
+              locations = spec.excluded_geo_locations;
+            } else {
+              locations = spec.geo_locations;
+            }
+
+            locations[typeMap[item.type]] = locations[typeMap[item.type]] || [];
+
+            if (item.type === 'country') {
+              locations[typeMap[item.type]].push(item.key);
+            } else {
+              let selectedValue: Key = {key: item.key, name: item.name};
+
+              if (item.type === 'city') {
+                (<City>selectedValue).radius        = item.radius;
+                (<City>selectedValue).distance_unit = item.distance_unit;
+              }
+
+              if (item.type === 'custom_location') {
+                (<CustomLocation>selectedValue).radius        = item.radius;
+                (<CustomLocation>selectedValue).distance_unit = item.distance_unit;
+                (<CustomLocation>selectedValue).latitude      = item.latitude;
+                (<CustomLocation>selectedValue).longitude     = item.longitude;
+                (<CustomLocation>selectedValue).name          = item.name;
+                if (item.address_string !== item.name) {
+                  (<CustomLocation>selectedValue).address_string = item.address_string;
+                }
+              }
+
+              locations[typeMap[item.type]].push(selectedValue);
+            }
+
+            return spec;
+          }, initialSpec)
+        )
+                         .map(([spec]) => spec);
+      });
   }
 
   constructor (private _store: Store<AppState>,
