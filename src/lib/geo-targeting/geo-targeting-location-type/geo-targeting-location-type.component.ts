@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingLocationTypeService } from './geo-targeting-location-type.service';
 import { AppState } from '../../../app/reducers/index';
-import { State } from '@ngrx/store';
+import { State, Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Rx';
 
 @Component({
@@ -41,7 +41,7 @@ export class GeoTargetingLocationTypeComponent implements OnInit, OnDestroy {
     this.geoTargetingLocationTypeService.toggleTypeDropdown(false);
   }
 
-  constructor (private _store: State<AppState>,
+  constructor (private _store: Store<AppState>,
                private geoTargetingLocationTypeService: GeoTargetingLocationTypeService,
                private translateService: TranslateService) {
     this.model$ = this._store.let(GeoTargetingLocationTypeService.getModel);

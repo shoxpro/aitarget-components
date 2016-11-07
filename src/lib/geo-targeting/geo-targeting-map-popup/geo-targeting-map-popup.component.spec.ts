@@ -2,15 +2,25 @@
 
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingMapPopupComponent } from './geo-targeting-map-popup.component';
-import { GeoTargetingModule } from '../geo-targeting.module';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { Store } from '@ngrx/store';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FullNamePipe } from '../full-name.pipe';
 
 describe('Component: GeoTargetingMapPopup', () => {
   beforeEach(() => {
+    // noinspection ReservedWordAsName
     TestBed.configureTestingModule({
-      imports:      [GeoTargetingModule],
-      providers:    [{provide: GeoTargetingSelectedService, useValue: {}}],
-      declarations: []
+      imports:      [],
+      declarations: [
+        GeoTargetingMapPopupComponent,
+        FullNamePipe
+      ],
+      providers:    [
+        {provide: Store, useValue: {let () {}}},
+        {provide: GeoTargetingSelectedService, useValue: {}}
+      ],
+      schemas:      [CUSTOM_ELEMENTS_SCHEMA]
     });
   });
 

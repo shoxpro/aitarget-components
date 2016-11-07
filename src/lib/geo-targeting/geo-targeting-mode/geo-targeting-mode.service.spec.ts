@@ -8,7 +8,8 @@ import { Store } from '@ngrx/store';
 describe('Service: GeoTargetingMode', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [GeoTargetingModeService,
+      providers: [
+        GeoTargetingModeService,
         {provide: Store, useValue: {}},
         {provide: GeoTargetingModeActions, useValue: {}}
       ]

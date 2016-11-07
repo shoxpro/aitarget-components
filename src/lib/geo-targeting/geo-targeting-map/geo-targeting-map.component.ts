@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { GeoTargetingMapService } from './geo-targeting-map.service';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { ComponentsHelperService } from '../../shared/services/components-helper.service';
 import { Subject } from 'rxjs';
@@ -29,11 +29,11 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
   pinMode;
 
   constructor (private _store: Store<AppState>,
-               private changeDetectorRef: ChangeDetectorRef,
+               private geoTargetingMapService: GeoTargetingMapService,
                private translateService: TranslateService,
-               private viewContainerRef: ViewContainerRef,
                private componentsHelperService: ComponentsHelperService,
-               private geoTargetingMapService: GeoTargetingMapService) {
+               private changeDetectorRef: ChangeDetectorRef,
+               private viewContainerRef: ViewContainerRef) {
     this.componentsHelperService.setRootViewContainerRef(viewContainerRef);
     this.modelSelected$ = this._store.let(GeoTargetingSelectedService.getModel);
   }

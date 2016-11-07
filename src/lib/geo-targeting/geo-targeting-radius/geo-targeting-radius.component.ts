@@ -2,7 +2,7 @@ import {
   Component, OnInit, Input, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, ViewEncapsulation
 } from '@angular/core';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingService } from '../geo-targeting.service';
 import { Subject } from 'rxjs';
 

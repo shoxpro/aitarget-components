@@ -5,17 +5,19 @@ import { GeoTargetingMapService } from './geo-targeting-map.service';
 import { ComponentsHelperService } from '../../shared/services/components-helper.service';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { Store } from '@ngrx/store';
+import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 
 describe('Service: GeoTargetingMap', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:   [],
       providers: [GeoTargetingMapService,
+        {provide: Store, useValue: {}},
         {provide: TranslateService, useValue: {}},
         {provide: GeoTargetingInfoService, useValue: {}},
-        {provide: GeoTargetingModeService, useValue: {}},
+        {provide: GeoTargetingApiService, useValue: {}},
         {provide: ComponentsHelperService, useValue: {}},
         {provide: GeoTargetingSelectedService, useValue: {}}
       ]

@@ -43,7 +43,7 @@ describe(`geoTargetingLocationTypeReducer`, () => {
     TestBed.configureTestingModule({
       providers: [
         GeoTargetingLocationTypeActions,
-        {provide: TranslateService, useValue: {instant: (key) => key}},
+        {provide: TranslateService, useValue: {instant: (key) => key}}
       ]
     });
   });

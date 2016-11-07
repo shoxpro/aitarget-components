@@ -3,24 +3,25 @@
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingMapControlsComponent } from './geo-targeting-map-controls.component';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
-import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
-import { Input, Component } from '@angular/core';
-import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { TranslatePipe, TranslateService } from 'ng2-translate';
 
 describe('Component: GeoTargetingMapControls', () => {
   beforeEach(() => {
+    // noinspection ReservedWordAsName
     TestBed.configureTestingModule({
       imports:      [],
       declarations: [
         GeoTargetingMapControlsComponent,
-        GeoTargetingPinComponent,
         TranslatePipe
       ],
       providers:    [
+        {provide: Store, useValue: {let () {}}},
         {provide: TranslateService, useValue: {}},
-        {provide: GeoTargetingMapService, useValue: {}},
-        {provide: GeoTargetingModeService, useValue: {}}
-      ]
+        {provide: GeoTargetingMapService, useValue: {}}
+      ],
+      schemas:      [CUSTOM_ELEMENTS_SCHEMA]
     });
   });
 
@@ -31,11 +32,3 @@ describe('Component: GeoTargetingMapControls', () => {
       .toBeTruthy();
   });
 });
-
-@Component({
-  selector: 'geo-targeting-pin',
-  template: '<div></div>'
-})
-class GeoTargetingPinComponent {
-  @Input() excluded;
-}

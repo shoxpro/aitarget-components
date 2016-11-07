@@ -4,7 +4,7 @@ import * as L from 'leaflet';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { BehaviorSubject } from 'rxjs/Rx';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingModule } from '../geo-targeting.module';
 import { ComponentsHelperService } from '../../shared/services/components-helper.service';
@@ -17,11 +17,10 @@ import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.s
 @Injectable()
 export class GeoTargetingMapService {
   map;
-  _mapActive = new BehaviorSubject<boolean>(false);
-  _pinMode   = new BehaviorSubject<boolean>(false);
-  zoom       = 1;
-  latitude   = 51.505;
-  longitude  = -0.09;
+  _pinMode  = new BehaviorSubject<boolean>(false);
+  zoom      = 1;
+  latitude  = 51.505;
+  longitude = -0.09;
   tileLayer;
   popup;
 

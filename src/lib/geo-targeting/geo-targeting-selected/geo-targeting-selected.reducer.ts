@@ -38,13 +38,12 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
                      // Sort out existing selected items
                      action.payload.items.reduce((acc: GeoTargetingSelectedState, item, index) => {
                        state.items.forEach((selectedItem) => {
-                         // Already added items should become inactive
-                         selectedItem = Object.assign({}, selectedItem, {active: false});
-
                          if (item.excluded === selectedItem.excluded &&
                            (isNarrower(item, selectedItem) || isBroader(item, selectedItem))) {
                            acc.itemsReplaced.push(selectedItem);
                          } else {
+                           // Already added items should become inactive
+                           selectedItem = Object.assign({}, selectedItem, {active: item.key === selectedItem.key});
                            acc.items.push(selectedItem);
                          }
                        });

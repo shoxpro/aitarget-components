@@ -2,23 +2,23 @@
 
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingModeComponent } from './geo-targeting-mode.component';
-import { Component, Input } from '@angular/core';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { GeoTargetingModeService } from './geo-targeting-mode.service';
+import { Store } from '@ngrx/store';
 
 describe('Component: GeoTargetingMode', () => {
   beforeEach(() => {
+    // noinspection ReservedWordAsName
     TestBed.configureTestingModule({
       imports:      [],
       declarations: [
-        GeoTargetingModeComponent,
-        GeoTargetingPinComponent,
-        FbArrowDropComponent
+        GeoTargetingModeComponent
       ],
       providers:    [
-        {provide: TranslateService, useValue: {}},
+        {provide: Store, useValue: {let () {}}},
         {provide: GeoTargetingModeService, useValue: {}},
-      ]
+      ],
+      schemas:      [CUSTOM_ELEMENTS_SCHEMA]
     });
   });
 
@@ -29,19 +29,3 @@ describe('Component: GeoTargetingMode', () => {
       .toBeTruthy();
   });
 });
-
-@Component({
-  selector: 'geo-targeting-pin',
-  template: '<div></div>'
-})
-class GeoTargetingPinComponent {
-  @Input() excluded;
-}
-
-@Component({
-  selector: 'fb-arrow-drop',
-  template: '<div></div>'
-})
-class FbArrowDropComponent {
-  @Input() direction;
-}

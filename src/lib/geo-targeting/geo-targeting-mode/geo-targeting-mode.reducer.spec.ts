@@ -1,6 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { geoTargetingModeActions, GeoTargetingModeActions } from './geo-targeting-mode.actions';
 import { geoTargetingModeInitial, geoTargetingModeReducer, GeoTargetingModeIdType } from './geo-targeting-mode.reducer';
+import { TranslateService } from 'ng2-translate';
 
 let deepFreeze = require('deep-freeze');
 
@@ -22,12 +23,15 @@ let modesWithKeys = [
 describe(`geoTargetingModeReducer`, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [geoTargetingModeActions]
+      providers: [
+        GeoTargetingModeActions,
+        {provide: TranslateService, useValue: {instant (key) { return key; }}},
+      ]
     });
   });
 
-  describe(geoTargetingModeActions.SET_TRANSLATED_MODES, () => {
-    it(`should set translated list of modes`, inject([geoTargetingModeActions],
+  describe(GeoTargetingModeActions.SET_TRANSLATED_MODES, () => {
+    it(`should set translated list of modes`, inject([GeoTargetingModeActions],
       (geoTargetingModeActions: GeoTargetingModeActions) => {
         let state = geoTargetingModeInitial;
 
@@ -40,23 +44,23 @@ describe(`geoTargetingModeReducer`, () => {
       })
     );
 
-    it(`should translate selected mode`, inject([geoTargetingModeActions],
+    it(`should translate selected mode`, inject([GeoTargetingModeActions],
       (geoTargetingModeActions: GeoTargetingModeActions) => {
         // Set selected type and reset its name and info
         let state = Object.assign({}, geoTargetingModeInitial, {
-          mode: Object.assign({}, modesWithKeys[1], {name: '', info: ''})
+          selectedMode: Object.assign({}, modesWithKeys[1], {name: '', info: ''})
         });
 
         deepFreeze(state);
 
         let newState = geoTargetingModeReducer(state, geoTargetingModeActions.setTranslatedModes());
 
-        expect(newState.selectedType)
+        expect(newState.selectedMode)
           .toEqual(modesWithKeys[1], 'should be selected mode with index 1 and name and info restored');
       })
     );
 
-    it(`should set selected mode to default if it is null`, inject([geoTargetingModeActions],
+    it(`should set selected mode to default if it is null`, inject([GeoTargetingModeActions],
       (geoTargetingModeActions: GeoTargetingModeActions) => {
         // Set selected type and reset its name and info
         let state = geoTargetingModeInitial;
@@ -71,8 +75,8 @@ describe(`geoTargetingModeReducer`, () => {
     );
   });
 
-  describe(geoTargetingModeActions.SET_MODE, () => {
-    it(`should set mode`, inject([geoTargetingModeActions],
+  describe(GeoTargetingModeActions.SET_MODE, () => {
+    it(`should set mode`, inject([GeoTargetingModeActions],
       (geoTargetingModeActions: geoTargetingModeActions) => {
         let state                                = geoTargetingModeInitial;
         let selectedMode: GeoTargetingModeIdType = modesWithKeys[1];
@@ -87,8 +91,8 @@ describe(`geoTargetingModeReducer`, () => {
     );
   });
 
-  describe(geoTargetingModeActions.TOGGLE_MODE_DROPDOWN, () => {
-    it(`should set isOpen flag`, inject([geoTargetingModeActions],
+  describe(GeoTargetingModeActions.TOGGLE_MODE_DROPDOWN, () => {
+    it(`should set isOpen flag`, inject([GeoTargetingModeActions],
       (geoTargetingModeActions: geoTargetingModeActions) => {
         let state = geoTargetingModeInitial;
 

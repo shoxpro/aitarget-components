@@ -9,7 +9,7 @@ import {
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 import { TranslateService } from 'ng2-translate';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.reducer';
 
 @Injectable()

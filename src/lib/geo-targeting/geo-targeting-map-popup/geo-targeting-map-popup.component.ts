@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, Input } from '@angular/core';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service.new';
+import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { AppState } from '../../../app/reducers/index';
 import { Store } from '@ngrx/store';

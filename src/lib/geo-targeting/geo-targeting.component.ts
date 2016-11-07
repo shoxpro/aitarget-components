@@ -18,7 +18,7 @@ import { GeoTargetingModeActions } from './geo-targeting-mode/geo-targeting-mode
 import { GeoTargetingSelectedActions } from './geo-targeting-selected/geo-targeting-selected.actions';
 import { GeoTargetingLocationTypeActions } from './geo-targeting-location-type/geo-targeting-location-type.actions';
 import { GeoTargetingInfoActions } from './geo-targeting-info/geo-targeting-info.actions';
-import { GeoTargetingSelectedService } from './geo-targeting-selected/geo-targeting-selected.service.new';
+import { GeoTargetingSelectedService } from './geo-targeting-selected/geo-targeting-selected.service';
 import { AppState } from '../../app/reducers/index';
 import { Store } from '@ngrx/store';
 import { Subject, Observable } from 'rxjs';
@@ -63,7 +63,6 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
   constructor (private _store: Store<AppState>,
                private translateService: TranslateService,
                private geoTargetingApiService: GeoTargetingApiService,
-               private targetingSpecService: TargetingSpecService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingTypeService: GeoTargetingLocationTypeService,
                private geoTargetingModeService: GeoTargetingModeService) {

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { GeoTargetingSelectedService } from './geo-targeting-selected.service.new';
+import { GeoTargetingSelectedService } from './geo-targeting-selected.service';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
 import { Subject } from 'rxjs';

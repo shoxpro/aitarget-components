@@ -54,7 +54,7 @@ describe(`geoTargetingSelectedReducer`, () => {
 
         expect(newState)
           .toEqual(Object.assign({}, state, {
-            items:         [item, item1],
+            items:         [Object.assign({}, item, {active: true}), Object.assign({}, item1, {active: false})],
             itemsPrevious: state.items
           }), 'included item should be added to the beginning');
 
@@ -62,7 +62,7 @@ describe(`geoTargetingSelectedReducer`, () => {
 
         expect(newState)
           .toEqual(Object.assign({}, state, {
-            items:         [item1, item2],
+            items:         [Object.assign({}, item1, {active: false}), Object.assign({}, item2, {active: true})],
             itemsPrevious: state.items
           }), 'excluded item should be added to the end');
 
@@ -70,8 +70,8 @@ describe(`geoTargetingSelectedReducer`, () => {
 
         expect(newState)
           .toEqual(Object.assign({}, state, {
-            items:         [item1, item2],
-            itemsPrevious: [item1, item2]
+            items:         [Object.assign({}, item1, {active: false}), Object.assign({}, item2, {active: true})],
+            itemsPrevious: [Object.assign({}, item1, {active: false}), Object.assign({}, item2, {active: true})]
           }), 'should not add items that have already been added');
       }));
 
@@ -87,27 +87,27 @@ describe(`geoTargetingSelectedReducer`, () => {
 
         expect(newState)
           .toEqual(Object.assign({}, state, {
-            items:         [region],
-            itemsPrevious: [country],
-            itemsReplaced: [country]
+            items:         [Object.assign({}, region, {active: true})],
+            itemsPrevious: [Object.assign({}, country)],
+            itemsReplaced: [Object.assign({}, country)]
           }));
 
         newState = geoTargetingSelectedReducer(newState, geoTargetingSelectedActions.addItems([city]));
 
         expect(newState)
           .toEqual(Object.assign({}, state, {
-            items:         [city],
-            itemsPrevious: [region],
-            itemsReplaced: [region]
+            items:         [Object.assign({}, city, {active: true})],
+            itemsPrevious: [Object.assign({}, region, {active: true})],
+            itemsReplaced: [Object.assign({}, region, {active: true})]
           }));
 
         newState = geoTargetingSelectedReducer(newState, geoTargetingSelectedActions.addItems([zip]));
 
         expect(newState)
           .toEqual(Object.assign({}, state, {
-            items:         [zip],
-            itemsPrevious: [city],
-            itemsReplaced: [city]
+            items:         [Object.assign({}, zip, {active: true})],
+            itemsPrevious: [Object.assign({}, city, {active: true})],
+            itemsReplaced: [Object.assign({}, city, {active: true})]
           }));
       }));
 
@@ -123,27 +123,27 @@ describe(`geoTargetingSelectedReducer`, () => {
 
         expect(newState)
           .toEqual(Object.assign({}, state, {
-            items:         [city],
-            itemsPrevious: [zip],
-            itemsReplaced: [zip]
+            items:         [Object.assign({}, city, {active: true})],
+            itemsPrevious: [Object.assign({}, zip)],
+            itemsReplaced: [Object.assign({}, zip)]
           }));
 
         newState = geoTargetingSelectedReducer(newState, geoTargetingSelectedActions.addItems([region]));
 
         expect(newState)
           .toEqual(Object.assign({}, state, {
-            items:         [region],
-            itemsPrevious: [city],
-            itemsReplaced: [city]
+            items:         [Object.assign({}, region, {active: true})],
+            itemsPrevious: [Object.assign({}, city, {active: true})],
+            itemsReplaced: [Object.assign({}, city, {active: true})]
           }));
 
         newState = geoTargetingSelectedReducer(newState, geoTargetingSelectedActions.addItems([country]));
 
         expect(newState)
           .toEqual(Object.assign({}, state, {
-            items:         [country],
-            itemsPrevious: [region],
-            itemsReplaced: [region]
+            items:         [Object.assign({}, country, {active: true})],
+            itemsPrevious: [Object.assign({}, region, {active: true})],
+            itemsReplaced: [Object.assign({}, region, {active: true})]
           }));
       }));
   });
@@ -189,7 +189,10 @@ describe(`geoTargetingSelectedReducer`, () => {
         expect(newState)
           .toEqual(Object.assign({}, state, {
             itemsPrevious: state.items,
-            items:         sortItems([item, updatedItem1, updatedItem2])
+            items:         sortItems([
+              Object.assign({}, item, {active: false}),
+              Object.assign({}, updatedItem1, {active: true}),
+              Object.assign({}, updatedItem2, {active: true})])
           }));
       }));
   });
