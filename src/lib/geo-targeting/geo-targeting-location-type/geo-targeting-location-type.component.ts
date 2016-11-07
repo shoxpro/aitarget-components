@@ -19,10 +19,7 @@ export class GeoTargetingLocationTypeComponent implements OnInit, OnDestroy {
   /**
    * Toggle Dropdown
    */
-  toggleDropdown (event?) {
-    if (event) {
-      event.stopPropagation();
-    }
+  toggleDropdown () {
     this.geoTargetingLocationTypeService.toggleTypeDropdown();
   }
 

@@ -25,18 +25,16 @@ export class GeoTargetingMapPopupComponent {
     if (<string>mode.id === 'delete') {
       this.geoTargetingSelectedService.removeItems([this.item]);
     } else {
-      item.excluded = mode.id === (<GeoTargetingModeIdType>'exclude');
-      this.geoTargetingSelectedService.updateItems([item]);
+      const excluded    = mode.id === (<GeoTargetingModeIdType>'exclude');
+      const updatedItem = Object.assign({}, item, {excluded});
+      this.geoTargetingSelectedService.updateItems([updatedItem]);
     }
   }
 
   /**
    * Toggle Dropdown
    */
-  toggleDropdown (event?) {
-    if (event) {
-      event.stopPropagation();
-    }
+  toggleDropdown () {
     this.isOpen = !this.isOpen;
     this.changeDetectorRef.markForCheck();
   }

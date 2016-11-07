@@ -10,7 +10,7 @@
          (mouseleave)="hoverGroup(key, false)">
       <span class="geo-targeting-selected__group-name">{{ (itemsGroupedByCountry$ | async).map[key].name }}</span>
       <span class="geo-targeting-selected__remove geo-targeting-selected__remove-group"
-            (click)="removeGroup(key, $event)">&times;</span>
+            (click)="removeGroup(key)">&times;</span>
     </div>
     <!--List of items-->
     <div class="geo-targeting-selected__items">
@@ -33,7 +33,7 @@
                               [item]="item"></geo-targeting-radius>
 
         <span class="geo-targeting-selected__remove geo-targeting-selected__remove-item"
-              (click)="removeItem(item, $event)">&times;</span>
+              (click)="removeItem(item)">&times;</span>
       </div>
     </div>
     <div class="geo-targeting-selected__group-devider"

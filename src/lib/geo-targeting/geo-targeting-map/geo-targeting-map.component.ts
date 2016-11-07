@@ -62,9 +62,11 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
             this.geoTargetingMapService.drawItem(item);
           });
 
-          // If has items focus on the fist one, if not - show world
+          // If has items focus on the fist active or first in the list, if not - show world
           if (items.length) {
-            this.geoTargetingMapService.focusItem(items[0]);
+            const activeItems = items.filter((item) => item.active);
+            const itemToFocus = activeItems.length ? activeItems[0] : items[0];
+            this.geoTargetingMapService.focusItem(itemToFocus);
           } else {
             this.geoTargetingMapService.setView();
           }

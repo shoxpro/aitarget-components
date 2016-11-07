@@ -8,6 +8,14 @@
   opacity:       1;
 }
 
+.geo-targeting-selected__mode {
+  margin-right: 8px;
+
+  .fb-dropdown-list {
+    left: -10px;
+  }
+}
+
 .geo-targeting-selected__group_hover {
   background: #f5fafd
 }
@@ -49,17 +57,11 @@
   position:    relative;
   display:     flex;
   box-sizing:  border-box;
-  padding:     0 0 0 51px;
   min-height:  26px;
   height:      auto;
   font-weight: bold;
   cursor:      pointer;
   align-items: center;
-}
-
-.geo-targeting-selected__mode {
-  position: absolute;
-  left:     0;
 }
 
 .geo-targeting-selected__item:hover {

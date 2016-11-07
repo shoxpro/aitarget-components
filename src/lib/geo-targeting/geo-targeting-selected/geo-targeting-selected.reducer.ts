@@ -35,8 +35,12 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
                        itemsReplaced: []
                      };
 
+                     // Sort out existing selected items
                      action.payload.items.reduce((acc: GeoTargetingSelectedState, item, index) => {
                        state.items.forEach((selectedItem) => {
+                         // Already added items should become inactive
+                         selectedItem = Object.assign({}, selectedItem, {active: false});
+
                          if (item.excluded === selectedItem.excluded &&
                            (isNarrower(item, selectedItem) || isBroader(item, selectedItem))) {
                            acc.itemsReplaced.push(selectedItem);
@@ -46,7 +50,12 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
                        });
 
                        if (index === action.payload.items.length - 1) {
-                         const combinedItems = [...action.payload.items, ...acc.items];
+                         // Newly added items should be marked as active
+                         const itemsToAdd    = action.payload.items.map((itemToAdd) => {
+                             return Object.assign({}, itemToAdd, {active: true});
+                           }
+                         );
+                         const combinedItems = [...itemsToAdd, ...acc.items];
                          items               = combinedItems.reduce((itemsMap, combinedItem, i) => {
                            itemsMap[combinedItem.key] = combinedItem;
                            if (i === combinedItems.length - 1) {
@@ -70,9 +79,12 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
                      return Object.assign({}, state, {items, itemsPrevious});
                    case GeoTargetingSelectedActions.UPDATE_ITEMS:
                      items = state.items.map((item) => {
+                       // Already added items should become inactive
+                       item = Object.assign({}, item, {active: false});
                        action.payload.items.forEach((updatedItem) => {
                          if (item.key === updatedItem.key) {
-                           item = Object.assign({}, item, updatedItem);
+                           // Updated item should be active
+                           item = Object.assign({}, item, updatedItem, {active: true});
                          }
                        });
                        return item;

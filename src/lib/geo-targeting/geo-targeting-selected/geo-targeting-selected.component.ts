@@ -56,11 +56,7 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
    * @param key
    * @param event
    */
-  removeGroup (key, event?) {
-    if (event) {
-      event.stopPropagation();
-    }
-
+  removeGroup (key) {
     this.itemsGroupedByCountry$
         .take(1)
         .subscribe(({map}) => this.geoTargetingSelectedService.removeItems(map[key].items));
@@ -71,11 +67,7 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
    * @param item
    * @param event
    */
-  removeItem (item: GeoTargetingItem, event?) {
-    if (event) {
-      event.stopPropagation();
-    }
-
+  removeItem (item: GeoTargetingItem) {
     this.geoTargetingSelectedService.removeItems([item]);
   }
 

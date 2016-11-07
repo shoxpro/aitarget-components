@@ -16,10 +16,7 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   model$;
 
-  toggleDropdown (isOpen, event?) {
-    if (event) {
-      event.stopPropagation();
-    }
+  toggleDropdown (isOpen) {
     this.geoTargetingTypeService.toggleSearchTypeDropdown(isOpen);
   }
 

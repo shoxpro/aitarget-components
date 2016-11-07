@@ -57,4 +57,8 @@ export interface GeoTargetingItem extends City, CustomLocation {
    */
   excluded?: boolean;
   polygons?: Array<Array<{lng: string, lat: string}>>;
+  /**
+   * Custom property in order to distinct last modified (added or updated) item
+   */
+  active?: boolean;
 }

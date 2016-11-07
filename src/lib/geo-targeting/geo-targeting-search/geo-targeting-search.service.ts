@@ -196,7 +196,6 @@ export class GeoTargetingSearchService {
         })
         .do(() => this._store.dispatch(this.geoTargetingSearchActions.updateModel({fetching: false})))
         .subscribe((updatedModel) => {
-          console.log('Updated Search Model: ', updatedModel);
           this._store.dispatch(
             this.geoTargetingSearchActions.updateModel(
               Object.assign(updatedModel, {

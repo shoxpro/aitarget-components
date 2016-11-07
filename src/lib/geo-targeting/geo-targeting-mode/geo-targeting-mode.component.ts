@@ -31,11 +31,7 @@ export class GeoTargetingModeComponent {
     }
   }
 
-  toggleDropdown (isOpen, event?) {
-    if (event) {
-      event.stopPropagation();
-    }
-
+  toggleDropdown (isOpen) {
     this.toggle.emit(isOpen);
 
     if (this.updateState) {

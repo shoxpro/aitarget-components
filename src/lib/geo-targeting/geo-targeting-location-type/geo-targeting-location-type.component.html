@@ -2,7 +2,7 @@
      [ngClass]="{'geo-targeting-location-type_open': (model$ | async)?.isOpen}">
 
   <div class="geo-targeting-location-type__content"
-       (click)="toggleDropdown($event)">
+       (click)="toggleDropdown()">
     <span class="geo-targeting-location-type__selected">{{ (model$ | async)?.selectedType.name }}</span>
     <fb-arrow-drop [direction]="(model$ | async)?.isOpen ? 'up' : 'down'"></fb-arrow-drop>
   </div>
