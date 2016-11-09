@@ -5,6 +5,9 @@ import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GeoTargetingService } from '../geo-targeting.service';
 import { Subject } from 'rxjs';
+import {
+  MILE_MIN, KILOMETER_MIN, MILE_MAX, KILOMETER_MAX, CUSTOM_LOCATION_RADIUS_MIN
+} from './geo-targeting-radius.constants';
 
 @Component({
   selector:        'geo-targeting-radius',
@@ -36,13 +39,17 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
    * Set default radius min and max
    */
   setDefaultBoundaries () {
-    if (this.item.distance_unit === 'mile') {
-      this.max = 50;
-    } else {
-      this.max = 80;
+    this.min = this.item.distance_unit === 'mile' ? MILE_MIN : KILOMETER_MIN;
+
+    /**
+     * Minimum radius for custom_location is different.
+     * @See https://developers.facebook.com/docs/marketing-api/targeting-specs#location
+     */
+    if (['custom_location', 'place'].includes(this.item.type)) {
+      this.min = CUSTOM_LOCATION_RADIUS_MIN;
     }
 
-    this.min = this.item.type === 'custom_location' ? 1 : 0;
+    this.max = this.item.distance_unit === 'mile' ? MILE_MAX : KILOMETER_MAX;
 
     this.changeDetectorRef.markForCheck();
   }
@@ -60,13 +67,16 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
 
   /**
    * Open/Close radius selection dropdown
-   * @param event
    */
   toggleDropdown () {
     this.isOpen = !this.isOpen;
 
+    // Restore original item when closing dropdown
+    if (!this.isOpen) {
+      this.item = this._itemOriginal;
+    }
+
     this.changeDetectorRef.markForCheck();
-    this.changeDetectorRef.detectChanges();
   }
 
   /**
@@ -75,7 +85,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   enableRadius () {
     this.item = this._itemOriginal;
     if (this.item.radius === 0) {
-      this.item.radius = 1;
+      this.item.radius = this.min;
     }
   }
 
@@ -101,6 +111,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
       return this.onChange(this.max);
     }
     this.item.radius = radius;
+    this.changeDetectorRef.markForCheck();
   }
 
   constructor (private geoTargetingSelectedService: GeoTargetingSelectedService,
@@ -123,12 +134,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
         .takeUntil(this.destroy$)
         .filter(() => this.isOpen)
         .subscribe(() => {
-          // Just close
-          this.isOpen = false;
-          // Restore original item
-          this.item   = this._itemOriginal;
-
-          this.changeDetectorRef.markForCheck();
+          this.toggleDropdown();
         });
 
     this.geoTargetingService.arrowUpStream
@@ -142,6 +148,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
         .subscribe((delta) => {
           this.item.radius += delta;
           this.changeDetectorRef.markForCheck();
+          this.changeDetectorRef.detectChanges();
         });
 
     /**
@@ -151,7 +158,9 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
         .takeUntil(this.destroy$)
         .filter(() => this.isOpen)
         .subscribe(() => {
-          this.toggleDropdown();
+          // Close dropdown and save value
+          this.isOpen = false;
+          this.changeDetectorRef.markForCheck();
           // Update item with current radius
           this.geoTargetingSelectedService.updateItems([this.item]);
         });

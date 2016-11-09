@@ -29,7 +29,7 @@
 
         <span>{{ item | fullName }}</span>
 
-        <geo-targeting-radius *ngIf="item.type === 'city' || item.type === 'custom_location'"
+        <geo-targeting-radius *ngIf="['city', 'custom_location', 'place'].includes(item.type)"
                               [item]="item"></geo-targeting-radius>
 
         <span class="geo-targeting-selected__remove geo-targeting-selected__remove-item"

@@ -54,14 +54,15 @@
 }
 
 .geo-targeting-selected__item {
-  position:    relative;
-  display:     flex;
-  box-sizing:  border-box;
-  min-height:  26px;
-  height:      auto;
-  font-weight: bold;
-  cursor:      pointer;
-  align-items: center;
+  position:      relative;
+  display:       flex;
+  box-sizing:    border-box;
+  min-height:    26px;
+  height:        auto;
+  font-weight:   bold;
+  cursor:        pointer;
+  align-items:   center;
+  padding-right: 18px;
 }
 
 .geo-targeting-selected__item:hover {

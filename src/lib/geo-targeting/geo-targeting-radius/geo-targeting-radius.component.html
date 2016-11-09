@@ -11,6 +11,7 @@
 <div class="geo-targeting-radius__dropdown"
      *ngIf="isOpen"
      appendTo="geo-targeting"
+     (clickOutside)="toggleDropdown()"
      [showVeil]="true">
   <div class="geo-targeting-radius__mode geo-targeting-radius__mode_current"
        *ngIf="item.type === 'city'">

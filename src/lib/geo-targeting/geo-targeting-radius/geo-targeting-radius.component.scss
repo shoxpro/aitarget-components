@@ -32,6 +32,7 @@
 
 .geo-targeting-radius__result {
   margin-right: 5px;
+  white-space:  nowrap;
 }
 
 .geo-targeting-radius__dropdown {
@@ -57,6 +58,7 @@
 
 .geo-targeting-radius__mode-row_selected .geo-targeting-radius__mode-text {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .geo-targeting-radius__mode_current {
@@ -87,6 +89,10 @@
 .geo-targeting-radius__mode-row_slider .md-slider-thumb::after {
   border-color:     #07a0cf;
   background-color: #07a0cf;
+}
+
+.geo-targeting-radius__mode-row_slider .md-slider-track {
+  background-color: rgba(0, 0, 0, 0.26);
 }
 
 .geo-targeting-radius__mode-row_slider .md-slider-track-fill {

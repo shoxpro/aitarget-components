@@ -60,24 +60,26 @@ export class GeoTargetingSelectedService {
    */
   setSuggestedRadius = (item: GeoTargetingItem): Observable<GeoTargetingItem> => {
     return Observable.create((observer) => {
-      // Request for suggested radius only for cities, custom locations and places
-      if (['city', 'custom_location', 'place'].indexOf(item.type) > -1) {
-        this.geoTargetingApiService.suggestRadius(item)
-            .subscribe((suggestedRadius: null | Array<{suggested_radius: number,
-              distance_unit: 'mile' | 'kilometer'}>) => {
-              if (!suggestedRadius || !suggestedRadius[0]) {
-                if (item.type === 'city') {
-                  item = GeoTargetingRadiusService.setDefaultRadius(item, this.translateService.currentLang);
-                }
-              } else {
+      switch (item.type) {
+        case 'city':
+          item = GeoTargetingRadiusService.setDefaultRadius(item, this.translateService.currentLang);
+          observer.next(item);
+          break;
+        case 'custom_location':
+        case 'place':
+          this.geoTargetingApiService.suggestRadius(item)
+              .subscribe((suggestedRadius: null | Array<{suggested_radius: number,
+                distance_unit: 'mile' | 'kilometer'}>) => {
+
                 item.radius        = suggestedRadius[0].suggested_radius;
                 item.distance_unit = suggestedRadius[0].distance_unit;
-              }
 
-              observer.next(item);
-            });
-      } else {
-        observer.next(item);
+                observer.next(item);
+              });
+          break;
+        default:
+          observer.next(item);
+          break;
       }
     })
                      .take(1);
@@ -202,7 +204,7 @@ export class GeoTargetingSelectedService {
                 (<City>selectedValue).distance_unit = item.distance_unit;
               }
 
-              if (item.type === 'custom_location') {
+              if (['custom_location', 'place'].includes(item.type)) {
                 (<CustomLocation>selectedValue).radius        = item.radius;
                 (<CustomLocation>selectedValue).distance_unit = item.distance_unit;
                 (<CustomLocation>selectedValue).latitude      = item.latitude;

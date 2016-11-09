@@ -10,8 +10,7 @@ export class GeoTargetingService {
   clickOutsideOfGeoStream = this.bodyClickStream.map((e: MouseEvent) => {
     let targetElement       = <HTMLElement>e.target;
     let geoTargetingElement = window.document.querySelector('geo-targeting');
-    let clickedInside       = geoTargetingElement === targetElement || geoTargetingElement.contains(targetElement);
-    return geoTargetingElement ? !clickedInside : null;
+    return geoTargetingElement ? !geoTargetingElement.contains(targetElement) : null;
   })
                                 .filter((clickedOutside) => clickedOutside === true)
                                 .share();

@@ -48,6 +48,7 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
     // Update map when selected items change
     this.modelSelected$
         .takeUntil(this.destroy$)
+        .filter(() => this.isOpen)
         .map((model) => model.items)
         .subscribe((items: GeoTargetingItem[]) => {
           // Clear all existing items layers
@@ -75,6 +76,7 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
     // Subscribe to map's pin mode flag
     this.geoTargetingMapService.pinMode
         .takeUntil(this.destroy$)
+        .filter(() => this.isOpen)
         .subscribe((pinMode) => {
           this.pinMode = pinMode;
           if (pinMode) {

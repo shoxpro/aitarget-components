@@ -7,7 +7,8 @@ export const typeMap = {
   zip:                'zips',
   geo_market:         'geo_markets',
   electoral_district: 'electoral_districts',
-  custom_location:    'custom_locations'
+  custom_location:    'custom_locations',
+  place:              'places',
 };
 
 export function sortItems (items) {

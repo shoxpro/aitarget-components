@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoTargetingLocationTypeService } from './geo-targeting-location-type.service';
 import { AppState } from '../../../app/reducers/index';
-import { State, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Rx';
 
 @Component({

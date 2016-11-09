@@ -21,7 +21,7 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy, OnChanges 
 
   @Output() focus            = new EventEmitter();
   @Output() blur             = new EventEmitter();
-  @Output() enter             = new EventEmitter();
+  @Output() enter            = new EventEmitter();
   @Output() inputValueChange = new EventEmitter();
 
   keyup (inputValue) {

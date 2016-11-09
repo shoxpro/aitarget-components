@@ -31,6 +31,7 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy, OnChang
     ) {
       this.activeItemIndex = 0;
     }
+    this.changeDetectorRef.markForCheck();
     this.changeDetectorRef.detectChanges();
   }
 

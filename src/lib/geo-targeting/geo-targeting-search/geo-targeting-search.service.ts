@@ -107,7 +107,8 @@ export class GeoTargetingSearchService {
             return results.reduce((acc: GeoTargetingSearchState, items, index) => {
               let query        = model.termsGrouped.queries[index];
               let term         = model.terms.filter((t) => t.query === query)[0];
-              let matchedItems = items.filter((item) => model.termsGrouped.queries[index] === item.name.toLowerCase());
+              let matchedItems = items.filter((item) => item.name.toLowerCase()
+                                                            .includes(model.termsGrouped.queries[index]));
               let matchedItem  = matchedItems[0];
 
               if (matchedItem) {

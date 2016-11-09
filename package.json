@@ -75,7 +75,7 @@
     "validate": "npm run lint && npm run ci:testall",
     "gh-pages": "ng github-pages:deploy",
     "dev": "npm run build:lib -- --env dev",
-    "build:lib": "webpack --config ./config/webpack.config.babel.js",
+    "build:lib": "webpack --config ./config/webpack.config.ts",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "config": {
