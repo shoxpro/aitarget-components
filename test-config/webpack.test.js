@@ -70,9 +70,9 @@ module.exports = {
        * See: https://github.com/wbuchwalter/tslint-loader
        */
       {
-        test: /\.ts$/,
+        test:    /\.ts$/,
         enforce: 'pre',
-        loader: 'tslint-loader',
+        loader:  'tslint-loader',
         exclude: [root('node_modules')]
       },
 
@@ -83,9 +83,9 @@ module.exports = {
        * See: https://github.com/webpack/source-map-loader
        */
       {
-        test: /\.js$/,
+        test:    /\.js$/,
         enforce: 'pre',
-        loader: 'source-map-loader',
+        loader:  'source-map-loader',
         exclude: [EXCLUDE_SOURCE_MAPS]
       },
 
@@ -95,7 +95,7 @@ module.exports = {
        * See: https://github.com/s-panferov/awesome-typescript-loader
        */
       {
-        test: /\.ts$/,
+        test:    /\.ts$/,
         loaders: [
           'awesome-typescript-loader?sourceMap=false,inlineSourceMap=true,compilerOptions{}=removeComments:true',
           'angular2-template-loader'
@@ -116,7 +116,11 @@ module.exports = {
        *
        * See: https://github.com/webpack/raw-loader
        */
-      { test: /\.css$/, loaders: ['raw-loader'], exclude: [root('src/index.html')]  },
+      { test: /\.css$/, loaders: ['raw-loader', 'postcss-loader'], exclude: [root('src/index.html')] },
+      { test:    /\.scss$|\.sass$/,
+        loaders: ['raw-loader', 'postcss-loader', 'sass-loader'],
+        exclude: [root('src/index.html')]
+      },
 
       /**
        * Raw loader support for *.html
@@ -133,7 +137,7 @@ module.exports = {
        * See: https://github.com/deepsweet/istanbul-instrumenter-loader
        */
       {
-        test: /\.(js|ts)$/, loader: 'istanbul-instrumenter-loader',
+        test:    /\.(js|ts)$/, loader: 'istanbul-instrumenter-loader',
         enforce: 'post',
         include: root('src'),
         exclude: [
@@ -166,19 +170,19 @@ module.exports = {
      */
     // NOTE: when adding more properties make sure you include them in custom-typings.d.ts
     new DefinePlugin({
-      AOT: false,
-      ENV: JSON.stringify('test'),
-      HMR: false,
-      PORT: 3000,
-      HOST: JSON.stringify('localhost'),
+      AOT:             false,
+      ENV:             JSON.stringify('test'),
+      HMR:             false,
+      PORT:            3000,
+      HOST:            JSON.stringify('localhost'),
       STORE_DEV_TOOLS: JSON.stringify(STORE_DEV_TOOLS)
     }),
     new NamedModulesPlugin(),
     new webpack.LoaderOptionsPlugin({
       options: {
         tslint: {
-          emitErrors: false,
-          failOnHint: false,
+          emitErrors:   false,
+          failOnHint:   false,
           resourcePath: root('./src')
         }
       }
@@ -193,11 +197,11 @@ module.exports = {
    * See: https://webpack.github.io/docs/configuration.html#node
    */
   node: {
-    global: true,
-    process: false,
-    crypto: false,
-    module: false,
+    global:         true,
+    process:        false,
+    crypto:         false,
+    module:         false,
     clearImmediate: false,
-    setImmediate: false
+    setImmediate:   false
   }
 };

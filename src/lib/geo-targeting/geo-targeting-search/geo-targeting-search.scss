@@ -1,0 +1,27 @@
+.geo-targeting-search {
+  display:          flex;
+  box-sizing:       border-box;
+  height:           30px;
+  border:           1px solid #d9dfe7;
+  border-radius:    3px;
+  background-color: #f2f6fa;
+  align-items:      center;
+}
+
+.geo-targeting-search_dropdown-active,
+.geo-targeting-search_map-active {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius:  0;
+}
+
+.geo-targeting-search_selected-items,
+.geo-targeting-search_visible-info {
+  border-top-left-radius:  0;
+  border-top-right-radius: 0;
+}
+
+.geo-targeting-search_focus {
+  outline:      none;
+  border-color: #abbdd4;
+  box-shadow:   0 0 5px 0 rgba(154, 168, 181, 0.39);
+}

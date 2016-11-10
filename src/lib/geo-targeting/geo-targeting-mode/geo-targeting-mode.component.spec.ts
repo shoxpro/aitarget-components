@@ -1,15 +1,24 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed } from '@angular/core/testing';
-import { LibModule } from '../../lib.module';
-import { GeoTargetingModeService } from './geo-targeting-mode.service';
 import { GeoTargetingModeComponent } from './geo-targeting-mode.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { GeoTargetingModeService } from './geo-targeting-mode.service';
+import { Store } from '@ngrx/store';
 
 describe('Component: GeoTargetingMode', () => {
   beforeEach(() => {
+    // noinspection ReservedWordAsName
     TestBed.configureTestingModule({
-      imports:   [LibModule],
-      providers: [GeoTargetingModeService]
+      imports:      [],
+      declarations: [
+        GeoTargetingModeComponent
+      ],
+      providers:    [
+        {provide: Store, useValue: {let () {}}},
+        {provide: GeoTargetingModeService, useValue: {}},
+      ],
+      schemas:      [CUSTOM_ELEMENTS_SCHEMA]
     });
   });
 

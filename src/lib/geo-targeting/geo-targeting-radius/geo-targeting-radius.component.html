@@ -1,6 +1,6 @@
 <div class="geo-targeting-radius"
      [ngClass]="{'geo-targeting-radius_open': isOpen}"
-     (click)="toggleDropdown($event)">
+     (click)="toggleDropdown()">
   <span class="geo-targeting-radius__result"
         *ngIf="item.radius > 0">+ {{ item.radius }} {{ 'geo-targeting-radius.' + item.distance_unit | translate}}
   </span>
@@ -11,8 +11,8 @@
 <div class="geo-targeting-radius__dropdown"
      *ngIf="isOpen"
      appendTo="geo-targeting"
-     [showVeil]="true"
-     (clickOutside)="toggleDropdown()">
+     (clickOutside)="toggleDropdown()"
+     [showVeil]="true">
   <div class="geo-targeting-radius__mode geo-targeting-radius__mode_current"
        *ngIf="item.type === 'city'">
     <div class="geo-targeting-radius__mode-row"

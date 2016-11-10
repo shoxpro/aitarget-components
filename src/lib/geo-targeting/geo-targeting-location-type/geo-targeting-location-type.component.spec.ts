@@ -2,19 +2,23 @@
 
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingLocationTypeComponent } from './geo-targeting-location-type.component';
-import { LibModule } from '../../lib.module';
 import { GeoTargetingLocationTypeService } from './geo-targeting-location-type.service';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
-import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
-import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
-import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
+import { Store } from '@ngrx/store';
+import { TranslateService } from 'ng2-translate';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('Component: GeoTargetingType', () => {
   beforeEach(() => {
+    // noinspection ReservedWordAsName
     TestBed.configureTestingModule({
-      imports:   [LibModule],
-      providers: [GeoTargetingApiService, GeoTargetingLocationTypeService, GeoTargetingLocationTypeService,
-        GeoTargetingSelectedService, GeoTargetingInfoService, GeoTargetingMapService]
+      imports:      [],
+      declarations: [GeoTargetingLocationTypeComponent],
+      providers:    [
+        {provide: Store, useValue: {let () {}}},
+        {provide: GeoTargetingLocationTypeService, useValue: {}},
+        {provide: TranslateService, useValue: {}},
+      ],
+      schemas:      [CUSTOM_ELEMENTS_SCHEMA]
     });
   });
 

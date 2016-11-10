@@ -7,7 +7,7 @@ import { TypeToHumanPipe } from '../type-to-human.pipe';
 @Component({
   selector:        'detailed-targeting-info',
   templateUrl:     'detailed-targeting-info.component.html',
-  styleUrls:       ['detailed-targeting-info.component.css'],
+  styleUrls:       ['detailed-targeting-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 

@@ -7,7 +7,7 @@ import { DetailedTargetingInfoService } from '../detailed-targeting-info/detaile
 @Component({
   selector:    'detailed-targeting-browse',
   templateUrl: './detailed-targeting-browse.component.html',
-  styleUrls:   ['./detailed-targeting-browse.component.css']
+  styleUrls:   ['./detailed-targeting-browse.component.scss']
 })
 export class DetailedTargetingBrowseComponent implements OnInit, OnDestroy {
   mode;

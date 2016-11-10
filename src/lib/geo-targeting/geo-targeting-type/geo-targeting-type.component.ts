@@ -1,58 +1,52 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TOGGLE_SEARCH_TYPE_DROPDOWN, SELECT_SEARCH_TYPE, TRANSLATE_SEARCH_TYPES } from './geo-targeting-type.actions';
-import { TranslateService } from 'ng2-translate/ng2-translate';
-import { typeModel } from './geo-targeting-type.model';
 import { AppState } from '../../../app/reducers/index';
+import { GeoTargetingTypeService } from './geo-targeting-type.service';
+import { Subject } from 'rxjs';
+import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector:        'geo-targeting-type',
   templateUrl:     './geo-targeting-type.component.html',
-  styleUrls:       ['./geo-targeting-type.component.css'],
+  styleUrls:       ['./geo-targeting-type.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
 
-  _subscriptions = [];
-  model;
+  destroy$ = new Subject();
+  model$;
 
-  toggleDropdown (isOpen, event?) {
-    if (event) {
-      event.stopPropagation();
-    }
-    this._store.dispatch({type: TOGGLE_SEARCH_TYPE_DROPDOWN, payload: {isOpen: isOpen}});
+  toggleDropdown (isOpen) {
+    this.geoTargetingTypeService.toggleSearchTypeDropdown(isOpen);
   }
 
   selectType (type) {
-    this._store.dispatch({type: SELECT_SEARCH_TYPE, payload: {selectedType: type}});
+    this.geoTargetingTypeService.selectSearchType(type);
     this.toggleDropdown(false);
   }
 
   constructor (private _store: Store<AppState>,
+               private geoTargetingTypeService: GeoTargetingTypeService,
                private translateService: TranslateService) {
-    this.model = _store.let(typeModel);
+    this.model$ = this._store.let(GeoTargetingTypeService.getModel);
   }
 
   ngOnDestroy () {
-    this._subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
+    this.destroy$.next();
   }
 
   ngOnInit () {
     /**
-     * Translate types on init
+     * Set defaults on init
      */
-    this._store.dispatch({type: TRANSLATE_SEARCH_TYPES, payload: {translateService: this.translateService}});
+    this.geoTargetingTypeService.setTranslatedSearchType();
 
     /**
      * Translate types when language change
      */
-    this._subscriptions.push(
-      this.translateService.onLangChange.subscribe(() => {
-        this._store.dispatch({type: TRANSLATE_SEARCH_TYPES, payload: {translateService: this.translateService}});
-      })
-    );
+    this.translateService.onLangChange
+        .takeUntil(this.destroy$)
+        .subscribe(() => this.geoTargetingTypeService.setTranslatedSearchType());
   }
 
 }

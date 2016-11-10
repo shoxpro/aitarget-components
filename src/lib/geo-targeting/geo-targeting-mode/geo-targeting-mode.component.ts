@@ -1,72 +1,48 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { GeoTargetingModeType } from './geo-targeting-mode.reducer';
 import { GeoTargetingModeService } from './geo-targeting-mode.service';
+import { AppState } from '../../../app/reducers/index';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector:        'geo-targeting-mode',
   templateUrl:     './geo-targeting-mode.component.html',
-  styleUrls:       ['./geo-targeting-mode.component.css'],
+  styleUrls:       ['./geo-targeting-mode.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GeoTargetingModeComponent implements OnInit, OnDestroy {
+export class GeoTargetingModeComponent {
 
-  _subscriptions = [];
-  mode;
-  modeTitle;
-  exclude;
-  isOpen         = false;
+  @Input() selectedMode: GeoTargetingModeType;
+  @Input() isOpen: boolean      = false;
+  @Input() appendTarget: string;
+  @Input() updateState: boolean = false;
 
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.changeDetectorRef.markForCheck();
-    this.changeDetectorRef.detectChanges();
-  }
+  @Output() modeChange = new EventEmitter();
+  @Output() toggle     = new EventEmitter();
 
-  constructor (private translateService: TranslateService,
-               private geoTargetingModeService: GeoTargetingModeService,
-               private changeDetectorRef: ChangeDetectorRef) { }
+  model$;
 
-  setMode (mode) {
-    this.geoTargetingModeService.update(mode);
-  }
+  selectMode (mode) {
+    this.modeChange.emit(mode);
+    this.selectedMode = mode;
 
-  /**
-   * Toggle Dropdown
-   */
-  toggleDropdown (event?) {
-    if (event) {
-      event.stopPropagation();
+    if (this.updateState) {
+      this.geoTargetingModeService.setMode(mode);
     }
-    this.isOpen = !this.isOpen;
-    this.updateTemplate();
   }
 
-  ngOnDestroy () {
-    this._subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
+  toggleDropdown (isOpen) {
+    this.toggle.emit(isOpen);
+
+    if (this.updateState) {
+      this.geoTargetingModeService.toggleModeDropdown(isOpen);
+    }
   }
 
-  ngOnInit () {
-    this._subscriptions.push(
-      this.geoTargetingModeService.mode.subscribe((mode: string) => {
-        this.mode      = mode;
-        this.exclude   = mode === 'exclude';
-        this.modeTitle = this.translateService.instant(`geo-targeting-mode.${mode}`);
-        this.updateTemplate();
-      })
-    );
-
-    /**
-     * Update component's translations on language change
-     */
-    this._subscriptions.push(
-      this.translateService.onLangChange.subscribe(() => {
-        this.geoTargetingModeService.update(this.mode);
-      })
-    );
+  constructor (private _store: Store<AppState>,
+               private geoTargetingModeService: GeoTargetingModeService) {
+    // TODO: add key navigation
+    this.model$ = this._store.let(GeoTargetingModeService.getModel);
   }
 
 }

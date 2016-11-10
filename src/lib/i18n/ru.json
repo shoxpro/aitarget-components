@@ -61,17 +61,14 @@
   "geo-targeting-info": {
     "MESSAGE": "Местоположение вашей аудитории изменено с {{ fromNames }} на {{ toName }}.",
     "UNDO": "Отменить изменения",
+    "MESSAGE_NOT_FOUND": "Некторые местоположения не были найдены: {{ notFoundInputsStr }}",
     "MESSAGE_MISSING_INCLUDED": "Прежде чем вы сможете исключать места, вы должны включить хотя бы одно место.",
     "MESSAGE_NARROW": "Местонахождение вашей аудитории — {{ narrowerLocationNames }}, все остальные места автоматически исключаются."
   },
   "geo-targeting-mode": {
     "include": "Включить",
-    "exclude": "Исключить"
-  },
-  "geo-targeting-mode-dropdown": {
-    "INCLUDE": "Включить",
-    "EXCLUDE": "Исключить",
-    "DELETE": "Удалить"
+    "exclude": "Исключить",
+    "delete": "Удалить"
   },
   "geo-targeting-map": {
     "MAP": "Карта"

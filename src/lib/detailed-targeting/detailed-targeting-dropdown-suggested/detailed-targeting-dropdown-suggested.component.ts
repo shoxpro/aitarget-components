@@ -11,7 +11,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 @Component({
   selector:        'detailed-targeting-dropdown-suggested',
   templateUrl:     'detailed-targeting-dropdown-suggested.component.html',
-  styleUrls:       ['detailed-targeting-dropdown-suggested.component.css'],
+  styleUrls:       ['detailed-targeting-dropdown-suggested.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 

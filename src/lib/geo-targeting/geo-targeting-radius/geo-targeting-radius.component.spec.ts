@@ -14,12 +14,12 @@ describe('Component: GeoTargetingRadius', () => {
     TestBed.configureTestingModule({
       imports:      [FormsModule],
       declarations: [GeoTargetingRadiusComponent, TranslatePipe, AppendToDirective],
-      schemas:      [CUSTOM_ELEMENTS_SCHEMA],
       providers:    [
         {provide: GeoTargetingSelectedService, useValue: {}},
         {provide: GeoTargetingService, useValue: {}},
         {provide: TranslateService, useValue: {}},
-      ]
+      ],
+      schemas:      [CUSTOM_ELEMENTS_SCHEMA]
     });
   });
 

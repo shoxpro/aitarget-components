@@ -2,30 +2,34 @@ import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRe
 import { GeoTargetingSelectedService } from './geo-targeting-selected.service';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
+import { Subject } from 'rxjs';
+import { AppState } from '../../../app/reducers/index';
+import { Store } from '@ngrx/store';
+import { GeoTargetingSearchService } from '../geo-targeting-search/geo-targeting-search.service';
+import { GeoTargetingModeType } from '../geo-targeting-mode/geo-targeting-mode.reducer';
+import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 
 @Component({
   selector:        'geo-targeting-selected',
   templateUrl:     './geo-targeting-selected.component.html',
-  styleUrls:       ['./geo-targeting-selected.component.css'],
+  styleUrls:       ['./geo-targeting-selected.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
-  items: GeoTargetingItem[];
-  itemsGroupedByCountry: Object = {};
-  groupHovered: Object          = {};
-  subscriptions                 = [];
-  itemsGroupedByCountryKeys     = [];
+  destroy$ = new Subject();
+  model$;
+  modelMode$;
+  itemsGroupedByCountry$;
 
-  constructor (private geoTargetingSelectedService: GeoTargetingSelectedService,
+  groupHovered: Object = {};
+
+  constructor (private _store: Store<AppState>,
+               private geoTargetingSelectedService: GeoTargetingSelectedService,
+               private geoTargetingSearchService: GeoTargetingSearchService,
                private geoTargetingMapService: GeoTargetingMapService,
-               private changeDetectorRef: ChangeDetectorRef) { }
-
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.changeDetectorRef.markForCheck();
-    this.changeDetectorRef.detectChanges();
+               private changeDetectorRef: ChangeDetectorRef) {
+    this.model$     = this._store.let(GeoTargetingSelectedService.getModel);
+    this.modelMode$ = this._store.let(GeoTargetingModeService.getModel);
   }
 
   /**
@@ -35,7 +39,7 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
    */
   hoverGroup (key, isHovered) {
     this.groupHovered[key] = isHovered;
-    this.updateTemplate();
+    this.changeDetectorRef.markForCheck();
   }
 
   /**
@@ -43,7 +47,7 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
    * @param item
    */
   showItemOnMap (item: GeoTargetingItem) {
-    this.geoTargetingMapService.showMap();
+    this.geoTargetingSearchService.toggleMap(true);
     this.geoTargetingMapService.focusItem(item);
   }
 
@@ -52,13 +56,10 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
    * @param key
    * @param event
    */
-  removeGroup (key, event?) {
-    if (event) {
-      event.stopPropagation();
-    }
-    this.itemsGroupedByCountry[key].items.forEach((item: GeoTargetingItem) => {
-      this.geoTargetingSelectedService.remove(item);
-    });
+  removeGroup (key) {
+    this.itemsGroupedByCountry$
+        .take(1)
+        .subscribe(({map}) => this.geoTargetingSelectedService.removeItems(map[key].items));
   }
 
   /**
@@ -66,64 +67,55 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
    * @param item
    * @param event
    */
-  removeItem (item: GeoTargetingItem, event?) {
-    if (event) {
-      event.stopPropagation();
-    }
-    this.geoTargetingSelectedService.remove(item);
+  removeItem (item: GeoTargetingItem) {
+    this.geoTargetingSelectedService.removeItems([item]);
   }
 
   /**
    * Toggle Dropdown
    */
-  toggleModeDropdown (itemMode: any, event) {
-    if (event) {
-      event.stopPropagation();
-    }
-    itemMode.isOpen = !itemMode.isOpen;
-    this.updateTemplate();
+  toggleModeDropdown (itemMode: any, isOpen: boolean) {
+    itemMode.isOpen = isOpen;
+
+    this.changeDetectorRef.markForCheck();
   }
 
-  setExcluded (itemMode, item: GeoTargetingItem, excluded: boolean) {
-    itemMode.isOpen = false;
+  modeChange (item: GeoTargetingItem, mode: GeoTargetingModeType) {
+    const updatedItem = Object.assign({}, item, {excluded: mode.id === 'exclude'});
 
-    item.excluded = excluded;
+    this.geoTargetingSelectedService.updateItems([updatedItem]);
 
-    this.geoTargetingSelectedService.updateSelectedItem(item);
-    this.updateTemplate();
+    this.changeDetectorRef.markForCheck();
   }
 
   ngOnDestroy () {
-    // Unsubscribe from all Observables
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
+    this.destroy$.next();
   }
 
   ngOnInit () {
-    this.subscriptions.push(
-      this.geoTargetingSelectedService.items.subscribe((items: GeoTargetingItem[]) => {
-        this.items                 = items;
-        this.itemsGroupedByCountry = {};
+    this.itemsGroupedByCountry$ =
+      this.model$
+          .takeUntil(this.destroy$)
+          .map(({items}) => {
+            let map = {};
 
-        this.items.forEach((item: GeoTargetingItem) => {
-          let countryCode                               = item.type === 'country' ? item.key : item.country_code;
-          this.itemsGroupedByCountry[countryCode]       = this.itemsGroupedByCountry[countryCode] || {};
-          this.itemsGroupedByCountry[countryCode].name  = item.type === 'country' ? item.name : item.country_name;
-          this.itemsGroupedByCountry[countryCode].items = this.itemsGroupedByCountry[countryCode].items || [];
-          // Put excluded items after included
-          if (item.excluded) {
-            this.itemsGroupedByCountry[countryCode].items.push(item);
-          } else {
-            this.itemsGroupedByCountry[countryCode].items.unshift(item);
-          }
-        });
+            items.forEach((item: GeoTargetingItem) => {
+              let countryCode        = item.type === 'country' ? item.key : item.country_code;
+              map[countryCode]       = map[countryCode] || {};
+              map[countryCode].name  = item.type === 'country' ? item.name : item.country_name;
+              map[countryCode].items = map[countryCode].items || [];
+              // Put excluded items after included
+              if (item.excluded) {
+                map[countryCode].items.push(item);
+              } else {
+                map[countryCode].items.unshift(item);
+              }
+            });
 
-        this.itemsGroupedByCountryKeys = Object.keys(this.itemsGroupedByCountry);
+            let keys = Object.keys(map);
 
-        this.updateTemplate();
-      })
-    );
+            return {map, keys};
+          });
   }
 
 }

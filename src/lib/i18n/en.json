@@ -61,17 +61,14 @@
   "geo-targeting-info": {
     "MESSAGE": "Your audience location has been changed from {{ fromNames }} to {{ toName }}.",
     "UNDO": "Undo Change",
+    "MESSAGE_NOT_FOUND": "Some locations were not found: {{ notFoundInputsStr }}",
     "MESSAGE_MISSING_INCLUDED": "You have to include at least one location before you can exclude locations.",
     "MESSAGE_NARROW": "Your audience location is set to {{ narrowerLocationNames }}, so everything outside of this location is automatically excluded."
   },
   "geo-targeting-mode": {
     "include": "Include",
-    "exclude": "Exclude"
-  },
-  "geo-targeting-mode-dropdown": {
-    "INCLUDE": "Include",
-    "EXCLUDE": "Exclude",
-    "DELETE": "Delete"
+    "exclude": "Exclude",
+    "delete": "Delete"
   },
   "geo-targeting-map": {
     "MAP": "Map"

@@ -1,20 +1,33 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../app/reducers/index';
+import { GeoTargetingModeActions } from './geo-targeting-mode.actions';
+import { GEO_TARGETING_MODE_KEY, GeoTargetingModeState, GeoTargetingModeType } from './geo-targeting-mode.reducer';
+import { GeoTargetingState, GEO_TARGETING_STATE_KEY } from '../geo-targeting.reducer';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class GeoTargetingModeService {
 
-  _mode = new BehaviorSubject<'include'|'exclude'>('include');
-  mode  = this._mode.asObservable();
+  static getModel (_store): Observable<GeoTargetingModeState> {
+    return _store.select(GEO_TARGETING_STATE_KEY)
+                 .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_MODE_KEY])
+                 .distinctUntilChanged();
+  };
 
-  update (mode) {
-    this._mode.next(mode);
+  setMode (selectedMode: GeoTargetingModeType) {
+    this._store.dispatch(this.geoTargetingModeActions.setMode(selectedMode));
   }
 
-  get () {
-    return this._mode.getValue();
+  setTranslatedModes () {
+    this._store.dispatch(this.geoTargetingModeActions.setTranslatedModes());
   }
 
-  constructor () { }
+  toggleModeDropdown (isOpen: boolean) {
+    this._store.dispatch(this.geoTargetingModeActions.toggleModeDropdown(isOpen));
+  }
+
+  constructor (private _store: Store<AppState>,
+               private geoTargetingModeActions: GeoTargetingModeActions) {}
 
 }

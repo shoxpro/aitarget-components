@@ -7,8 +7,8 @@ import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSpec } from '../../targeting/targeting-spec-geo.interface';
 import { Store } from '@ngrx/store';
-import { typeModel } from '../geo-targeting-type/geo-targeting-type.model';
 import { AppState } from '../../../app/reducers/index';
+import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 
 @Injectable()
 export class GeoTargetingApiService {
@@ -30,7 +30,8 @@ export class GeoTargetingApiService {
     let simplifiedGeoLocations = {};
     let map                    = {};
 
-    let types = ['countries', 'regions', 'cities', 'zips', 'geo_markets', 'electoral_districts', 'custom_locations'];
+    let types = ['countries', 'regions', 'cities', 'zips', 'geo_markets', 'electoral_districts', 'custom_locations',
+      'places'];
 
     types.forEach((type: string) => {
       // Combine items from included and excluded locations
@@ -69,7 +70,7 @@ export class GeoTargetingApiService {
 
     // Define locations types to search for
     let locationTypes;
-    this._store.let(typeModel)
+    this._store.let(GeoTargetingTypeService.getModel)
         .subscribe(({selected}) => {
           // Array of selected types' ids
           locationTypes = selected.map(type => type.id);
@@ -84,11 +85,12 @@ export class GeoTargetingApiService {
         place_fallback: true,
         locale:         this.lang
       }, (response) => {
-        _response.next(response.data);
+        _response.next(response.data || []);
       });
     });
 
-    return _response.asObservable();
+    return _response.asObservable()
+                    .take(1);
   };
 
   /**
@@ -139,7 +141,8 @@ export class GeoTargetingApiService {
 
           _items.next(items);
         });
-    return _items.asObservable();
+    return _items.asObservable()
+                 .take(1);
   }
 
   /**
@@ -165,7 +168,8 @@ export class GeoTargetingApiService {
       });
     });
 
-    return _response.asObservable();
+    return _response.asObservable()
+                    .take(1);
   };
 
   /**
@@ -195,7 +199,8 @@ export class GeoTargetingApiService {
       });
     });
 
-    return _response.asObservable();
+    return _response.asObservable()
+                    .take(1);
   };
 
 }

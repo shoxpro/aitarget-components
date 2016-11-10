@@ -1,33 +1,34 @@
 import { Directive, ElementRef, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 @Directive({
   selector: '[clickOutside]'
 })
 export class ClickOutsideDirective implements OnInit, OnDestroy {
 
+  destroy$ = new Subject();
+
   @Output()
   clickOutside = new EventEmitter();
-  element;
 
-  onClick = (e) => {
-    const targetElement = e.target;
-    const clickedInside = this.element
-                              .contains(targetElement);
-    if (!clickedInside) {
-      this.clickOutside.emit(null);
-    }
-  };
-
-  constructor (private elementRef: ElementRef) {
-    this.element = this.elementRef.nativeElement;
-  }
+  constructor (private elementRef: ElementRef) {}
 
   ngOnDestroy () {
-    window.document.body.removeEventListener('click', this.onClick);
+    this.destroy$.next();
   }
 
   ngOnInit () {
-    window.document.body.addEventListener('click', this.onClick);
+    Observable.fromEvent(window.document.body, 'click')
+              .takeUntil(this.destroy$)
+              .skip(1)
+              .subscribe((e: MouseEvent) => {
+                const targetElement = e.target;
+                const clickedInside = this.elementRef.nativeElement
+                                          .contains(targetElement);
+                if (!clickedInside) {
+                  this.clickOutside.emit(null);
+                }
+              });
   }
 
 }

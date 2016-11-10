@@ -6,7 +6,7 @@ import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-
 @Component({
   selector:        'detailed-targeting-search',
   templateUrl:     './detailed-targeting-search.component.html',
-  styleUrls:       ['./detailed-targeting-search.component.css'],
+  styleUrls:       ['./detailed-targeting-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {

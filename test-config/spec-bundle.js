@@ -15,6 +15,7 @@ Error.stackTraceLimit = Infinity;
 
 require('core-js/es6');
 require('core-js/es7/reflect');
+require('core-js/client/shim');
 
 // Typescript emit helpers polyfill
 require('ts-helpers');
@@ -28,17 +29,17 @@ require('zone.js/dist/sync-test');
 require('zone.js/dist/proxy');
 require('zone.js/dist/jasmine-patch');
 
-
 // RxJS
 require('rxjs/Rx');
 
 const testing = require('@angular/core/testing');
 const browser = require('@angular/platform-browser-dynamic/testing');
 
-testing.getTestBed().initTestEnvironment(
-  browser.BrowserDynamicTestingModule,
-  browser.platformBrowserDynamicTesting()
-);
+testing.getTestBed()
+       .initTestEnvironment(
+         browser.BrowserDynamicTestingModule,
+         browser.platformBrowserDynamicTesting()
+       );
 
 /*
  * Ok, this is kinda crazy. We can use the the context method on
@@ -56,8 +57,9 @@ const testContext = require.context('../src', true, /\.spec\.ts/);
  * that will require the file and load it up here. Context will
  * loop and require those spec files here
  */
-function requireAll(requireContext) {
-  return requireContext.keys().map(requireContext);
+function requireAll (requireContext) {
+  return requireContext.keys()
+                       .map(requireContext);
 }
 
 // requires and returns all modules that match

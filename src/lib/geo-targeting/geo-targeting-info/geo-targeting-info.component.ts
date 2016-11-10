@@ -1,76 +1,41 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { GeoTargetingInfoService } from './geo-targeting-info.service';
+import { AppState } from '../../../app/reducers/index';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector:        'geo-targeting-info',
   templateUrl:     './geo-targeting-info.component.html',
-  styleUrls:       ['./geo-targeting-info.component.css'],
+  styleUrls:       ['./geo-targeting-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GeoTargetingInfoComponent implements OnInit, OnDestroy {
 
-  _subscriptions = [];
+  model$;
 
-  infoLevel: 'info'|'error';
-  message: string;
-  canRevert: boolean;
-  isVisible: boolean = false;
-
-  updateTemplate () {
-    this.changeDetectorRef.markForCheck();
-    this.changeDetectorRef.detectChanges();
+  hideInfo () {
+    this.geoTargetingInfoService.hideInfo();
   }
 
-  hide () {
-    this.geoTargetingInfoService.hide();
+  revert () {
+    this.hideInfo();
+
+    this.model$
+        .take(1)
+        .subscribe((model) => {
+          this.geoTargetingInfoService.revert(model.revertKeys);
+        });
   }
 
-  undoChange () {
-    this.geoTargetingSelectedService.update(
-      this.geoTargetingSelectedService.getPrevItems()
-    );
-    this.hide();
+  constructor (private _store: Store<AppState>,
+               private geoTargetingInfoService: GeoTargetingInfoService) {
+    this.model$ = this._store.let(GeoTargetingInfoService.getModel);
   }
 
-  constructor (private geoTargetingSelectedService: GeoTargetingSelectedService,
-               private geoTargetingInfoService: GeoTargetingInfoService,
-               private changeDetectorRef: ChangeDetectorRef) { }
-
-  ngOnDestroy () {
-    this._subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
-  }
+  ngOnDestroy () {}
 
   ngOnInit () {
-    this._subscriptions.push(
-      this.geoTargetingInfoService.message.subscribe((message) => {
-        this.message = message;
-        this.updateTemplate();
-      })
-    );
-
-    this._subscriptions.push(
-      this.geoTargetingInfoService.infoLevel.subscribe((infoLevel) => {
-        this.infoLevel = infoLevel;
-        this.updateTemplate();
-      })
-    );
-
-    this._subscriptions.push(
-      this.geoTargetingInfoService.canRevert.subscribe((canRevert) => {
-        this.canRevert = canRevert;
-        this.updateTemplate();
-      })
-    );
-
-    this._subscriptions.push(
-      this.geoTargetingInfoService.isVisible.subscribe((isVisible) => {
-        this.isVisible = isVisible;
-        this.updateTemplate();
-      })
-    );
+    // TODO: Translate message on language change
   }
 
 }

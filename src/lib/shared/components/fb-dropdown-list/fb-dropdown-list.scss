@@ -1,0 +1,77 @@
+:host {
+  position: absolute;
+  top:      100%;
+  left:     -1px;
+  display:  inline-block;
+  z-index:  1200;
+}
+
+.fb-dropdown-list {
+  position:         relative;
+  display:          block;
+  box-sizing:       border-box;
+  padding:          4px 0 4px 0;
+  width:            auto;
+  height:           auto;
+  border:           1px solid rgba(0, 0, 0, 0.15);
+  background-color: #ffffff;
+  box-shadow:       0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+
+.fb-dropdown-list__item {
+  position:    relative;
+  display:     flex;
+  padding:     0 8px 0 30px;
+  height:      24px;
+  font-weight: normal;
+  cursor:      pointer;
+  align-items: center
+}
+
+.fb-dropdown-list__item:hover {
+  background-color: #f5fafd
+}
+
+.fb-dropdown-list__item-name {
+  white-space: nowrap;
+}
+
+.fb-dropdown-list__item_selected {
+  font-weight: bold
+}
+
+.fb-dropdown-list__tick {
+  position: absolute;
+  left:     6px
+}
+
+.fb-dropdown-list__info {
+  position:         absolute;
+  top:              0;
+  left:             100%;
+  z-index:          100;
+  display:          inline-block;
+  box-sizing:       border-box;
+  margin-left:      8px;
+  padding:          8px;
+  min-height:       22px;
+  width:            240px;
+  height:           auto;
+  border-radius:    4px;
+  background-color: #616161;
+  color:            rgba(255, 255, 255, 0.87);
+  font-weight:      500;
+  font-size:        12px;
+  opacity:          0.9
+}
+
+.fb-dropdown-list__info:after {
+  position:      absolute;
+  top:           9px;
+  left:          -4px;
+  display:       inline-block;
+  border-top:    4px solid transparent;
+  border-right:  4px solid #616161;
+  border-bottom: 4px solid transparent;
+  content:       ""
+}

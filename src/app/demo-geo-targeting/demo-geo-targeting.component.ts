@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector:    'app-demo-geo-targeting',
   templateUrl: './demo-geo-targeting.component.html',
-  styleUrls:   ['./demo-geo-targeting.component.css']
+  styleUrls:   ['demo-geo-targeting.component.scss']
 })
 export class DemoGeoTargetingComponent implements OnInit {
 
   hideGeoTargeting = false;
-  showSpec              = false;
-  lang                  = 'en_US';
+  showSpec         = false;
+  lang             = 'en_US';
 
   spec = {
     'geo_locations':          {

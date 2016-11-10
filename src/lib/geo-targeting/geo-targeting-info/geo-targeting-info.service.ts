@@ -1,33 +1,41 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
+import { GeoTargetingInfoState, GEO_TARGETING_INFO_KEY } from './geo-targeting-info.reducer';
+import { AppState } from '../../../app/reducers/index';
+import { Store } from '@ngrx/store';
+import { GeoTargetingInfoActions } from './geo-targeting-info.actions';
+import { GeoTargetingState, GEO_TARGETING_STATE_KEY } from '../geo-targeting.reducer';
+import { SharedActions } from '../../shared/actions/index';
 
 @Injectable()
 export class GeoTargetingInfoService {
 
-  _infoLevel = new Subject<'info'|'error'>();
-  _message   = new Subject<string>();
-  _canRevert = new Subject<boolean>();
-  _isVisible = new Subject<boolean>();
+  static getModel (_store): Observable<GeoTargetingInfoState> {
+    return _store.select(GEO_TARGETING_STATE_KEY)
+                 .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_INFO_KEY])
+                 .distinctUntilChanged();
+  };
 
-  infoLevel = this._infoLevel.asObservable();
-  message   = this._message.asObservable();
-  canRevert = this._canRevert.asObservable();
-  isVisible = this._isVisible.asObservable();
-
-  update (infoLevel: 'info'|'error', message: string, canRevert = false) {
-    this._infoLevel.next(infoLevel);
-    this._message.next(message);
-    this._canRevert.next(canRevert);
+  showInfo ({level = 'info', message, canRevert = false, revertKeys = [], isVisible = true}: GeoTargetingInfoState) {
+    this._store.dispatch(this.geoTargetingInfoActions.showInfo({
+      level, message, canRevert, revertKeys, isVisible
+    }));
   }
 
-  show () {
-    this._isVisible.next(true);
+  hideInfo () {
+    this._store.dispatch(this.geoTargetingInfoActions.hideInfo());
   }
 
-  hide () {
-    this._isVisible.next(false);
+  /**
+   * Dispatch universal revert action with revertKeys, so any interested component can process this action
+   * @param revertKeys
+   */
+  revert (revertKeys: Array<string>) {
+    this._store.dispatch(this.sharedActions.revert(revertKeys));
   }
 
-  constructor () { }
+  constructor (private _store: Store<AppState>,
+               private geoTargetingInfoActions: GeoTargetingInfoActions,
+               private sharedActions: SharedActions) { }
 
 }

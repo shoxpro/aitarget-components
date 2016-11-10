@@ -1,65 +1,81 @@
-import { geoTargetingTypeReducer } from './geo-targeting-type.reducer';
-import { TOGGLE_SEARCH_TYPE_DROPDOWN, SELECT_SEARCH_TYPE, TRANSLATE_SEARCH_TYPES } from './geo-targeting-type.actions';
+import { geoTargetingTypeReducer, geoTargetingTypeInitial } from './geo-targeting-type.reducer';
+import { GeoTargetingTypeActions } from './geo-targeting-type.actions';
 import { GeoTargetingTypeState } from './geo-targeting-type.interface';
-import { geoTargetingTypeInitial } from './geo-targeting-type.initial';
+import { inject, TestBed } from '@angular/core/testing';
+import { TranslateService } from 'ng2-translate';
 
 let deepFreeze = require('deep-freeze');
+const types    = [
+  {id: 'all', name: `geo-targeting-dropdown.all`},
+  {id: 'country', name: `geo-targeting-dropdown.country`},
+  {id: 'region', name: `geo-targeting-dropdown.region`},
+  {id: 'geo_market', name: `geo-targeting-dropdown.geo_market`},
+  {id: 'city', name: `geo-targeting-dropdown.city`},
+  {id: 'electoral_district', name: `geo-targeting-dropdown.electoral_district`},
+  {id: 'political_district', name: `geo-targeting-dropdown.political_district`},
+  {id: 'zip', name: `geo-targeting-dropdown.zip`},
+  {id: 'custom_location', name: `geo-targeting-dropdown.custom_location`},
+  {id: 'place', name: `geo-targeting-dropdown.place`}
+];
 
-describe('Reducer: geoTargetingType', () => {
-  it('should return initial state if no state passed', () => {
-    let state     = undefined;
-    let nextState = geoTargetingTypeReducer(state, {type: ''});
+describe('geoTargetingTypeReducer', () => {
 
-    expect(nextState)
-      .toEqual(geoTargetingTypeInitial);
-  });
-
-  it('should toggle isOpen flag', () => {
-    let state: GeoTargetingTypeState = geoTargetingTypeInitial;
-    let newState                     = Object.assign({}, state, {isOpen: true});
-
-    deepFreeze(state);
-
-    let nextState = geoTargetingTypeReducer(state, {type: TOGGLE_SEARCH_TYPE_DROPDOWN, payload: {isOpen: true}});
-
-    expect(nextState)
-      .toEqual(newState);
-  });
-
-  it('should select type', () => {
-    let state: GeoTargetingTypeState = geoTargetingTypeInitial;
-    let selectType                   = {id: 'country', name: 'country'};
-    let newState                     = Object.assign({}, state, <GeoTargetingTypeState>{
-      selectedType: selectType,
-      selected:     [selectType]
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports:      [],
+      providers:    [
+        GeoTargetingTypeActions,
+        {provide: TranslateService, useValue: {instant: (key) => key}}
+      ],
+      declarations: []
     });
-
-    deepFreeze(state);
-
-    let nextState = geoTargetingTypeReducer(state, {type: SELECT_SEARCH_TYPE, payload: {selectedType: selectType}});
-
-    expect(nextState)
-      .toEqual(newState);
   });
 
-  it('should translate names of all types based on its ids', () => {
-    let state: GeoTargetingTypeState = geoTargetingTypeInitial;
-    const translatedName             = 'translated name';
-    let newState                     = Object.assign({}, state, <GeoTargetingTypeState>{
-      available:    state.available.map((type) => Object.assign({}, type, {name: translatedName})),
-      selected:     state.selected.map((type) => Object.assign({}, type, {name: translatedName})),
-      selectedType: Object.assign({}, state.selectedType, {name: translatedName}),
-    });
-    let translateService             = {instant: () => translatedName};
+  describe(GeoTargetingTypeActions.TOGGLE_SEARCH_TYPE_DROPDOWN, () => {
+    it('should toggle isOpen flag', inject([GeoTargetingTypeActions], (geoTargetingTypeActions) => {
+      let state: GeoTargetingTypeState = Object.assign({}, geoTargetingTypeInitial, {types});
 
-    deepFreeze(state);
+      deepFreeze(state);
 
-    let nextState = geoTargetingTypeReducer(state, {
-      type:    TRANSLATE_SEARCH_TYPES,
-      payload: {translateService: translateService}
-    });
+      let newState = geoTargetingTypeReducer(state, geoTargetingTypeActions.toggleSearchTypeDropdown(true));
 
-    expect(nextState)
-      .toEqual(newState);
+      expect(newState)
+        .toEqual(Object.assign({}, state, {isOpen: true}));
+    }));
   });
+
+  describe(GeoTargetingTypeActions.SELECT_SEARCH_TYPE, () => {
+    it('should select type', inject([GeoTargetingTypeActions], (geoTargetingTypeActions) => {
+      let state: GeoTargetingTypeState = Object.assign({}, geoTargetingTypeInitial, {types});
+      let selectType                   = types[1];
+
+      deepFreeze(state);
+      let newState = geoTargetingTypeReducer(state, geoTargetingTypeActions.selectSearchType(selectType));
+
+      expect(newState)
+        .toEqual(Object.assign({}, state, {
+          selectedType: selectType,
+          selected:     [selectType]
+        }));
+    }));
+  });
+
+  describe(GeoTargetingTypeActions.SET_TRANSLATED_SEARCH_TYPES, () => {
+    it('should translate names of all types based on its ids',
+      inject([GeoTargetingTypeActions], (geoTargetingTypeActions) => {
+        let state: GeoTargetingTypeState = Object.assign({}, geoTargetingTypeInitial);
+
+        deepFreeze(state);
+
+        let newState = geoTargetingTypeReducer(state, geoTargetingTypeActions.setTranslatedSearchType());
+
+        expect(newState)
+          .toEqual(Object.assign({}, geoTargetingTypeInitial, {
+            types,
+            selected:     types.slice(1),
+            selectedType: types[0]
+          }));
+      }));
+  });
+
 });

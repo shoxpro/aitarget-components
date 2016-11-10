@@ -6,7 +6,7 @@ import { DetailedTargetingSelectedService } from '../detailed-targeting-selected
 @Component({
   selector:    'detailed-targeting-items',
   templateUrl: './detailed-targeting-items.component.html',
-  styleUrls:   ['./detailed-targeting-items.component.css']
+  styleUrls:   ['./detailed-targeting-items.component.scss']
 })
 export class DetailedTargetingItemsComponent implements OnInit {
 

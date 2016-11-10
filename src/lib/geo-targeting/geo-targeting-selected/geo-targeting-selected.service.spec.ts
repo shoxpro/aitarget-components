@@ -2,20 +2,26 @@
 
 import { TestBed, inject } from '@angular/core/testing';
 import { GeoTargetingSelectedService } from './geo-targeting-selected.service';
-import { countries, country } from '../geo-targeting-items.example';
-import { LibModule } from '../../lib.module';
-import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
-import { GeoTargetingLocationTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
+import { Store } from '@ngrx/store';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
-import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
+import { GeoTargetingSelectedActions } from './geo-targeting-selected.actions';
+import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
+import { TranslateService } from 'ng2-translate';
 
 describe('Service: GeoTargetingSelected', () => {
 
   beforeEach(() => {
+    // noinspection ReservedWordAsName
     TestBed.configureTestingModule({
-      imports:   [LibModule],
-      providers: [GeoTargetingSelectedService, GeoTargetingInfoService, GeoTargetingLocationTypeService,
-        GeoTargetingApiService, GeoTargetingMapService]
+      imports:   [],
+      providers: [
+        GeoTargetingSelectedService,
+        {provide: Store, useValue: {let () {}}},
+        {provide: GeoTargetingApiService, useValue: {}},
+        {provide: GeoTargetingSelectedActions, useValue: {}},
+        {provide: GeoTargetingInfoService, useValue: {}},
+        {provide: TranslateService, useValue: {}},
+      ]
     });
   });
 
@@ -28,49 +34,18 @@ describe('Service: GeoTargetingSelected', () => {
       .toBeTruthy();
   });
 
-  it('should have `get` api method', () => {
-    expect(this.service.update)
+  it('should have `updateItems` api method', () => {
+    expect(this.service.updateItems)
       .toEqual(jasmine.any(Function));
   });
 
-  it('should have `update` api method', () => {
-    expect(this.service.update)
+  it('should have `addItems` api method', () => {
+    expect(this.service.addItems)
       .toEqual(jasmine.any(Function));
   });
 
-  it('should `update` selected items', () => {
-    expect(this.service.get())
-      .toEqual([]);
-
-    this.service.update(countries);
-
-    expect(this.service.get())
-      .toEqual(countries);
-  });
-
-  describe('`add` api method', () => {
-    it('should have `add` api method', () => {
-      expect(this.service.update)
-        .toEqual(jasmine.any(Function));
-    });
-
-    xit('should add new country', () => {
-      this.service.update(countries);
-      this.service.add(country);
-
-      let newCountriesList = countries.concat([country]);
-
-      expect(this.service.get())
-        .toEqual(newCountriesList);
-    });
-
-    it('should not add same country', () => {});
-
-    it('should not add same country', () => {});
-  });
-
-  it('should have `remove` api method', () => {
-    expect(this.service.remove)
+  it('should have `removeItems` api method', () => {
+    expect(this.service.removeItems)
       .toEqual(jasmine.any(Function));
   });
 

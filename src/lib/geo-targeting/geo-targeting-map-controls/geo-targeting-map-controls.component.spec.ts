@@ -2,22 +2,26 @@
 
 import { TestBed } from '@angular/core/testing';
 import { GeoTargetingMapControlsComponent } from './geo-targeting-map-controls.component';
-import { LibModule } from '../../lib.module';
 import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
-import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
-import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
-import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
-import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
-import { GeoTargetingLocationTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
-import { ComponentsHelperService } from '../../shared/services/components-helper.service';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { TranslatePipe, TranslateService } from 'ng2-translate';
 
 describe('Component: GeoTargetingMapControls', () => {
   beforeEach(() => {
+    // noinspection ReservedWordAsName
     TestBed.configureTestingModule({
-      imports:   [LibModule],
-      providers: [GeoTargetingMapService, GeoTargetingMapService, GeoTargetingInfoService,
-        GeoTargetingModeService, GeoTargetingSelectedService, GeoTargetingApiService,
-        GeoTargetingLocationTypeService, ComponentsHelperService]
+      imports:      [],
+      declarations: [
+        GeoTargetingMapControlsComponent,
+        TranslatePipe
+      ],
+      providers:    [
+        {provide: Store, useValue: {let () {}}},
+        {provide: TranslateService, useValue: {}},
+        {provide: GeoTargetingMapService, useValue: {}}
+      ],
+      schemas:      [CUSTOM_ELEMENTS_SCHEMA]
     });
   });
 

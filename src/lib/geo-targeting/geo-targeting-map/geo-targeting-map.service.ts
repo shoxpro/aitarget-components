@@ -10,21 +10,22 @@ import { GeoTargetingModule } from '../geo-targeting.module';
 import { ComponentsHelperService } from '../../shared/services/components-helper.service';
 import { GeoTargetingPinComponent } from '../geo-targeting-pin/geo-targeting-pin.component';
 import { GeoTargetingMapPopupComponent } from '../geo-targeting-map-popup/geo-targeting-map-popup.component';
+import { AppState } from '../../../app/reducers/index';
+import { Store } from '@ngrx/store';
+import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 
 @Injectable()
 export class GeoTargetingMapService {
   map;
-  _mapActive = new BehaviorSubject<boolean>(false);
-  _pinMode   = new BehaviorSubject<boolean>(false);
-  zoom       = 1;
-  latitude   = 51.505;
-  longitude  = -0.09;
+  _pinMode  = new BehaviorSubject<boolean>(false);
+  zoom      = 1;
+  latitude  = 51.505;
+  longitude = -0.09;
   tileLayer;
   popup;
 
-  itemsMap  = {};
-  mapActive = this._mapActive.asObservable();
-  pinMode   = this._pinMode.asObservable();
+  itemsMap = {};
+  pinMode  = this._pinMode.asObservable();
 
   /**
    * Toggle pin mode
@@ -32,20 +33,6 @@ export class GeoTargetingMapService {
   togglePinMode () {
     let pinMode = this._pinMode.getValue();
     this._pinMode.next(!pinMode);
-  }
-
-  /**
-   * Show map
-   */
-  showMap () {
-    this._mapActive.next(true);
-  }
-
-  /**
-   * Hide map
-   */
-  hideMap () {
-    this._mapActive.next(false);
   }
 
   /**
@@ -205,29 +192,32 @@ export class GeoTargetingMapService {
     let latitude  = e.latlng.lat;
     let longitude = e.latlng.lng;
     let key       = `(${latitude}, ${longitude})`;
-    let pinItem   = (<GeoTargetingItem>{
-      key:       key,
-      name:      key,
-      latitude:  latitude,
-      longitude: longitude,
-      type:      'custom_location'
-    });
-    this.geoTargetingSelectedService
-        .setCoordinates(pinItem)
+
+    this.geoTargetingApiService.metaData({custom_locations: [key]})
+        .map((metaData) => {
+          if (!metaData) {
+            return;
+          }
+          return Object.values(metaData['custom_locations'])[0];
+        })
+        .filter((item) => Boolean(item))
         .subscribe((item: GeoTargetingItem) => {
           // Show message if coordinates don't belong to any country (e.g. deep-deep ocean)
           if (!item.country_code) {
             let message = this.translateService.instant(`geo-targeting-input.INVALID_LOCATION`);
 
-            this.geoTargetingInfoService.update('info', message);
-            this.geoTargetingInfoService.show();
+            this.geoTargetingInfoService.showInfo({message});
 
             return;
           }
 
-          item.excluded = this.geoTargetingModeService.get() === 'exclude';
+          this._store.let(GeoTargetingModeService.getModel)
+              .take(1)
+              .subscribe(
+                (model) => item.excluded = model.selectedMode.id === 'exclude'
+              );
 
-          this.geoTargetingSelectedService.add(item);
+          this.geoTargetingSelectedService.addItems([item]);
 
           this.togglePinMode();
         });
@@ -241,9 +231,10 @@ export class GeoTargetingMapService {
     this.map.off('click', this.onMapClick);
   }
 
-  constructor (private translateService: TranslateService,
+  constructor (private _store: Store<AppState>,
+               private translateService: TranslateService,
                private geoTargetingInfoService: GeoTargetingInfoService,
-               private geoTargetingModeService: GeoTargetingModeService,
+               private geoTargetingApiService: GeoTargetingApiService,
                private componentsHelperService: ComponentsHelperService,
                private geoTargetingSelectedService: GeoTargetingSelectedService) { }
 

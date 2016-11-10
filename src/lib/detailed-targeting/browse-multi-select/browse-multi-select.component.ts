@@ -6,7 +6,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 @Component({
   selector:    'browse-multi-select',
   templateUrl: 'browse-multi-select.component.html',
-  styleUrls:   ['browse-multi-select.component.css']
+  styleUrls:   ['browse-multi-select.component.scss']
 })
 export class BrowseMultiSelectComponent implements AfterViewInit {
 

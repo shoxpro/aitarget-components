@@ -5,7 +5,7 @@ import { Directive, ElementRef, OnInit, OnDestroy, Input } from '@angular/core';
 })
 export class AppendToDirective implements OnInit, OnDestroy {
 
-  @Input() appendTo: string  = 'body';
+  @Input() appendTo: string;
   @Input() showVeil: boolean = false;
 
   element: HTMLElement;
@@ -19,9 +19,14 @@ export class AppendToDirective implements OnInit, OnDestroy {
     if (this.veil) {
       this.veil.remove();
     }
+    setTimeout(() => this.element.remove());
   }
 
   ngOnInit () {
+    if (!this.appendTo) {
+      return;
+    }
+
     const targetElement       = <HTMLElement>window.document.querySelector(this.appendTo);
     const appendToElementRect = targetElement.getBoundingClientRect();
     const currentRect         = this.element.getBoundingClientRect();
