@@ -1,15 +1,16 @@
 .detailed-targeting-info__content {
   position:      absolute;
-  right:         -230px;
-  bottom:        0;
+  left:          -230px;
+  bottom:        1px;
+  transform:     translateY(100%);
   z-index:       10;
   box-sizing:    border-box;
   padding:       8px;
   width:         230px;
-  height:        232px;
+  height:        auto;
   border:        1px solid #bdc7d8;
-  border-left:   none;
-  border-radius: 0 3px 3px 0;
+  border-right:  none;
+  border-radius: 3px 0 0 3px;
   background:    #ffffff;
 }
 
