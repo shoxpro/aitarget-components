@@ -52,7 +52,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit, OnDe
     let alreadyAdded: boolean = Boolean(selectedItemsFiltered.length);
 
     if (!alreadyAdded) {
-      selectedItems.push(item);
+      selectedItems.unshift(item);
     }
 
     this.detailedTargetingInputService.setTerm('');

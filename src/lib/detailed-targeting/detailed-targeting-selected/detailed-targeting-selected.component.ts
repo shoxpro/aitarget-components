@@ -104,6 +104,7 @@ export class DetailedTargetingSelectedComponent implements OnInit, OnDestroy {
         .subscribe((structuredSelectedItems) => {
           this.structuredSelectedItems = structuredSelectedItems;
           this.changeDetectorRef.markForCheck();
+          this.changeDetectorRef.detectChanges();
         });
   }
 

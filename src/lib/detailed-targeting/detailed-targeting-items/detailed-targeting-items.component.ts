@@ -26,7 +26,7 @@ export class DetailedTargetingItemsComponent {
     let alreadyAdded: boolean = Boolean(selectedItemsFiltered.length);
 
     if (!alreadyAdded) {
-      selectedItems.push(item);
+      selectedItems.unshift(item);
     }
 
     this.detailedTargetingSelectedService.updateSelected(selectedItems);
