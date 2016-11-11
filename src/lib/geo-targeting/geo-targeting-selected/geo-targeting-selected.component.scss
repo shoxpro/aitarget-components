@@ -44,9 +44,11 @@
 .geo-targeting-selected__group-title {
   position:        relative;
   display:         flex;
-  padding:         6px 0 6px 6px;
+  padding:         4px 0 4px 6px;
   justify-content: space-between;
   align-content:   center;
+  min-height:      26px;
+  box-sizing:      border-box;
 }
 
 .geo-targeting-selected__group-title .geo-targeting-selected__group-name {

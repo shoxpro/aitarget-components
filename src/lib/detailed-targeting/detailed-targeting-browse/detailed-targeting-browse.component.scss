@@ -1,4 +1,5 @@
 .detailed-targeting-browse-wrapper {
+  position:      absolute;
   display:       block;
   overflow:      hidden;
   box-sizing:    border-box;
@@ -8,6 +9,7 @@
   border-top:    none;
   border-radius: 0 0 3px 3px;
   box-shadow:    0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index:       1000;
 }
 
 .detailed-targeting-browse-wrapper[hidden] {
@@ -20,11 +22,11 @@
   display:    table;
   width:      200%;
   background: #ffffff;
-  transition: right 0.5s;
+  transition: all 0.5s;
 }
 
 .detailed-targeting-browse_search-visible {
-  right: 100%;
+  left: -100%;
 }
 
 .detailed-targeting-browse-wrapper_active-info {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { DetailedTargetingDropdownSuggestedService } from './detailed-targeting-dropdown-suggested.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
@@ -7,6 +7,7 @@ import { DetailedTargetingModeService } from '../detailed-targeting-mode/detaile
 import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-targeting-api.service';
 import { DetailedTargetingInputService } from '../detailed-targeting-input/detailed-targeting-input.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { Subject } from 'rxjs';
 
 @Component({
   selector:        'detailed-targeting-dropdown-suggested',
@@ -15,20 +16,13 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
+export class DetailedTargetingDropdownSuggestedComponent implements OnInit, OnDestroy {
+
+  destroy$ = new Subject();
 
   items: DetailedTargetingItem[];
   mode;
   activeInfo;
-
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.ref.detach();
-    this.ref.markForCheck();
-    this.ref.detectChanges();
-  }
 
   suggest (targetingList: Array<Object> = []) {
     this.detailedTargetingApiService.suggest(targetingList);
@@ -41,7 +35,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
                private detailedTargetingApiService: DetailedTargetingApiService,
                private detailedTargetingInputService: DetailedTargetingInputService,
                private translateService: TranslateService,
-               private ref: ChangeDetectorRef) {
+               private changeDetectorRef: ChangeDetectorRef) {
   }
 
   setDropdownInfoItem (item: DetailedTargetingItem) {
@@ -58,7 +52,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
     let alreadyAdded: boolean = Boolean(selectedItemsFiltered.length);
 
     if (!alreadyAdded) {
-      selectedItems.push(item);
+      selectedItems.unshift(item);
     }
 
     this.detailedTargetingInputService.setTerm('');
@@ -66,23 +60,32 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
     this.detailedTargetingSelectedService.updateSelected(selectedItems);
   }
 
+  ngOnDestroy () {
+    this.destroy$.next();
+  }
+
   ngOnInit () {
-    this.detailedTargetingDropdownSuggestedService.items.subscribe(items => {
-      this.items = items;
+    this.detailedTargetingDropdownSuggestedService.items
+        .takeUntil(this.destroy$)
+        .subscribe(items => {
+          this.items = items;
 
-      this.updateTemplate();
-    });
+          this.changeDetectorRef.markForCheck();
+        });
 
-    this.detailedTargetingModeService.mode.subscribe((mode: string) => {
-      this.mode = mode;
+    this.detailedTargetingModeService.mode
+        .takeUntil(this.destroy$)
+        .subscribe((mode: string) => {
+          this.mode = mode;
 
-      this.updateTemplate();
-    });
+          this.changeDetectorRef.markForCheck();
+        });
 
     /**
      * Load suggested items when list of selected items changes
      */
     this.detailedTargetingSelectedService.items
+        .takeUntil(this.destroy$)
         .filter(items => items.length > 0)
         .map((items: DetailedTargetingItem[]) => {
           return items.map(item => {
@@ -98,16 +101,18 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
           }
           this.suggest(targetingList);
 
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     /**
      * Indicate that info is open. Needed to set proper border-radius to dropdown.
      */
-    this.detailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
-      this.activeInfo = Boolean(item);
-      this.updateTemplate();
-    });
+    this.detailedTargetingInfoService.item
+        .takeUntil(this.destroy$)
+        .subscribe((item: DetailedTargetingItem) => {
+          this.activeInfo = Boolean(item);
+          this.changeDetectorRef.markForCheck();
+        });
 
     /**
      * Load suggestions on first init
@@ -117,9 +122,11 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit {
     /**
      * Load suggestions when language changes
      */
-    this.translateService.onLangChange.subscribe(() => {
-      this.detailedTargetingApiService.suggest();
-    });
+    this.translateService.onLangChange
+        .takeUntil(this.destroy$)
+        .subscribe(() => {
+          this.detailedTargetingApiService.suggest();
+        });
   }
 
 }

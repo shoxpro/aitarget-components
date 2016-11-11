@@ -1,5 +1,5 @@
 /* tslint:disable:max-line-length */
-import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef, OnDestroy } from '@angular/core';
 import { TargetingSpecService } from '../targeting/targeting-spec.service';
 import { DetailedTargetingSelectedService } from './detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingApiService } from './detailed-targeting-api/detailed-targeting-api.service';
@@ -14,6 +14,7 @@ import { DetailedTargetingDropdownBrowseService } from './detailed-targeting-dro
 import { DetailedTargetingInputService } from './detailed-targeting-input/detailed-targeting-input.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { DetailedTargetingSearchService } from './detailed-targeting-search/detailed-targeting-search.service';
+import { Subject } from 'rxjs';
 /* tslint:enable:max-line-length */
 
 @Component({
@@ -28,7 +29,9 @@ import { DetailedTargetingSearchService } from './detailed-targeting-search/deta
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetailedTargetingComponent implements OnInit {
+export class DetailedTargetingComponent implements OnInit, OnDestroy {
+  destroy$ = new Subject();
+
   _defaultLang: string = 'en_US';
   _lang: string        = this._defaultLang;
 
@@ -88,6 +91,10 @@ export class DetailedTargetingComponent implements OnInit {
     }
   };
 
+  ngOnDestroy () {
+    this.destroy$.next();
+  }
+
   ngOnInit () {
     if (this.adaccountId) {
       this.detailedTargetingApiService.setAdaccount(this.adaccountId);
@@ -118,7 +125,8 @@ export class DetailedTargetingComponent implements OnInit {
      * Update global Targeting spec when detailedTargetingSpec changes
      */
     this.detailedTargetingService.spec
-    // Skip first initialization subject and second with passed spec
+        .takeUntil(this.destroy$)
+        // Skip first initialization subject and second with passed spec
         .skip(2)
         .subscribe((detailedTargetingSpec: DetailedTargetingSpec) => {
           // noinspection TypeScriptUnresolvedFunction
@@ -131,7 +139,8 @@ export class DetailedTargetingComponent implements OnInit {
      * Trigger onchange if global Targeting spec changed
      */
     this.targetingSpecService.spec
-    // Skip first initialization subject and second with passed spec
+        .takeUntil(this.destroy$)
+        // Skip first initialization subject and second with passed spec
         .skip(1)
         .subscribe((spec: TargetingSpec) => {
           this.onChange(spec);
@@ -139,17 +148,19 @@ export class DetailedTargetingComponent implements OnInit {
 
     /**
      * Bind/unbind different events depending on detailed-component mode.
-     * Mode reflects component's current state.
+     * Mode changeDetectorReflects component's current state.
      */
-    this.detailedTargetingModeService.mode.subscribe((mode: string) => {
-      // Process body clicks in order to close element if clicked outside and element
-      window.document.body.removeEventListener('click', this.processOutsideClick);
-      window.document.body.removeEventListener('keydown', this.processKeydown);
-      if (mode) {
-        window.document.body.addEventListener('click', this.processOutsideClick);
-        window.document.body.addEventListener('keydown', this.processKeydown);
-      }
-    });
+    this.detailedTargetingModeService.mode
+        .takeUntil(this.destroy$)
+        .subscribe((mode: string) => {
+          // Process body clicks in order to close element if clicked outside and element
+          window.document.body.removeEventListener('click', this.processOutsideClick);
+          window.document.body.removeEventListener('keydown', this.processKeydown);
+          if (mode) {
+            window.document.body.addEventListener('click', this.processOutsideClick);
+            window.document.body.addEventListener('keydown', this.processKeydown);
+          }
+        });
   }
 
 }

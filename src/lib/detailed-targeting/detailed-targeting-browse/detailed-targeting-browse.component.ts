@@ -3,6 +3,7 @@ import { DetailedTargetingModeService } from '../detailed-targeting-mode/detaile
 import { DetailedTargetingSearchService } from '../detailed-targeting-search/detailed-targeting-search.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector:    'detailed-targeting-browse',
@@ -10,52 +11,48 @@ import { DetailedTargetingInfoService } from '../detailed-targeting-info/detaile
   styleUrls:   ['./detailed-targeting-browse.component.scss']
 })
 export class DetailedTargetingBrowseComponent implements OnInit, OnDestroy {
+  destroy$ = new Subject();
+
   mode;
   isVisible;
-  subscriptions = [];
   activeInfo;
-
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.ref.markForCheck();
-    this.ref.detectChanges();
-  }
 
   constructor (private detailedTargetingModeService: DetailedTargetingModeService,
                private detailedTargetingSearchService: DetailedTargetingSearchService,
                private detailedTargetingInfoService: DetailedTargetingInfoService,
-               private ref: ChangeDetectorRef) { }
+               private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnDestroy () {
-    // Unsubscribe from all Observables
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
+    this.destroy$.next();
   }
 
   ngOnInit () {
     /**
      * Toggle mode if changed
      */
-    this.subscriptions.push(this.detailedTargetingModeService.mode.subscribe((mode: string) => {
-      this.mode = mode;
-      this.updateTemplate();
-    }));
+    this.detailedTargetingModeService.mode
+        .takeUntil(this.destroy$)
+        .subscribe((mode: string) => {
+          this.mode = mode;
+          this.changeDetectorRef.markForCheck();
+        });
 
-    this.subscriptions.push(this.detailedTargetingSearchService.data.subscribe((data) => {
-      this.isVisible = data.isVisible;
-      this.updateTemplate();
-    }));
+    this.detailedTargetingSearchService.data
+        .takeUntil(this.destroy$)
+        .subscribe((data) => {
+          this.isVisible = data.isVisible;
+          this.changeDetectorRef.markForCheck();
+        });
 
     /**
      * Indicate that info is open. Needed to set proper border-radius to dropdown.
      */
-    this.subscriptions.push(this.detailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
-      this.activeInfo = Boolean(item);
-      this.updateTemplate();
-    }));
+    this.detailedTargetingInfoService.item
+        .takeUntil(this.destroy$)
+        .subscribe((item: DetailedTargetingItem) => {
+          this.activeInfo = Boolean(item);
+          this.changeDetectorRef.markForCheck();
+        });
   }
 
 }

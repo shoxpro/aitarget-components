@@ -10,24 +10,17 @@ import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
-  subscriptions = [];
-  _term         = new Subject();
-  term          = this._term.asObservable();
+  destroy$ = new Subject();
+
+  _term = new Subject();
+  term  = this._term.asObservable();
   items;
   type;
-
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.ref.markForCheck();
-    this.ref.detectChanges();
-  }
 
   constructor (private detailedTargetingSearchService: DetailedTargetingSearchService,
                private detailedTargetingApiService: DetailedTargetingApiService,
                private elementRef: ElementRef,
-               private ref: ChangeDetectorRef) {
+               private changeDetectorRef: ChangeDetectorRef) {
   }
 
   closeSearch = () => {
@@ -43,31 +36,29 @@ export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy () {
-    // Unsubscribe from all Observables
-    this.subscriptions.forEach((subscription) => {
-      subscription.unsubscribe();
-    });
+    this.destroy$.next();
   }
 
   ngOnInit () {
-    this.subscriptions.push(
-      this.detailedTargetingSearchService.data.subscribe((data) => {
-        this.type = data.type;
+    this.detailedTargetingSearchService.data
+        .takeUntil(this.destroy$)
+        .subscribe((data) => {
+          this.type = data.type;
 
-        if (data.isVisible) {
-          let elm     = this.elementRef.nativeElement;
-          let input   = elm.querySelector('input');
-          input.value = null;
-          input.focus();
-        }
+          if (data.isVisible) {
+            let elm     = this.elementRef.nativeElement;
+            let input   = elm.querySelector('input');
+            input.value = null;
+            input.focus();
+          }
 
-        this.items = Observable.of(null);
+          this.items = Observable.of(null);
 
-        this.updateTemplate();
-      })
-    );
+          this.changeDetectorRef.markForCheck();
+        });
 
     this.term
+        .takeUntil(this.destroy$)
         .debounceTime(500)
         .distinctUntilChanged()
         .subscribe((value: string) => {
@@ -78,7 +69,7 @@ export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
             this.items = Observable.of(null);
           }
 
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
   }
 

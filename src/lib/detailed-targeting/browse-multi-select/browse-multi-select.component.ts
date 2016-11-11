@@ -1,14 +1,17 @@
-import { Component, AfterViewInit, Input, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, Input, ElementRef, OnDestroy } from '@angular/core';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { Subject } from 'rxjs';
 
 @Component({
   selector:    'browse-multi-select',
   templateUrl: 'browse-multi-select.component.html',
   styleUrls:   ['browse-multi-select.component.scss']
 })
-export class BrowseMultiSelectComponent implements AfterViewInit {
+export class BrowseMultiSelectComponent implements AfterViewInit, OnDestroy {
+
+  destroy$ = new Subject();
 
   el: HTMLElement;
 
@@ -70,9 +73,15 @@ export class BrowseMultiSelectComponent implements AfterViewInit {
     }
   }
 
+  ngOnDestroy () {
+    this.destroy$.next();
+  }
+
   ngAfterViewInit () {
-    this.detailedTargetingSelectedService.items.subscribe(() => {
-      this.checkState();
-    });
+    this.detailedTargetingSelectedService.items
+        .takeUntil(this.destroy$)
+        .subscribe(() => {
+          this.checkState();
+        });
   }
 }

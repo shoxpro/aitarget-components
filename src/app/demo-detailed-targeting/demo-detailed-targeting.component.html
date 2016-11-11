@@ -11,12 +11,13 @@
           (click)="showSpec = !showSpec">Show Spec</button>
 </div>
 
-<detailed-targeting
-  *ngIf="!hideDetailedTargeting"
-  [spec]="spec"
-  [onChange]="onChange"
-  [adaccountId]="'act_944874195534529'"
-  [lang]="lang"></detailed-targeting>
-
+<div class="detailed-targeting-wrapper">
+  <detailed-targeting
+    *ngIf="!hideDetailedTargeting"
+    [spec]="spec"
+    [onChange]="onChange"
+    [adaccountId]="'act_944874195534529'"
+    [lang]="lang"></detailed-targeting>
+</div>
 <pre class="demo-detailed-targeting__spec"
      *ngIf="showSpec">{{ spec | json}}</pre>
