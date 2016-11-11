@@ -1,8 +1,9 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from './detailed-targeting-info.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { TypeToHumanPipe } from '../type-to-human.pipe';
+import { Subject } from 'rxjs';
 
 @Component({
   selector:        'detailed-targeting-info',
@@ -11,7 +12,9 @@ import { TypeToHumanPipe } from '../type-to-human.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class DetailedTargetingInfoComponent implements OnInit {
+export class DetailedTargetingInfoComponent implements OnInit, OnDestroy {
+
+  destroy$ = new Subject();
 
   item: DetailedTargetingItem;
 
@@ -46,11 +49,17 @@ export class DetailedTargetingInfoComponent implements OnInit {
     return description;
   }
 
+  ngOnDestroy () {
+    this.destroy$.next();
+  }
+
   ngOnInit () {
-    this.detailedTargetingInfoService.item.subscribe((item: DetailedTargetingItem) => {
-      this.item = item;
-      this.updateTemplate();
-    });
+    this.detailedTargetingInfoService.item
+        .takeUntil(this.destroy$)
+        .subscribe((item: DetailedTargetingItem) => {
+          this.item = item;
+          this.updateTemplate();
+        });
   }
 
 }

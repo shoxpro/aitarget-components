@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingInfoService } from '../detailed-targeting-info/detailed-targeting-info.service';
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
@@ -8,7 +8,7 @@ import { DetailedTargetingSelectedService } from '../detailed-targeting-selected
   templateUrl: './detailed-targeting-items.component.html',
   styleUrls:   ['./detailed-targeting-items.component.scss']
 })
-export class DetailedTargetingItemsComponent implements OnInit {
+export class DetailedTargetingItemsComponent {
 
   @Input('items') items: Array<DetailedTargetingItem> = [];
 
@@ -34,8 +34,4 @@ export class DetailedTargetingItemsComponent implements OnInit {
 
   constructor (private detailedTargetingInfoService: DetailedTargetingInfoService,
                private detailedTargetingSelectedService: DetailedTargetingSelectedService) { }
-
-  ngOnInit () {
-  }
-
 }

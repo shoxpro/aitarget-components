@@ -1,11 +1,12 @@
 /* tslint:disable:max-line-length */
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { DetailedTargetingSelectedService } from './detailed-targeting-selected.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingDropdownBrowseService } from '../detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
 import { DetailedTargetingService } from '../detailed-targeting.service';
 import { DetailedTargetingSearchService } from '../detailed-targeting-search/detailed-targeting-search.service';
+import { Subject } from 'rxjs';
 /* tslint:enable:max-line-length */
 
 @Component({
@@ -14,7 +15,9 @@ import { DetailedTargetingSearchService } from '../detailed-targeting-search/det
   styleUrls:       ['detailed-targeting-selected.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetailedTargetingSelectedComponent implements OnInit {
+export class DetailedTargetingSelectedComponent implements OnInit, OnDestroy {
+
+  destroy$ = new Subject();
 
   items: DetailedTargetingItem[];
 
@@ -92,14 +95,20 @@ export class DetailedTargetingSelectedComponent implements OnInit {
     this.updateTemplate();
   }
 
+  ngOnDestroy () {
+    this.destroy$.next();
+  }
+
   ngOnInit () {
     this.detailedTargetingSelectedService.items
+        .takeUntil(this.destroy$)
         .subscribe((items: DetailedTargetingItem[]) => {
           this.items = items;
           this.detailedTargetingService.updateWithSelectedItems(this.items);
         });
 
     this.detailedTargetingSelectedService.items
+        .takeUntil(this.destroy$)
         .map(this.detailedTargetingSelectedService.structureSelectedItems)
         .subscribe((structuredSelectedItems) => {
           this.structuredSelectedItems = structuredSelectedItems;

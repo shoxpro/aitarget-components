@@ -87,7 +87,8 @@ export class DetailedTargetingApiService {
       });
     });
 
-    return _response.asObservable();
+    return _response.asObservable()
+                    .take(1);
   };
 
   filteredSearch (q: string, limitType: string, adaccountId = this.adaccountId) {
@@ -103,7 +104,8 @@ export class DetailedTargetingApiService {
       });
     });
 
-    return _response.asObservable();
+    return _response.asObservable()
+                    .take(1);
   };
 
 }

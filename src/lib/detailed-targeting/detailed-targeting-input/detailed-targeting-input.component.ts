@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { DetailedTargetingApiService } from '../detailed-targeting-api/detailed-targeting-api.service';
 import { DetailedTargetingModeService } from '../detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingInputService } from './detailed-targeting-input.service';
@@ -6,6 +6,7 @@ import { DetailedTargetingInfoService } from '../detailed-targeting-info/detaile
 import { DetailedTargetingSelectedService } from '../detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingItem } from '../detailed-targeting-item';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { Subject } from 'rxjs';
 
 @Component({
   selector:        'detailed-targeting-input',
@@ -13,7 +14,10 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
   styleUrls:       ['detailed-targeting-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetailedTargetingInputComponent implements OnInit {
+export class DetailedTargetingInputComponent implements OnInit, OnDestroy {
+
+  destroy$ = new Subject();
+
   term;
   mode;
   hasFocus;
@@ -66,8 +70,13 @@ export class DetailedTargetingInputComponent implements OnInit {
                private ref: ChangeDetectorRef) {
   }
 
+  ngOnDestroy () {
+    this.destroy$.next();
+  }
+
   ngOnInit () {
     this.detailedTargetingInputService.term
+        .takeUntil(this.destroy$)
         .debounceTime(500)
         .distinctUntilChanged()
         .subscribe((term: string) => {
@@ -84,16 +93,19 @@ export class DetailedTargetingInputComponent implements OnInit {
         });
 
     this.detailedTargetingModeService.mode
+        .takeUntil(this.destroy$)
         .distinctUntilChanged()
         .subscribe(() => {
           this.detailedTargetingInputService.setTerm('');
         });
 
-    this.detailedTargetingModeService.mode.subscribe((mode: string) => {
-      this.mode = mode;
+    this.detailedTargetingModeService.mode
+        .takeUntil(this.destroy$)
+        .subscribe((mode: string) => {
+          this.mode = mode;
 
-      this.updateTemplate();
-    });
+          this.updateTemplate();
+        });
 
     this.detailedTargetingSelectedService.items
         .map(this.detailedTargetingSelectedService.structureSelectedItems)
@@ -103,15 +115,18 @@ export class DetailedTargetingInputComponent implements OnInit {
         });
 
     this.detailedTargetingInfoService.item
+        .takeUntil(this.destroy$)
         .debounceTime(50)
         .subscribe((item: DetailedTargetingItem) => {
           this.activeInfo = Boolean(item);
           this.updateTemplate();
         });
 
-    this.translateService.onLangChange.subscribe(() => {
-      this.updateTemplate();
-    });
+    this.translateService.onLangChange
+        .takeUntil(this.destroy$)
+        .subscribe(() => {
+          this.updateTemplate();
+        });
   }
 
 }
