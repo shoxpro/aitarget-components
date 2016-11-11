@@ -17,18 +17,10 @@ export class DetailedTargetingBrowseComponent implements OnInit, OnDestroy {
   isVisible;
   activeInfo;
 
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.ref.markForCheck();
-    this.ref.detectChanges();
-  }
-
   constructor (private detailedTargetingModeService: DetailedTargetingModeService,
                private detailedTargetingSearchService: DetailedTargetingSearchService,
                private detailedTargetingInfoService: DetailedTargetingInfoService,
-               private ref: ChangeDetectorRef) { }
+               private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnDestroy () {
     this.destroy$.next();
@@ -42,14 +34,14 @@ export class DetailedTargetingBrowseComponent implements OnInit, OnDestroy {
         .takeUntil(this.destroy$)
         .subscribe((mode: string) => {
           this.mode = mode;
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     this.detailedTargetingSearchService.data
         .takeUntil(this.destroy$)
         .subscribe((data) => {
           this.isVisible = data.isVisible;
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     /**
@@ -59,7 +51,7 @@ export class DetailedTargetingBrowseComponent implements OnInit, OnDestroy {
         .takeUntil(this.destroy$)
         .subscribe((item: DetailedTargetingItem) => {
           this.activeInfo = Boolean(item);
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
   }
 

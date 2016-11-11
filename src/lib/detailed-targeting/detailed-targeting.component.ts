@@ -148,7 +148,7 @@ export class DetailedTargetingComponent implements OnInit, OnDestroy {
 
     /**
      * Bind/unbind different events depending on detailed-component mode.
-     * Mode reflects component's current state.
+     * Mode changeDetectorReflects component's current state.
      */
     this.detailedTargetingModeService.mode
         .takeUntil(this.destroy$)

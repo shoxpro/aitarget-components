@@ -24,15 +24,6 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit, OnDe
   mode;
   activeInfo;
 
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.ref.detach();
-    this.ref.markForCheck();
-    this.ref.detectChanges();
-  }
-
   suggest (targetingList: Array<Object> = []) {
     this.detailedTargetingApiService.suggest(targetingList);
   }
@@ -44,7 +35,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit, OnDe
                private detailedTargetingApiService: DetailedTargetingApiService,
                private detailedTargetingInputService: DetailedTargetingInputService,
                private translateService: TranslateService,
-               private ref: ChangeDetectorRef) {
+               private changeDetectorRef: ChangeDetectorRef) {
   }
 
   setDropdownInfoItem (item: DetailedTargetingItem) {
@@ -79,7 +70,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit, OnDe
         .subscribe(items => {
           this.items = items;
 
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     this.detailedTargetingModeService.mode
@@ -87,7 +78,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit, OnDe
         .subscribe((mode: string) => {
           this.mode = mode;
 
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     /**
@@ -110,7 +101,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit, OnDe
           }
           this.suggest(targetingList);
 
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     /**
@@ -120,7 +111,7 @@ export class DetailedTargetingDropdownSuggestedComponent implements OnInit, OnDe
         .takeUntil(this.destroy$)
         .subscribe((item: DetailedTargetingItem) => {
           this.activeInfo = Boolean(item);
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     /**

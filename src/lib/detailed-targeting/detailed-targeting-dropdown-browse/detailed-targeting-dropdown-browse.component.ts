@@ -29,19 +29,11 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
                private elementRef: ElementRef,
                private translateService: TranslateService,
                private detailedTargetingSearchService: DetailedTargetingSearchService,
-               private ref: ChangeDetectorRef) {
+               private changeDetectorRef: ChangeDetectorRef) {
     this.openItems = this.detailedTargetingDropdownBrowseService.getOpenItems();
   }
 
   combinedId = (item) => [item.type, item.id].join('.');
-
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.ref.markForCheck();
-    this.ref.detectChanges();
-  }
 
   ngOnDestroy () {
     this.destroy$.next();
@@ -225,7 +217,7 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
 
           this.toggleSelected();
 
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     /**
@@ -239,17 +231,17 @@ export class DetailedTargetingDropdownBrowseComponent implements OnInit, OnDestr
 
           this.toggleSelected();
 
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     /**
-     * If openItems change reflect these changes it in a template.
+     * If openItems change changeDetectorReflect these changes it in a template.
      */
     this.detailedTargetingDropdownBrowseService.openItems
         .takeUntil(this.destroy$)
         .subscribe((openItems) => {
           this.openItems = openItems;
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
           setTimeout(() => {
             this.scrollTo(openItems._scrollTo);
           });

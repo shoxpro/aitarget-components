@@ -17,18 +17,10 @@ export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
   items;
   type;
 
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.ref.markForCheck();
-    this.ref.detectChanges();
-  }
-
   constructor (private detailedTargetingSearchService: DetailedTargetingSearchService,
                private detailedTargetingApiService: DetailedTargetingApiService,
                private elementRef: ElementRef,
-               private ref: ChangeDetectorRef) {
+               private changeDetectorRef: ChangeDetectorRef) {
   }
 
   closeSearch = () => {
@@ -62,7 +54,7 @@ export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
 
           this.items = Observable.of(null);
 
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     this.term
@@ -77,7 +69,7 @@ export class DetailedTargetingSearchComponent implements OnInit, OnDestroy {
             this.items = Observable.of(null);
           }
 
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
   }
 

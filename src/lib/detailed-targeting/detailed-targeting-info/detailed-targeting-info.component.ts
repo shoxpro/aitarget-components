@@ -18,18 +18,9 @@ export class DetailedTargetingInfoComponent implements OnInit, OnDestroy {
 
   item: DetailedTargetingItem;
 
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.ref.detach();
-    this.ref.markForCheck();
-    this.ref.detectChanges();
-  }
-
   constructor (private detailedTargetingInfoService: DetailedTargetingInfoService,
                private translateService: TranslateService,
-               private ref: ChangeDetectorRef) {}
+               private changeDetectorRef: ChangeDetectorRef) {}
 
   getDescription (item: DetailedTargetingItem) {
     let description: string;
@@ -58,7 +49,7 @@ export class DetailedTargetingInfoComponent implements OnInit, OnDestroy {
         .takeUntil(this.destroy$)
         .subscribe((item: DetailedTargetingItem) => {
           this.item = item;
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
   }
 

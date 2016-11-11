@@ -25,18 +25,6 @@ export class DetailedTargetingInputComponent implements OnInit, OnDestroy {
   activeInfo;
 
   /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    // TODO: rethink this timeout, but without it it throws "Attempt to use a destroyed view: detectChanges"
-    setTimeout(() => {
-      this.ref.detach();
-      this.ref.markForCheck();
-      this.ref.detectChanges();
-    }, 0);
-  }
-
-  /**
    * On key up handler.
    * @param term
    */
@@ -50,7 +38,7 @@ export class DetailedTargetingInputComponent implements OnInit, OnDestroy {
   focus () {
     this.hasFocus = true;
     this.detailedTargetingModeService.set('suggested');
-    this.updateTemplate();
+    this.changeDetectorRef.markForCheck();
   }
 
   /**
@@ -58,7 +46,7 @@ export class DetailedTargetingInputComponent implements OnInit, OnDestroy {
    */
   blur () {
     this.hasFocus = false;
-    this.updateTemplate();
+    this.changeDetectorRef.markForCheck();
   }
 
   constructor (private detailedTargetingApiService: DetailedTargetingApiService,
@@ -67,7 +55,7 @@ export class DetailedTargetingInputComponent implements OnInit, OnDestroy {
                private detailedTargetingInfoService: DetailedTargetingInfoService,
                private detailedTargetingSelectedService: DetailedTargetingSelectedService,
                private translateService: TranslateService,
-               private ref: ChangeDetectorRef) {
+               private changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnDestroy () {
@@ -89,7 +77,7 @@ export class DetailedTargetingInputComponent implements OnInit, OnDestroy {
             this.detailedTargetingApiService.search(term);
           }
 
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     this.detailedTargetingModeService.mode
@@ -104,14 +92,14 @@ export class DetailedTargetingInputComponent implements OnInit, OnDestroy {
         .subscribe((mode: string) => {
           this.mode = mode;
 
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     this.detailedTargetingSelectedService.items
         .map(this.detailedTargetingSelectedService.structureSelectedItems)
         .subscribe((structuredSelectedItems) => {
           this.structuredSelectedItems = structuredSelectedItems;
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     this.detailedTargetingInfoService.item
@@ -119,13 +107,13 @@ export class DetailedTargetingInputComponent implements OnInit, OnDestroy {
         .debounceTime(50)
         .subscribe((item: DetailedTargetingItem) => {
           this.activeInfo = Boolean(item);
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
 
     this.translateService.onLangChange
         .takeUntil(this.destroy$)
         .subscribe(() => {
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
   }
 

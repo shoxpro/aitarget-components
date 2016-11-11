@@ -24,21 +24,12 @@ export class DetailedTargetingSelectedComponent implements OnInit, OnDestroy {
   structuredSelectedItems;
   groupHovered: Object = {};
 
-  /**
-   * Trigger change detection mechanism that updates component's template
-   */
-  updateTemplate () {
-    this.ref.detach();
-    this.ref.markForCheck();
-    this.ref.detectChanges();
-  }
-
   constructor (private detailedTargetingService: DetailedTargetingService,
                private detailedTargetingDropdownBrowseService: DetailedTargetingDropdownBrowseService,
                private detailedTargetingModeService: DetailedTargetingModeService,
                private detailedTargetingSelectedService: DetailedTargetingSelectedService,
                private detailedTargetingSearchService: DetailedTargetingSearchService,
-               private ref: ChangeDetectorRef) {
+               private changeDetectorRef: ChangeDetectorRef) {
   }
 
   /**
@@ -92,7 +83,7 @@ export class DetailedTargetingSelectedComponent implements OnInit, OnDestroy {
 
   hoverGroup (key, isHovered) {
     this.groupHovered[key] = isHovered;
-    this.updateTemplate();
+    this.changeDetectorRef.markForCheck();
   }
 
   ngOnDestroy () {
@@ -112,7 +103,7 @@ export class DetailedTargetingSelectedComponent implements OnInit, OnDestroy {
         .map(this.detailedTargetingSelectedService.structureSelectedItems)
         .subscribe((structuredSelectedItems) => {
           this.structuredSelectedItems = structuredSelectedItems;
-          this.updateTemplate();
+          this.changeDetectorRef.markForCheck();
         });
   }
 
