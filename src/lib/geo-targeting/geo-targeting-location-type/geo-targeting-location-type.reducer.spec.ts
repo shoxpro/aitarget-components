@@ -4,6 +4,7 @@ import {
   geoTargetingLocationTypeInitial, geoTargetingLocationTypeReducer, LocationType
 } from './geo-targeting-location-type.reducer';
 import { TranslateService } from 'ng2-translate/ng2-translate';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 let deepFreeze = require('deep-freeze');
 
@@ -43,6 +44,7 @@ describe(`geoTargetingLocationTypeReducer`, () => {
     TestBed.configureTestingModule({
       providers: [
         GeoTargetingLocationTypeActions,
+        {provide: GeoTargetingIdService, useValue: {id$: {getValue () {}}}},
         {provide: TranslateService, useValue: {instant: (key) => key}}
       ]
     });

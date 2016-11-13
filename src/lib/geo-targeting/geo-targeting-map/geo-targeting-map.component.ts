@@ -32,10 +32,11 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
                private geoTargetingMapService: GeoTargetingMapService,
                private translateService: TranslateService,
                private componentsHelperService: ComponentsHelperService,
+               private geoTargetingSelectedService: GeoTargetingSelectedService,
                private changeDetectorRef: ChangeDetectorRef,
                private viewContainerRef: ViewContainerRef) {
     this.componentsHelperService.setRootViewContainerRef(viewContainerRef);
-    this.modelSelected$ = this._store.let(GeoTargetingSelectedService.getModel);
+    this.modelSelected$ = this._store.let(this.geoTargetingSelectedService.getModel);
   }
 
   ngOnDestroy () {

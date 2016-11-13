@@ -3,6 +3,7 @@ import { GeoTargetingTypeActions } from './geo-targeting-type.actions';
 import { GeoTargetingTypeState } from './geo-targeting-type.interface';
 import { inject, TestBed } from '@angular/core/testing';
 import { TranslateService } from 'ng2-translate';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 let deepFreeze = require('deep-freeze');
 const types    = [
@@ -25,6 +26,7 @@ describe('geoTargetingTypeReducer', () => {
       imports:      [],
       providers:    [
         GeoTargetingTypeActions,
+        {provide: GeoTargetingIdService, useValue: {id$: {getValue () {}}}},
         {provide: TranslateService, useValue: {instant: (key) => key}}
       ],
       declarations: []

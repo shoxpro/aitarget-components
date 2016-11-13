@@ -8,15 +8,19 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/reducers/index';
 import { GeoTargetingLocationTypeActions } from './geo-targeting-location-type.actions';
 import { LocationTypeValue } from '../../targeting/targeting-spec-geo.interface';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 @Injectable()
 export class GeoTargetingLocationTypeService {
 
   $model;
 
-  static getModel = (_store): Observable<GeoTargetingLocationTypeState> => {
+  getModel = (_store): Observable<GeoTargetingLocationTypeState> => {
     return _store.select(GEO_TARGETING_STATE_KEY)
-                 .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_LOCATION_TYPE_KEY])
+                 .map((geoTargetingState: GeoTargetingState) => {
+                   let id = this.geoTargetingIdService.id$.getValue();
+                   return geoTargetingState[id][GEO_TARGETING_LOCATION_TYPE_KEY];
+                 })
                  .distinctUntilChanged();
   };
 
@@ -31,6 +35,7 @@ export class GeoTargetingLocationTypeService {
   selectTypeByValue (selectedTypeValue: LocationTypeValue[]) {
     this.$model.take(1)
         .subscribe((model) => {
+          console.log(`model: `, model);
           let selectedType = model.types.find((type) => type.value.toString() === selectedTypeValue.toString());
           this._store.dispatch(this.geoTargetingLocationTypeActions.selectType(selectedType));
         });
@@ -45,7 +50,8 @@ export class GeoTargetingLocationTypeService {
   }
 
   constructor (private _store: Store<AppState>,
+               private geoTargetingIdService: GeoTargetingIdService,
                private geoTargetingLocationTypeActions: GeoTargetingLocationTypeActions) {
-    this.$model = this._store.let(GeoTargetingLocationTypeService.getModel);
+    this.$model = this._store.let(this.getModel);
   }
 }

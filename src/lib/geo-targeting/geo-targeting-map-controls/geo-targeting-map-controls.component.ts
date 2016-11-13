@@ -23,8 +23,9 @@ export class GeoTargetingMapControlsComponent implements OnInit, OnDestroy {
 
   constructor (private _store: Store<AppState>,
                private geoTargetingMapService: GeoTargetingMapService,
+               private geoTargetingModeService: GeoTargetingModeService,
                private changeDetectorRef: ChangeDetectorRef) {
-    this.modelMode$ = this._store.let(GeoTargetingModeService.getModel);
+    this.modelMode$ = this._store.let(this.geoTargetingModeService.getModel);
   }
 
   ngOnDestroy () {

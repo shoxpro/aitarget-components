@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { GeoTargetingType } from './geo-targeting-type.reducer';
 import { TranslateService } from 'ng2-translate';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 @Injectable()
 export class GeoTargetingTypeActions {
@@ -13,6 +14,7 @@ export class GeoTargetingTypeActions {
     return {
       type:    GeoTargetingTypeActions.SET_TRANSLATED_SEARCH_TYPES,
       payload: {
+        id:    this.geoTargetingIdService.id$.getValue(),
         types: [
           {id: 'all', name: this.translateService.instant(`geo-targeting-dropdown.all`)},
           {id: 'country', name: this.translateService.instant(`geo-targeting-dropdown.country`)},
@@ -32,16 +34,23 @@ export class GeoTargetingTypeActions {
   selectSearchType (selectedType: GeoTargetingType): Action {
     return {
       type:    GeoTargetingTypeActions.SELECT_SEARCH_TYPE,
-      payload: {selectedType}
+      payload: {
+        id:           this.geoTargetingIdService.id$.getValue(),
+        selectedType: selectedType
+      }
     };
   }
 
   toggleSearchTypeDropdown (isOpen: boolean): Action {
     return {
       type:    GeoTargetingTypeActions.TOGGLE_SEARCH_TYPE_DROPDOWN,
-      payload: {isOpen}
+      payload: {
+        id:     this.geoTargetingIdService.id$.getValue(),
+        isOpen: isOpen
+      }
     };
   }
 
-  constructor (private translateService: TranslateService) {}
+  constructor (private translateService: TranslateService,
+               private geoTargetingIdService: GeoTargetingIdService) {}
 }

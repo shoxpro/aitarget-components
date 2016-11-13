@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { LocationType } from './geo-targeting-location-type.reducer';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 @Injectable()
 export class GeoTargetingLocationTypeActions {
@@ -13,6 +14,7 @@ export class GeoTargetingLocationTypeActions {
     return {
       type:    GeoTargetingLocationTypeActions.SET_TRANSLATED_TYPES,
       payload: {
+        id:    this.geoTargetingIdService.id$.getValue(),
         types: [
           {
             id:       'all',
@@ -50,23 +52,33 @@ export class GeoTargetingLocationTypeActions {
   selectType (selectedType: LocationType) {
     return {
       type:    GeoTargetingLocationTypeActions.SELECT_TYPE,
-      payload: {selectedType}
+      payload: {
+        id:           this.geoTargetingIdService.id$.getValue(),
+        selectedType: selectedType
+      }
     };
   }
 
   showInfoForType (type: LocationType) {
     return {
       type:    GeoTargetingLocationTypeActions.SHOW_INFO_FOR_TYPE,
-      payload: {type}
+      payload: {
+        id:   this.geoTargetingIdService.id$.getValue(),
+        type: type
+      }
     };
   }
 
   toggleTypeDropdown (isOpen?: boolean) {
     return {
       type:    GeoTargetingLocationTypeActions.TOGGLE_TYPE_DROPDOWN,
-      payload: {isOpen}
+      payload: {
+        id:     this.geoTargetingIdService.id$.getValue(),
+        isOpen: isOpen
+      }
     };
   }
 
-  constructor (private translateService: TranslateService) {}
+  constructor (private translateService: TranslateService,
+               private geoTargetingIdService: GeoTargetingIdService) {}
 }

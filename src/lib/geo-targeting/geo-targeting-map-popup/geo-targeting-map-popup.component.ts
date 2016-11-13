@@ -41,7 +41,8 @@ export class GeoTargetingMapPopupComponent {
 
   constructor (private _store: Store<AppState>,
                private changeDetectorRef: ChangeDetectorRef,
+               private geoTargetingModeService: GeoTargetingModeService,
                private geoTargetingSelectedService: GeoTargetingSelectedService) {
-    this.modelMode$ = this._store.let(GeoTargetingModeService.getModel);
+    this.modelMode$ = this._store.let(this.geoTargetingModeService.getModel);
   }
 }

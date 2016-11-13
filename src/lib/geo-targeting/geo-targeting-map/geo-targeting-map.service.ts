@@ -211,7 +211,7 @@ export class GeoTargetingMapService {
             return;
           }
 
-          this._store.let(GeoTargetingModeService.getModel)
+          this._store.let(this.geoTargetingModeService.getModel)
               .take(1)
               .subscribe(
                 (model) => item.excluded = model.selectedMode.id === 'exclude'
@@ -236,6 +236,7 @@ export class GeoTargetingMapService {
                private geoTargetingInfoService: GeoTargetingInfoService,
                private geoTargetingApiService: GeoTargetingApiService,
                private componentsHelperService: ComponentsHelperService,
+               private geoTargetingModeService: GeoTargetingModeService,
                private geoTargetingSelectedService: GeoTargetingSelectedService) { }
 
 }

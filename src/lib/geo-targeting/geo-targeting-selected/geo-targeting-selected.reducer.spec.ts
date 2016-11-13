@@ -6,13 +6,18 @@ import {
 import { sortItems } from './geo-targeting-selected.constants';
 import { country, region, zip, city } from './geo-targeting-selected.mocks';
 import { SharedActions } from '../../shared/actions/index';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 let deepFreeze = require('deep-freeze');
 
 describe(`geoTargetingSelectedReducer`, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [GeoTargetingSelectedActions, SharedActions]
+      providers: [
+        GeoTargetingSelectedActions,
+        SharedActions,
+        {provide: GeoTargetingIdService, useValue: {id$: {getValue () {}}}},
+      ]
     });
   });
 

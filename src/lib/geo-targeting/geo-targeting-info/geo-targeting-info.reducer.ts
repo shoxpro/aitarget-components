@@ -24,7 +24,7 @@ export const geoTargetingInfoReducer: ActionReducer<GeoTargetingInfoState> = (st
                                                                               action: Action) => {
   switch (action.type) {
     case GeoTargetingInfoActions.SHOW_INFO:
-      return Object.assign({}, state, action.payload);
+      return Object.assign({}, state, action.payload.info);
     case GeoTargetingInfoActions.HIDE_INFO:
       return Object.assign({}, state, geoTargetingInfoInitial);
     default:

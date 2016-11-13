@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
+import { GeoTargetingIdService } from '../geo-targeting.id';
+import { Action } from '@ngrx/store';
 
 @Injectable()
 export class GeoTargetingSelectedActions {
@@ -8,33 +10,45 @@ export class GeoTargetingSelectedActions {
   static REMOVE_ITEMS = '[geo-targeting-selected] Remove Items';
   static UPDATE_ITEMS = '[geo-targeting-selected] Update Items';
 
-  addItems (items: GeoTargetingItem[]) {
+  addItems (items: GeoTargetingItem[]): Action {
     return {
       type:    GeoTargetingSelectedActions.ADD_ITEMS,
-      payload: {items}
+      payload: {
+        id:    this.geoTargetingIdService.id$.getValue(),
+        items: items
+      }
     };
   }
 
-  setItems (items: GeoTargetingItem[]) {
+  setItems (items: GeoTargetingItem[]): Action {
     return {
       type:    GeoTargetingSelectedActions.SET_ITEMS,
-      payload: {items}
+      payload: {
+        id:    this.geoTargetingIdService.id$.getValue(),
+        items: items
+      }
     };
   }
 
-  removeItems (items: GeoTargetingItem[]) {
+  removeItems (items: GeoTargetingItem[]): Action {
     return {
       type:    GeoTargetingSelectedActions.REMOVE_ITEMS,
-      payload: {items}
+      payload: {
+        id:    this.geoTargetingIdService.id$.getValue(),
+        items: items
+      }
     };
   }
 
-  updateItems (items: GeoTargetingItem[]) {
+  updateItems (items: GeoTargetingItem[]): Action {
     return {
       type:    GeoTargetingSelectedActions.UPDATE_ITEMS,
-      payload: {items}
+      payload: {
+        id:    this.geoTargetingIdService.id$.getValue(),
+        items: items
+      }
     };
   }
 
-  constructor () {}
+  constructor (private geoTargetingIdService: GeoTargetingIdService) {}
 }

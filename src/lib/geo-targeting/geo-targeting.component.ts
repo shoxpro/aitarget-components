@@ -22,20 +22,22 @@ import { GeoTargetingSelectedService } from './geo-targeting-selected/geo-target
 import { AppState } from '../../app/reducers/index';
 import { Store } from '@ngrx/store';
 import { Subject, Observable } from 'rxjs';
-import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type.service';
 import { GeoTargetingTypeActions } from './geo-targeting-type/geo-targeting-type.actions';
+import { GeoTargetingIdService } from './geo-targeting.id';
+import { GeoTargetingActions } from './geo-targeting.actions';
+import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type.service';
 
 @Component({
   selector:    'geo-targeting',
   templateUrl: './geo-targeting.component.html',
   styleUrls:   ['./geo-targeting.component.scss'],
-  providers:   [GeoTargetingService, GeoTargetingApiService, GeoTargetingDropdownService,
+  providers:   [GeoTargetingActions, GeoTargetingService, GeoTargetingApiService, GeoTargetingDropdownService,
     GeoTargetingSelectedActions, TargetingSpecService, GeoTargetingModeService,
     GeoTargetingInfoService, GeoTargetingInfoActions, GeoTargetingLocationTypeService,
-    GeoTargetingLocationTypeActions,
+    GeoTargetingLocationTypeActions, GeoTargetingTypeService,
     GeoTargetingRadiusService, GeoTargetingSelectedService,
-    GeoTargetingMapService, ComponentsHelperService, GeoTargetingTypeActions, GeoTargetingTypeService,
-    GeoTargetingSearchActions,
+    GeoTargetingMapService, ComponentsHelperService, GeoTargetingTypeActions,
+    GeoTargetingSearchActions, GeoTargetingIdService,
     GeoTargetingSearchService, GeoTargetingModeService, GeoTargetingModeActions]
 })
 export class GeoTargetingComponent implements OnInit, OnDestroy {
@@ -64,22 +66,27 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
                private translateService: TranslateService,
                private geoTargetingApiService: GeoTargetingApiService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
-               private geoTargetingTypeService: GeoTargetingLocationTypeService,
+               private geoTargetingLocationTypeService: GeoTargetingLocationTypeService,
+               private geoTargetingService: GeoTargetingService,
                private geoTargetingModeService: GeoTargetingModeService) {
     // this language will be used as a fallback when a translation isn't found in the current language
     this.translateService.setDefaultLang(this.lang);
-    this.modelSelected$ = this._store.let(GeoTargetingSelectedService.getModel);
+    this.modelSelected$ = this._store.let(this.geoTargetingSelectedService.getModel);
   }
 
   ngOnDestroy () {
     this.destroy$.next();
+    this.geoTargetingService.destroy();
   }
 
   ngOnInit () {
+
+    this.geoTargetingService.init();
+
     this.geoTargetingModeService.setTranslatedModes();
 
     if (this.spec.geo_locations && this.spec.geo_locations.location_types) {
-      this.geoTargetingTypeService.selectTypeByValue(this.spec.geo_locations.location_types);
+      this.geoTargetingLocationTypeService.selectTypeByValue(this.spec.geo_locations.location_types);
     }
     /**
      * Get geo location metadata for passed targeting spec and update selected items
@@ -97,7 +104,7 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
       this.modelSelected$
           .map(({items}) => items)
           .distinctUntilChanged(),
-      this._store.let(GeoTargetingLocationTypeService.getModel)
+      this._store.let(this.geoTargetingLocationTypeService.getModel)
           .map(({selectedType}) => selectedType)
           .filter((selectedType) => Boolean(selectedType))
           .distinctUntilChanged()

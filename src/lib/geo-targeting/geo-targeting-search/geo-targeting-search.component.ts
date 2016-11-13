@@ -57,20 +57,23 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
   }
 
   select (item) {
-    this.geoTargetingSelectedServiceNew.addItems([item]);
+    this.geoTargetingSelectedService.addItems([item]);
     this.geoTargetingSearchService.reset();
   }
 
   constructor (private _store: Store<AppState>,
                private geoTargetingSearchService: GeoTargetingSearchService,
-               private geoTargetingSelectedServiceNew: GeoTargetingSelectedService,
+               private geoTargetingSelectedService: GeoTargetingSelectedService,
+               private geoTargetingModeService: GeoTargetingModeService,
+               private geoTargetingInfoService: GeoTargetingInfoService,
+               private geoTargetingTypeService: GeoTargetingTypeService,
                private geoTargetingService: GeoTargetingService) {
-    this.model$           = this._store.let(GeoTargetingSearchService.getModel);
-    this.modelInfo$       = this._store.let(GeoTargetingInfoService.getModel);
-    this.modelMode$       = this._store.let(GeoTargetingModeService.getModel);
-    this.modelSearchType$ = this._store.let(GeoTargetingTypeService.getModel);
+    this.model$           = this._store.let(this.geoTargetingSearchService.getModel);
+    this.modelInfo$       = this._store.let(this.geoTargetingInfoService.getModel);
+    this.modelMode$       = this._store.let(this.geoTargetingModeService.getModel);
+    this.modelSearchType$ = this._store.let(this.geoTargetingTypeService.getModel);
     this.hasSelected$     = this._store
-                                .let(GeoTargetingSelectedService.getModel)
+                                .let(this.geoTargetingSelectedService.getModel)
                                 .map(({items}) => Boolean(items.length))
                                 .distinctUntilChanged();
   }

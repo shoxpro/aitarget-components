@@ -27,9 +27,10 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
                private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingSearchService: GeoTargetingSearchService,
                private geoTargetingMapService: GeoTargetingMapService,
+               private geoTargetingModeService: GeoTargetingModeService,
                private changeDetectorRef: ChangeDetectorRef) {
-    this.model$     = this._store.let(GeoTargetingSelectedService.getModel);
-    this.modelMode$ = this._store.let(GeoTargetingModeService.getModel);
+    this.model$     = this._store.let(this.geoTargetingSelectedService.getModel);
+    this.modelMode$ = this._store.let(this.geoTargetingModeService.getModel);
   }
 
   /**

@@ -6,6 +6,7 @@ import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targe
 import { Store } from '@ngrx/store';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FullNamePipe } from '../full-name.pipe';
+import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 
 describe('Component: GeoTargetingMapPopup', () => {
   beforeEach(() => {
@@ -18,6 +19,7 @@ describe('Component: GeoTargetingMapPopup', () => {
       ],
       providers:    [
         {provide: Store, useValue: {let () {}}},
+        {provide: GeoTargetingModeService, useValue: {let () {}}},
         {provide: GeoTargetingSelectedService, useValue: {}}
       ],
       schemas:      [CUSTOM_ELEMENTS_SCHEMA]

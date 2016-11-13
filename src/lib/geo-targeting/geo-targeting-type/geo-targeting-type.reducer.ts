@@ -20,7 +20,7 @@ export const geoTargetingTypeInitial: GeoTargetingTypeState = {
   isOpen:       false
 };
 
-export const GEO_TARGETING_TYPE_STATE_KEY = 'geoTargetingType';
+export const GEO_TARGETING_TYPE_KEY = 'geoTargetingType';
 
 export const geoTargetingTypeReducer: ActionReducer<GeoTargetingTypeState> = (state = geoTargetingTypeInitial,
                                                                               action: Action) => {

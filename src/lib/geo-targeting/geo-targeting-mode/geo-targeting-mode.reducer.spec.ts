@@ -2,6 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { geoTargetingModeActions, GeoTargetingModeActions } from './geo-targeting-mode.actions';
 import { geoTargetingModeInitial, geoTargetingModeReducer, GeoTargetingModeIdType } from './geo-targeting-mode.reducer';
 import { TranslateService } from 'ng2-translate';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 let deepFreeze = require('deep-freeze');
 
@@ -25,6 +26,7 @@ describe(`geoTargetingModeReducer`, () => {
     TestBed.configureTestingModule({
       providers: [
         GeoTargetingModeActions,
+        {provide: GeoTargetingIdService, useValue: {id$: {getValue () {}}}},
         {provide: TranslateService, useValue: {instant (key) { return key; }}},
       ]
     });

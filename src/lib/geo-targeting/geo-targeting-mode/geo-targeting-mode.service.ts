@@ -5,13 +5,17 @@ import { GeoTargetingModeActions } from './geo-targeting-mode.actions';
 import { GEO_TARGETING_MODE_KEY, GeoTargetingModeState, GeoTargetingModeType } from './geo-targeting-mode.reducer';
 import { GeoTargetingState, GEO_TARGETING_STATE_KEY } from '../geo-targeting.reducer';
 import { Observable } from 'rxjs';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 @Injectable()
 export class GeoTargetingModeService {
 
-  static getModel (_store): Observable<GeoTargetingModeState> {
+  getModel = (_store): Observable<GeoTargetingModeState> => {
     return _store.select(GEO_TARGETING_STATE_KEY)
-                 .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_MODE_KEY])
+                 .map((geoTargetingState: GeoTargetingState) => {
+                   let id = this.geoTargetingIdService.id$.getValue();
+                   return geoTargetingState[id][GEO_TARGETING_MODE_KEY];
+                 })
                  .distinctUntilChanged();
   };
 
@@ -28,6 +32,7 @@ export class GeoTargetingModeService {
   }
 
   constructor (private _store: Store<AppState>,
+               private geoTargetingIdService: GeoTargetingIdService,
                private geoTargetingModeActions: GeoTargetingModeActions) {}
 
 }
