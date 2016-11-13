@@ -12,9 +12,13 @@ export class GeoTargetingModeService {
 
   getModel = (_store): Observable<GeoTargetingModeState> => {
     return _store.select(GEO_TARGETING_STATE_KEY)
-                 .map((geoTargetingState: GeoTargetingState) => {
+                 .map((geoTargeting) => {
                    let id = this.geoTargetingIdService.id$.getValue();
-                   return geoTargetingState[id][GEO_TARGETING_MODE_KEY];
+                   return geoTargeting[id];
+                 })
+                 .filter((geoTargetingState: GeoTargetingState) => Boolean(geoTargetingState))
+                 .map((geoTargetingState: GeoTargetingState) => {
+                   return geoTargetingState[GEO_TARGETING_MODE_KEY];
                  })
                  .distinctUntilChanged();
   };

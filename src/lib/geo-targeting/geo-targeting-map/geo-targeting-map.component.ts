@@ -1,6 +1,6 @@
 import {
   Component, OnInit, ViewEncapsulation, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, ViewContainerRef, Output,
-  EventEmitter, Input
+  EventEmitter, Input, ElementRef
 } from '@angular/core';
 import { GeoTargetingMapService } from './geo-targeting-map.service';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
@@ -34,7 +34,8 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
                private componentsHelperService: ComponentsHelperService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
                private changeDetectorRef: ChangeDetectorRef,
-               private viewContainerRef: ViewContainerRef) {
+               private viewContainerRef: ViewContainerRef,
+               private elementRef: ElementRef) {
     this.componentsHelperService.setRootViewContainerRef(viewContainerRef);
     this.modelSelected$ = this._store.let(this.geoTargetingSelectedService.getModel);
   }
@@ -44,7 +45,8 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
-    this.geoTargetingMapService.initializeMap();
+    let map = this.elementRef.nativeElement.querySelector('.geo-targeting-map__element');
+    this.geoTargetingMapService.initializeMap(map);
 
     // Update map when selected items change
     this.modelSelected$

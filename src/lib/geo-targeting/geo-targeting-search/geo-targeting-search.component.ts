@@ -8,6 +8,7 @@ import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targe
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
+import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
 
 @Component({
   selector:        'geo-targeting-search',
@@ -65,6 +66,7 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
                private geoTargetingSearchService: GeoTargetingSearchService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingModeService: GeoTargetingModeService,
+               private geoTargetingMapService: GeoTargetingMapService,
                private geoTargetingInfoService: GeoTargetingInfoService,
                private geoTargetingTypeService: GeoTargetingTypeService,
                private geoTargetingService: GeoTargetingService) {

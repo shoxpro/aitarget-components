@@ -57,19 +57,19 @@
   cursor: crosshair !important;
 }
 
-#geo-targeting-map {
+.geo-targeting-map__element {
   position: relative;
   width:    100%;
   height:   230px;
   outline:  none;
 }
 
-#geo-targeting-map .leaflet-popup-content {
+.geo-targeting-map__element .leaflet-popup-content {
   margin: 8px;
   width:  auto !important;
 }
 
-#geo-targeting-map .leaflet-bar {
+.geo-targeting-map__element .leaflet-bar {
   border-radius: 3px;
 }
 

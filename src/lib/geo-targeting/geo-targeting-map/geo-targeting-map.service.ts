@@ -175,9 +175,9 @@ export class GeoTargetingMapService {
   /**
    * Initialize map using default view
    */
-  initializeMap () {
+  initializeMap (mapContainerElement: HTMLHtmlElement) {
 
-    this.map = L.map('geo-targeting-map', {
+    this.map = L.map(mapContainerElement, {
       center: [this.latitude, this.longitude],
       zoom:   this.zoom
     });
@@ -237,6 +237,6 @@ export class GeoTargetingMapService {
                private geoTargetingApiService: GeoTargetingApiService,
                private componentsHelperService: ComponentsHelperService,
                private geoTargetingModeService: GeoTargetingModeService,
-               private geoTargetingSelectedService: GeoTargetingSelectedService) { }
+               private geoTargetingSelectedService: GeoTargetingSelectedService) {}
 
 }

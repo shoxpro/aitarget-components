@@ -27,6 +27,7 @@ export const GEO_TARGETING_STATE_KEY = 'geoTargeting';
 
 function multiplyReducer (reducer: ActionReducer<any>): ActionReducer<any> {
   return function (state = {}, action) {
+    console.log('state, action: ', state, action);
     if (action.type.includes('geo-targeting')) {
       let id = action.payload.id;
 
