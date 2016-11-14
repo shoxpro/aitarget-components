@@ -1,7 +1,5 @@
 <div class="demo-geo-targeting__component-buttons">
   <button md-raised-button
-          (click)="hideGeoTargeting = !hideGeoTargeting">Toggle</button>
-  <button md-raised-button
           (click)="lang = 'en_US'">EN</button>
   <button md-raised-button
           (click)="lang = 'ru_RU'">RU</button>
@@ -11,12 +9,37 @@
           (click)="showSpec = !showSpec">Show Spec</button>
 </div>
 
-<geo-targeting
-  *ngIf="!hideGeoTargeting"
-  [spec]="spec"
-  [onChange]="onChange"
-  [adaccountId]="'act_944874195534529'"
-  [lang]="lang"></geo-targeting>
+<button md-raised-button
+        (click)="hideGeoTargeting = !hideGeoTargeting">Toggle</button>
+<div class="geo-targeting-wrapper">
+  <geo-targeting
+    *ngIf="!hideGeoTargeting"
+    [spec]="spec"
+    [onChange]="onChange"
+    [adaccountId]="'act_944874195534529'"
+    [lang]="lang"></geo-targeting>
+</div>
 
+<button md-raised-button
+        (click)="hideGeoTargeting1 = !hideGeoTargeting1">Toggle</button>
+<div class="geo-targeting-wrapper">
+  <geo-targeting
+    *ngIf="!hideGeoTargeting1"
+    [spec]="spec"
+    [onChange]="onChange"
+    [adaccountId]="'act_944874195534529'"
+    [lang]="lang"></geo-targeting>
+</div>
+
+<button md-raised-button
+        (click)="hideGeoTargeting2 = !hideGeoTargeting2">Toggle</button>
+<div class="geo-targeting-wrapper">
+  <geo-targeting
+    *ngIf="!hideGeoTargeting2"
+    [spec]="spec"
+    [onChange]="onChange"
+    [adaccountId]="'act_944874195534529'"
+    [lang]="lang"></geo-targeting>
+</div>
 <pre class="demo-geo-targeting__spec"
      *ngIf="showSpec">{{ spec | json}}</pre>

@@ -32,7 +32,7 @@ import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type
   templateUrl: './geo-targeting.component.html',
   styleUrls:   ['./geo-targeting.component.scss'],
   providers:   [GeoTargetingActions, GeoTargetingService, GeoTargetingApiService, GeoTargetingDropdownService,
-    GeoTargetingSelectedActions, TargetingSpecService, GeoTargetingModeService,
+    GeoTargetingSelectedActions, TargetingSpecService,
     GeoTargetingInfoService, GeoTargetingInfoActions, GeoTargetingLocationTypeService,
     GeoTargetingLocationTypeActions, GeoTargetingTypeService,
     GeoTargetingRadiusService, GeoTargetingSelectedService,
@@ -42,7 +42,10 @@ import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type
 })
 export class GeoTargetingComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
+  clickOutsideOfComponent$;
   modelSelected$;
+
+  id;
 
   _defaultLang: string = 'en_US';
   _lang: string        = this._defaultLang;
@@ -68,10 +71,13 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
                private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingLocationTypeService: GeoTargetingLocationTypeService,
                private geoTargetingService: GeoTargetingService,
+               private geoTargetingIdService: GeoTargetingIdService,
                private geoTargetingModeService: GeoTargetingModeService) {
     // this language will be used as a fallback when a translation isn't found in the current language
     this.translateService.setDefaultLang(this.lang);
-    this.modelSelected$ = this._store.let(this.geoTargetingSelectedService.getModel);
+    this.modelSelected$           = this._store.let(this.geoTargetingSelectedService.getModel);
+    this.clickOutsideOfComponent$ = this.geoTargetingService.clickOutsideOfComponent$;
+    this.id                       = this.geoTargetingIdService.id$.getValue();
   }
 
   ngOnDestroy () {

@@ -10,7 +10,7 @@
 <!--Select Radius Dropdown-->
 <div class="geo-targeting-radius__dropdown"
      *ngIf="isOpen"
-     appendTo="geo-targeting"
+     [appendTo]="appendToSelector"
      (clickOutside)="toggleDropdown()"
      [showVeil]="true">
   <div class="geo-targeting-radius__mode geo-targeting-radius__mode_current"

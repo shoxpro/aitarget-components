@@ -39,7 +39,6 @@ export class GeoTargetingLocationTypeService {
   selectTypeByValue (selectedTypeValue: LocationTypeValue[]) {
     this.$model.take(1)
         .subscribe((model) => {
-          console.log(`model: `, model);
           let selectedType = model.types.find((type) => type.value.toString() === selectedTypeValue.toString());
           this._store.dispatch(this.geoTargetingLocationTypeActions.selectType(selectedType));
         });

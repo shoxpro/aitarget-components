@@ -8,6 +8,7 @@ import { GeoTargetingService } from '../geo-targeting.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppendToDirective } from '../../shared/directives/append-to.directive';
 import { FormsModule } from '@angular/forms';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 describe('Component: GeoTargetingRadius', () => {
   beforeEach(() => {
@@ -16,6 +17,7 @@ describe('Component: GeoTargetingRadius', () => {
       declarations: [GeoTargetingRadiusComponent, TranslatePipe, AppendToDirective],
       providers:    [
         {provide: GeoTargetingSelectedService, useValue: {}},
+        {provide: GeoTargetingIdService, useValue: {id$: {getValue () {}}}},
         {provide: GeoTargetingService, useValue: {}},
         {provide: TranslateService, useValue: {}},
       ],

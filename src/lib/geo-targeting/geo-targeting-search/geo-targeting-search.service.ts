@@ -95,7 +95,6 @@ export class GeoTargetingSearchService {
    * @param inputValue
    */
   processInputValue (inputValue) {
-    console.log(`inputValue: `, inputValue);
     this._store.dispatch(this.geoTargetingSearchActions.processInputValue(inputValue));
     this.search();
   }
@@ -110,6 +109,10 @@ export class GeoTargetingSearchService {
       .take(1)
       .mergeMap((model) => {
         let updatedModel = Object.assign({}, model, {items: [], termsMatches: [], termsFound: [], termsNotFound: []});
+
+        if (!model.termsGrouped.queries.length) {
+          return Observable.of(updatedModel);
+        }
 
         return Observable.forkJoin(model.termsGrouped.queries.map((query) => this.geoTargetingApiService.search(query)),
           (...results) => {
@@ -131,7 +134,8 @@ export class GeoTargetingSearchService {
 
               return acc;
             }, updatedModel);
-          });
+          })
+                         .take(1);
       })
       .take(1);
   };

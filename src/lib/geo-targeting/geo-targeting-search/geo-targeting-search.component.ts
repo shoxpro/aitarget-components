@@ -8,7 +8,7 @@ import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targe
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
-import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.service';
+import { escape$ } from '../../shared/constants/event-streams.constants';
 
 @Component({
   selector:        'geo-targeting-search',
@@ -66,7 +66,6 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
                private geoTargetingSearchService: GeoTargetingSearchService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingModeService: GeoTargetingModeService,
-               private geoTargetingMapService: GeoTargetingMapService,
                private geoTargetingInfoService: GeoTargetingInfoService,
                private geoTargetingTypeService: GeoTargetingTypeService,
                private geoTargetingService: GeoTargetingService) {
@@ -88,47 +87,50 @@ export class GeoTargetingSearchComponent implements OnInit, OnDestroy {
     /**
      * Blur on Escape
      */
-    this.model$
+    escape$
+      .takeUntil(this.destroy$)
+      .merge(this.geoTargetingService.clickOutsideOfComponent$)
+      .withLatestFrom(this.model$
+                          .map(({hasFocus}) => hasFocus)
+                          .distinctUntilChanged())
+      .filter(([, hasFocus]) => hasFocus)
+      .subscribe(() => {
+        this.blur();
+        this.toggleDropdown(false);
+      });
+
+    /**
+     * Close dropdown and map when info visibility changes from true to false
+     */
+    this.modelInfo$
         .takeUntil(this.destroy$)
-        .map(({hasFocus}) => hasFocus)
+        .map(({isVisible}) => isVisible)
         .distinctUntilChanged()
-        .let((hasFocus$) => hasFocus$
-          .filter((hasFocus) => hasFocus)
-          .switchMap(() => this.geoTargetingService.escapeStream
-                               .takeUntil(hasFocus$.skip(1))
-                               .take(1))
-        )
+        .filter((isVisible) => !isVisible)
         .subscribe(() => {
-          this.blur();
+          this.toggleMap(false);
           this.toggleDropdown(false);
         });
 
     /**
      * Close map and dropdown on Escape and when click outside of geo component
      */
-    this.model$
-        .takeUntil(this.destroy$)
-        .map(({isMapOpen, isDropdownOpen}) => ({isMapOpen, isDropdownOpen}))
-        .distinctUntilChanged()
-        .let((isOpen$) => isOpen$
-          .filter(({isMapOpen, isDropdownOpen}) => isMapOpen || isDropdownOpen)
-          .switchMap(({isMapOpen, isDropdownOpen}) => {
-            return this.geoTargetingService.escapeStream
-                       .merge(this.geoTargetingService.clickOutsideOfGeoStream)
-                       .takeUntil(isOpen$.skip(1))
-                       .take(1)
-                       .mapTo({isMapOpen, isDropdownOpen});
-          })
-        )
-        .subscribe(({isMapOpen, isDropdownOpen}) => {
-          if (isMapOpen) {
-            this.toggleMap(false);
-          }
+    escape$
+      .takeUntil(this.destroy$)
+      .merge(this.geoTargetingService.clickOutsideOfComponent$)
+      .withLatestFrom(this.model$
+                          .map(({isMapOpen, isDropdownOpen}) => ({isMapOpen, isDropdownOpen}))
+                          .distinctUntilChanged())
+      .filter(([, {isMapOpen, isDropdownOpen}]) => isMapOpen || isDropdownOpen)
+      .subscribe(([, {isMapOpen, isDropdownOpen}]) => {
+        if (isMapOpen) {
+          this.toggleMap(false);
+        }
 
-          if (isDropdownOpen) {
-            this.toggleDropdown(false);
-          }
-        });
+        if (isDropdownOpen) {
+          this.toggleDropdown(false);
+        }
+      });
 
     /**
      * Repeat search when search type changes

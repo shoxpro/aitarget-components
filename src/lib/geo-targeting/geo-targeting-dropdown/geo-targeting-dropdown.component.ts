@@ -2,8 +2,8 @@ import {
   Component, OnInit, OnDestroy, ChangeDetectionStrategy, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef
 } from '@angular/core';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
-import { GeoTargetingService } from '../geo-targeting.service';
 import { Subject } from 'rxjs';
+import { arrowUp$, arrowDown$, enter$ } from '../../shared/constants/event-streams.constants';
 
 @Component({
   selector:        'geo-targeting-dropdown',
@@ -22,8 +22,7 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy, OnChang
 
   activeItemIndex = 0;
 
-  constructor (private geoTargetingService: GeoTargetingService,
-               private changeDetectorRef: ChangeDetectorRef) { }
+  constructor (private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnChanges (changes) {
     if (changes.items.currentValue !== changes.items.previousValue ||
@@ -40,30 +39,35 @@ export class GeoTargetingDropdownComponent implements OnInit, OnDestroy, OnChang
   }
 
   ngOnInit () {
-    this.geoTargetingService.arrowUpStream.mapTo(-1)
-        .takeUntil(this.destroy$)
-        .merge(this.geoTargetingService.arrowDownStream.mapTo(1))
-        .filter(() => this.isOpen)
-        .subscribe((delta) => {
-          this.activeItemIndex += delta;
+    arrowUp$
+      .takeUntil(this.destroy$)
+      .do((e: KeyboardEvent) => e.preventDefault())
+      .mapTo(-1)
+      .merge(arrowDown$
+        .do((e: KeyboardEvent) => e.preventDefault())
+        .mapTo(1))
+      .filter(() => this.isOpen)
+      .subscribe((delta) => {
+        this.activeItemIndex += delta;
 
-          if (this.activeItemIndex < 0) {
-            this.activeItemIndex = this.items.length - 1;
-          }
+        if (this.activeItemIndex < 0) {
+          this.activeItemIndex = this.items.length - 1;
+        }
 
-          if (this.activeItemIndex > this.items.length - 1) {
-            this.activeItemIndex = 0;
-          }
+        if (this.activeItemIndex > this.items.length - 1) {
+          this.activeItemIndex = 0;
+        }
 
-          this.changeDetectorRef.markForCheck();
-        });
+        this.changeDetectorRef.markForCheck();
+      });
 
-    this.geoTargetingService.enterStream
-        .takeUntil(this.destroy$)
-        .filter(() => this.isOpen)
-        .subscribe(() => {
-          this.select.emit(this.items[this.activeItemIndex]);
-        });
+    enter$
+      .takeUntil(this.destroy$)
+      .do((e: KeyboardEvent) => e.preventDefault())
+      .filter(() => this.isOpen)
+      .subscribe(() => {
+        this.select.emit(this.items[this.activeItemIndex]);
+      });
   }
 
 }

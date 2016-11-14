@@ -8,6 +8,8 @@ import { Subject } from 'rxjs';
 import {
   MILE_MIN, KILOMETER_MIN, MILE_MAX, KILOMETER_MAX, CUSTOM_LOCATION_RADIUS_MIN
 } from './geo-targeting-radius.constants';
+import { escape$, arrowUp$, arrowDown$, enter$ } from '../../shared/constants/event-streams.constants';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 @Component({
   selector:        'geo-targeting-radius',
@@ -18,6 +20,8 @@ import {
 })
 export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
+
+  appendToSelector;
 
   _itemOriginal;
   _itemCopy;
@@ -77,6 +81,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     }
 
     this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
   }
 
   /**
@@ -116,7 +121,9 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
 
   constructor (private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingService: GeoTargetingService,
+               private geoTargetingIdService: GeoTargetingIdService,
                private changeDetectorRef: ChangeDetectorRef) {
+    this.appendToSelector = `#${this.geoTargetingIdService.id$.getValue()}`;
   }
 
   ngOnDestroy () {
@@ -129,41 +136,44 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     /**
      * Process Escape when dropdown is open
      */
-    this.geoTargetingService.escapeStream
-        .merge(this.geoTargetingService.clickOutsideOfGeoStream)
-        .takeUntil(this.destroy$)
-        .filter(() => this.isOpen)
-        .subscribe(() => {
-          this.toggleDropdown();
-        });
+    escape$
+      .takeUntil(this.destroy$)
+      .do((e: KeyboardEvent) => e.preventDefault())
+      .merge(this.geoTargetingService.clickOutsideOfComponent$)
+      .filter(() => this.isOpen)
+      .subscribe(() => {
+        this.toggleDropdown();
+      });
 
-    this.geoTargetingService.arrowUpStream
+    arrowUp$
+      .takeUntil(this.destroy$)
+      .do((e: KeyboardEvent) => e.preventDefault())
+      .mapTo(1)
+      .merge(arrowDown$
         .do((e: KeyboardEvent) => e.preventDefault())
-        .mapTo(1)
-        .takeUntil(this.destroy$)
-        .merge(this.geoTargetingService.arrowDownStream
-                   .do((e: KeyboardEvent) => e.preventDefault())
-                   .mapTo(-1))
-        .filter(() => this.isOpen)
-        .subscribe((delta) => {
-          this.item.radius += delta;
-          this.changeDetectorRef.markForCheck();
-          this.changeDetectorRef.detectChanges();
-        });
+        .mapTo(-1))
+      .filter(() => this.isOpen)
+      .subscribe((delta) => {
+        this.item.radius += delta;
+        this.changeDetectorRef.markForCheck();
+        this.changeDetectorRef.detectChanges();
+      });
 
     /**
      * Process Enter when dropdown is open
      */
-    this.geoTargetingService.enterStream
-        .takeUntil(this.destroy$)
-        .filter(() => this.isOpen)
-        .subscribe(() => {
-          // Close dropdown and save value
-          this.isOpen = false;
-          this.changeDetectorRef.markForCheck();
-          // Update item with current radius
-          this.geoTargetingSelectedService.updateItems([this.item]);
-        });
+    enter$
+      .takeUntil(this.destroy$)
+      .do((e: KeyboardEvent) => e.preventDefault())
+      .filter(() => this.isOpen)
+      .subscribe(() => {
+        // Close dropdown and save value
+        this.isOpen = false;
+        this.changeDetectorRef.markForCheck();
+        this.changeDetectorRef.detectChanges();
+        // Update item with current radius
+        this.geoTargetingSelectedService.updateItems([this.item]);
+      });
   }
 
 }
