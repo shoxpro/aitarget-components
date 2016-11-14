@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { FB } from '../../fb/fb.interface';
 import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
 import { FbService } from '../../fb/fb.service';
-import { Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 import { GeoTargetingItem } from '../geo-targeting-item.interface';
 import { GeoTargetingSpec } from '../../targeting/targeting-spec-geo.interface';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/reducers/index';
 import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
+import { SdkError } from '../../shared/errors/sdkError';
 
 @Injectable()
 export class GeoTargetingApiService {
@@ -16,8 +17,11 @@ export class GeoTargetingApiService {
   _defaultLang: string = 'en_US';
   lang: string         = this._defaultLang;
 
-  api = this.fbService.api
-            .filter((FB: FB) => Boolean(FB));
+  get sdk (): Observable<FB> {
+    return this.fbService.sdk
+               .filter((FB: FB) => Boolean(FB))
+               .take(1);
+  }
 
   /**
    * Simplify geo locations for receiving adgeolocationmeta
@@ -67,31 +71,31 @@ export class GeoTargetingApiService {
   }
 
   search (q: string) {
-    let _response = new Subject();
-
-    // Define locations types to search for
-    let locationTypes;
-    this._store.let(this.geoTargetingTypeService.getModel)
-        .subscribe(({selected}) => {
-          // Array of selected types' ids
-          locationTypes = selected.map(type => type.id);
-        });
-
-    this.api.subscribe((FB: FB) => {
-      FB.api(`/search`, {
-        q:              q,
-        location_types: locationTypes,
-        type:           'adgeolocation',
-        limit:          10,
-        place_fallback: true,
-        locale:         this.lang
-      }, (response) => {
-        _response.next(response.data || []);
-      });
-    });
-
-    return _response.asObservable()
-                    .take(1);
+    return this._store.let(this.geoTargetingTypeService.getModel)
+               .take(1)
+               .map(({selected}) => selected.map(type => type.id))
+               .filter((locationTypes) => Boolean(locationTypes.length))
+               .switchMap((locationTypes) => {
+                 return this.sdk.switchMap((FB: FB) => {
+                   return Observable.create((observer) => {
+                     FB.api(`/search`, {
+                       q:              q,
+                       location_types: locationTypes,
+                       type:           'adgeolocation',
+                       limit:          10,
+                       place_fallback: true,
+                       locale:         this.lang
+                     }, (response) => {
+                       if (response.error) {
+                         observer.error(new SdkError(response.error));
+                       } else {
+                         observer.next(response.data);
+                         observer.complete();
+                       }
+                     });
+                   });
+                 });
+               });
   };
 
   /**
@@ -100,8 +104,6 @@ export class GeoTargetingApiService {
    * @returns {Observable<T>}
    */
   getSelectedLocationItems (spec: TargetingSpec) {
-    let _items = new Subject();
-
     let processedGeoLocations = this.processGeoLocations(spec.geo_locations, spec.excluded_geo_locations);
 
     // Get all excluded keys
@@ -115,35 +117,35 @@ export class GeoTargetingApiService {
     }
 
     // Require metadata for locations and extract only items from the it
-    this.metaData(processedGeoLocations.simplified)
-        .subscribe((metaData: any) => {
-          let items: GeoTargetingItem[] = [];
-          /**
-           * Iterate through geo location metadata and get all available items
-           * @see https://developers.facebook.com/docs/marketing-api/targeting-search/v2.7#geo-meta
-           */
-          for (let type in metaData) {
-            if (metaData.hasOwnProperty(type)) {
-              for (let key in metaData[type]) {
-                if (metaData[type].hasOwnProperty(key)) {
-                  let item         = metaData[type][key];
-                  let selectedItem = processedGeoLocations.map[item.key];
+    return this.metaData(processedGeoLocations.simplified)
+               .map((metaData: any) => {
+                 let items: GeoTargetingItem[] = [];
 
-                  item.excluded = excludedKeys.indexOf(key) > -1;
+                 /**
+                  * Iterate through geo location metadata and get all available items
+                  * @see https://developers.facebook.com/docs/marketing-api/targeting-search/v2.7#geo-meta
+                  */
+                 for (let type in metaData) {
+                   if (metaData.hasOwnProperty(type)) {
+                     for (let key in metaData[type]) {
+                       if (metaData[type].hasOwnProperty(key)) {
+                         let item         = metaData[type][key];
+                         let selectedItem = processedGeoLocations.map[item.key];
 
-                  item.radius        = selectedItem.radius || 0;
-                  item.distance_unit = selectedItem.distance_unit || (this.lang === 'en_US' ? 'mile' : 'kilometer');
+                         item.excluded = excludedKeys.indexOf(key) > -1;
 
-                  items.push(item);
-                }
-              }
-            }
-          }
+                         item.radius        = selectedItem.radius || 0;
+                         item.distance_unit = selectedItem.distance_unit ||
+                           (this.lang === 'en_US' ? 'mile' : 'kilometer');
 
-          _items.next(items);
-        });
-    return _items.asObservable()
-                 .take(1);
+                         items.push(item);
+                       }
+                     }
+                   }
+                 }
+
+                 return items;
+               });
   }
 
   /**
@@ -153,9 +155,7 @@ export class GeoTargetingApiService {
    * @returns {Observable<T>}
    */
   metaData (simplifiedLocations) {
-    let _response = new Subject();
-
-    let params = Object.assign({
+    const params = Object.assign({
       type:                          'adgeolocationmeta',
       show_polygons_and_coordinates: 1,
       locale:                        this.lang
@@ -163,14 +163,16 @@ export class GeoTargetingApiService {
       location_types: null
     });
 
-    this.api.subscribe((FB: FB) => {
+    return this.sdk.switchMap((FB: FB) => Observable.create((observer) => {
       FB.api(`/search`, params, (response) => {
-        _response.next(response.data);
+        if (response.error) {
+          observer.error(new SdkError(response.error));
+        } else {
+          observer.next(response.data);
+          observer.complete();
+        }
       });
-    });
-
-    return _response.asObservable()
-                    .take(1);
+    }));
   };
 
   /**
@@ -180,10 +182,8 @@ export class GeoTargetingApiService {
    * @param item
    */
   suggestRadius (item: GeoTargetingItem) {
-    let _response = new Subject();
-
     if (!item.latitude || !item.longitude) {
-      _response.next(null);
+      Observable.of(null);
     }
 
     let params = {
@@ -194,14 +194,16 @@ export class GeoTargetingApiService {
       locale:        this.lang
     };
 
-    this.api.subscribe((FB: FB) => {
+    return this.sdk.switchMap((FB: FB) => Observable.create((observer) => {
       FB.api(`/search`, params, (response) => {
-        _response.next(response.data);
+        if (response.error) {
+          observer.error(new SdkError(response.error));
+        } else {
+          observer.next(response.data);
+          observer.complete();
+        }
       });
-    });
-
-    return _response.asObservable()
-                    .take(1);
+    }));
   };
 
 }

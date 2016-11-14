@@ -13,6 +13,7 @@
 
   <geo-targeting-input [inputValue]="(model$ | async).inputValue"
                        [hasFocus]="(model$ | async).hasFocus"
+                       [fetching]="(model$ | async).fetching"
                        (focus)="focus()"
                        (blur)="blur()"
                        (inputValueChange)="inputValueChange($event)"

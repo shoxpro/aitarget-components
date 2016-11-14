@@ -34,7 +34,10 @@ export class GeoTargetingMapPopupComponent {
   /**
    * Toggle Dropdown
    */
-  toggleDropdown () {
+  toggleDropdown (event?) {
+    if (event) {
+      event.stopPropagation();
+    }
     this.isOpen = !this.isOpen;
     this.changeDetectorRef.markForCheck();
   }

@@ -16,6 +16,7 @@ export class GeoTargetingInputComponent implements OnInit, OnDestroy, OnChanges 
   inputElement;
 
   @Input() inputValue;
+  @Input() fetching     = false;
   @Input() hasFocus;
   @Input() debounceTime = 1000;
 

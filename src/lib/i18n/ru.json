@@ -50,12 +50,17 @@
     "country": "Страна",
     "country_group": "Группа стран",
     "region": "Штат/Регион/Область",
+    "region_many": "штатов/регионов/областей",
     "city": "Город",
+    "city_many": "городов",
     "zip": "Индекс",
+    "zip_many": "индексов",
     "electoral_district": "Избирательный округ",
     "political_district": "Политический округ",
     "geo_market": "Рынок",
+    "geo_market_many": "рынков",
     "custom_location": "GPS координаты",
+    "custom_location_many": "GPS координат",
     "place": "Место"
   },
   "geo-targeting-info": {
@@ -63,11 +68,14 @@
     "UNDO": "Отменить изменения",
     "MESSAGE_NOT_FOUND": "Некторые местоположения не были найдены: {{ notFoundInputsStr }}",
     "MESSAGE_MISSING_INCLUDED": "Прежде чем вы сможете исключать места, вы должны включить хотя бы одно место.",
-    "MESSAGE_NARROW": "Местонахождение вашей аудитории — {{ narrowerLocationNames }}, все остальные места автоматически исключаются."
+    "MESSAGE_NARROW": "Местонахождение вашей аудитории — {{ narrowerLocationNames }}, все остальные места автоматически исключаются.",
+    "LIMIT": "Количество {{mode}} {{type}} не может превышать {{limit}}."
   },
   "geo-targeting-mode": {
     "include": "Включить",
+    "include_past": "включенных",
     "exclude": "Исключить",
+    "exclude_past": "исключенных",
     "delete": "Удалить"
   },
   "geo-targeting-map": {

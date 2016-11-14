@@ -50,12 +50,17 @@
     "country": "Country",
     "country_group": "Country Group",
     "region": "State",
+    "region_many": "states",
     "city": "City",
+    "city_many": "cities",
     "zip": "Zip",
+    "zip_many": "zips",
     "electoral_district": "Electoral District",
     "political_district": "Political District",
     "geo_market": "Geo Market",
+    "geo_market_many": "geo markets",
     "custom_location": "GPS Coordinates",
+    "custom_location_many": "GPS Coordinates",
     "place": "Place"
   },
   "geo-targeting-info": {
@@ -63,11 +68,14 @@
     "UNDO": "Undo Change",
     "MESSAGE_NOT_FOUND": "Some locations were not found: {{ notFoundInputsStr }}",
     "MESSAGE_MISSING_INCLUDED": "You have to include at least one location before you can exclude locations.",
-    "MESSAGE_NARROW": "Your audience location is set to {{ narrowerLocationNames }}, so everything outside of this location is automatically excluded."
+    "MESSAGE_NARROW": "Your audience location is set to {{ narrowerLocationNames }}, so everything outside of this location is automatically excluded.",
+    "LIMIT": "Maximum number of {{mode}} {{type}} cannot exceed {{limit}}."
   },
   "geo-targeting-mode": {
     "include": "Include",
+    "include_past": "included",
     "exclude": "Exclude",
+    "exclude_past": "excluded",
     "delete": "Delete"
   },
   "geo-targeting-map": {

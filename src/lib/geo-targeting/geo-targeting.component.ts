@@ -26,6 +26,8 @@ import { GeoTargetingTypeActions } from './geo-targeting-type/geo-targeting-type
 import { GeoTargetingIdService } from './geo-targeting.id';
 import { GeoTargetingActions } from './geo-targeting.actions';
 import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type.service';
+import { GEO_LIMITS } from './geo-targeting.constants';
+import { SdkError } from '../shared/errors/sdkError';
 
 @Component({
   selector:    'geo-targeting',
@@ -65,12 +67,48 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
     return this._lang;
   }
 
+  /**
+   * Show notification that some locations exceed its limit
+   * @param mode
+   * @param type
+   * @param limit
+   */
+  informAboutOverLimit (mode, type, limit) {
+    this.geoTargetingInfoService.showInfo({
+      level:   'error',
+      message: this.translateService.instant(`geo-targeting-info.LIMIT`, {
+        type:  this.translateService.instant(`geo-targeting-dropdown.${type}_many`),
+        mode:  this.translateService.instant(`geo-targeting-mode.${mode}_past`),
+        limit: limit
+      })
+    });
+  }
+
+  /**
+   * Process and inform about over limit
+   * @param isWithinLimit
+   */
+  processOverLimit (isWithinLimit) {
+    for (let mode in isWithinLimit) {
+      if (isWithinLimit.hasOwnProperty(mode)) {
+        for (let type in isWithinLimit[mode]) {
+          if (isWithinLimit[mode].hasOwnProperty(type)) {
+            if (!isWithinLimit[mode][type]) {
+              return this.informAboutOverLimit(mode, type, GEO_LIMITS[type]);
+            }
+          }
+        }
+      }
+    }
+  }
+
   constructor (private _store: Store<AppState>,
                private translateService: TranslateService,
                private geoTargetingApiService: GeoTargetingApiService,
                private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingLocationTypeService: GeoTargetingLocationTypeService,
                private geoTargetingService: GeoTargetingService,
+               private geoTargetingInfoService: GeoTargetingInfoService,
                private geoTargetingIdService: GeoTargetingIdService,
                private geoTargetingModeService: GeoTargetingModeService) {
     // this language will be used as a fallback when a translation isn't found in the current language
@@ -99,8 +137,15 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
      */
     this.geoTargetingApiService
         .getSelectedLocationItems(this.spec)
-        .subscribe((items: GeoTargetingItem[]) => {
-          this.geoTargetingSelectedService.setItems(items);
+        .subscribe({
+          next:  (items: GeoTargetingItem[]) => {
+            this.geoTargetingSelectedService.setItems(items);
+          },
+          error: (error) => {
+            if (error instanceof SdkError) {
+              this.geoTargetingInfoService.showInfo({level: 'error', message: error.message});
+            }
+          }
         });
 
     /**
@@ -117,6 +162,39 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
     )
               .takeUntil(this.destroy$)
               .switchMap(() => this.geoTargetingSelectedService.getSpec())
+              .filter((spec: TargetingSpec) => {
+                /* tslint:disable:max-line-length */
+                const isWithinLimit = {
+                  include: {
+                    region:          !spec.geo_locations.regions || spec.geo_locations.regions.length <= GEO_LIMITS.region,
+                    city:            !spec.geo_locations.cities || spec.geo_locations.cities.length <= GEO_LIMITS.city,
+                    zip:             !spec.geo_locations.zips || spec.geo_locations.zips.length <= GEO_LIMITS.zip,
+                    geo_market:      !spec.geo_locations.geo_markets || spec.geo_locations.geo_markets.length <= GEO_LIMITS.geo_market,
+                    custom_location: !spec.geo_locations.custom_locations || spec.geo_locations.custom_locations.length <= GEO_LIMITS.custom_location
+                  },
+                  exclude: {
+                    region:          !spec.excluded_geo_locations.regions || spec.excluded_geo_locations.regions.length <= GEO_LIMITS.region,
+                    city:            !spec.excluded_geo_locations.cities || spec.excluded_geo_locations.cities.length <= GEO_LIMITS.city,
+                    zip:             !spec.excluded_geo_locations.zips || spec.excluded_geo_locations.zips.length <= GEO_LIMITS.geo_market,
+                    geo_market:      !spec.excluded_geo_locations.geo_markets || spec.excluded_geo_locations.geo_markets.length <= GEO_LIMITS.zip,
+                    custom_location: !spec.excluded_geo_locations.custom_locations || spec.excluded_geo_locations.custom_locations.length <= GEO_LIMITS.custom_location
+                  }
+                };
+                /* tslint:enable:max-line-length */
+
+                const isGeoLocationsExceedLimit         = Object.values(isWithinLimit.include)
+                                                                .includes(false);
+                const isExcludedGeoLocationsExceedLimit = Object.values(isWithinLimit.exclude)
+                                                                .includes(false);
+
+                const isExceedLimit = isGeoLocationsExceedLimit || isExcludedGeoLocationsExceedLimit;
+
+                if (isExceedLimit) {
+                  this.processOverLimit(isWithinLimit);
+                }
+
+                return !isExceedLimit;
+              })
               .subscribe((spec: TargetingSpec) => {
                 let newTargetingSpec = Object.assign({}, this.spec, spec);
                 this.onChange(newTargetingSpec);
@@ -131,8 +209,15 @@ export class GeoTargetingComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.geoTargetingApiService
               .getSelectedLocationItems(this.spec)
-              .subscribe((items: GeoTargetingItem[]) => {
-                this.geoTargetingSelectedService.updateItems(items);
+              .subscribe({
+                next:  (items: GeoTargetingItem[]) => {
+                  this.geoTargetingSelectedService.updateItems(items);
+                },
+                error: (error) => {
+                  if (error instanceof SdkError) {
+                    this.geoTargetingInfoService.showInfo({level: 'error', message: error.message});
+                  }
+                }
               });
 
           this.geoTargetingModeService.setTranslatedModes();

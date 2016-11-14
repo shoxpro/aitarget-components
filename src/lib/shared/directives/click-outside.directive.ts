@@ -23,7 +23,6 @@ export class ClickOutsideDirective implements OnInit, OnDestroy {
   ngOnInit () {
     bodyClick$
       .takeUntil(this.destroy$)
-      .skip(1)
       .subscribe((e: MouseEvent) => {
         const targetElement = e.target;
         const clickedInside = this.elementRef.nativeElement

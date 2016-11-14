@@ -50,12 +50,17 @@
     "country": "国家",
     "country_group": "Country Group",
     "region": "地区",
+    "region_many": "地区",
     "city": "城市",
+    "city_many": "城市",
     "zip": "邮编",
+    "zip_many": "邮编",
     "electoral_district": "选区",
     "political_district": "政治区",
     "geo_market": "市场",
+    "geo_market_many": "市场",
     "custom_location": "GPS坐标",
+    "custom_location_many": "GPS坐标",
     "place": "地方"
   },
   "geo-targeting-info": {
@@ -63,11 +68,14 @@
     "UNDO": "撤销更改",
     "MESSAGE_NOT_FOUND": "找不到某些位置: {{ notFoundInputsStr }}",
     "MESSAGE_MISSING_INCLUDED": "必须指定至少一个地区才能进行排除。",
-    "MESSAGE_NARROW": "定位地区设置为 {{ narrowerLocationNames }}, 系统自动排除此地区以外的所有受众。"
+    "MESSAGE_NARROW": "定位地区设置为 {{ narrowerLocationNames }}, 系统自动排除此地区以外的所有受众。",
+    "LIMIT": "最大数量的{{mode}}{{type}}不能超过{{limit}}的。"
   },
   "geo-targeting-mode": {
     "include": "包括",
+    "include_past": "包括",
     "exclude": "排除",
+    "exclude_past": "排除",
     "delete": "删除"
   },
   "geo-targeting-map": {

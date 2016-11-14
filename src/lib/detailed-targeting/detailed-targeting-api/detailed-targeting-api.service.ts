@@ -4,9 +4,9 @@ import { FbService } from '../../fb/fb.service';
 import { DetailedTargetingDropdownSuggestedService } from '../detailed-targeting-dropdown-suggested/detailed-targeting-dropdown-suggested.service';
 import { DetailedTargetingDropdownBrowseService } from '../detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
 import { FB } from '../../fb/fb.interface';
-import { Subject } from 'rxjs';
-import { DetailedTargetingItem } from '../detailed-targeting-item';
+import { Observable } from 'rxjs';
 import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
+import { SdkError } from '../../shared/errors/sdkError';
 /* tslint:enable:max-line-length */
 
 @Injectable()
@@ -17,8 +17,12 @@ export class DetailedTargetingApiService {
 
   suggestedTargetingList = [];
 
-  api = this.fbService.api
-            .filter((FB: FB) => Boolean(FB));
+  get sdk (): Observable<FB> {
+    return this.fbService.sdk
+               .filter((FB: FB) => Boolean(FB))
+               .take(1);
+  }
+
   adaccountId;
 
   constructor (private fbService: FbService,
@@ -39,7 +43,7 @@ export class DetailedTargetingApiService {
   };
 
   search (q: string, adaccountId = this.adaccountId) {
-    this.api.subscribe((FB: FB) => {
+    this.sdk.subscribe((FB: FB) => {
       FB.api(`/${adaccountId}/targetingsearch`, {q: q, locale: this.lang}, (response) => {
         this.detailedTargetingDropdownSuggestedService.updateDropdown(response.data);
       });
@@ -47,7 +51,7 @@ export class DetailedTargetingApiService {
   };
 
   browse (adaccountId = this.adaccountId) {
-    this.api.subscribe((FB: FB) => {
+    this.sdk.subscribe((FB: FB) => {
       FB.api(`/${adaccountId}/targetingbrowse`, {
         include_headers: false,
         include_nodes:   true,
@@ -65,7 +69,7 @@ export class DetailedTargetingApiService {
 
   suggest (targetingList: Array<Object> = this.suggestedTargetingList, adaccountId = this.adaccountId) {
     this.suggestedTargetingList = targetingList;
-    this.api.subscribe((FB: FB) => {
+    this.sdk.subscribe((FB: FB) => {
       FB.api(`/${adaccountId}/targetingsuggestions`, {
         targeting_list: targetingList,
         locale:         this.lang
@@ -76,36 +80,38 @@ export class DetailedTargetingApiService {
   };
 
   validate (targetingList: Array<Object> = [], adaccountId = this.adaccountId) {
-    let _response = new Subject<DetailedTargetingItem[]>();
-
-    this.api.subscribe((FB: FB) => {
-      FB.api(`/${adaccountId}/targetingvalidation`, {
-        targeting_list: targetingList,
-        locale:         this.lang
-      }, (response) => {
-        _response.next(response.data);
-      });
-    });
-
-    return _response.asObservable()
-                    .take(1);
+    return this.sdk.switchMap((FB: FB) => Observable.create((observer) => {
+        FB.api(`/${adaccountId}/targetingvalidation`, {
+          targeting_list: targetingList,
+          locale:         this.lang
+        }, (response) => {
+          if (response.error) {
+            observer.error(new SdkError(response.error));
+          } else {
+            observer.next(response.data);
+            observer.complete();
+          }
+        });
+      })
+    );
   };
 
   filteredSearch (q: string, limitType: string, adaccountId = this.adaccountId) {
-    let _response = new Subject<DetailedTargetingItem[]>();
-
-    this.api.subscribe((FB: FB) => {
-      FB.api(`/${adaccountId}/targetingsearch`, {
-        q:          q,
-        limit_type: limitType,
-        locale:     this.lang
-      }, (response) => {
-        _response.next(response.data);
-      });
-    });
-
-    return _response.asObservable()
-                    .take(1);
+    return this.sdk.switchMap((FB: FB) => Observable.create((observer) => {
+        FB.api(`/${adaccountId}/targetingsearch`, {
+          q:          q,
+          limit_type: limitType,
+          locale:     this.lang
+        }, (response) => {
+          if (response.error) {
+            observer.error(new SdkError(response.error));
+          } else {
+            observer.next(response.data);
+            observer.complete();
+          }
+        });
+      })
+    );
   };
 
 }

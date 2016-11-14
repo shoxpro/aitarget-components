@@ -72,7 +72,11 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
   /**
    * Open/Close radius selection dropdown
    */
-  toggleDropdown () {
+  toggleDropdown (event?) {
+    if (event) {
+      event.stopPropagation();
+    }
+
     this.isOpen = !this.isOpen;
 
     // Restore original item when closing dropdown
@@ -92,12 +96,14 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     if (this.item.radius === 0) {
       this.item.radius = this.min;
     }
+    this.setDefaultBoundaries();
   }
 
   /**
    * Disable radius by setting radius to 0
    */
   disableRadius () {
+    this.min         = 0;
     this.item.radius = 0;
   }
 
@@ -105,8 +111,8 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
    * When radius change
    * @param radius
    */
-  onChange (radius) {
-    if (radius === null) {
+  onChange (radius: number | null) {
+    if (!radius) {
       return;
     }
     if (radius < this.min) {
@@ -139,7 +145,6 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     escape$
       .takeUntil(this.destroy$)
       .do((e: KeyboardEvent) => e.preventDefault())
-      .merge(this.geoTargetingService.clickOutsideOfComponent$)
       .filter(() => this.isOpen)
       .subscribe(() => {
         this.toggleDropdown();
@@ -165,6 +170,7 @@ export class GeoTargetingRadiusComponent implements OnInit, OnDestroy {
     enter$
       .takeUntil(this.destroy$)
       .do((e: KeyboardEvent) => e.preventDefault())
+      .merge(this.geoTargetingService.clickOutsideOfComponent$)
       .filter(() => this.isOpen)
       .subscribe(() => {
         // Close dropdown and save value

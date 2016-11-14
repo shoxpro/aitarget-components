@@ -1,5 +1,5 @@
 <div class="geo-targeting-mode"
-     (click)="toggleDropdown(true)">
+     (click)="toggleDropdown(true, $event)">
   <div class="geo-targeting-mode__pin">
     <geo-targeting-pin [excluded]="selectedMode.id === 'exclude'"></geo-targeting-pin>
   </div>
@@ -7,7 +7,7 @@
   <fb-dropdown-list
     *ngIf="isOpen"
     [appendTo]="appendTarget"
-    (clickOutside)="toggleDropdown(false)"
+    (clickOutside)="toggleDropdown(false, $event)"
     [items]="(model$ | async).modes.slice(0, 2)"
     [selectedItem]="selectedMode"
     (onClick)="selectMode($event)"></fb-dropdown-list>
