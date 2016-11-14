@@ -7,6 +7,9 @@ import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.s
 import { GeoTargetingSelectedActions } from './geo-targeting-selected.actions';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { TranslateService } from 'ng2-translate';
+import { GeoTargetingLocationTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
+import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 describe('Service: GeoTargetingSelected', () => {
 
@@ -18,6 +21,9 @@ describe('Service: GeoTargetingSelected', () => {
         GeoTargetingSelectedService,
         {provide: Store, useValue: {let () {}}},
         {provide: GeoTargetingApiService, useValue: {}},
+        {provide: GeoTargetingLocationTypeService, useValue: {}},
+        {provide: GeoTargetingModeService, useValue: {}},
+        {provide: GeoTargetingIdService, useValue: {id$: {getValue () {}}}},
         {provide: GeoTargetingSelectedActions, useValue: {}},
         {provide: GeoTargetingInfoService, useValue: {}},
         {provide: TranslateService, useValue: {}},

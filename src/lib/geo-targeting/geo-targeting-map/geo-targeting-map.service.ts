@@ -175,9 +175,9 @@ export class GeoTargetingMapService {
   /**
    * Initialize map using default view
    */
-  initializeMap () {
+  initializeMap (mapContainerElement: HTMLHtmlElement) {
 
-    this.map = L.map('geo-targeting-map', {
+    this.map = L.map(mapContainerElement, {
       center: [this.latitude, this.longitude],
       zoom:   this.zoom
     });
@@ -211,7 +211,7 @@ export class GeoTargetingMapService {
             return;
           }
 
-          this._store.let(GeoTargetingModeService.getModel)
+          this._store.let(this.geoTargetingModeService.getModel)
               .take(1)
               .subscribe(
                 (model) => item.excluded = model.selectedMode.id === 'exclude'
@@ -236,6 +236,7 @@ export class GeoTargetingMapService {
                private geoTargetingInfoService: GeoTargetingInfoService,
                private geoTargetingApiService: GeoTargetingApiService,
                private componentsHelperService: ComponentsHelperService,
-               private geoTargetingSelectedService: GeoTargetingSelectedService) { }
+               private geoTargetingModeService: GeoTargetingModeService,
+               private geoTargetingSelectedService: GeoTargetingSelectedService) {}
 
 }

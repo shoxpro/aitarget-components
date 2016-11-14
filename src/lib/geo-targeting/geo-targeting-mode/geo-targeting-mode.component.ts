@@ -42,7 +42,7 @@ export class GeoTargetingModeComponent {
   constructor (private _store: Store<AppState>,
                private geoTargetingModeService: GeoTargetingModeService) {
     // TODO: add key navigation
-    this.model$ = this._store.let(GeoTargetingModeService.getModel);
+    this.model$ = this._store.let(this.geoTargetingModeService.getModel);
   }
 
 }

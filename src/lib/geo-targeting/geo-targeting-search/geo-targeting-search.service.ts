@@ -4,21 +4,29 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/reducers/index';
 import { Observable } from 'rxjs/Rx';
 import {
-  GeoTargetingSearchState, GEO_TARGETING_SEARCH_KEY, geoTargetingSearchInitial
+  GeoTargetingSearchState, geoTargetingSearchInitial, GEO_TARGETING_SEARCH_KEY
 } from './geo-taregting-search.reducer';
 import { GeoTargetingApiService } from '../geo-targeting-api/geo-targeting-api.service';
 import { TranslateService } from 'ng2-translate';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.reducer';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 @Injectable()
 export class GeoTargetingSearchService {
   model$;
 
-  static getModel = (_store): Observable<GeoTargetingSearchState> => {
+  getModel = (_store): Observable<GeoTargetingSearchState> => {
     return _store.select(GEO_TARGETING_STATE_KEY)
-                 .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_SEARCH_KEY])
+                 .map((geoTargeting) => {
+                   let id = this.geoTargetingIdService.id$.getValue();
+                   return geoTargeting[id];
+                 })
+                 .filter((geoTargetingState: GeoTargetingState) => Boolean(geoTargetingState))
+                 .map((geoTargetingState: GeoTargetingState) => {
+                   return geoTargetingState[GEO_TARGETING_SEARCH_KEY];
+                 })
                  .distinctUntilChanged();
   };
 
@@ -102,6 +110,10 @@ export class GeoTargetingSearchService {
       .mergeMap((model) => {
         let updatedModel = Object.assign({}, model, {items: [], termsMatches: [], termsFound: [], termsNotFound: []});
 
+        if (!model.termsGrouped.queries.length) {
+          return Observable.of(updatedModel);
+        }
+
         return Observable.forkJoin(model.termsGrouped.queries.map((query) => this.geoTargetingApiService.search(query)),
           (...results) => {
             return results.reduce((acc: GeoTargetingSearchState, items, index) => {
@@ -122,7 +134,8 @@ export class GeoTargetingSearchService {
 
               return acc;
             }, updatedModel);
-          });
+          })
+                         .take(1);
       })
       .take(1);
   };
@@ -219,7 +232,8 @@ export class GeoTargetingSearchService {
                private geoTargetingSelectedService: GeoTargetingSelectedService,
                private geoTargetingInfoService: GeoTargetingInfoService,
                private geoTargetingApiService: GeoTargetingApiService,
+               private geoTargetingIdService: GeoTargetingIdService,
                private translateService: TranslateService) {
-    this.model$ = this._store.let(GeoTargetingSearchService.getModel);
+    this.model$ = this._store.let(this.getModel);
   }
 }

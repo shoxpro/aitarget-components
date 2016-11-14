@@ -6,13 +6,21 @@ import { Store } from '@ngrx/store';
 import { GeoTargetingInfoActions } from './geo-targeting-info.actions';
 import { GeoTargetingState, GEO_TARGETING_STATE_KEY } from '../geo-targeting.reducer';
 import { SharedActions } from '../../shared/actions/index';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 @Injectable()
 export class GeoTargetingInfoService {
 
-  static getModel (_store): Observable<GeoTargetingInfoState> {
+  getModel = (_store): Observable<GeoTargetingInfoState> => {
     return _store.select(GEO_TARGETING_STATE_KEY)
-                 .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_INFO_KEY])
+                 .map((geoTargeting) => {
+                   let id = this.geoTargetingIdService.id$.getValue();
+                   return geoTargeting[id];
+                 })
+                 .filter((geoTargetingState: GeoTargetingState) => Boolean(geoTargetingState))
+                 .map((geoTargetingState: GeoTargetingState) => {
+                   return geoTargetingState[GEO_TARGETING_INFO_KEY];
+                 })
                  .distinctUntilChanged();
   };
 
@@ -36,6 +44,7 @@ export class GeoTargetingInfoService {
 
   constructor (private _store: Store<AppState>,
                private geoTargetingInfoActions: GeoTargetingInfoActions,
+               private geoTargetingIdService: GeoTargetingIdService,
                private sharedActions: SharedActions) { }
 
 }

@@ -6,6 +6,7 @@ import { GeoTargetingMapService } from '../geo-targeting-map/geo-targeting-map.s
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TranslatePipe, TranslateService } from 'ng2-translate';
+import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 
 describe('Component: GeoTargetingMapControls', () => {
   beforeEach(() => {
@@ -19,6 +20,7 @@ describe('Component: GeoTargetingMapControls', () => {
       providers:    [
         {provide: Store, useValue: {let () {}}},
         {provide: TranslateService, useValue: {}},
+        {provide: GeoTargetingModeService, useValue: {}},
         {provide: GeoTargetingMapService, useValue: {}}
       ],
       schemas:      [CUSTOM_ELEMENTS_SCHEMA]

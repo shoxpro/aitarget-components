@@ -59,6 +59,7 @@ export class GeoTargetingApiService {
 
   constructor (private fbService: FbService,
                private translateService: TranslateService,
+               private geoTargetingTypeService: GeoTargetingTypeService,
                private _store: Store<AppState>) {
     this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
       this.lang = event.lang;
@@ -70,7 +71,7 @@ export class GeoTargetingApiService {
 
     // Define locations types to search for
     let locationTypes;
-    this._store.let(GeoTargetingTypeService.getModel)
+    this._store.let(this.geoTargetingTypeService.getModel)
         .subscribe(({selected}) => {
           // Array of selected types' ids
           locationTypes = selected.map(type => type.id);

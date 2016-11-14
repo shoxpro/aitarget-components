@@ -1,6 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { geoTargetingInfoInitial, geoTargetingInfoReducer } from './geo-targeting-info.reducer';
 import { GeoTargetingInfoActions } from './geo-targeting-info.actions';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 let deepFreeze = require('deep-freeze');
 
@@ -15,6 +16,7 @@ describe(`geoTargetingInfoReducer`, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        {provide: GeoTargetingIdService, useValue: {id$: {getValue () {}}}},
         GeoTargetingInfoActions
       ]
     });

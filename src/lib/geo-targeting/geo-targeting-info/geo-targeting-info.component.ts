@@ -29,7 +29,7 @@ export class GeoTargetingInfoComponent implements OnInit, OnDestroy {
 
   constructor (private _store: Store<AppState>,
                private geoTargetingInfoService: GeoTargetingInfoService) {
-    this.model$ = this._store.let(GeoTargetingInfoService.getModel);
+    this.model$ = this._store.let(this.geoTargetingInfoService.getModel);
   }
 
   ngOnDestroy () {}

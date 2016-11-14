@@ -1,24 +1,32 @@
 import { Injectable } from '@angular/core';
+import { GeoTargetingIdService } from '../geo-targeting.id';
+import { Action } from '@ngrx/store';
 
 @Injectable()
 export class GeoTargetingSearchActions {
-  static PROCESS_INPUT_VALUE = '[GeoTargetingSearchState] Process Input Value';
-  static UPDATE_MODEL        = '[GeoTargetingSearchState] Update Model';
+  static PROCESS_INPUT_VALUE = '[geo-targeting-search] Process Input Value';
+  static UPDATE_MODEL        = '[geo-targeting-search] Update Model';
 
-  processInputValue (inputValue) {
+  processInputValue (inputValue): Action {
     return {
       type:    GeoTargetingSearchActions.PROCESS_INPUT_VALUE,
-      payload: {inputValue}
+      payload: {
+        id:         this.geoTargetingIdService.id$.getValue(),
+        inputValue: inputValue
+      }
     };
   }
 
-  updateModel (model) {
+  updateModel (model): Action {
     return {
       type:    GeoTargetingSearchActions.UPDATE_MODEL,
-      payload: {model}
+      payload: {
+        id:    this.geoTargetingIdService.id$.getValue(),
+        model: model
+      }
     };
   }
 
-  constructor () {}
+  constructor (private geoTargetingIdService: GeoTargetingIdService) {}
 }
 

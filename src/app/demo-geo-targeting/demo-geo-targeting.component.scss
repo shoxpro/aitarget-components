@@ -5,3 +5,13 @@
 .demo-geo-targeting__spec {
   font-size: 14px
 }
+
+.geo-targeting-wrapper {
+  display:         flex;
+  justify-content: center;
+  margin:          10px 0;
+}
+
+geo-targeting {
+  width: 90%;
+}

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GeoTargetingModeType } from './geo-targeting-mode.reducer';
 import { TranslateService } from 'ng2-translate';
+import { GeoTargetingIdService } from '../geo-targeting.id';
+import { Action } from '@ngrx/store';
 
 @Injectable()
 export class GeoTargetingModeActions {
@@ -9,17 +11,21 @@ export class GeoTargetingModeActions {
   static SET_TRANSLATED_MODES = '[geo-targeting-mode] Set Translated Modes';
   static TOGGLE_MODE_DROPDOWN = '[geo-targeting-mode] Toggle Mode Dropdown';
 
-  setMode (selectedMode: GeoTargetingModeType) {
+  setMode (selectedMode: GeoTargetingModeType): Action {
     return {
       type:    GeoTargetingModeActions.SET_MODE,
-      payload: {selectedMode}
+      payload: {
+        id:           this.geoTargetingIdService.id$.getValue(),
+        selectedMode: selectedMode
+      }
     };
   }
 
-  setTranslatedModes () {
+  setTranslatedModes (): Action {
     return {
       type:    GeoTargetingModeActions.SET_TRANSLATED_MODES,
       payload: {
+        id:    this.geoTargetingIdService.id$.getValue(),
         modes: [
           {
             id:   'include',
@@ -38,12 +44,16 @@ export class GeoTargetingModeActions {
     };
   }
 
-  toggleModeDropdown (isOpen?: boolean) {
+  toggleModeDropdown (isOpen?: boolean): Action {
     return {
       type:    GeoTargetingModeActions.TOGGLE_MODE_DROPDOWN,
-      payload: {isOpen}
+      payload: {
+        id:     this.geoTargetingIdService.id$.getValue(),
+        isOpen: isOpen
+      }
     };
   }
 
-  constructor (private translateService: TranslateService) {}
+  constructor (private translateService: TranslateService,
+               private geoTargetingIdService: GeoTargetingIdService) {}
 }

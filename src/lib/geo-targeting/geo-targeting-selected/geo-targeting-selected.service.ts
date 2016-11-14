@@ -15,17 +15,25 @@ import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.red
 import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 import { GeoTargetingLocationTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
 import { Key, City, CustomLocation } from '../../targeting/targeting-spec-geo.interface';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 @Injectable()
 export class GeoTargetingSelectedService {
 
   model$;
 
-  static getModel (_store): Observable<GeoTargetingSelectedState> {
+  getModel = (_store): Observable<GeoTargetingSelectedState> => {
     return _store.select(GEO_TARGETING_STATE_KEY)
-                 .map((geoTargetingState: GeoTargetingState) => geoTargetingState[GEO_TARGETING_SELECTED_KEY])
+                 .map((geoTargeting) => {
+                   let id = this.geoTargetingIdService.id$.getValue();
+                   return geoTargeting[id];
+                 })
+                 .filter((geoTargetingState: GeoTargetingState) => Boolean(geoTargetingState))
+                 .map((geoTargetingState: GeoTargetingState) => {
+                   return geoTargetingState[GEO_TARGETING_SELECTED_KEY];
+                 })
                  .distinctUntilChanged();
-  }
+  };
 
   /**
    * Show info message that some locations were replaced
@@ -129,7 +137,7 @@ export class GeoTargetingSelectedService {
                  }
                )
                .switchMap((extendedItems) => {
-                 return this._store.let(GeoTargetingModeService.getModel)
+                 return this._store.let(this.geoTargetingModeService.getModel)
                             .take(1)
                             .map(({selectedMode}) => selectedMode.id === 'exclude')
                             .map((excluded) => extendedItems.map((item) => Object.assign(item, {excluded})));
@@ -164,7 +172,7 @@ export class GeoTargetingSelectedService {
    * @returns {TargetingSpec}
    */
   getSpec () {
-    const initialSpec$ = this._store.let(GeoTargetingLocationTypeService.getModel)
+    const initialSpec$ = this._store.let(this.geoTargetingLocationTypeService.getModel)
                              .take(1)
                              .map(({selectedType}) => selectedType)
                              .filter((selectedType) => Boolean(selectedType))
@@ -227,9 +235,12 @@ export class GeoTargetingSelectedService {
 
   constructor (private _store: Store<AppState>,
                private geoTargetingApiService: GeoTargetingApiService,
+               private geoTargetingLocationTypeService: GeoTargetingLocationTypeService,
                private geoTargetingSelectedActions: GeoTargetingSelectedActions,
+               private geoTargetingModeService: GeoTargetingModeService,
                private geoTargetingInfoService: GeoTargetingInfoService,
+               private geoTargetingIdService: GeoTargetingIdService,
                private translateService: TranslateService) {
-    this.model$ = this._store.let(GeoTargetingSelectedService.getModel);
+    this.model$ = this._store.let(this.getModel);
   }
 }

@@ -28,7 +28,7 @@ export class GeoTargetingTypeComponent implements OnInit, OnDestroy {
   constructor (private _store: Store<AppState>,
                private geoTargetingTypeService: GeoTargetingTypeService,
                private translateService: TranslateService) {
-    this.model$ = this._store.let(GeoTargetingTypeService.getModel);
+    this.model$ = this._store.let(this.geoTargetingTypeService.getModel);
   }
 
   ngOnDestroy () {

@@ -5,6 +5,7 @@ import { GeoTargetingInfoService } from './geo-targeting-info.service';
 import { Store } from '@ngrx/store';
 import { GeoTargetingInfoActions } from './geo-targeting-info.actions';
 import { SharedActions } from '../../shared/actions/index';
+import { GeoTargetingIdService } from '../geo-targeting.id';
 
 describe('Service: GeoTargetingInfo', () => {
   beforeEach(() => {
@@ -12,6 +13,7 @@ describe('Service: GeoTargetingInfo', () => {
       providers: [
         GeoTargetingInfoService,
         {provide: Store, useValue: {}},
+        {provide: GeoTargetingIdService, useValue: {id$: {getValue () {}}}},
         {provide: GeoTargetingInfoActions, useValue: {}},
         {provide: SharedActions, useValue: {}},
       ]
