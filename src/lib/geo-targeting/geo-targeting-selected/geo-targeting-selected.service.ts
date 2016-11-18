@@ -16,6 +16,7 @@ import { TargetingSpec } from '../../targeting/targeting-spec.interface';
 import { GeoTargetingLocationTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
 import { Key, City, CustomLocation } from '../../targeting/targeting-spec-geo.interface';
 import { GeoTargetingIdService } from '../geo-targeting.id';
+import { SdkError } from '../../shared/errors/sdkError';
 
 @Injectable()
 export class GeoTargetingSelectedService {
@@ -150,8 +151,15 @@ export class GeoTargetingSelectedService {
           this._store.dispatch(this.geoTargetingSelectedActions.addItems(extendedItems));
         })
         .switchMap(() => this.model$.take(1))
-        .subscribe(() => {
-          this.informAboutReplaced(items);
+        .subscribe({
+          next:  () => {
+            this.informAboutReplaced(items);
+          },
+          error: (error) => {
+            if (error instanceof SdkError) {
+              this.geoTargetingInfoService.showInfo({level: 'error', message: error.message});
+            }
+          }
         });
   }
 

@@ -3,7 +3,8 @@
 
   <geo-targeting-info-icon [level]="(model$ | async).level"></geo-targeting-info-icon>
 
-  <div class="geo-targeting-info__message">
+  <div class="geo-targeting-info__message"
+       [ngClass]="{'geo-targeting-info__message_error': (model$ | async).level === 'error'}">
     <span class="geo-targeting-info__text">{{ (model$ | async).message }}</span>
     <span class="geo-targeting-info__change"
           *ngIf="(model$ | async).canRevert"

@@ -31,11 +31,10 @@ import { Component, Input } from '@angular/core';
       </svg>
     </div>`,
   styles:   [`:host {
-                display:        table-cell;
-                height:         100%;
-                vertical-align: middle;
+                display: inline-block;
+                height:  24px;
                 padding: 0 5px;
-                width:   20px;
+                width:   24px;
               }`]
 })
 export class GeoTargetingInfoIconComponent {

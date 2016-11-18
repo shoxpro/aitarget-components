@@ -12,6 +12,7 @@ import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-inf
 import { GeoTargetingSelectedService } from '../geo-targeting-selected/geo-targeting-selected.service';
 import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.reducer';
 import { GeoTargetingIdService } from '../geo-targeting.id';
+import { SdkError } from '../../shared/errors/sdkError';
 
 @Injectable()
 export class GeoTargetingSearchService {
@@ -107,14 +108,16 @@ export class GeoTargetingSearchService {
   getQueryItemsUpdatedModelStream = (model$ = this.model$) => {
     return model$
       .take(1)
-      .mergeMap((model) => {
+      .switchMap((model) => {
         let updatedModel = Object.assign({}, model, {items: [], termsMatches: [], termsFound: [], termsNotFound: []});
 
         if (!model.termsGrouped.queries.length) {
           return Observable.of(updatedModel);
         }
 
-        return Observable.forkJoin(model.termsGrouped.queries.map((query) => this.geoTargetingApiService.search(query)),
+        return Observable.forkJoin(model.termsGrouped.queries.map((query) => {
+            return this.geoTargetingApiService.search(query);
+          }),
           (...results) => {
             return results.reduce((acc: GeoTargetingSearchState, items, index) => {
               let query        = model.termsGrouped.queries[index];
@@ -134,10 +137,8 @@ export class GeoTargetingSearchService {
 
               return acc;
             }, updatedModel);
-          })
-                         .take(1);
-      })
-      .take(1);
+          });
+      });
   };
 
   /**
@@ -148,7 +149,7 @@ export class GeoTargetingSearchService {
   getCustomLocationItemsUpdatedModelStream = (model$ = this.model$) => {
     return model$
       .take(1)
-      .mergeMap((model) => {
+      .switchMap((model) => {
         let updatedModel = Object.assign({}, model, {items: [], termsMatches: [], termsFound: [], termsNotFound: []});
 
         if (!model.termsGrouped.customLocationKeys.length) {
@@ -175,8 +176,7 @@ export class GeoTargetingSearchService {
 
                      return acc;
                    }, updatedModel);
-      })
-      .take(1);
+      });
   };
 
   /**
@@ -186,7 +186,7 @@ export class GeoTargetingSearchService {
     this.model$
         .take(1)
         .do(() => this._store.dispatch(this.geoTargetingSearchActions.updateModel({fetching: true})))
-        .mergeMap((model) => {
+        .switchMap((model) => {
           return Observable.forkJoin(
             this.getCustomLocationItemsUpdatedModelStream(),
             this.getQueryItemsUpdatedModelStream(),
@@ -209,20 +209,29 @@ export class GeoTargetingSearchService {
             });
         })
         .do(() => this._store.dispatch(this.geoTargetingSearchActions.updateModel({fetching: false})))
-        .subscribe((updatedModel) => {
-          this._store.dispatch(
-            this.geoTargetingSearchActions.updateModel(
-              Object.assign(updatedModel, {
-                isDropdownOpen: updatedModel.terms.length === 1
-              })
-            )
-          );
-          // If multi search, select FOUND terms and inform about NOT FOUND
-          if (updatedModel.terms.length > 1) {
-            this.informAboutNotFoundTerms(updatedModel);
-            this.selectFoundTerms(updatedModel);
-            this.setInput(updatedModel.termsNotFound.map((term) => term.input)
-                                      .join(';'));
+        .subscribe({
+          next:  (updatedModel) => {
+            // console.log(`updatedModel: `, updatedModel);
+            this._store.dispatch(
+              this.geoTargetingSearchActions.updateModel(
+                Object.assign(updatedModel, {
+                  isDropdownOpen: updatedModel.terms.length === 1
+                })
+              )
+            );
+            // If multi search, select FOUND terms and inform about NOT FOUND
+            if (updatedModel.terms.length > 1) {
+              this.informAboutNotFoundTerms(updatedModel);
+              this.selectFoundTerms(updatedModel);
+              this.setInput(updatedModel.termsNotFound.map((term) => term.input)
+                                        .join(';'));
+            }
+          },
+          error: (error) => {
+            if (error instanceof SdkError) {
+              this.geoTargetingInfoService.showInfo({level: 'error', message: error.message});
+            }
+            this._store.dispatch(this.geoTargetingSearchActions.updateModel({fetching: false}));
           }
         });
   }

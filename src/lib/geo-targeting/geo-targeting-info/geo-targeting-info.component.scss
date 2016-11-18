@@ -1,26 +1,24 @@
 .geo-targeting-info {
-  position:      relative;
-  display:       table;
-  box-sizing:    border-box;
-  width:         100%;
-  height:        32px;
-  border:        1px solid #d9dfe7;
-  border-bottom: none;
-  background:    #f5fafd;
-  white-space:   normal;
-  font-size:     14px;
-}
-
-.geo-targeting-info__icon,
-.geo-targeting-info__message,
-.geo-targeting-info__remove {
-  display:        table-cell;
-  height:         100%;
-  vertical-align: middle;
+  position:        relative;
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+  box-sizing:      border-box;
+  width:           100%;
+  border:          1px solid #d9dfe7;
+  border-bottom:   none;
+  background:      #f5fafd;
+  white-space:     normal;
+  font-size:       14px;
 }
 
 .geo-targeting-info__message {
-  padding: 5px 0;
+  padding:   5px 0;
+  flex-grow: 2;
+}
+
+.geo-targeting-info__message_error {
+  color: #d00303;
 }
 
 .geo-targeting-info__change {

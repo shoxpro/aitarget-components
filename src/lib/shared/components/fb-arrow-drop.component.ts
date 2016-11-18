@@ -28,8 +28,10 @@ import { Component, OnInit, Input } from '@angular/core';
               </span>`,
   styles:   [`
               :host {
-                width: 14px;
-                height: 14px;
+                position: relative;
+                display:  inline-block;
+                width:    14px;
+                height:   14px;
               }
               .fb-arrow-drop__wrapper {
                 position: relative;
@@ -45,7 +47,7 @@ import { Component, OnInit, Input } from '@angular/core';
               }
               .fb-arrow-drop__svg_up {
                 position: relative;
-                top: -2px;
+                top:      -2px;
               }
             `]
 })

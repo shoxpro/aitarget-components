@@ -15,6 +15,7 @@ import { DetailedTargetingInputService } from './detailed-targeting-input/detail
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { DetailedTargetingSearchService } from './detailed-targeting-search/detailed-targeting-search.service';
 import { Subject } from 'rxjs';
+import { DetailedTargetingItem } from './detailed-targeting-item';
 /* tslint:enable:max-line-length */
 
 @Component({
@@ -115,7 +116,7 @@ export class DetailedTargetingComponent implements OnInit, OnDestroy {
     // If targetingList is not empty get validated items and update selected
     if (targetingList.length) {
       this.detailedTargetingApiService.validate(targetingList)
-          .subscribe((selectedItems) => {
+          .subscribe((selectedItems: DetailedTargetingItem[]) => {
             let validSelectedItems = selectedItems.filter((selectedItem) => selectedItem.valid);
             this.detailedTargetingSelectedService.updateSelected(validSelectedItems);
           });

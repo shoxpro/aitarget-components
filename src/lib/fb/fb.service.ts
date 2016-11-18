@@ -6,9 +6,9 @@ import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
 @Injectable()
 export class FbService {
 
-  _api = new BehaviorSubject<FB>(null);
+  _sdk = new BehaviorSubject<FB>(null);
 
-  api                  = this._api.asObservable();
+  sdk                  = this._sdk.asObservable();
   _defaultLang: string = 'en_US';
   lang: string         = this._defaultLang;
 
@@ -77,7 +77,7 @@ export class FbService {
   }
 
   startSdk = (lang: string = this._defaultLang) => {
-    this.setAsyncInit(this._api);
+    this.setAsyncInit(this._sdk);
     this.loadSdk(lang);
   };
 
