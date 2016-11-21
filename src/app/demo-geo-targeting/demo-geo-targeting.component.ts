@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
-  selector:    'app-demo-geo-targeting',
-  templateUrl: './demo-geo-targeting.component.html',
-  styleUrls:   ['demo-geo-targeting.component.scss']
+  selector:        'app-demo-geo-targeting',
+  templateUrl:     './demo-geo-targeting.component.html',
+  styleUrls:       ['demo-geo-targeting.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DemoGeoTargetingComponent implements OnInit {
 
   hideGeoTargeting = false;
-  showSpec         = false;
+  isSpecVisible    = false;
   lang             = 'en_US';
 
   spec = {
@@ -24,11 +25,22 @@ export class DemoGeoTargetingComponent implements OnInit {
     'excluded_geo_locations': {}
   };
 
+  showSpec (isVisible, event?) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    this.isSpecVisible = isVisible;
+
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
+  }
+
   onChange = (spec) => {
     this.spec = spec;
   };
 
-  constructor () { }
+  constructor (private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit () {
   }

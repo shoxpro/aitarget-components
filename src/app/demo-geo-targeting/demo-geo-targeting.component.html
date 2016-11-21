@@ -8,7 +8,7 @@
   <button md-raised-button
           (click)="lang = 'zh_CN'">CN</button>
   <button md-raised-button
-          (click)="showSpec = !showSpec">Show Spec</button>
+          (click)="showSpec(true, $event)">Show Spec</button>
 </div>
 
 <div class="geo-targeting-wrapper">
@@ -20,5 +20,6 @@
     [lang]="lang"></geo-targeting>
 </div>
 
-<pre class="demo-geo-targeting__spec"
-     *ngIf="showSpec">{{ spec | json}}</pre>
+<fba-spec (close)="showSpec(false, $event)"
+          *ngIf="isSpecVisible"
+          [spec]="spec"></fba-spec>

@@ -7,5 +7,6 @@ export const routes: Routes = [
   {path: '', component: DashboardComponent, pathMatch: 'full'},
   {path: 'geo-targeting', loadChildren: './demo-geo-targeting/index#DemoGeoTargetingModule'},
   {path: 'detailed-targeting', loadChildren: './demo-detailed-targeting/index#DemoDetailedTargetingModule'},
+  {path: 'targeting', loadChildren: './demo-targeting/index#DemoTargetingModule'},
   {path: '**', component: NotFound404Component}
 ];

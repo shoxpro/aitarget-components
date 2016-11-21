@@ -1,5 +1,9 @@
 @import './styles.scss';
 
 #my-page-card {
-  min-height: 100%;
+  position: absolute;
+  left:     0;
+  right:    0;
+  top:      64px;
+  bottom:   0;
 }

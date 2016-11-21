@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { DemoGeoTargetingComponent } from './demo-geo-targeting.component';
-import { routes } from './demo-geo-targeting.routing';
-import { GeoTargetingModule } from '../../lib/geo-targeting/geo-targeting.module';
+import { routes } from './demo-targeting.routing';
+import { DemoTargetingComponent } from './demo-targeting.component';
+import { TargetingModule } from '../../lib/targeting/targeting.module';
 import { AppSharedModule } from '../shared/index';
 
 @NgModule({
   imports:      [
     CommonModule,
-    GeoTargetingModule,
+    TargetingModule,
     AppSharedModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
-    DemoGeoTargetingComponent
+    DemoTargetingComponent
   ]
 })
 
-export class DemoGeoTargetingModule {
+export class DemoTargetingModule {
 }
 
