@@ -1,6 +1,6 @@
 export const latLngRegex = /[(]?([\s]*[\-]?[\s]*\d{1,3}\.\d{4,6})[\s]*,?([\s]*[\-]?[\s]*\d{1,3}\.\d{4,6})[\s]*[)]?/;
 
-export const getQuery = (input: string): string => {
+export function getQuery (input: string): string {
   let query = '';
 
   if (!latLngRegex.test(input)) {
@@ -10,9 +10,9 @@ export const getQuery = (input: string): string => {
   }
 
   return query;
-};
+}
 
-export const getCustomLocationKey = (input: string): string => {
+export function getCustomLocationKey (input: string): string {
   let key = '';
 
   if (latLngRegex.test(input)) {
@@ -23,4 +23,4 @@ export const getCustomLocationKey = (input: string): string => {
   }
 
   return key;
-};
+}
