@@ -35,4 +35,4 @@ script:
   - yarn run test:once:ci
   - yarn run build:lib
 after_success:
-  - yarn run semantic-release
+  - npm run semantic-release

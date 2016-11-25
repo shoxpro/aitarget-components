@@ -2,7 +2,6 @@
   position:        relative;
   display:         flex;
   justify-content: space-between;
-  align-items:     center;
   box-sizing:      border-box;
   width:           100%;
   border:          1px solid #d9dfe7;
@@ -10,11 +9,21 @@
   background:      #f5fafd;
   white-space:     normal;
   font-size:       14px;
+  max-height:      100px;
+  overflow:        auto;
 }
 
 .geo-targeting-info__message {
-  padding:   5px 0;
-  flex-grow: 2;
+  display:     flex;
+  align-items: center;
+  flex-grow:   2;
+  height:      100%;
+  min-height:  35px;
+}
+
+.geo-targeting-info__text {
+  display: inline-block;
+  padding: 5px 0;
 }
 
 .geo-targeting-info__message_error {
@@ -30,7 +39,7 @@
 
 .geo-targeting-info__remove {
   box-sizing:  border-box;
-  padding:     0 5px;
+  padding:     5px;
   width:       20px;
   color:       #bdc0c8;
   font-weight: bold;

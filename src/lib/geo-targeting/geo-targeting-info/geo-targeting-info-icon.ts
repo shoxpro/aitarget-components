@@ -33,7 +33,7 @@ import { Component, Input } from '@angular/core';
   styles:   [`:host {
                 display: inline-block;
                 height:  24px;
-                padding: 0 5px;
+                padding: 5px;
                 width:   24px;
               }`]
 })

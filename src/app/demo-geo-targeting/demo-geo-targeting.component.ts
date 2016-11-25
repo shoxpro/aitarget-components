@@ -7,30 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DemoGeoTargetingComponent implements OnInit {
 
-  hideGeoTargeting  = false;
-  showSpec          = false;
-  lang              = 'en_US';
+  hideGeoTargeting = false;
+  showSpec         = false;
+  lang             = 'en_US';
 
   spec = {
     'geo_locations':          {
       'location_types': [
-        'home'
+        'home',
+        'recent'
       ],
-      'cities':         [
-        {
-          'key':           '2020916',
-          'name':          'Moscow',
-          'radius':        25,
-          'distance_unit': 'mile'
-        }
-      ],
+      'countries':      [
+        'RU'
+      ]
     },
-    'excluded_geo_locations': {
-      'location_types': [
-        'home'
-      ],
-      'cities':         []
-    }
+    'excluded_geo_locations': {}
   };
 
   onChange = (spec) => {

@@ -30,44 +30,52 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
                      return Object.assign({}, state, {items});
                    case GeoTargetingSelectedActions.ADD_ITEMS:
                      let newState: GeoTargetingSelectedState = {
-                       items:         [],
-                       itemsPrevious: state.items,
+                       items:         state.items.slice(),
+                       itemsPrevious: state.items.slice(),
                        itemsReplaced: []
                      };
 
-                     // Sort out existing selected items
-                     action.payload.items.reduce((acc: GeoTargetingSelectedState, item, index) => {
-                       state.items.forEach((selectedItem) => {
-                         if (item.excluded === selectedItem.excluded &&
-                           (isNarrower(item, selectedItem) || isBroader(item, selectedItem))) {
-                           acc.itemsReplaced.push(selectedItem);
-                         } else {
-                           // Already added items should become inactive
-                           selectedItem = Object.assign({}, selectedItem, {active: item.key === selectedItem.key});
-                           acc.items.push(selectedItem);
-                         }
+                     // Filter out existing selected items and pick replaced items
+                     newState.items = newState.items.filter((selectedItem) => {
+                       const toReplace = action.payload.items.some((item) => {
+                         return item.excluded === selectedItem.excluded &&
+                           isNarrower(item, selectedItem) || isBroader(item, selectedItem);
                        });
 
-                       if (index === action.payload.items.length - 1) {
-                         // Newly added items should be marked as active
-                         const itemsToAdd    = action.payload.items.map((itemToAdd) => {
-                             return Object.assign({}, itemToAdd, {active: true});
-                           }
-                         );
-                         const combinedItems = [...itemsToAdd, ...acc.items];
-                         items               = combinedItems.reduce((itemsMap, combinedItem, i) => {
-                           itemsMap[combinedItem.key] = combinedItem;
-                           if (i === combinedItems.length - 1) {
-                             return Object.values(itemsMap);
-                           }
-                           return itemsMap;
-                         }, {});
-
-                         acc.items = sortItems(items);
+                       if (toReplace) {
+                         newState.itemsReplaced.push(selectedItem);
                        }
 
-                       return acc;
-                     }, newState);
+                       return !toReplace;
+                     });
+
+                     // Newly added items should be marked as active
+                     const itemsToAdd = action.payload.items.map((itemToAdd) => {
+                         return Object.assign({}, itemToAdd, {active: true});
+                       }
+                     );
+
+                     // Previously selected items should be marked as inactive
+                     newState.items = newState.items.map((selectedItem) => {
+                         return Object.assign({}, selectedItem, {active: false});
+                       }
+                     );
+
+                     const combinedItems = [...itemsToAdd, ...newState.items];
+                     // Leave only unique locations
+                     items               = combinedItems.reduce((itemsMap, combinedItem, i) => {
+                       if (itemsMap[combinedItem.key]) {
+                         itemsMap[combinedItem.key] = Object.assign({}, itemsMap[combinedItem.key], {active: true});
+                       } else {
+                         itemsMap[combinedItem.key] = combinedItem;
+                       }
+                       if (i === combinedItems.length - 1) {
+                         return Object.values(itemsMap);
+                       }
+                       return itemsMap;
+                     }, {});
+
+                     newState.items = sortItems(items);
 
                      return Object.assign({}, state, newState);
                    case GeoTargetingSelectedActions.REMOVE_ITEMS:

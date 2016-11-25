@@ -5,10 +5,12 @@
 
   <div class="geo-targeting-info__message"
        [ngClass]="{'geo-targeting-info__message_error': (model$ | async).level === 'error'}">
-    <span class="geo-targeting-info__text">{{ (model$ | async).message }}</span>
-    <span class="geo-targeting-info__change"
-          *ngIf="(model$ | async).canRevert"
-          (click)="revert()">{{ 'geo-targeting-info.UNDO' | translate }}
+    <span class="geo-targeting-info__text">
+      {{ (model$ | async).message }}
+      <span class="geo-targeting-info__change"
+            *ngIf="(model$ | async).canRevert"
+            (click)="revert()">{{ 'geo-targeting-info.UNDO' | translate }}
+      </span>
     </span>
   </div>
 
