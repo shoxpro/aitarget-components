@@ -68,7 +68,9 @@ export const geoTargetingSearchReducer: ActionReducer<GeoTargetingSearchState> =
       termsGrouped = terms.reduce((acc, term) => {
         if (term.query) {
           acc.queries.push(term.query);
-        } else {
+        }
+
+        if (term.customLocationKey) {
           acc.customLocationKeys.push(term.customLocationKey);
         }
 

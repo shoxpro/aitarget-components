@@ -155,6 +155,10 @@ export class GeoTargetingApiService {
    * @returns {Observable<T>}
    */
   metaData (simplifiedLocations) {
+    if (!Object.keys(simplifiedLocations).length) {
+      return Observable.of({});
+    }
+
     const params = Object.assign({
       type:                          'adgeolocationmeta',
       show_polygons_and_coordinates: 1,
