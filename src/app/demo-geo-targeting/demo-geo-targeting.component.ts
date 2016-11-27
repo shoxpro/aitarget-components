@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { targetingSpecInitial } from '../../lib/targeting/targeting-spec.interface';
 
 @Component({
   selector:        'app-demo-geo-targeting',
@@ -12,18 +13,7 @@ export class DemoGeoTargetingComponent implements OnInit {
   isSpecVisible    = false;
   lang             = 'en_US';
 
-  spec = {
-    'geo_locations':          {
-      'location_types': [
-        'home',
-        'recent'
-      ],
-      'countries':      [
-        'RU'
-      ]
-    },
-    'excluded_geo_locations': {}
-  };
+  spec = targetingSpecInitial;
 
   showSpec (isVisible, event?) {
     if (event) {
