@@ -39,6 +39,10 @@ export class GeoTargetingSearchService {
     this._store.dispatch(this.geoTargetingSearchActions.updateModel({hasFocus: false}));
   }
 
+  fetching (fetching: boolean) {
+    this._store.dispatch(this.geoTargetingSearchActions.updateModel({fetching}));
+  }
+
   toggleDropdown (toOpen: boolean) {
     this.model$
         .take(1)
@@ -185,7 +189,7 @@ export class GeoTargetingSearchService {
   search () {
     this.model$
         .take(1)
-        .do(() => this._store.dispatch(this.geoTargetingSearchActions.updateModel({fetching: true})))
+        .do(() => this.fetching(true))
         .switchMap((model) => {
           return Observable.forkJoin(
             this.getCustomLocationItemsUpdatedModelStream(),
@@ -208,7 +212,7 @@ export class GeoTargetingSearchService {
               return updatedModel;
             });
         })
-        .do(() => this._store.dispatch(this.geoTargetingSearchActions.updateModel({fetching: false})))
+        .do(() => this.fetching(false))
         .subscribe({
           next:  (updatedModel) => {
             this._store.dispatch(
