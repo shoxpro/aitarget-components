@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { GeoTargetingApiService } from './geo-targeting-api/geo-targeting-api.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { TargetingSpec } from '../targeting/targeting-spec.interface';
@@ -51,28 +51,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
   destroy$ = new Subject();
   clickOutsideOfComponent$;
   modelSelected$;
 
   id;
-
-  // ==== lang ====
-  _lang: string;
-
-  @Input('lang')
-  set lang (lang: string) {
-    this._lang = lang || 'en_US';
-    // the lang to use, if the lang isn't available, it will use the current loader to get them
-    this.translateService.use(this._lang);
-  }
-
-  get lang () {
-    return this._lang;
-  }
-
-  // ==== lang ====
 
   // ==== value ====
   _value: TargetingSpec = {};
@@ -82,6 +66,7 @@ export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDe
 
     this.propagateChange(this._value);
     this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
   }
 
   get value () {
@@ -90,37 +75,12 @@ export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDe
 
   // ==== value ====
 
+  // noinspection JSMethodCanBeStatic
   /**
    * Will be replaced when implementing registerOnChange
    * @param _ {TargetingSpec}
    */
   propagateChange (_: TargetingSpec) { return _; }
-
-  processNewValue () {
-    /**
-     * Set location types on init
-     */
-    if (this.value.geo_locations && this.value.geo_locations.location_types) {
-      this.geoTargetingLocationTypeService.selectTypeByValue(this.value.geo_locations.location_types);
-    }
-    /**
-     * Get geo location metadata for passed targeting spec and update selected items
-     */
-    this.geoTargetingApiService
-        .getSelectedLocationItems(this.value)
-        .subscribe({
-          next:  (items: GeoTargetingItem[]) => {
-            if (items.length) {
-              this.geoTargetingSelectedService.setItems(items);
-            }
-          },
-          error: (error) => {
-            if (error instanceof SdkError) {
-              this.geoTargetingInfoService.showInfo({level: 'error', message: error.message});
-            }
-          }
-        });
-  }
 
   constructor (private _store: Store<AppState>,
                private translateService: TranslateService,
@@ -129,11 +89,10 @@ export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDe
                private geoTargetingLocationTypeService: GeoTargetingLocationTypeService,
                private geoTargetingService: GeoTargetingService,
                private geoTargetingInfoService: GeoTargetingInfoService,
+               private geoTargetingSearchService: GeoTargetingSearchService,
                private geoTargetingIdService: GeoTargetingIdService,
                private geoTargetingModeService: GeoTargetingModeService,
                private changeDetectorRef: ChangeDetectorRef) {
-    // this language will be used as a fallback when a translation isn't found in the current language
-    this.translateService.setDefaultLang(this.lang);
     this.modelSelected$           = this._store.let(this.geoTargetingSelectedService.getModel);
     this.clickOutsideOfComponent$ = this.geoTargetingService.clickOutsideOfComponent$;
     this.id                       = this.geoTargetingIdService.id$.getValue();
@@ -142,7 +101,6 @@ export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDe
   // ==== implement ControlValueAccessor ====
   writeValue (value: TargetingSpec) {
     this._value = value || this._value;
-    this.processNewValue();
   }
 
   registerOnChange (fn: any) {
@@ -153,15 +111,53 @@ export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDe
 
   // ==== implement ControlValueAccessor ====
 
+  // noinspection JSUnusedGlobalSymbols
+  ngAfterViewInit () {
+    /**
+     * Set location types on init
+     */
+    if (this.value.geo_locations && this.value.geo_locations.location_types) {
+      this.geoTargetingLocationTypeService.selectTypeByValue(this.value.geo_locations.location_types);
+    }
+    /**
+     * Get geo location metadata for passed targeting spec and update selected items
+     */
+    this.geoTargetingSearchService.fetching(true);
+    this.geoTargetingApiService
+        .getSelectedLocationItems(this.value)
+        .subscribe({
+          next:     (items: GeoTargetingItem[]) => {
+            if (items.length) {
+              this.geoTargetingSelectedService.setItems(items);
+            }
+          },
+          error:    (error) => {
+            if (error instanceof SdkError) {
+              this.geoTargetingInfoService.showInfo({level: 'error', message: error.message});
+            }
+          },
+          complete: () => {
+            this.geoTargetingSearchService.fetching(false);
+            this.changeDetectorRef.markForCheck();
+            this.changeDetectorRef.detectChanges();
+          }
+        });
+  }
+
   ngOnDestroy () {
     this.destroy$.next();
     this.geoTargetingService.destroy();
   }
 
   ngOnInit () {
-
+    /**
+     * Init new geo component under new unique id
+     */
     this.geoTargetingService.init();
 
+    /**
+     * Update all mode components at once
+     */
     this.geoTargetingModeService.setTranslatedModes();
 
     /**
@@ -195,18 +191,23 @@ export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDe
      */
     this.translateService.onLangChange
         .takeUntil(this.destroy$)
-
+        .do(() => this.geoTargetingSearchService.fetching(true))
         .subscribe(() => {
           this.geoTargetingApiService
               .getSelectedLocationItems(this.value)
               .subscribe({
-                next:  (items: GeoTargetingItem[]) => {
+                next:     (items: GeoTargetingItem[]) => {
                   this.geoTargetingSelectedService.updateItems(items);
                 },
-                error: (error) => {
+                error:    (error) => {
                   if (error instanceof SdkError) {
                     this.geoTargetingInfoService.showInfo({level: 'error', message: error.message});
                   }
+                },
+                complete: () => {
+                  this.geoTargetingSearchService.fetching(false);
+                  this.changeDetectorRef.markForCheck();
+                  this.changeDetectorRef.detectChanges();
                 }
               });
 
