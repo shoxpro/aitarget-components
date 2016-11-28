@@ -1,12 +1,21 @@
-<form #form="ngForm">
+<form [formGroup]="targetingForm">
 
-  <geo-targeting name="geo-targeting"
-                 [ngModel]="spec"
-                 [lang]="lang"></geo-targeting>
+  <div formArrayName="geoTargetings">
+
+    <div *ngFor="let control of targetingForm.controls.geoTargetings.controls; let i = index">
+      <div style="position: relative; padding: 10px 30px 10px 0;">
+        <geo-targeting [formControlName]="i"></geo-targeting>
+        <fba-close (onClose)="removeControl('geoTargetings', i)"></fba-close>
+      </div>
+    </div>
+
+    <div style="margin-top: 10px">
+      <button
+        md-raised-button
+        (click)="addControl('geoTargetings')">Add New
+      </button>
+    </div>
+  </div>
+
 
 </form>
-
-<div>
-  <div>Form value:</div>
-  <div>{{ form.value | json}}</div>
-</div>

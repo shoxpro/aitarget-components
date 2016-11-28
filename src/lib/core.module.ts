@@ -16,6 +16,7 @@ import { SharedModule } from './shared/shared.module';
   exports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     SharedModule,
     TranslateModule
   ]
