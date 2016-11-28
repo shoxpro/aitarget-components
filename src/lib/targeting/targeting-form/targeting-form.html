@@ -1,1 +1,12 @@
-<div>Targeting From</div>
+<form #form="ngForm">
+
+  <geo-targeting name="geo-targeting"
+                 [ngModel]="spec"
+                 [lang]="lang"></geo-targeting>
+
+</form>
+
+<div>
+  <div>Form value:</div>
+  <div>{{ form.value | json}}</div>
+</div>
