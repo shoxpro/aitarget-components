@@ -15,7 +15,8 @@ import { CommonModule } from '@angular/common';
   ],
   exports:      [
     SpecComponent,
-    CloseComponent
+    CloseComponent,
+    SharedModule
   ]
 })
 export class AppSharedModule {

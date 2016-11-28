@@ -11,8 +11,6 @@ export class DemoTargetingComponent implements OnInit {
   hideTargeting = true;
   isSpecVisible = false;
 
-  lang = 'en_US';
-
   spec = {};
 
   showSpec (isVisible, event?) {
