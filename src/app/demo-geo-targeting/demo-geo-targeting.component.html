@@ -12,12 +12,9 @@
 </div>
 
 <div class="geo-targeting-wrapper">
-  <geo-targeting
-    *ngIf="!hideGeoTargeting"
-    [spec]="spec"
-    [onChange]="onChange"
-    [adaccountId]="'act_944874195534529'"
-    [lang]="lang"></geo-targeting>
+  <geo-targeting *ngIf="!hideGeoTargeting"
+                 [(ngModel)]="spec"
+                 [lang]="lang"></geo-targeting>
 </div>
 
 <fba-spec (close)="showSpec(false, $event)"

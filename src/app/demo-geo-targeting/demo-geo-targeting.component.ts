@@ -26,10 +26,6 @@ export class DemoGeoTargetingComponent implements OnInit {
     this.changeDetectorRef.detectChanges();
   }
 
-  onChange = (spec) => {
-    this.spec = spec;
-  };
-
   constructor (private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit () {
