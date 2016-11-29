@@ -1,5 +1,7 @@
 /* tslint:disable:max-line-length */
-import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef, OnDestroy } from '@angular/core';
+import {
+  Component, OnInit, ChangeDetectionStrategy, Input, ElementRef, OnDestroy, ChangeDetectorRef, AfterViewInit
+} from '@angular/core';
 import { TargetingSpecService } from '../targeting/targeting-spec.service';
 import { DetailedTargetingSelectedService } from './detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingApiService } from './detailed-targeting-api/detailed-targeting-api.service';
@@ -12,10 +14,10 @@ import { DetailedTargetingInfoService } from './detailed-targeting-info/detailed
 import { DetailedTargetingDropdownSuggestedService } from './detailed-targeting-dropdown-suggested/detailed-targeting-dropdown-suggested.service';
 import { DetailedTargetingDropdownBrowseService } from './detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
 import { DetailedTargetingInputService } from './detailed-targeting-input/detailed-targeting-input.service';
-import { TranslateService } from 'ng2-translate/ng2-translate';
 import { DetailedTargetingSearchService } from './detailed-targeting-search/detailed-targeting-search.service';
 import { Subject } from 'rxjs';
 import { DetailedTargetingItem } from './detailed-targeting-item';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 /* tslint:enable:max-line-length */
 
 @Component({
@@ -23,6 +25,11 @@ import { DetailedTargetingItem } from './detailed-targeting-item';
   templateUrl:     'detailed-targeting.component.html',
   styleUrls:       ['detailed-targeting.component.scss'],
   providers:       [
+    {
+      provide:     NG_VALUE_ACCESSOR,
+      useExisting: DetailedTargetingComponent,
+      multi:       true
+    },
     DetailedTargetingApiService, DetailedTargetingDropdownSuggestedService,
     DetailedTargetingDropdownBrowseService, DetailedTargetingInfoService,
     DetailedTargetingSelectedService, DetailedTargetingModeService, DetailedTargetingInputService,
@@ -30,26 +37,53 @@ import { DetailedTargetingItem } from './detailed-targeting-item';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetailedTargetingComponent implements OnInit, OnDestroy {
+export class DetailedTargetingComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
   destroy$ = new Subject();
 
-  _defaultLang: string = 'en_US';
-  _lang: string        = this._defaultLang;
-
   @Input('adaccountId') adaccountId: string;
-  @Input('spec') spec: TargetingSpec    = {};
-  @Input('onChange') onChange: Function = (spec?) => {};
 
-  @Input('lang')
-  set lang (lang: string) {
-    this._lang = lang || this._defaultLang;
-    // the lang to use, if the lang isn't available, it will use the current loader to get them
-    this.translateService.use(this.lang);
+  // ==== value ====
+  _value: TargetingSpec = {};
+
+  set value (value: any) {
+    this._value = value || this._value;
+
+    this.propagateChange(this._value);
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
   }
 
-  get lang () {
-    return this._lang;
+  get value () {
+    return this._value;
   }
+
+  // ==== value ====
+
+  // noinspection JSMethodCanBeStatic
+  /**
+   * Will be replaced when implementing registerOnChange
+   * @param _ {TargetingSpec}
+   */
+  propagateChange (_: TargetingSpec) { return _; }
+
+  // ==== implement ControlValueAccessor ====
+  writeValue (value: TargetingSpec) {
+    if (!value) {
+      return;
+    }
+
+    this._value = value || this._value;
+    this.updateView();
+
+  }
+
+  registerOnChange (fn: any) {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched () {}
+
+  // ==== implement ControlValueAccessor ====
 
   constructor (private targetingSpecService: TargetingSpecService,
                private detailedTargetingService: DetailedTargetingService,
@@ -58,10 +92,7 @@ export class DetailedTargetingComponent implements OnInit, OnDestroy {
                private detailedTargetingModeService: DetailedTargetingModeService,
                private detailedTargetingInfoService: DetailedTargetingInfoService,
                private elementRef: ElementRef,
-               private translateService: TranslateService) {
-    // this language will be used as a fallback when a translation isn't found in the current language
-    this.translateService.setDefaultLang(this.lang);
-  }
+               private changeDetectorRef: ChangeDetectorRef) {}
 
   /**
    * Close detailed targeting component
@@ -92,22 +123,12 @@ export class DetailedTargetingComponent implements OnInit, OnDestroy {
     }
   };
 
-  ngOnDestroy () {
-    this.destroy$.next();
-  }
-
-  ngOnInit () {
-    if (this.adaccountId) {
-      this.detailedTargetingApiService.setAdaccount(this.adaccountId);
-    } else {
-      throw 'Adaccout ID must be provided for this detailed targeting component!';
-    }
-
+  updateView () {
     // Set targetingList array for validation
     let targetingList = [];
     for (let type in defaultDetailedTargetingSpec) {
-      if (this.spec[type] && this.spec[type].length) {
-        this.spec[type].forEach((item) => {
+      if (this.value[type] && this.value[type].length) {
+        this.value[type].forEach((item) => {
           targetingList.push({type: type, id: item.id || item});
         });
       }
@@ -121,6 +142,23 @@ export class DetailedTargetingComponent implements OnInit, OnDestroy {
             this.detailedTargetingSelectedService.updateSelected(validSelectedItems);
           });
     }
+  }
+
+  // noinspection JSUnusedGlobalSymbols
+  ngAfterViewInit () {
+    this.updateView();
+  }
+
+  ngOnDestroy () {
+    this.destroy$.next();
+  }
+
+  ngOnInit () {
+    if (this.adaccountId) {
+      this.detailedTargetingApiService.setAdaccount(this.adaccountId);
+    } else {
+      throw 'Adaccout ID must be provided for this detailed targeting component!';
+    }
 
     /**
      * Update global Targeting spec when detailedTargetingSpec changes
@@ -131,7 +169,7 @@ export class DetailedTargetingComponent implements OnInit, OnDestroy {
         .skip(2)
         .subscribe((detailedTargetingSpec: DetailedTargetingSpec) => {
           // noinspection TypeScriptUnresolvedFunction
-          let newTargetingSpec = Object.assign({}, this.spec, detailedTargetingSpec);
+          let newTargetingSpec = Object.assign({}, this.value, detailedTargetingSpec);
           let cleanSpec        = this.targetingSpecService.clean(newTargetingSpec);
           this.targetingSpecService.update(cleanSpec);
         });
@@ -144,7 +182,7 @@ export class DetailedTargetingComponent implements OnInit, OnDestroy {
         // Skip first initialization subject and second with passed spec
         .skip(1)
         .subscribe((spec: TargetingSpec) => {
-          this.onChange(spec);
+          this.value = spec;
         });
 
     /**

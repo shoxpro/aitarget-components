@@ -2,22 +2,15 @@
   <button md-raised-button
           (click)="hideDetailedTargeting = !hideDetailedTargeting">Toggle</button>
   <button md-raised-button
-          (click)="lang = 'en_US'">EN</button>
-  <button md-raised-button
-          (click)="lang = 'ru_RU'">RU</button>
-  <button md-raised-button
-          (click)="lang = 'zh_CN'">CN</button>
-  <button md-raised-button
           (click)="showSpec(true, $event)">Show Spec</button>
+  <fba-localization></fba-localization>
 </div>
 
 <div class="detailed-targeting-wrapper">
   <detailed-targeting
     *ngIf="!hideDetailedTargeting"
-    [spec]="spec"
-    [onChange]="onChange"
-    [adaccountId]="'act_944874195534529'"
-    [lang]="lang"></detailed-targeting>
+    [(ngModel)]="spec"
+    [adaccountId]="'act_944874195534529'"></detailed-targeting>
 </div>
 
 <fba-spec (close)="showSpec(false, $event)"

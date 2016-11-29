@@ -10,7 +10,6 @@ export class DemoDetailedTargetingComponent implements OnInit {
 
   hideDetailedTargeting = false;
   isSpecVisible         = false;
-  lang                  = 'en_US';
 
   spec = {
     'age_max':             65,
@@ -90,10 +89,6 @@ export class DemoDetailedTargetingComponent implements OnInit {
     this.changeDetectorRef.markForCheck();
     this.changeDetectorRef.detectChanges();
   }
-
-  onChange = (spec) => {
-    this.spec = spec;
-  };
 
   constructor (private changeDetectorRef: ChangeDetectorRef) { }
 
