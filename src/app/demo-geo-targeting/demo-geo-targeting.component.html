@@ -2,13 +2,8 @@
   <button md-raised-button
           (click)="hideGeoTargeting = !hideGeoTargeting">Toggle</button>
   <button md-raised-button
-          (click)="lang = 'en_US'">EN</button>
-  <button md-raised-button
-          (click)="lang = 'ru_RU'">RU</button>
-  <button md-raised-button
-          (click)="lang = 'zh_CN'">CN</button>
-  <button md-raised-button
           (click)="showSpec(true, $event)">Show Spec</button>
+  <fba-localization></fba-localization>
 </div>
 
 <div class="geo-targeting-wrapper">

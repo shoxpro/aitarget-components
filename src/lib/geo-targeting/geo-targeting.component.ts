@@ -100,7 +100,12 @@ export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDe
 
   // ==== implement ControlValueAccessor ====
   writeValue (value: TargetingSpec) {
+    if (!value) {
+      return;
+    }
+
     this._value = value || this._value;
+    this.updateView();
   }
 
   registerOnChange (fn: any) {
@@ -145,8 +150,7 @@ export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDe
         });
   }
 
-  // noinspection JSUnusedGlobalSymbols
-  ngAfterViewInit () {
+  updateView () {
     /**
      * Set location types on init
      */
@@ -155,6 +159,11 @@ export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDe
     }
 
     this.getSelectedLocationItems();
+  }
+
+  // noinspection JSUnusedGlobalSymbols
+  ngAfterViewInit () {
+    this.updateView();
   }
 
   ngOnDestroy () {
