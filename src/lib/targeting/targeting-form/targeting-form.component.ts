@@ -33,6 +33,7 @@ export class TargetingFormComponent implements OnInit, OnDestroy {
    * @param i
    */
   removeControl (name: string, i: number) {
+    console.log(`removeControl name, i: `, name, i);
     const control = <FormArray>this.targetingForm.controls[name];
     control.removeAt(i);
   }

@@ -6,8 +6,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styles:   [`
             :host {
               position:            absolute;
-              top:                 10px;
-              right:               10px;
+              top:                 5px;
+              right:               5px;
               padding:             0 5px;
               color:               #bdc0c8;
               font-weight:         bold;
