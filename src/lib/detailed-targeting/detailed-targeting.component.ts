@@ -1,8 +1,7 @@
 /* tslint:disable:max-line-length */
 import {
-  Component, OnInit, ChangeDetectionStrategy, Input, ElementRef, OnDestroy, ChangeDetectorRef, AfterViewInit
+  Component, OnInit, ChangeDetectionStrategy, Input, ElementRef, OnDestroy, ChangeDetectorRef
 } from '@angular/core';
-import { TargetingSpecService } from '../targeting/targeting-spec.service';
 import { DetailedTargetingSelectedService } from './detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingApiService } from './detailed-targeting-api/detailed-targeting-api.service';
 import { TargetingSpec } from '../targeting/targeting-spec.interface';
@@ -18,6 +17,7 @@ import { DetailedTargetingSearchService } from './detailed-targeting-search/deta
 import { Subject } from 'rxjs';
 import { DetailedTargetingItem } from './detailed-targeting-item';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { cleanDetailedTargetingSpec } from './detailed-targeting.constants';
 /* tslint:enable:max-line-length */
 
 @Component({
@@ -85,8 +85,7 @@ export class DetailedTargetingComponent implements ControlValueAccessor, OnInit,
 
   // ==== implement ControlValueAccessor ====
 
-  constructor (private targetingSpecService: TargetingSpecService,
-               private detailedTargetingService: DetailedTargetingService,
+  constructor (private detailedTargetingService: DetailedTargetingService,
                private detailedTargetingApiService: DetailedTargetingApiService,
                private detailedTargetingSelectedService: DetailedTargetingSelectedService,
                private detailedTargetingModeService: DetailedTargetingModeService,
@@ -163,21 +162,8 @@ export class DetailedTargetingComponent implements ControlValueAccessor, OnInit,
         // Skip first initialization subject and second with passed spec
         .skip(2)
         .subscribe((detailedTargetingSpec: DetailedTargetingSpec) => {
-          // noinspection TypeScriptUnresolvedFunction
-          let newTargetingSpec = Object.assign({}, this.value, detailedTargetingSpec);
-          let cleanSpec        = this.targetingSpecService.clean(newTargetingSpec);
-          this.targetingSpecService.update(cleanSpec);
-        });
-
-    /**
-     * Trigger onchange if global Targeting spec changed
-     */
-    this.targetingSpecService.spec
-        .takeUntil(this.destroy$)
-        // Skip first initialization subject and second with passed spec
-        .skip(1)
-        .subscribe((spec: TargetingSpec) => {
-          this.value = spec;
+          const newTargetingSpec = Object.assign({}, this.value, detailedTargetingSpec);
+          this.value             = cleanDetailedTargetingSpec(newTargetingSpec);
         });
 
     /**

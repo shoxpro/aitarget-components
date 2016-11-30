@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { GeoTargetingApiService } from './geo-targeting-api/geo-targeting-api.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { TargetingSpec } from '../targeting/targeting-spec.interface';
 import { GeoTargetingDropdownService } from './geo-targeting-dropdown/geo-targeting-dropdown.service';
-import { TargetingSpecService } from '../targeting/targeting-spec.service';
 import { GeoTargetingItem } from './geo-targeting-item.interface';
 import { GeoTargetingModeService } from './geo-targeting-mode/geo-targeting-mode.service';
 import { GeoTargetingInfoService } from './geo-targeting-info/geo-targeting-info.service';
@@ -41,7 +40,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       multi:       true
     },
     GeoTargetingActions, GeoTargetingService, GeoTargetingApiService, GeoTargetingDropdownService,
-    GeoTargetingSelectedActions, TargetingSpecService,
+    GeoTargetingSelectedActions,
     GeoTargetingInfoService, GeoTargetingInfoActions, GeoTargetingLocationTypeService,
     GeoTargetingLocationTypeActions, GeoTargetingTypeService,
     GeoTargetingRadiusService, GeoTargetingSelectedService,
