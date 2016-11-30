@@ -15,6 +15,9 @@ export class TargetingFormComponent implements OnInit, OnDestroy {
 
   @Output() changeSpec = new EventEmitter();
 
+  // TODO: accountId should be set from AppState
+  adaccountId = 'act_944874195534529';
+
   spec = targetingSpecInitial;
 
   targetingForm: FormGroup;
@@ -32,8 +35,7 @@ export class TargetingFormComponent implements OnInit, OnDestroy {
    * @param name
    * @param i
    */
-  removeControl (name: string, i: number) {
-    console.log(`removeControl name, i: `, name, i);
+  removeControl ({name, i}: {name: string, i: number}) {
     const control = <FormArray>this.targetingForm.controls[name];
     control.removeAt(i);
   }

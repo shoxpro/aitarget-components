@@ -1,18 +1,22 @@
 <form [formGroup]="targetingForm">
 
   <fba-targeting-form-array name="geoTargetings"
-                            [control]="'geo-targeting'"
                             [group]="targetingForm"
                             (add)="addControl($event)"
                             (remove)="removeControl($event, i)">
+    <template let-control>
+      <geo-targeting [formControl]="control"></geo-targeting>
+    </template>
   </fba-targeting-form-array>
 
   <fba-targeting-form-array name="detailedTargetings"
-                            [control]="'detailed-targeting'"
-                            [controlAttrs]="{adaccountId: 'act_944874195534529'}"
                             [group]="targetingForm"
                             (add)="addControl($event)"
-                            (remove)="removeControl($event, i)">
+                            (remove)="removeControl($event)">
+    <template let-control>
+      <detailed-targeting [adaccountId]="adaccountId"
+                          [formControl]="control"></detailed-targeting>
+    </template>
   </fba-targeting-form-array>
 
 </form>

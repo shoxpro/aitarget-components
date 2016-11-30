@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, TemplateRef, ContentChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -10,12 +10,11 @@ import { FormGroup } from '@angular/forms';
                 <div *ngFor="let control of group.controls[name].controls; let i=index; let first=first; let last=last;"
                      class="targeting-form__controls">
 
-                  <!--suppress UnnecessaryLabelJS -->
-                  <ng-container *dynamicComponent="controlTemplate; context: {control: control}"></ng-container>
-
+                  <template [ngTemplateOutlet]="template" [ngOutletContext]="{$implicit: control}"></template>
+                  
                   <fba-close
                     *ngIf="!(first && last)"
-                    (onClose)="remove.emit(name, i)"></fba-close>
+                    (onClose)="remove.emit({name: name, i: i})"></fba-close>
                 </div>
 
                 <fba-targeting-form-add (add)="add.emit(name)"></fba-targeting-form-add>
@@ -47,36 +46,5 @@ export class TargetingFormArrayComponent {
   @Output() add    = new EventEmitter();
   @Output() remove = new EventEmitter();
 
-  // ==== attributes ====
-  _controlAttrs: string = '';
-
-  @Input()
-  set controlAttrs (attrs = {}) {
-    this._controlAttrs = '';
-    for (let attr in attrs) {
-      if (attrs.hasOwnProperty(attr)) {
-        this._controlAttrs += `${attr}="${attrs[attr]}"`;
-      }
-    }
-  }
-
-  get controlAttrs () {
-    return this._controlAttrs;
-  }
-
-  // ==== attributes ====
-
-  // ==== control to render ====
-  _controlTemplate: string = 'input';
-
-  @Input('control')
-  set controlTemplate (tag) {
-    this._controlTemplate = `<${tag} ${this.controlAttrs} [formControl]="control"></${tag}>`;
-  }
-
-  get controlTemplate () {
-    return this._controlTemplate;
-  }
-
-  // ==== control to render ====
+  @ContentChild(TemplateRef) template: TemplateRef<any>;
 }
