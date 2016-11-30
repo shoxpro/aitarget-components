@@ -51,7 +51,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
+export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDestroy {
   destroy$ = new Subject();
   clickOutsideOfComponent$;
   modelSelected$;
@@ -159,11 +159,6 @@ export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDe
     }
 
     this.getSelectedLocationItems();
-  }
-
-  // noinspection JSUnusedGlobalSymbols
-  ngAfterViewInit () {
-    this.updateView();
   }
 
   ngOnDestroy () {

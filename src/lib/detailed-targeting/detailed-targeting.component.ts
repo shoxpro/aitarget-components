@@ -37,7 +37,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetailedTargetingComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
+export class DetailedTargetingComponent implements ControlValueAccessor, OnInit, OnDestroy {
   destroy$ = new Subject();
 
   @Input('adaccountId') adaccountId: string;
@@ -142,11 +142,6 @@ export class DetailedTargetingComponent implements ControlValueAccessor, OnInit,
             this.detailedTargetingSelectedService.updateSelected(validSelectedItems);
           });
     }
-  }
-
-  // noinspection JSUnusedGlobalSymbols
-  ngAfterViewInit () {
-    this.updateView();
   }
 
   ngOnDestroy () {
