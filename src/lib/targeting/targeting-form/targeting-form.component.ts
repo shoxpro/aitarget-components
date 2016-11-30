@@ -46,9 +46,12 @@ export class TargetingFormComponent implements OnInit, OnDestroy {
 
   ngOnInit () {
     this.targetingForm = this.formBuilder.group({
-      'geoTargetings': this.formBuilder.array([
+      'geoTargetings':      this.formBuilder.array([
         this.formBuilder.control(this.spec)
-      ])
+      ]),
+      'detailedTargetings': this.formBuilder.array([
+        this.formBuilder.control(this.spec)
+      ]),
     });
 
     this.targetingForm
