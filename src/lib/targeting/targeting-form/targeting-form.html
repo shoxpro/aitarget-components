@@ -5,7 +5,9 @@
                             (add)="addControl($event)"
                             (remove)="removeControl($event, i)">
     <template let-control>
-      <geo-targeting [formControl]="control"></geo-targeting>
+      <fba-control-squeeze>
+        <geo-targeting [formControl]="control"></geo-targeting>
+      </fba-control-squeeze>
     </template>
   </fba-targeting-form-array>
 
@@ -14,8 +16,10 @@
                             (add)="addControl($event)"
                             (remove)="removeControl($event)">
     <template let-control>
-      <detailed-targeting [adaccountId]="adaccountId"
-                          [formControl]="control"></detailed-targeting>
+      <fba-control-squeeze>
+        <detailed-targeting [adaccountId]="adaccountId"
+                            [formControl]="control"></detailed-targeting>
+      </fba-control-squeeze>
     </template>
   </fba-targeting-form-array>
 

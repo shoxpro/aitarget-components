@@ -1,28 +1,35 @@
 import { NgModule } from '@angular/core';
 import { TargetingComponent } from './targeting.component';
 import { TargetingFormComponent } from './targeting-form/targeting-form.component';
-import { CoreModule } from '../core.module';
 import { GeoTargetingModule } from '../geo-targeting/geo-targeting.module';
-import { AppSharedModule } from '../../app/shared/index';
 import { TargetingFormAddComponent } from './targeting-form/targeting-form-add.comonent';
 import { TargetingFormArrayComponent } from './targeting-form/targeting-form-array.component';
 import { DetailedTargetingModule } from '../detailed-targeting/detailed-targeting.module';
+import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from '../core.module';
+import { DynamicComponentModule } from 'ng-dynamic';
+import { ControlSqueezeComponent } from '../shared/components/control-squeeze.component';
 
 @NgModule({
   imports:      [
-    CoreModule,
-    AppSharedModule,
+    SharedModule,
     DetailedTargetingModule,
-    GeoTargetingModule
+    GeoTargetingModule,
+    DynamicComponentModule.forRoot({
+      imports: [GeoTargetingModule, CoreModule]
+    })
   ],
   declarations: [
     TargetingComponent,
     TargetingFormComponent,
     TargetingFormAddComponent,
-    TargetingFormArrayComponent
+    TargetingFormArrayComponent,
+    ControlSqueezeComponent
   ],
   exports:      [
-    TargetingComponent
+    TargetingComponent,
+    GeoTargetingModule,
+    DetailedTargetingModule
   ]
 })
 export class TargetingModule {
