@@ -39,7 +39,7 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
                      newState.items = newState.items.filter((selectedItem) => {
                        const toReplace = action.payload.items.some((item) => {
                          return item.excluded === selectedItem.excluded &&
-                           isNarrower(item, selectedItem) || isBroader(item, selectedItem);
+                           (isNarrower(item, selectedItem) || isBroader(item, selectedItem));
                        });
 
                        if (toReplace) {
