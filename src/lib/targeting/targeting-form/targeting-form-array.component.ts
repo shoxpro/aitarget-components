@@ -10,7 +10,9 @@ import { FormGroup } from '@angular/forms';
                 <div *ngFor="let control of group.controls[name].controls; let i=index; let first=first; let last=last;"
                      class="targeting-form__controls">
 
-                  <template [ngTemplateOutlet]="template" [ngOutletContext]="{$implicit: control}"></template>
+                  <div class="targeting-form__control">
+                    <template [ngTemplateOutlet]="template" [ngOutletContext]="{$implicit: control}"></template>
+                  </div>
                   
                   <fba-close
                     *ngIf="!(first && last)"
@@ -24,11 +26,13 @@ import { FormGroup } from '@angular/forms';
   styles:   [`
               .targeting-form__controls {
                 position: relative;
-                padding:  0 30px 5px 0;
+                display: flex;
+                align-items: flex-start;
+                margin-bottom: 5px;
               }
-
-              .array-wrapper {
-                margin-bottom: 10px;
+              
+              .targeting-form__control {
+                flex-grow: 2;
               }
 
               [formArrayName] {
@@ -40,7 +44,9 @@ import { FormGroup } from '@angular/forms';
               }
               
               fba-close {
+                position: relative;
                 top: 7px;
+                right: -5px;
               }
             `]
 })
