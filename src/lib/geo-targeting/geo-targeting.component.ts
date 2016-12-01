@@ -20,7 +20,7 @@ import { GeoTargetingInfoActions } from './geo-targeting-info/geo-targeting-info
 import { GeoTargetingSelectedService } from './geo-targeting-selected/geo-targeting-selected.service';
 import { AppState } from '../../app/reducers/index';
 import { Store } from '@ngrx/store';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { GeoTargetingTypeActions } from './geo-targeting-type/geo-targeting-type.actions';
 import { GeoTargetingIdService } from './geo-targeting.id';
 import { GeoTargetingActions } from './geo-targeting.actions';
@@ -28,6 +28,8 @@ import { GeoTargetingTypeService } from './geo-targeting-type/geo-targeting-type
 import { isExceedLimit, getIsWithinLimitObject } from './geo-targeting.constants';
 import { SdkError } from '../shared/errors/sdkError';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SqueezedValueAccessor } from '../shared/interfaces';
+import { FormControlToken } from '../shared/constants/form-control-token';
 
 @Component({
   selector:        'geo-targeting',
@@ -39,6 +41,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       useExisting: GeoTargetingComponent,
       multi:       true
     },
+    {provide: FormControlToken, useExisting: GeoTargetingComponent},
     GeoTargetingActions, GeoTargetingService, GeoTargetingApiService, GeoTargetingDropdownService,
     GeoTargetingSelectedActions,
     GeoTargetingInfoService, GeoTargetingInfoActions, GeoTargetingLocationTypeService,
@@ -50,8 +53,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDestroy {
-  destroy$ = new Subject();
+export class GeoTargetingComponent implements ControlValueAccessor, SqueezedValueAccessor, OnInit, OnDestroy {
+  destroy$       = new Subject();
+  squeezedValue$ = new BehaviorSubject('');
   clickOutsideOfComponent$;
   modelSelected$;
 
@@ -64,6 +68,8 @@ export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDe
     this._value = value || this._value;
 
     this.propagateChange(this._value);
+    this.updateSqueezedValue();
+
     this.changeDetectorRef.markForCheck();
     this.changeDetectorRef.detectChanges();
   }
@@ -115,6 +121,32 @@ export class GeoTargetingComponent implements ControlValueAccessor, OnInit, OnDe
 
   // ==== implement ControlValueAccessor ====
 
+  // ==== implement SqueezedValueAccessor ====
+
+  updateSqueezedValue () {
+    this.modelSelected$
+        .take(1)
+        .map(({items}) => {
+          return items.reduce((acc, item) => {
+            acc += `<span style="display: inline-flex">
+                      <geo-targeting-pin [excluded]="${item.excluded} === true"
+                      style="display: inline-block"></geo-targeting-pin>
+                      <span>${item.name}</span>
+                    </span>`;
+
+            return acc;
+          }, '');
+        })
+        .subscribe((value) => {
+          this.squeezedValue$.next(value);
+        });
+  }
+
+  getSqueezedValue () {
+    return this.squeezedValue$.getValue();
+  }
+
+  // ==== implement SqueezedValueAccessor ====
   /**
    * Get geo location metadata for passed targeting spec and update selected items
    */

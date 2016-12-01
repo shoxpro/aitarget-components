@@ -14,10 +14,12 @@ import { DetailedTargetingDropdownSuggestedService } from './detailed-targeting-
 import { DetailedTargetingDropdownBrowseService } from './detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
 import { DetailedTargetingInputService } from './detailed-targeting-input/detailed-targeting-input.service';
 import { DetailedTargetingSearchService } from './detailed-targeting-search/detailed-targeting-search.service';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { DetailedTargetingItem } from './detailed-targeting-item';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cleanDetailedTargetingSpec } from './detailed-targeting.constants';
+import { FormControlToken } from '../shared/constants/form-control-token';
+import { SqueezedValueAccessor } from '../shared/interfaces/squeeze-value-accessor.inteface';
 /* tslint:enable:max-line-length */
 
 @Component({
@@ -30,6 +32,7 @@ import { cleanDetailedTargetingSpec } from './detailed-targeting.constants';
       useExisting: DetailedTargetingComponent,
       multi:       true
     },
+    {provide: FormControlToken, useExisting: DetailedTargetingComponent},
     DetailedTargetingApiService, DetailedTargetingDropdownSuggestedService,
     DetailedTargetingDropdownBrowseService, DetailedTargetingInfoService,
     DetailedTargetingSelectedService, DetailedTargetingModeService, DetailedTargetingInputService,
@@ -37,8 +40,9 @@ import { cleanDetailedTargetingSpec } from './detailed-targeting.constants';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetailedTargetingComponent implements ControlValueAccessor, OnInit, OnDestroy {
-  destroy$ = new Subject();
+export class DetailedTargetingComponent implements ControlValueAccessor, SqueezedValueAccessor, OnInit, OnDestroy {
+  destroy$       = new Subject();
+  squeezedValue$ = new BehaviorSubject('–');
 
   @Input('adaccountId') adaccountId: string;
 
@@ -49,6 +53,8 @@ export class DetailedTargetingComponent implements ControlValueAccessor, OnInit,
     this._value = value || this._value;
 
     this.propagateChange(this._value);
+    this.updateSqueezedValue();
+
     this.changeDetectorRef.markForCheck();
     this.changeDetectorRef.detectChanges();
   }
@@ -84,6 +90,33 @@ export class DetailedTargetingComponent implements ControlValueAccessor, OnInit,
   registerOnTouched () {}
 
   // ==== implement ControlValueAccessor ====
+
+  // ==== implement SqueezedValueAccessor ====
+
+  updateSqueezedValue () {
+    this.detailedTargetingSelectedService.items
+        .take(1)
+        .map((items) => {
+          return items.reduce((acc, item, index) => {
+            let postfix = index === items.length - 1 ? '' : ';&nbsp;';
+
+            acc += `<span style="display: inline-flex">
+                        <span>${item.name}${postfix}</span>
+                      </span>`;
+
+            return acc;
+          }, '');
+        })
+        .subscribe((value) => {
+          this.squeezedValue$.next(value || '–');
+        });
+  }
+
+  getSqueezedValue () {
+    return this.squeezedValue$.getValue();
+  }
+
+  // ==== implement SqueezedValueAccessor ====
 
   constructor (private detailedTargetingService: DetailedTargetingService,
                private detailedTargetingApiService: DetailedTargetingApiService,
