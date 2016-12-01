@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CloseComponent } from '../../lib/shared/components/fba-close.component';
 import { SpecComponent } from './components/spec.component';
 import { SharedModule } from '../../lib/shared/shared.module';
 import { CommonModule } from '@angular/common';
@@ -10,12 +9,10 @@ import { CommonModule } from '@angular/common';
     SharedModule
   ],
   declarations: [
-    SpecComponent,
-    CloseComponent
+    SpecComponent
   ],
   exports:      [
     SpecComponent,
-    CloseComponent,
     SharedModule
   ]
 })

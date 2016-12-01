@@ -9,15 +9,15 @@ import { DetailedTargetingSelectedComponent } from './detailed-targeting-selecte
 import { DetailedTargetingModeComponent } from './detailed-targeting-mode/detailed-targeting-mode.component';
 import { BrowseMultiSelectComponent } from './browse-multi-select/browse-multi-select.component';
 import { TypeToHumanPipe } from './type-to-human.pipe';
-import { CoreModule } from '../core.module';
 import { DetailedTargetingSearchComponent } from './detailed-targeting-search/detailed-targeting-search.component';
 import { DetailedTargetingBrowseComponent } from './detailed-targeting-browse/detailed-targeting-browse.component';
 import { DetailedTargetingItemsComponent } from './detailed-targeting-items/detailed-targeting-items.component';
+import { SharedModule } from '../shared/shared.module';
 /* tslint:enable:max-line-length */
 
 @NgModule({
   imports:      [
-    CoreModule
+    SharedModule
   ],
   declarations: [
     DetailedTargetingComponent,

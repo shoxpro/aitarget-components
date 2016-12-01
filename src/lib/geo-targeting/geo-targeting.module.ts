@@ -1,6 +1,5 @@
 /* tslint:disable:max-line-length */
 import { NgModule } from '@angular/core';
-import { CoreModule } from '../core.module';
 import { GeoTargetingComponent } from './geo-targeting.component';
 import { GeoTargetingSelectedComponent } from './geo-targeting-selected/geo-targeting-selected.component';
 import { GeoTargetingInputComponent } from './geo-targeting-input/geo-targeting-input.component';
@@ -23,11 +22,12 @@ import { FbDropdownListComponent } from '../shared/components/fb-dropdown-list/f
 import { GeoTargetingInfoIconComponent } from './geo-targeting-info/geo-targeting-info-icon';
 import { GeoTargetingSearchComponent } from './geo-targeting-search/geo-targeting-search.component';
 import { FbPreloaderDotsComponent } from '../shared/components/fb-preloader-dots.component';
+import { SharedModule } from '../shared/shared.module';
 /* tslint:enable:max-line-length */
 
 @NgModule({
   imports:      [
-    CoreModule,
+    SharedModule,
     MdSliderModule.forRoot()
   ],
   declarations: [
@@ -54,7 +54,8 @@ import { FbPreloaderDotsComponent } from '../shared/components/fb-preloader-dots
     FbPreloaderDotsComponent
   ],
   exports:      [
-    GeoTargetingComponent
+    GeoTargetingComponent,
+    GeoTargetingPinComponent
   ]
 })
 export class GeoTargetingModule {
