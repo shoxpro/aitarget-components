@@ -24,7 +24,7 @@ import { FormGroup } from '@angular/forms';
   styles:   [`
               .targeting-form__controls {
                 position: relative;
-                padding:  0 30px 10px 0;
+                padding:  0 30px 5px 0;
               }
 
               .array-wrapper {
@@ -37,6 +37,10 @@ import { FormGroup } from '@angular/forms';
 
               fba-targeting-form-add {
                 margin-top: 10px;
+              }
+              
+              fba-close {
+                top: 7px;
               }
             `]
 })
