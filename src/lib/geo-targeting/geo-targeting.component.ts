@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { GeoTargetingApiService } from './geo-targeting-api/geo-targeting-api.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-import { TargetingSpec } from '../targeting/targeting-spec.interface';
+import { TargetingSpec } from '../targeting/interfaces/targeting-spec.interface';
 import { GeoTargetingDropdownService } from './geo-targeting-dropdown/geo-targeting-dropdown.service';
 import { GeoTargetingItem } from './geo-targeting-item.interface';
 import { GeoTargetingModeService } from './geo-targeting-mode/geo-targeting-mode.service';

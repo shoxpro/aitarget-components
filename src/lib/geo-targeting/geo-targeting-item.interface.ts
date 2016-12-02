@@ -1,4 +1,4 @@
-import { City, CustomLocation } from '../targeting/targeting-spec-geo.interface';
+import { City, CustomLocation } from '../targeting/interfaces/targeting-spec-geo.interface';
 export interface GeoTargetingItem extends City, CustomLocation {
   /**
    * Property of all types of locations

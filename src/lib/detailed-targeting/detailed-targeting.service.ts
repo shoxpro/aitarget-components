@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { DetailedTargetingSpec } from '../targeting/targeting-spec-detailed.interface';
+import { DetailedTargetingSpec } from '../targeting/interfaces/targeting-spec-detailed.interface';
 import { BehaviorSubject } from 'rxjs';
-import { defaultDetailedTargetingSpec } from '../targeting/targeting-spec-detailed.const';
+import { defaultDetailedTargetingSpec } from '../targeting/interfaces/targeting-spec-detailed.const';
 import { DetailedTargetingItem } from './detailed-targeting-item';
 
 @Injectable()

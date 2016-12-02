@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { targetingSpecInitial } from '../targeting-spec.interface';
+import { targetingSpecInitial } from '../interfaces/targeting-spec.interface';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Subject } from 'rxjs';
 
@@ -14,6 +14,7 @@ export class TargetingFormComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   @Output() changeSpec = new EventEmitter();
+  @Output() onChange   = new EventEmitter();
 
   // TODO: accountId should be set from AppState
   adaccountId = 'act_944874195534529';
@@ -62,6 +63,7 @@ export class TargetingFormComponent implements OnInit, OnDestroy {
         .subscribe((formValue) => {
           console.log(`formValue: `, formValue);
           this.changeSpec.emit(formValue);
+          this.onChange.emit(formValue);
         });
   }
 }

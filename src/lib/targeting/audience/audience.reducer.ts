@@ -1,9 +1,10 @@
-import { TargetingSpec } from '../targeting/targeting-spec.interface';
+import { TargetingSpec } from '../targeting/interfaces/targeting-spec.interface';
 import { ActionReducer, Action } from '@ngrx/store';
 
 export interface AudienceState {
   name: string;
   spec: TargetingSpec;
+  formValue: any;
   budget: number;
   bid: number;
   active: boolean;
@@ -11,14 +12,16 @@ export interface AudienceState {
 }
 
 export const audienceInitial: AudienceState = {
-  name:   '',
-  spec:   {},
-  budget: 0.0,
-  bid:    0.0,
-  active: true,
-  valid:  true
+  name:      '',
+  spec:      {},
+  formValue: {},
+  budget:    0.0,
+  bid:       0.0,
+  active:    true,
+  valid:     true
 };
 
+// noinspection JSUnusedGlobalSymbols
 export const actionReducer: ActionReducer<AudienceState> = (state = audienceInitial,
                                                             action: Action) => {
   switch (action.type) {

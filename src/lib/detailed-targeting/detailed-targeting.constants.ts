@@ -1,4 +1,4 @@
-import { defaultDetailedTargetingSpec } from '../targeting/targeting-spec-detailed.const';
+import { defaultDetailedTargetingSpec } from '../targeting/interfaces/targeting-spec-detailed.const';
 
 export function cleanDetailedTargetingSpec (spec) {
   let updatedSpec = {};

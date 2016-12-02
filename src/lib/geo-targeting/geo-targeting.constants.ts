@@ -1,4 +1,4 @@
-import { TargetingSpec } from '../targeting/targeting-spec.interface';
+import { TargetingSpec } from '../targeting/interfaces/targeting-spec.interface';
 export const GEO_LIMITS = {
   region:          200,
   city:            250,

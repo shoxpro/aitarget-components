@@ -4,10 +4,10 @@ import {
 } from '@angular/core';
 import { DetailedTargetingSelectedService } from './detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingApiService } from './detailed-targeting-api/detailed-targeting-api.service';
-import { TargetingSpec } from '../targeting/targeting-spec.interface';
-import { defaultDetailedTargetingSpec } from '../targeting/targeting-spec-detailed.const';
+import { TargetingSpec } from '../targeting/interfaces/targeting-spec.interface';
+import { defaultDetailedTargetingSpec } from '../targeting/interfaces/targeting-spec-detailed.const';
 import { DetailedTargetingService } from './detailed-targeting.service';
-import { DetailedTargetingSpec } from '../targeting/targeting-spec-detailed.interface';
+import { DetailedTargetingSpec } from '../targeting/interfaces/targeting-spec-detailed.interface';
 import { DetailedTargetingModeService } from './detailed-targeting-mode/detailed-targeting-mode.service';
 import { DetailedTargetingInfoService } from './detailed-targeting-info/detailed-targeting-info.service';
 import { DetailedTargetingDropdownSuggestedService } from './detailed-targeting-dropdown-suggested/detailed-targeting-dropdown-suggested.service';

@@ -7,7 +7,7 @@ import { GeoTargetingState, GEO_TARGETING_STATE_KEY } from '../geo-targeting.red
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/reducers/index';
 import { GeoTargetingLocationTypeActions } from './geo-targeting-location-type.actions';
-import { LocationTypeValue } from '../../targeting/targeting-spec-geo.interface';
+import { LocationTypeValue } from '../../targeting/interfaces/targeting-spec-geo.interface';
 import { GeoTargetingIdService } from '../geo-targeting.id';
 
 @Injectable()

@@ -12,9 +12,9 @@ import { GeoTargetingSelectedActions } from './geo-targeting-selected.actions';
 import { GeoTargetingInfoService } from '../geo-targeting-info/geo-targeting-info.service';
 import { GeoTargetingModeService } from '../geo-targeting-mode/geo-targeting-mode.service';
 import { GEO_TARGETING_STATE_KEY, GeoTargetingState } from '../geo-targeting.reducer';
-import { TargetingSpec } from '../../targeting/targeting-spec.interface';
+import { TargetingSpec } from '../../targeting/interfaces/targeting-spec.interface';
 import { GeoTargetingLocationTypeService } from '../geo-targeting-location-type/geo-targeting-location-type.service';
-import { Key, City, CustomLocation } from '../../targeting/targeting-spec-geo.interface';
+import { Key, City, CustomLocation } from '../../targeting/interfaces/targeting-spec-geo.interface';
 import { GeoTargetingIdService } from '../geo-targeting.id';
 import { SdkError } from '../../shared/errors/sdkError';
 

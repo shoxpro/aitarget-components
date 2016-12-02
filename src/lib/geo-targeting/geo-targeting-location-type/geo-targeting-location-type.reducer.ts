@@ -1,5 +1,5 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import { LocationTypeValue } from '../../targeting/targeting-spec-geo.interface';
+import { LocationTypeValue } from '../../targeting/interfaces/targeting-spec-geo.interface';
 import { GeoTargetingLocationTypeActions } from './geo-targeting-location-type.actions';
 
 export interface LocationType {
