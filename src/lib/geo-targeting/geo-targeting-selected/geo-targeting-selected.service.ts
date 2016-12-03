@@ -164,7 +164,7 @@ export class GeoTargetingSelectedService {
   }
 
   setItems (items: GeoTargetingItem[]) {
-    this._store.dispatch(this.geoTargetingSelectedActions.addItems(items));
+    this._store.dispatch(this.geoTargetingSelectedActions.setItems(items));
   }
 
   updateItems (items: GeoTargetingItem[]) {

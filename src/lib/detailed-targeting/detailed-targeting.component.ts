@@ -55,8 +55,8 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
     this.propagateChange(this._value);
     this.updateSqueezedValue();
 
-    this.changeDetectorRef.markForCheck();
-    this.changeDetectorRef.detectChanges();
+    // this.changeDetectorRef.markForCheck();
+    // this.changeDetectorRef.detectChanges();
   }
 
   get value () {

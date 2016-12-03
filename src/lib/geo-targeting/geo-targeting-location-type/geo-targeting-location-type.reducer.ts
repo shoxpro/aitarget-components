@@ -1,6 +1,7 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { LocationTypeValue } from '../../targeting/interfaces/targeting-spec-geo.interface';
 import { GeoTargetingLocationTypeActions } from './geo-targeting-location-type.actions';
+import isEqual = require('lodash/isEqual');
 
 export interface LocationType {
   id: string;
@@ -44,6 +45,9 @@ export const geoTargetingLocationTypeReducer: ActionReducer<GeoTargetingLocation
                      return Object.assign({}, state, {types, selectedType});
                    case GeoTargetingLocationTypeActions.SELECT_TYPE:
                      selectedType = action.payload.selectedType;
+                     if (isEqual(state.selectedType, selectedType)) {
+                       return state;
+                     }
                      return Object.assign({}, state, {selectedType});
                    case GeoTargetingLocationTypeActions.SHOW_INFO_FOR_TYPE:
                      return Object.assign({}, state, {

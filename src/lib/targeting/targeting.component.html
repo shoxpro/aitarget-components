@@ -1,1 +1,3 @@
-<fba-targeting-form (onChange)="onFormChange($event)" (changeSpec)="onChange.emit($event)"></fba-targeting-form>
+<fba-targeting-form [formValue]="form$ | async"
+                    (onChange)="onFormChange($event)"
+                    (changeSpec)="onChange.emit($event)"></fba-targeting-form>

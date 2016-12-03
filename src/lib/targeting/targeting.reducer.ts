@@ -1,7 +1,6 @@
 import { AudienceState, audienceInitial } from './audience/audience.reducer';
-import { targetingSpecInitial } from './interfaces/targeting-spec.interface';
 import { ActionReducer, Action } from '@ngrx/store';
-import { TargetingForm } from './targeting-form/targeting-form.interface';
+import { TargetingForm, targetingFormInitial } from './targeting-form/targeting-form.interface';
 import { TargetingActions } from './targeting.actions';
 import { splitFormValue, getSpecFromFormValue } from './targeting.constants';
 
@@ -12,10 +11,7 @@ export interface TargetingState {
 
 export const targetingInitial: TargetingState = {
   audiences: [audienceInitial],
-  formValue: <TargetingForm>{
-    geoTargetings:      [targetingSpecInitial],
-    detailedTargetings: [targetingSpecInitial],
-  }
+  formValue: targetingFormInitial
 };
 
 export const TARGETING_KEY = 'targeting';
