@@ -192,6 +192,19 @@ export class GeoTargetingSelectedService {
                                };
                              });
 
+    let selectedItems = [];
+
+    this.model$
+        .take(1)
+        .map(({items}) => items)
+        .subscribe((items) => {
+          selectedItems = items;
+        });
+
+    if (!selectedItems.length) {
+      return initialSpec$;
+    }
+
     const items$ = this.model$
                        .take(1)
                        .switchMap(({items}) => Observable.from(items));

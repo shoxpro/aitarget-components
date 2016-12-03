@@ -188,6 +188,10 @@ export class GeoTargetingMapService {
    */
   initializeMap (mapContainerElement: HTMLHtmlElement) {
 
+    if (this.map) {
+      this.map.remove();
+    }
+
     this.map = L.map(mapContainerElement, {
       center: [this.latitude, this.longitude],
       zoom:   this.zoom

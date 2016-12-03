@@ -63,7 +63,7 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
 
                      const combinedItems = [...itemsToAdd, ...newState.items];
                      // Leave only unique locations
-                     items               = combinedItems.reduce((itemsMap, combinedItem, i) => {
+                     items               = combinedItems.length ? combinedItems.reduce((itemsMap, combinedItem, i) => {
                        if (itemsMap[combinedItem.key]) {
                          itemsMap[combinedItem.key] = Object.assign({}, itemsMap[combinedItem.key], {active: true});
                        } else {
@@ -73,7 +73,7 @@ export const geoTargetingSelectedReducer: ActionReducer<GeoTargetingSelectedStat
                          return Object.values(itemsMap);
                        }
                        return itemsMap;
-                     }, {});
+                     }, {}) : [];
 
                      newState.items = sortItems(items);
 

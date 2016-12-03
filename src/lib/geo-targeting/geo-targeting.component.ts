@@ -55,7 +55,7 @@ import { FormControlToken } from '../shared/constants/form-control-token';
 })
 export class GeoTargetingComponent implements ControlValueAccessor, SqueezedValueAccessor, OnInit, OnDestroy {
   destroy$       = new Subject();
-  squeezedValue$ = new BehaviorSubject('');
+  squeezedValue$ = new BehaviorSubject('–');
   clickOutsideOfComponent$;
   modelSelected$;
 
@@ -69,9 +69,6 @@ export class GeoTargetingComponent implements ControlValueAccessor, SqueezedValu
 
     this.propagateChange(this._value);
     this.updateSqueezedValue();
-
-    this.changeDetectorRef.markForCheck();
-    this.changeDetectorRef.detectChanges();
   }
 
   get value () {
@@ -105,10 +102,6 @@ export class GeoTargetingComponent implements ControlValueAccessor, SqueezedValu
 
   // ==== implement ControlValueAccessor ====
   writeValue (value: TargetingSpec) {
-    if (!value) {
-      return;
-    }
-
     this._value = value || this._value;
     this.updateView();
   }
@@ -138,7 +131,7 @@ export class GeoTargetingComponent implements ControlValueAccessor, SqueezedValu
           }, '');
         })
         .subscribe((value) => {
-          this.squeezedValue$.next(value);
+          this.squeezedValue$.next(value || '–');
         });
   }
 
@@ -164,9 +157,8 @@ export class GeoTargetingComponent implements ControlValueAccessor, SqueezedValu
         .getSelectedLocationItems(this.value)
         .subscribe({
           next:     (items: GeoTargetingItem[]) => {
-            if (items.length) {
-              this.geoTargetingSelectedService.setItems(items);
-            }
+            this.geoTargetingSelectedService.setItems(items);
+            this.updateSqueezedValue();
           },
           error:    (error) => {
             if (error instanceof SdkError) {
@@ -213,9 +205,11 @@ export class GeoTargetingComponent implements ControlValueAccessor, SqueezedValu
      */
     Observable.merge(
       this.modelSelected$
+          .skip(2)
           .map(({items}) => items)
           .distinctUntilChanged(),
       this._store.let(this.geoTargetingLocationTypeService.getModel)
+          .skip(3)
           .map(({selectedType}) => selectedType)
           .filter((selectedType) => Boolean(selectedType))
           .distinctUntilChanged()
