@@ -231,7 +231,7 @@ export class GeoTargetingComponent implements ControlValueAccessor, SqueezedValu
                 }
               })
               .subscribe((spec: TargetingSpec) => {
-                this.value = Object.assign({}, this.value, spec);
+                this.value = spec;
               });
 
     /**

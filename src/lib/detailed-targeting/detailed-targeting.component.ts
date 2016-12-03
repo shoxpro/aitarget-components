@@ -195,8 +195,7 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
         // Skip first initialization subject and second with passed spec
         .skip(2)
         .subscribe((detailedTargetingSpec: DetailedTargetingSpec) => {
-          const newTargetingSpec = Object.assign({}, this.value, detailedTargetingSpec);
-          this.value             = cleanDetailedTargetingSpec(newTargetingSpec);
+          this.value = cleanDetailedTargetingSpec(detailedTargetingSpec);
         });
 
     /**
