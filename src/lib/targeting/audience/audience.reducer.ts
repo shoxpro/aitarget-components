@@ -1,4 +1,4 @@
-import { TargetingSpec } from '../targeting/interfaces/targeting-spec.interface';
+import { TargetingSpec } from '../interfaces/targeting-spec.interface';
 import { ActionReducer, Action } from '@ngrx/store';
 
 export interface AudienceState {
