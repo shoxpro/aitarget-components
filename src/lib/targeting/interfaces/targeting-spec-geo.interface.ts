@@ -142,3 +142,13 @@ export interface GeoTargetingSpec {
    */
   country_groups?: Array<CountryGroup>;
 }
+
+export const geoTargetingSpecInitial = {
+  'location_types': [
+    <LocationTypeValue>'home',
+    <LocationTypeValue>'recent'
+  ],
+  'countries':      [
+    'RU'
+  ]
+};

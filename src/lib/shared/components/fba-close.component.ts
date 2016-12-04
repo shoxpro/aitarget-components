@@ -17,6 +17,10 @@ import { Component, Output, EventEmitter } from '@angular/core';
               -moz-user-select:    none;
               -ms-user-select:     none;
             }
+            
+            :host:hover {
+              color: #9b9ea6;
+            }
             `]
 })
 export class CloseComponent {

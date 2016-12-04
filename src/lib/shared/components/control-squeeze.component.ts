@@ -1,6 +1,7 @@
-import { Component, ChangeDetectionStrategy, ContentChild } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ContentChild, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormControlToken } from '../constants/form-control-token';
+import { Subject } from 'rxjs';
 
 @Component({
   selector:        'fba-control-squeeze',
@@ -8,7 +9,7 @@ import { FormControlToken } from '../constants/form-control-token';
                       <div  class="fba-control-squeeze-value"
                             *ngIf="squeezeValueVisible"
                             (click)="toggleSqueezedValue()">
-                        <div *dynamicComponent="control.squeezedValue$ | async"></div>
+                        <div *dynamicComponent="squeezedValue"></div>
                       </div>
                       <div *ngIf="!squeezeValueVisible" (clickOutside)="toggleSqueezedValue()">
                         <ng-content></ng-content>
@@ -34,12 +35,33 @@ import { FormControlToken } from '../constants/form-control-token';
   }],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlSqueezeComponent {
-  squeezeValueVisible = false;
+export class ControlSqueezeComponent implements OnInit, OnDestroy {
+  destroy$            = new Subject();
+  squeezeValueVisible = true;
+
+  squeezedValue;
 
   @ContentChild(FormControlToken) control;
 
   toggleSqueezedValue () {
     this.squeezeValueVisible = !this.squeezeValueVisible;
+  }
+
+  ngOnDestroy () {
+    this.destroy$.next();
+  }
+
+  ngOnInit () {
+    this.control.squeezedValue$
+        .takeUntil(this.destroy$)
+        .subscribe((squeezedValue) => {
+          this.squeezedValue = squeezedValue;
+          this.changeDetectorRef.markForCheck();
+          this.changeDetectorRef.detectChanges();
+        });
+  }
+
+  constructor (private changeDetectorRef: ChangeDetectorRef) {
+
   }
 }

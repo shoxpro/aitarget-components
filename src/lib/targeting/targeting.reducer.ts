@@ -1,33 +1,34 @@
-import { AudienceState, audienceInitial } from './audience/audience.reducer';
-import { ActionReducer, Action } from '@ngrx/store';
-import { TargetingForm, targetingFormInitial } from './targeting-form/targeting-form.interface';
+import { AudienceState, audienceInitial } from './audience/audience.interface';
+import { ActionReducer, combineReducers } from '@ngrx/store';
+import {
+  TargetingFormState, targetingFormInitial, targetingFormReducer
+} from './targeting-form/targeting-form.reducer';
 import { TargetingActions } from './targeting.actions';
-import { splitFormValue, getSpecFromFormValue } from './targeting.constants';
+import { targetingAudiencesReducer } from './targeting-audiences/targeting-audiences.reducer';
 
 export interface TargetingState {
   audiences: Array<AudienceState>;
-  formValue: TargetingForm;
+  formValue: TargetingFormState;
+  audienceEditIndex: number | null;
 }
 
 export const targetingInitial: TargetingState = {
-  audiences: [audienceInitial],
-  formValue: targetingFormInitial
+  audiences:         [audienceInitial],
+  formValue:         targetingFormInitial,
+  audienceEditIndex: null
 };
 
 export const TARGETING_KEY = 'targeting';
 
-export const targetingReducer: ActionReducer<TargetingState> = (state = targetingInitial,
-                                                                action: Action) => {
-  switch (action.type) {
-    case TargetingActions.SPLIT_FORM_VALUE:
-      const audiences = splitFormValue(action.payload.formValue)
-        .map((formValue) => {
-          let spec = getSpecFromFormValue(formValue);
-          return Object.assign({}, audienceInitial, {formValue, spec});
-        });
-      const formValue = action.payload.formValue;
-      return {audiences, formValue};
-    default:
-      return state;
+export const targetingReducer: ActionReducer<TargetingState> = combineReducers({
+  audiences: targetingAudiencesReducer,
+  formValue: targetingFormReducer,
+  audienceEditIndex (state = null, action) {
+    switch (action.type) {
+      case TargetingActions.SET_EDIT_AUDIENCE_INDEX:
+        return action.payload.index;
+      default:
+        return state;
+    }
   }
-};
+});

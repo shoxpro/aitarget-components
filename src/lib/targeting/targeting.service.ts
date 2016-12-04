@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { TargetingForm } from './targeting-form/targeting-form.interface';
 import { AppState } from '../../app/reducers/index';
 import { Store } from '@ngrx/store';
 import { TargetingActions } from './targeting.actions';
@@ -14,8 +13,8 @@ export class TargetingService {
                  .distinctUntilChanged();
   };
 
-  splitFormValue (formValue: TargetingForm) {
-    this._store.dispatch(this.targetingActions.splitFormValue(formValue));
+  setEditAudienceIndex (index: number | null) {
+    this._store.dispatch(this.targetingActions.setEditAudienceIndex(index));
   }
 
   constructor (private _store: Store<AppState>,

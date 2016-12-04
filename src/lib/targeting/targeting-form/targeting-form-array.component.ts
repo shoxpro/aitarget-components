@@ -19,7 +19,9 @@ import { FormGroup } from '@angular/forms';
                     (onClose)="remove.emit({name: name, i: i})"></fba-close>
                 </div>
 
-                <fba-targeting-form-add (add)="add.emit(name)"></fba-targeting-form-add>
+                <fba-targeting-form-add
+                 *ngIf="!single"
+                (add)="add.emit(name)"></fba-targeting-form-add>
               </div>
             </div>
             `,
@@ -52,6 +54,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class TargetingFormArrayComponent {
   @Input() name: string;
+  @Input() single: boolean;
   @Input() group: FormGroup;
   @Output() add    = new EventEmitter();
   @Output() remove = new EventEmitter();

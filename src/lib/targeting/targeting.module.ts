@@ -9,6 +9,9 @@ import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from '../core.module';
 import { DynamicComponentModule } from 'ng-dynamic';
 import { ControlSqueezeComponent } from '../shared/components/control-squeeze.component';
+import { TargetingAudiences } from './targeting-audiences/targeting-audiences.component';
+import { AudienceComponent } from './audience/audience.component';
+import { MdSliderModule } from '@angular/material';
 
 @NgModule({
   imports:      [
@@ -17,14 +20,17 @@ import { ControlSqueezeComponent } from '../shared/components/control-squeeze.co
     GeoTargetingModule,
     DynamicComponentModule.forRoot({
       imports: [GeoTargetingModule, CoreModule]
-    })
+    }),
+    MdSliderModule.forRoot()
   ],
   declarations: [
     TargetingComponent,
     TargetingFormComponent,
     TargetingFormAddComponent,
     TargetingFormArrayComponent,
-    ControlSqueezeComponent
+    TargetingAudiences,
+    ControlSqueezeComponent,
+    AudienceComponent
   ],
   exports:      [
     TargetingComponent,

@@ -1,5 +1,7 @@
 :host {
-  display: block;
+  display:   block;
+  padding:   0 10px;
+  flex-grow: 2;
 }
 
 fieldset {
@@ -12,4 +14,5 @@ legend {
   margin-left: -3px;
   padding:     0 3px;
   font-weight: 500;
+  font-size:   14px;
 }

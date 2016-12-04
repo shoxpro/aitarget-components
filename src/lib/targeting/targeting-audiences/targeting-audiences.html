@@ -1,0 +1,7 @@
+<div *ngFor="let audience of audiences; let index = index;">
+  <fba-audience [audience]="audience"
+                [index]="index"
+                [audienceEditIndex]="audienceEditIndex"
+                (editAudience)="editAudience($event)"
+                (updateAudience)="updateAudience($event)"></fba-audience>
+</div>

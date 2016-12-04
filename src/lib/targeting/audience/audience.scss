@@ -1,0 +1,117 @@
+.audience {
+  position:         relative;
+  border-radius:    3px;
+  background-color: #f6f7f8;
+  padding:          0 5px 5px 5px;
+  margin:           2px;
+  font-size:        13px;
+  width:            100%;
+  box-sizing:       border-box;
+}
+
+.audience_off {
+  opacity: 0.7;
+}
+
+.audience_edited {
+  outline: 2px solid green;
+}
+
+.audience__caption {
+  text-align: left;
+}
+
+.audience__caption-content {
+  position:    relative;
+  height:      35px;
+  display:     flex;
+  align-items: center;
+  width:       100%;
+}
+
+.audience__caption-label {
+  flex-grow:     2;
+  padding-right: 10px;
+  display:       flex;
+}
+
+.audience__icon {
+  font-size:    16px;
+  color:        #50a9c9;
+  margin-right: 5px;
+}
+
+.audience__name {
+  flex-grow:        2;
+  text-transform:   uppercase;
+  font-size:        16px;
+  color:            #969ba7;
+  font-weight:      normal;
+  height:           20px;
+  box-sizing:       border-box;
+  background-color: transparent;
+  outline:          none;
+  border:           none;
+}
+
+.audience__name.ng-dirty.ng-invalid {
+  color: #d00303;
+}
+
+.audience__edit {
+  text-transform:   uppercase;
+  font-size:        13px;
+  line-height:      28px;
+  min-width:        50px;
+  background-color: #e5e6e7;
+  color:            #464647;
+  font-weight:      400;
+  margin-right:     5px;
+}
+
+.audience__switch {
+  cursor:    pointer;
+  position:  relative;
+  min-width: 50px;
+  height:    35px;
+
+  .md-slider-container {
+    top: -5px;
+  }
+
+  .md-slider-track-fill {
+    background-color: #67ba2f;
+  }
+
+  .md-slider-thumb::after {
+    background-color: #67ba2f;
+    border-color:     #67ba2f;
+  }
+
+  .md-slider-thumb {
+    transform: scale(0.5);
+  }
+
+  .md-slider-active .md-slider-thumb {
+    transform: scale(0.7);
+  }
+
+  &_off {
+    .md-slider-thumb::after {
+      background-color: transparent;
+      border-color:     rgba(0, 0, 0, 0.26);
+    }
+  }
+}
+
+.audience__sentence-content {
+  color: #707171;
+}
+
+.audience__sentence-children {
+  color: #383838;
+}
+
+.audience__reach-value {
+  font-weight: 600;
+}

@@ -1,11 +1,7 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { TargetingActions } from './targeting.actions';
-import { targetingReducer } from './targeting.reducer';
 import { splittedTestFormValue } from './targeting.reducer.mocks';
 import { splitFormValue, getSpecFromFormValue } from './targeting.constants';
-import { audienceInitial } from './audience/audience.reducer';
-
-let deepFreeze = require('deep-freeze');
 
 describe(`TargetingReducer`, () => {
   beforeEach(() => {
@@ -56,46 +52,5 @@ describe(`TargetingReducer`, () => {
           q: 'q'
         }, 'incorrect form value split');
     });
-  });
-
-  describe(TargetingActions.SPLIT_FORM_VALUE, () => {
-    it(`should split form value`, inject([TargetingActions],
-      (targetingActions: TargetingActions) => {
-        let state            = {
-          audiences: [],
-          formValue: {}
-        };
-        const inputFormValue = {
-          a: [{
-            c: 'c'
-          }],
-          g: [{
-            n: 'n'
-          }],
-          d: [{
-            p: 'p',
-            n: 'override n'
-          }],
-          s: [{
-            q: 'q',
-            p: 'override p'
-          }]
-        };
-
-        deepFreeze(state);
-
-        let newState = targetingReducer(state, targetingActions.splitFormValue(inputFormValue));
-
-        expect(newState)
-          .toEqual(Object.assign({}, state, {
-            audiences: splitFormValue(inputFormValue)
-                         .map((formValue) => {
-                           let spec = getSpecFromFormValue(formValue);
-                           return Object.assign({}, audienceInitial, {formValue, spec});
-                         }),
-            formValue: inputFormValue
-          }));
-      })
-    );
   });
 });

@@ -1,0 +1,42 @@
+<div class="audience"
+     [ngClass]="{'audience_off': !audience.active, 'audience_edited': index === audienceEditIndex}">
+  <table>
+    <caption class="audience__caption">
+      <div class="audience__caption-content">
+        <label class="audience__caption-label">
+          <i class="audience__icon material-icons">edit</i>
+          <input class="audience__name"
+                 type="text"
+                 placeholder="name is required"
+                 #input
+                 [disabled]="!audience.active"
+                 [ngModel]="audience.name"
+                 required
+                 (blur)="setName(input.value)" />
+        </label>
+        <button class="audience__edit"
+                md-button="primary"
+                [disabled]="!audience.active"
+                (click)="editAudience.emit(index)">edit</button>
+        <md-slider class="audience__switch"
+                   [ngClass]="{'audience__switch_off': !audience.active}"
+                   max="1"
+                   [ngModel]="audience.active"
+                   (ngModelChange)="setActive($event)"></md-slider>
+      </div>
+    </caption>
+    <tbody>
+      <tr class="audience__sentence"
+          *ngFor="let sentenceline of audience.targetingsentencelines">
+        <td class="audience__sentence-content">{{ sentenceline.content }}</td>
+        <td class="audience__sentence-children">{{ sentenceline.children.join(', ') }}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr class="audience__reach">
+        <td class="audience__reach-label">Reach Estimate:</td>
+        <td class="audience__reach-value">{{ audience.reachestimate.users }}</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

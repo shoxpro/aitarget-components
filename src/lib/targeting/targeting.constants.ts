@@ -1,9 +1,9 @@
-import { TargetingForm } from './targeting-form/targeting-form.interface';
+import { TargetingFormState } from './targeting-form/targeting-form.reducer';
 import { TargetingSpec } from './interfaces/targeting-spec.interface';
 
-export function splitFormValue (formValue: TargetingForm) {
-  let formValues: Array<TargetingForm> = [];
-  let i                                = 0;
+export function splitFormValue (formValue: TargetingFormState) {
+  let formValues: Array<TargetingFormState> = [];
+  let i                                     = 0;
 
   for (let key in formValue) {
     if (formValue.hasOwnProperty(key)) {
@@ -30,7 +30,7 @@ export function splitFormValue (formValue: TargetingForm) {
   return formValues;
 }
 
-export function getSpecFromFormValue (formValue: TargetingForm): TargetingSpec {
+export function getSpecFromFormValue (formValue: TargetingFormState): TargetingSpec {
   let spec: TargetingSpec = {};
 
   for (let key in formValue) {

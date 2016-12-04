@@ -1,45 +1,40 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/core';
-import { TargetingForm } from './targeting-form/targeting-form.interface';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { TargetingFormState, targetingFormInitial } from './targeting-form/targeting-form.reducer';
 import { TargetingService } from './targeting.service';
 import { TargetingActions } from './targeting.actions';
-import { Subject } from 'rxjs';
-import { AppState } from '../../app/reducers/index';
-import { Store } from '@ngrx/store';
+import { TargetingApiService } from './targeting-api/geo-targeting-api.service';
+import { TargetingAudiencesService } from './targeting-audiences/targeting-audiences.service';
+import { TargetingFormService } from './targeting-form/targeting-form.service';
+import { TargetingFormActions } from './targeting-form/targeting-form.actions';
+import { TargetingAudiencesActions } from './targeting-audiences/targeting-audiences.actions';
 
 @Component({
   selector:        'fba-targeting',
   templateUrl:     './targeting.component.html',
   styleUrls:       ['./targeting.component.scss'],
   providers:       [
-    TargetingActions, TargetingService
+    TargetingApiService,
+    TargetingActions, TargetingService,
+    TargetingAudiencesActions, TargetingAudiencesService,
+    TargetingFormActions, TargetingFormService
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TargetingComponent implements OnInit, OnDestroy {
-  destroy$ = new Subject();
-  form$;
-
+export class TargetingComponent {
   @Input() spec;
-  @Output() onChange = new EventEmitter();
+  @Input() adaccountId: string = 'act_944874195534529';
+  @Output() onChange           = new EventEmitter();
 
-  onFormChange (formValue: TargetingForm) {
-    this.targetingService.splitFormValue(formValue);
+  onFormChange (formValue: TargetingFormState) {
+    this.targetingAudiencesService.setAudiences(formValue);
+    this.targetingFormService.setFormValue(formValue);
+    this.onChange.emit(formValue);
   }
 
-  ngOnDestroy () {
-    this.destroy$.next();
-  }
-
-  ngOnInit () {
-  }
-
-  constructor (private _store: Store<AppState>,
-               private targetingService: TargetingService) {
-    this.form$ = this._store.let(TargetingService.getModel)
-                     .takeUntil(this.destroy$)
-                     .map(({formValue}) => {
-                       return formValue;
-                     })
-                     .distinctUntilChanged();
+  constructor (private targetingApiService: TargetingApiService,
+               private targetingAudiencesService: TargetingAudiencesService,
+               private targetingFormService: TargetingFormService) {
+    this.targetingApiService.setAdaccount(this.adaccountId);
+    this.targetingAudiencesService.setAudiences(targetingFormInitial);
   }
 }

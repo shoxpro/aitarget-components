@@ -1,32 +1,40 @@
-<form [formGroup]="targetingForm">
-
+<form [formGroup]="targetingForm"
+      (ngSubmit)="onSubmit()">
   <fieldset>
-    <legend>Geo Locations</legend>
-    <fba-targeting-form-array name="geoTargetings"
-                              [group]="targetingForm"
-                              (add)="addControl($event)"
-                              (remove)="removeControl($event, i)">
-      <template let-control>
-        <fba-control-squeeze>
-          <geo-targeting [formControl]="control"></geo-targeting>
-        </fba-control-squeeze>
-      </template>
-    </fba-targeting-form-array>
-  </fieldset>
+    <legend>{{ formLegend }}</legend>
+    <fieldset>
+      <legend>Geo Locations</legend>
+      <fba-targeting-form-array name="geoTargetings"
+                                [single]="editMode"
+                                [group]="targetingForm"
+                                (add)="addControl($event)"
+                                (remove)="removeControl($event, i)">
+        <template let-control>
+          <fba-control-squeeze>
+            <geo-targeting [formControl]="control"></geo-targeting>
+          </fba-control-squeeze>
+        </template>
+      </fba-targeting-form-array>
+    </fieldset>
 
-  <fieldset>
-    <legend>Detailed Targetings</legend>
-    <fba-targeting-form-array name="detailedTargetings"
-                              [group]="targetingForm"
-                              (add)="addControl($event)"
-                              (remove)="removeControl($event)">
-      <template let-control>
-        <fba-control-squeeze>
-          <detailed-targeting [adaccountId]="adaccountId"
-                              [formControl]="control"></detailed-targeting>
-        </fba-control-squeeze>
-      </template>
-    </fba-targeting-form-array>
+    <fieldset>
+      <legend>Detailed Targetings</legend>
+      <fba-targeting-form-array name="detailedTargetings"
+                                [single]="editMode"
+                                [group]="targetingForm"
+                                (add)="addControl($event)"
+                                (remove)="removeControl($event)">
+        <template let-control>
+          <fba-control-squeeze>
+            <detailed-targeting [adaccountId]="adaccountId"
+                                [formControl]="control"></detailed-targeting>
+          </fba-control-squeeze>
+        </template>
+      </fba-targeting-form-array>
+    </fieldset>
+
+    <button type="submit"
+            md-raised-button>{{ submitText }}</button>
   </fieldset>
 
 </form>
