@@ -8,10 +8,10 @@ import { Subject } from 'rxjs';
   template:        `<div>
                       <div  class="fba-control-squeeze-value"
                             *ngIf="squeezeValueVisible"
-                            (click)="toggleSqueezedValue()">
+                            (click)="toggleSqueezedValue($event)">
                         <div *dynamicComponent="squeezedValue"></div>
                       </div>
-                      <div *ngIf="!squeezeValueVisible" (clickOutside)="toggleSqueezedValue()">
+                      <div *ngIf="!squeezeValueVisible" (clickOutside)="toggleSqueezedValue($event)">
                         <ng-content></ng-content>
                       </div>
                     </div>`,
@@ -43,8 +43,13 @@ export class ControlSqueezeComponent implements OnInit, OnDestroy {
 
   @ContentChild(FormControlToken) control;
 
-  toggleSqueezedValue () {
+  toggleSqueezedValue (event) {
+    event.stopPropagation();
     this.squeezeValueVisible = !this.squeezeValueVisible;
+    // Focus inner control
+    if (!this.squeezeValueVisible) {
+      this.control.focus();
+    }
   }
 
   ngOnDestroy () {

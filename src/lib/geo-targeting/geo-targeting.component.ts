@@ -139,6 +139,10 @@ export class GeoTargetingComponent implements ControlValueAccessor, SqueezedValu
     return this.squeezedValue$.getValue();
   }
 
+  focus () {
+    this.geoTargetingSearchService.focus();
+  }
+
   // ==== implement SqueezedValueAccessor ====
   /**
    * Get geo location metadata for passed targeting spec and update selected items

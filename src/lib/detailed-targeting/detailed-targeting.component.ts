@@ -1,7 +1,5 @@
 /* tslint:disable:max-line-length */
-import {
-  Component, OnInit, ChangeDetectionStrategy, Input, ElementRef, OnDestroy, ChangeDetectorRef
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef, OnDestroy } from '@angular/core';
 import { DetailedTargetingSelectedService } from './detailed-targeting-selected/detailed-targeting-selected.service';
 import { DetailedTargetingApiService } from './detailed-targeting-api/detailed-targeting-api.service';
 import { TargetingSpec } from '../targeting/interfaces/targeting-spec.interface';
@@ -54,9 +52,6 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
 
     this.propagateChange(this._value);
     this.updateSqueezedValue();
-
-    // this.changeDetectorRef.markForCheck();
-    // this.changeDetectorRef.detectChanges();
   }
 
   get value () {
@@ -116,6 +111,14 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
     return this.squeezedValue$.getValue();
   }
 
+  focus () {
+    // TODO: should be changed after moving architecture to @ngrx/store
+    const input = this.elementRef.nativeElement.querySelector('.detailed-targeting-input__input');
+    setTimeout(() => {
+      input.focus();
+    });
+  }
+
   // ==== implement SqueezedValueAccessor ====
 
   constructor (private detailedTargetingService: DetailedTargetingService,
@@ -123,8 +126,7 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
                private detailedTargetingSelectedService: DetailedTargetingSelectedService,
                private detailedTargetingModeService: DetailedTargetingModeService,
                private detailedTargetingInfoService: DetailedTargetingInfoService,
-               private elementRef: ElementRef,
-               private changeDetectorRef: ChangeDetectorRef) {}
+               private elementRef: ElementRef) {}
 
   /**
    * Close detailed targeting component
