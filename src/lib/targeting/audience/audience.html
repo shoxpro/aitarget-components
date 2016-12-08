@@ -1,29 +1,28 @@
-<div class="audience"
-     [ngClass]="{'audience_off': !audience.active, 'audience_edited': index === audienceEditIndex}">
+<form class="audience"
+      [formGroup]="audienceForm"
+      [ngClass]="{'audience_off': !audience.active, 'audience_edited': index === audienceEditIndex}">
   <table>
     <caption class="audience__caption">
       <div class="audience__caption-content">
-        <label class="audience__caption-label">
+        <label class="audience__label">
           <i class="audience__icon material-icons">edit</i>
-          <input class="audience__name"
+          <input class="audience__input audience__input_name"
                  type="text"
-                 placeholder="name is required"
-                 #input
-                 [disabled]="!audience.active"
-                 [ngModel]="audience.name"
-                 required
-                 (blur)="setName(input.value)" />
+                 placeholder="Enter audience name"
+                 formControlName="name" />
         </label>
         <button class="audience__edit"
                 md-button="primary"
                 [disabled]="!audience.active"
                 (click)="editAudience.emit(index)">edit</button>
-        <md-slider class="audience__switch"
-                   [ngClass]="{'audience__switch_off': !audience.active}"
-                   max="1"
-                   [ngModel]="audience.active"
-                   (ngModelChange)="setActive($event)"></md-slider>
+        <label>
+          <input
+            class="audience__switch"
+            type="checkbox"
+            formControlName="active" />
+        </label>
       </div>
+      <fba-validate-messages [control]="audienceForm.get('name')"></fba-validate-messages>
     </caption>
     <tbody>
       <tr class="audience__sentence"
@@ -37,6 +36,43 @@
         <td class="audience__reach-label">Reach Estimate:</td>
         <td class="audience__reach-value">{{ audience.reachestimate.users }}</td>
       </tr>
+      <tr class="audience__bid"
+          [ngClass]="{'invalid': audienceForm.get('bid').errors}">
+        <td class="audience__bid-label">Bid:</td>
+        <td class="audience__bid-value">
+          <div class="controls">
+            <label class="audience__label">
+              <i class="audience__icon material-icons">edit</i>
+              <input type="number"
+                     class="audience__input audience__input_bid"
+                     placeholder="{{ 'Facebook recommended bid is ' + bidMedian}}"
+                     formControlName="bid"/>
+            </label>
+            <label>
+              <span>Auto Bid:</span>
+              <input
+                class="audience__switch"
+                type="checkbox"
+                formControlName="bidAuto" />
+            </label>
+          </div>
+          <fba-validate-messages [control]="audienceForm.get('bid')"></fba-validate-messages>
+        </td>
+      </tr>
+      <tr class="audience__budget"
+          [ngClass]="{'invalid': audienceForm.get('budget').errors}">
+        <td class="audience__budget-label">Budget:</td>
+        <td class="audience__budget-value">
+          <label class="audience__label">
+            <i class="audience__icon material-icons">edit</i>
+            <input type="number"
+                   class="audience__input audience__input_budget"
+                   placeholder="Enter budget "
+                   formControlName="budget" />
+          </label>
+          <fba-validate-messages [control]="audienceForm.get('budget')"></fba-validate-messages>
+        </td>
+      </tr>
     </tfoot>
   </table>
-</div>
+</form>

@@ -5,6 +5,8 @@ import { LocalizationComponent } from './components/localization.component';
 import { CloseComponent } from './components/fba-close.component';
 import { LinkDirective } from './directives/link.directive';
 import { CoreModule } from '../core.module';
+import { ValuesPipe } from './pipes/values.pipe';
+import { ValidateMessageComponent } from './components/validate-messages.component';
 
 @NgModule({
   imports:      [
@@ -15,7 +17,9 @@ import { CoreModule } from '../core.module';
     ClickOutsideDirective,
     LinkDirective,
     LocalizationComponent,
-    CloseComponent
+    CloseComponent,
+    ValuesPipe,
+    ValidateMessageComponent
   ],
   exports:      [
     CoreModule,
@@ -23,7 +27,9 @@ import { CoreModule } from '../core.module';
     ClickOutsideDirective,
     LinkDirective,
     LocalizationComponent,
-    CloseComponent
+    CloseComponent,
+    ValuesPipe,
+    ValidateMessageComponent
   ]
 })
 export class SharedModule {

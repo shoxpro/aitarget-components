@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AppState } from '../../app/reducers/index';
-import { Store } from '@ngrx/store';
-import { TargetingActions } from './targeting.actions';
 import { TARGETING_KEY, TargetingState } from './targeting.reducer';
 import { Observable } from 'rxjs';
 
@@ -12,11 +9,4 @@ export class TargetingService {
     return _store.select(TARGETING_KEY)
                  .distinctUntilChanged();
   };
-
-  setEditAudienceIndex (index: number | null) {
-    this._store.dispatch(this.targetingActions.setEditAudienceIndex(index));
-  }
-
-  constructor (private _store: Store<AppState>,
-               private targetingActions: TargetingActions) {}
 }

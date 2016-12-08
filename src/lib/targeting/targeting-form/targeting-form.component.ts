@@ -12,6 +12,7 @@ import { getSpecFromFormValue } from '../targeting.constants';
 import { TargetingFormService } from './targeting-form.service';
 import { TargetingAudiencesService } from '../targeting-audiences/targeting-audiences.service';
 import { AudienceState } from '../audience/audience.interface';
+import { AudienceService } from '../audience/audience.service';
 
 const isEqual = require('lodash/isEqual');
 
@@ -32,8 +33,8 @@ export class TargetingFormComponent implements OnInit, OnDestroy {
 
   editMode = false;
 
-  _formLegendDefault = 'FORM FOR SPLITTING';
-  _submitTextDefault = 'SPLIT';
+  _formLegendDefault = 'FORM FOR MULTIPLE AUDIENCE CREATION';
+  _submitTextDefault = 'CREATE';
 
   formLegend = this._formLegendDefault;
   submitText = this._submitTextDefault;
@@ -99,7 +100,7 @@ export class TargetingFormComponent implements OnInit, OnDestroy {
           .take(1)
           .subscribe((formValue) => {
             this.updateForm(formValue);
-            this.targetingService.setEditAudienceIndex(null);
+            this.audienceService.setEditAudienceIndex(null);
           });
 
     } else {
@@ -156,23 +157,23 @@ export class TargetingFormComponent implements OnInit, OnDestroy {
   constructor (private _store: Store<AppState>,
                private changeDetectorRef: ChangeDetectorRef,
                private targetingAudiencesService: TargetingAudiencesService,
-               private targetingService: TargetingService,
+               private audienceService: AudienceService,
                private formBuilder: FormBuilder) {
     this.targeting$ = this._store.let(TargetingService.getModel);
 
     this.audienceEditIndex$ = this.targeting$
                                   .takeUntil(this.destroy$)
                                   .skip(2)
-                                  .map(({audienceEditIndex}) => audienceEditIndex)
+                                  .map(({audienceIndexes}) => audienceIndexes.editIndex)
                                   .distinctUntilChanged();
 
     this.audienceEdited$ = this.targeting$
                                .takeUntil(this.destroy$)
-                               .filter(({audienceEditIndex}) => audienceEditIndex !== null)
-                               .map(({audienceEditIndex, audiences}) => {
+                               .filter(({audienceIndexes}) => audienceIndexes.editIndex !== null)
+                               .map(({audienceIndexes, audiences}) => {
                                  return {
-                                   index:    audienceEditIndex,
-                                   audience: audiences[audienceEditIndex]
+                                   index:    audienceIndexes.editIndex,
+                                   audience: audiences[audienceIndexes.editIndex]
                                  };
                                });
 

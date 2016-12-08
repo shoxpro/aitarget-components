@@ -14,7 +14,7 @@ export class TargetingAudiencesActions {
     };
   }
 
-  updateAudience (index, audience) {
+  updateAudience (index: number, audience: AudienceState): Action {
     return {
       type:    TargetingAudiencesActions.UPDATE_AUDIENCE,
       payload: {index, audience}

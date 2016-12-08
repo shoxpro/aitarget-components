@@ -1,14 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { TargetingActions } from './targeting.actions';
 import { splittedTestFormValue } from './targeting.reducer.mocks';
 import { splitFormValue, getSpecFromFormValue } from './targeting.constants';
 
 describe(`TargetingReducer`, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        TargetingActions
-      ]
+      providers: []
     });
   });
 
@@ -16,7 +13,7 @@ describe(`TargetingReducer`, () => {
     it(`should return array of form values`, () => {
       const formValue = {a: ['a1', 'a2', 'a3', 'a4'], g: ['g1', 'g2', 'g3'], d: ['d1', 'd2'], s: ['s1']};
 
-      const formValues = splitFormValue(formValue);
+      const formValues = splitFormValue(<any>formValue);
 
       expect(formValues)
         .toEqual(splittedTestFormValue, 'incorrect form value split');
@@ -42,7 +39,7 @@ describe(`TargetingReducer`, () => {
         }]
       };
 
-      const spec = getSpecFromFormValue(formValue);
+      const spec = getSpecFromFormValue(<any>formValue);
 
       expect(spec)
         .toEqual({

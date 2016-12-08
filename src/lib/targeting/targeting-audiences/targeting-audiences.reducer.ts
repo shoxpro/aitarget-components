@@ -12,13 +12,14 @@ export const targetingAudiencesReducer: ActionReducer<Array<AudienceState>> = (s
     case TargetingAudiencesActions.SET_AUDIENCES:
       return action.payload.audiences.slice();
     case TargetingAudiencesActions.UPDATE_AUDIENCE:
-      const audiences = state.map((audience, index) => {
+      return state.map((audience, index) => {
         if (index === action.payload.index) {
           return Object.assign({}, audience, action.payload.audience);
         }
         return audience;
       });
-      return audiences.slice();
+      // state[action.payload.index] = Object.assign({}, state[action.payload.index], action.payload.audience);
+      // return state;
     default:
       return state;
   }

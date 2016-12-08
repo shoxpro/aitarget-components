@@ -1,9 +1,11 @@
-import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+  Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, OnDestroy, EventEmitter, Output
+} from '@angular/core';
 import { AppState } from '../../../app/reducers/index';
 import { Store } from '@ngrx/store';
 import { TargetingAudiencesService } from './targeting-audiences.service';
-import { TargetingService } from '../targeting.service';
 import { Subject } from 'rxjs';
+import { AudienceService } from '../audience/audience.service';
 
 @Component({
   selector:        'fba-targeting-audiences',
@@ -14,16 +16,21 @@ import { Subject } from 'rxjs';
 export class TargetingAudiences implements OnInit, OnDestroy {
   destroy$ = new Subject();
   audiences$;
-  audienceEditIndex$;
+  audienceIndexes$;
 
   audiences;
   audienceEditIndex;
 
+  @Output() onChange = new EventEmitter();
+
   editAudience (index) {
-    this.targetingService.setEditAudienceIndex(index);
+    // Order matters! Set index first!
+    this.audienceService.setEditAudienceIndex(index);
   }
 
   updateAudience ({index, audience}) {
+    // Order matters! Set index first!
+    this.audienceService.setUpdateAudienceIndex(index);
     this.targetingAudiencesService.updateAudience(index, audience);
   }
 
@@ -34,15 +41,27 @@ export class TargetingAudiences implements OnInit, OnDestroy {
   ngOnInit () {
     this.audiences$
         .takeUntil(this.destroy$)
+        .switchMap((audiences) => {
+
+          this.onChange.emit(audiences);
+
+          return this.audienceIndexes$
+                     .take(1)
+                     .filter(({editIndex, updateIndex}) => {
+                       return editIndex === null && updateIndex === null;
+                     })
+                     .mapTo(audiences);
+        })
         .subscribe((audiences) => {
           this.audiences = audiences;
           this.changeDetectorRef.markForCheck();
           this.changeDetectorRef.detectChanges();
         });
-    this.audienceEditIndex$
+
+    this.audienceIndexes$
         .takeUntil(this.destroy$)
-        .subscribe((audienceEditIndex) => {
-          this.audienceEditIndex = audienceEditIndex;
+        .subscribe(({editIndex}) => {
+          this.audienceEditIndex = editIndex;
           this.changeDetectorRef.markForCheck();
           this.changeDetectorRef.detectChanges();
         });
@@ -50,12 +69,10 @@ export class TargetingAudiences implements OnInit, OnDestroy {
 
   constructor (private _store: Store<AppState>,
                private changeDetectorRef: ChangeDetectorRef,
-               private targetingService: TargetingService,
+               private audienceService: AudienceService,
                private targetingAudiencesService: TargetingAudiencesService) {
-    this.audiences$         = this._store.let(TargetingAudiencesService.getModel)
-                                  .skip(1); // Skip initial audiences
-    this.audienceEditIndex$ = this._store.let(TargetingService.getModel)
-                                  .map(({audienceEditIndex}) => audienceEditIndex)
-                                  .distinctUntilChanged();
+    this.audiences$       = this._store.let(TargetingAudiencesService.getModel)
+                                .skip(1); // Skip initial audiences
+    this.audienceIndexes$ = this._store.let(AudienceService.getModel);
   }
 }
