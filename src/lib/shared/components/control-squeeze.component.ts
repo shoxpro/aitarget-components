@@ -60,9 +60,11 @@ export class ControlSqueezeComponent implements OnInit, OnDestroy {
     this.control.squeezedValue$
         .takeUntil(this.destroy$)
         .subscribe((squeezedValue) => {
-          this.squeezedValue = squeezedValue;
-          this.changeDetectorRef.markForCheck();
-          this.changeDetectorRef.detectChanges();
+          setTimeout(() => {
+            this.squeezedValue = squeezedValue;
+            this.changeDetectorRef.markForCheck();
+            this.changeDetectorRef.detectChanges();
+          });
         });
   }
 
