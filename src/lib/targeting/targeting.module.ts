@@ -12,6 +12,7 @@ import { ControlSqueezeComponent } from '../shared/components/control-squeeze.co
 import { TargetingAudiences } from './targeting-audiences/targeting-audiences.component';
 import { AudienceComponent } from './audience/audience.component';
 import { MdSliderModule } from '@angular/material';
+import { GenderComponent } from '../gender/gender';
 
 @NgModule({
   imports:      [
@@ -30,7 +31,8 @@ import { MdSliderModule } from '@angular/material';
     TargetingFormArrayComponent,
     TargetingAudiences,
     ControlSqueezeComponent,
-    AudienceComponent
+    AudienceComponent,
+    GenderComponent
   ],
   exports:      [
     TargetingComponent,

@@ -2,17 +2,20 @@ import { DetailedTargetingSpec } from '../interfaces/targeting-spec-detailed.int
 import { GeoTargetingSpec, geoTargetingSpecInitial } from '../interfaces/targeting-spec-geo.interface';
 import { Action, ActionReducer } from '@ngrx/store';
 import { TargetingFormActions } from './targeting-form.actions';
+import { GendersSpec } from '../interfaces/targeting-spec-gender.interface';
 
 export interface TargetingFormState {
   geoTargetings: Array<{geo_locations: GeoTargetingSpec; excluded_geo_locations?: GeoTargetingSpec}>;
   detailedTargetings: Array<DetailedTargetingSpec>;
+  genders: Array<GendersSpec>;
 }
 
 export const targetingFormInitial: TargetingFormState = {
   geoTargetings:      [{
     geo_locations: geoTargetingSpecInitial
   }],
-  detailedTargetings: [{}]
+  detailedTargetings: [{}],
+  genders:            [{}]
 };
 
 export const TARGETING_FORM_KEY = 'formValue';

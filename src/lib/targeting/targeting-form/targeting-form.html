@@ -33,6 +33,21 @@
       </fba-targeting-form-array>
     </fieldset>
 
+    <fieldset>
+      <legend>Genders</legend>
+      <fba-targeting-form-array name="genders"
+                                [single]="editMode"
+                                [group]="targetingForm"
+                                (add)="addControl($event)"
+                                (remove)="removeControl($event)">
+        <template let-control>
+          <fba-control-squeeze>
+            <fba-gender [formControl]="control"></fba-gender>
+          </fba-control-squeeze>
+        </template>
+      </fba-targeting-form-array>
+    </fieldset>
+
     <button type="submit"
             md-raised-button>{{ submitText }}</button>
   </fieldset>
