@@ -18,6 +18,36 @@
     </fieldset>
 
     <fieldset>
+      <legend>Genders</legend>
+      <fba-targeting-form-array name="genders"
+                                [single]="editMode"
+                                [group]="targetingForm"
+                                (add)="addControl($event)"
+                                (remove)="removeControl($event)">
+        <template let-control>
+          <fba-control-squeeze>
+            <fba-gender [formControl]="control"></fba-gender>
+          </fba-control-squeeze>
+        </template>
+      </fba-targeting-form-array>
+    </fieldset>
+
+    <fieldset>
+      <legend>Ages</legend>
+      <fba-targeting-form-array name="ages"
+                                [single]="editMode"
+                                [group]="targetingForm"
+                                (add)="addControl($event)"
+                                (remove)="removeControl($event)">
+        <template let-control>
+          <fba-control-squeeze>
+            <fba-age [formControl]="control"></fba-age>
+          </fba-control-squeeze>
+        </template>
+      </fba-targeting-form-array>
+    </fieldset>
+
+    <fieldset>
       <legend>Detailed Targetings</legend>
       <fba-targeting-form-array name="detailedTargetings"
                                 [single]="editMode"
@@ -28,21 +58,6 @@
           <fba-control-squeeze>
             <detailed-targeting [adaccountId]="adaccountId"
                                 [formControl]="control"></detailed-targeting>
-          </fba-control-squeeze>
-        </template>
-      </fba-targeting-form-array>
-    </fieldset>
-
-    <fieldset>
-      <legend>Genders</legend>
-      <fba-targeting-form-array name="genders"
-                                [single]="editMode"
-                                [group]="targetingForm"
-                                (add)="addControl($event)"
-                                (remove)="removeControl($event)">
-        <template let-control>
-          <fba-control-squeeze>
-            <fba-gender [formControl]="control"></fba-gender>
           </fba-control-squeeze>
         </template>
       </fba-targeting-form-array>

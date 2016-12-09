@@ -13,6 +13,7 @@ import { TargetingAudiences } from './targeting-audiences/targeting-audiences.co
 import { AudienceComponent } from './audience/audience.component';
 import { MdSliderModule } from '@angular/material';
 import { GenderComponent } from '../gender/gender';
+import { AgeComponent } from '../age/age.component';
 
 @NgModule({
   imports:      [
@@ -32,7 +33,8 @@ import { GenderComponent } from '../gender/gender';
     TargetingAudiences,
     ControlSqueezeComponent,
     AudienceComponent,
-    GenderComponent
+    GenderComponent,
+    AgeComponent
   ],
   exports:      [
     TargetingComponent,
