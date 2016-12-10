@@ -6,7 +6,7 @@ import { MOBILE } from './services/constants';
 
 @Component({
   selector:      'app-root',
-  styleUrls:     ['./app.component.css'],
+  styleUrls:     ['./app.component.scss'],
   templateUrl:   './app.component.html',
   encapsulation: ViewEncapsulation.None
 })
