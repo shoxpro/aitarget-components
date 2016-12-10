@@ -14,12 +14,14 @@ import { AudienceComponent } from './audience/audience.component';
 import { MdSliderModule } from '@angular/material';
 import { GenderComponent } from '../gender/gender';
 import { AgeComponent } from '../age/age.component';
+import { LocalesModule } from '../locales/locales.module';
 
 @NgModule({
   imports:      [
     SharedModule,
     DetailedTargetingModule,
     GeoTargetingModule,
+    LocalesModule,
     DynamicComponentModule.forRoot({
       imports: [GeoTargetingModule, CoreModule]
     }),

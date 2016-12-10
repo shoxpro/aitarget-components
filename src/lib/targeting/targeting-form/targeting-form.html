@@ -2,6 +2,7 @@
       (ngSubmit)="onSubmit()">
   <fieldset>
     <legend>{{ formLegend }}</legend>
+
     <fieldset>
       <legend>Geo Locations</legend>
       <fba-targeting-form-array name="geoTargetings"
@@ -42,6 +43,21 @@
         <template let-control>
           <fba-control-squeeze>
             <fba-age [formControl]="control"></fba-age>
+          </fba-control-squeeze>
+        </template>
+      </fba-targeting-form-array>
+    </fieldset>
+
+    <fieldset>
+      <legend>Languages</legend>
+      <fba-targeting-form-array name="locales"
+                                [single]="editMode"
+                                [group]="targetingForm"
+                                (add)="addControl($event)"
+                                (remove)="removeControl($event)">
+        <template let-control>
+          <fba-control-squeeze>
+            <fba-locales [formControl]="control"></fba-locales>
           </fba-control-squeeze>
         </template>
       </fba-targeting-form-array>

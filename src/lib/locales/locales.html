@@ -1,0 +1,7 @@
+<div>
+  <fba-locales-selected [selectedLocales]="selected$ | async"
+                        (remove)="remove$.next($event)"></fba-locales-selected>
+  <fba-locales-search (inputValueChange)="inputValue$.next($event)"></fba-locales-search>
+  <fba-locales-dropdown [locales]="locales$ | async"
+                        (select)="select$.next($event)"></fba-locales-dropdown>
+</div>
