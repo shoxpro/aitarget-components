@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { targetingSpecInitial } from '../../lib/targeting/interfaces/targeting-spec.interface';
+import { targetingSpecInitial } from '../../lib/components/targeting/interfaces/targeting-spec.interface';
 
 @Component({
   selector:        'app-demo-geo-targeting',
