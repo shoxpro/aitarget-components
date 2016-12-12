@@ -1,10 +1,12 @@
+@import "../../../styles/main";
+
 .audience {
   position:         relative;
-  border-radius:    3px;
-  background-color: #f6f7f8;
+  border-radius:    $size__border-radius;
+  background-color: $color__background-common;
   padding:          0 5px 5px 5px;
   margin:           2px;
-  font-size:        13px;
+  font-size:        1.3rem;
   width:            100%;
   box-sizing:       border-box;
 }
@@ -14,7 +16,7 @@
 }
 
 .audience_edited {
-  outline: 2px solid #67ba2f;
+  outline: 2px solid $color_info;
 }
 
 .audience__caption {
@@ -38,7 +40,7 @@
 .audience__icon {
   display:      inline;
   font-size:    16px;
-  color:        #50a9c9;
+  color:        $color_info;
   margin-right: 5px;
 }
 
@@ -53,7 +55,7 @@
 }
 
 .audience__input:focus {
-  border-color: #67ba2f;
+  border-color: $color_success;
 }
 
 .audience__input_name {
@@ -65,11 +67,11 @@
 }
 
 .invalid {
-  color: #d00303;
+  color: $color_error;
 }
 
 .audience__input.ng-dirty.ng-invalid {
-  border-color: #d00303;
+  border-color: $color__border-control_error;
 }
 
 .validate-message {

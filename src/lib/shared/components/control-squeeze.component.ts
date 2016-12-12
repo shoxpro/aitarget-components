@@ -24,6 +24,7 @@ import { Subject } from 'rxjs';
                         border-radius: 3px;
                         cursor: pointer;
                         min-height: 32px;
+                        font-size: 1.4rem;
                         padding: 5px;
                         box-sizing: border-box;
                       }
