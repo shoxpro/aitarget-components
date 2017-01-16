@@ -79,7 +79,8 @@
     "delete": "Delete"
   },
   "geo-targeting-map": {
-    "MAP": "Map"
+    "MAP": "Map",
+    "COUNTRY_GROUP": "We are unable to highlight the border of {{name}} on the map, but it has been successfully added."
   },
   "geo-targeting-map-controls": {
     "DROP_PIN": "Drop Pin"

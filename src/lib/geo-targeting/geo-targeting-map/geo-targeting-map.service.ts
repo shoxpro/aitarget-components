@@ -65,7 +65,18 @@ export class GeoTargetingMapService {
     if (!this.itemsMap[item.key] || !this.itemsMap[item.key].featureGroup.getLayers().length) {
       this.drawItem(item);
     }
-    this.map.fitBounds(this.itemsMap[item.key].featureGroup.getBounds());
+
+    if (item.type === 'country_group') {
+      this.setView(item.latitude, item.longitude);
+      // Show message
+      this.geoTargetingInfoService.showInfo({
+        message: this.translateService.instant('geo-targeting-map.COUNTRY_GROUP', {
+          name: item.name
+        })
+      });
+    } else {
+      this.map.fitBounds(this.itemsMap[item.key].featureGroup.getBounds());
+    }
   }
 
   /**

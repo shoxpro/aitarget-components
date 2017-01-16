@@ -79,7 +79,8 @@
     "delete": "删除"
   },
   "geo-targeting-map": {
-    "MAP": "地图"
+    "MAP": "地图",
+    "COUNTRY_GROUP": "我们无法在地图中画出{{name}}的边界，但{{name}}已添加成功。"
   },
   "geo-targeting-map-controls": {
     "DROP_PIN": "放置大头针"

@@ -51,13 +51,13 @@ export class GeoTargetingMapComponent implements OnInit, OnDestroy {
     // Update map when selected items change
     this.modelSelected$
         .takeUntil(this.destroy$)
-        .filter(() => this.isOpen)
         .map((model) => model.items)
         .subscribe((items: GeoTargetingItem[]) => {
-          // Clear all existing items layers
+          // Clear all existing items layers and remove it from itemsMap
           for (let key in this.geoTargetingMapService.itemsMap) {
             if (this.geoTargetingMapService.itemsMap.hasOwnProperty(key)) {
               this.geoTargetingMapService.itemsMap[key].featureGroup.clearLayers();
+              delete this.geoTargetingMapService.itemsMap[key];
             }
           }
 
