@@ -111,7 +111,9 @@ export class GeoTargetingApiService {
     for (let type in spec.excluded_geo_locations) {
       if (spec.excluded_geo_locations.hasOwnProperty(type)) {
         spec.excluded_geo_locations[type].forEach((item: GeoTargetingItem) => {
-          excludedKeys.push(item.key);
+          // Item should have a location key
+          // But for countries item is country code itself, eg. RU, US, CA, etc.
+          excludedKeys.push(item.key || item);
         });
       }
     }
