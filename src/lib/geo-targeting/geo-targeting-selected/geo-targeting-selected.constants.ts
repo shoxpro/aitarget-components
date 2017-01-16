@@ -6,6 +6,7 @@ export const typeMap = {
   city:               'cities',
   zip:                'zips',
   geo_market:         'geo_markets',
+  country_group:      'country_groups',
   electoral_district: 'electoral_districts',
   custom_location:    'custom_locations',
   place:              'places',

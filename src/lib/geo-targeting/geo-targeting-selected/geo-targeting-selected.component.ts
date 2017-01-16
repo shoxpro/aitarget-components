@@ -101,9 +101,9 @@ export class GeoTargetingSelectedComponent implements OnInit, OnDestroy {
             let map = {};
 
             items.forEach((item: GeoTargetingItem) => {
-              let countryCode        = item.type === 'country' ? item.key : item.country_code;
+              let countryCode        = ['country', 'country_group'].includes(item.type) ? item.key : item.country_code;
               map[countryCode]       = map[countryCode] || {};
-              map[countryCode].name  = item.type === 'country' ? item.name : item.country_name;
+              map[countryCode].name  = ['country', 'country_group'].includes(item.type) ? item.name : item.country_name;
               map[countryCode].items = map[countryCode].items || [];
               // Put excluded items after included
               if (item.excluded) {
