@@ -1,5 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { Locale } from '../interfaces/locale.interface';
 
 @Component({

@@ -10,6 +10,7 @@ import { GeoTargetingSpec } from '../../../interfaces/targeting-spec-geo.interfa
 import { SdkService } from '../../../../../shared/sdk/sdk.service';
 import { SdkError } from '../../../../../shared/errors/sdkError';
 import { TargetingSpec } from '../../../interfaces/targeting-spec.interface';
+import { typeMap } from '../geo-targeting-selected/geo-targeting-selected.constants';
 
 @Injectable()
 export class GeoTargetingApiService {
