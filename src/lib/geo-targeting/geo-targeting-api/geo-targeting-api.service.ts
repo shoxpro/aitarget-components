@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../app/reducers/index';
 import { GeoTargetingTypeService } from '../geo-targeting-type/geo-targeting-type.service';
 import { SdkError } from '../../shared/errors/sdkError';
+import { typeMap } from '../geo-targeting-selected/geo-targeting-selected.constants';
 
 @Injectable()
 export class GeoTargetingApiService {
@@ -34,8 +35,7 @@ export class GeoTargetingApiService {
     let simplifiedGeoLocations = {};
     let map                    = {};
 
-    let types = ['countries', 'regions', 'cities', 'zips', 'geo_markets', 'electoral_districts', 'custom_locations',
-      'places'];
+    let types = Object.values(typeMap);
 
     types.forEach((type: string) => {
       // Combine items from included and excluded locations
@@ -45,7 +45,7 @@ export class GeoTargetingApiService {
         simplifiedGeoLocations[type] = simplifiedGeoLocations[type] || [];
         let key: string | number     = item.key;
 
-        if (type === 'countries') {
+        if (['countries', 'country_groups'].includes(type)) {
           key = (<string>item);
         }
 

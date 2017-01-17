@@ -79,7 +79,8 @@
     "delete": "Удалить"
   },
   "geo-targeting-map": {
-    "MAP": "Карта"
+    "MAP": "Карта",
+    "COUNTRY_GROUP": "Мы не можем выделить границу {{name}} на карте, но местонахождение было добавлено."
   },
   "geo-targeting-map-controls": {
     "DROP_PIN": "Отметить булавкой"

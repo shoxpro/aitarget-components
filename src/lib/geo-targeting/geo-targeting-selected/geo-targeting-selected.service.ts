@@ -56,7 +56,7 @@ export class GeoTargetingSelectedService {
           });
 
           this.geoTargetingInfoService.showInfo({
-                        message,
+            message,
             canRevert:  true,
             revertKeys: [GEO_TARGETING_SELECTED_KEY]
           });
@@ -210,7 +210,7 @@ export class GeoTargetingSelectedService {
 
             locations[typeMap[item.type]] = locations[typeMap[item.type]] || [];
 
-            if (item.type === 'country') {
+            if (['country', 'country_group'].includes(item.type)) {
               locations[typeMap[item.type]].push(item.key);
             } else {
               let selectedValue: Key = {key: item.key, name: item.name};

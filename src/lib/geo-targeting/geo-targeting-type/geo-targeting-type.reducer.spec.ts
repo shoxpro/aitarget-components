@@ -1,6 +1,5 @@
-import { geoTargetingTypeReducer, geoTargetingTypeInitial } from './geo-targeting-type.reducer';
+import { geoTargetingTypeReducer, geoTargetingTypeInitial, GeoTargetingTypeState } from './geo-targeting-type.reducer';
 import { GeoTargetingTypeActions } from './geo-targeting-type.actions';
-import { GeoTargetingTypeState } from './geo-targeting-type.interface';
 import { inject, TestBed } from '@angular/core/testing';
 import { TranslateService } from 'ng2-translate';
 import { GeoTargetingIdService } from '../geo-targeting.id';
@@ -9,6 +8,7 @@ let deepFreeze = require('deep-freeze');
 const types    = [
   {id: 'all', name: `geo-targeting-dropdown.all`},
   {id: 'country', name: `geo-targeting-dropdown.country`},
+  {id: 'country_group', name: `geo-targeting-dropdown.country_group`},
   {id: 'region', name: `geo-targeting-dropdown.region`},
   {id: 'geo_market', name: `geo-targeting-dropdown.geo_market`},
   {id: 'city', name: `geo-targeting-dropdown.city`},

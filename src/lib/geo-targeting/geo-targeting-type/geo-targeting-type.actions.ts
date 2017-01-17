@@ -18,6 +18,7 @@ export class GeoTargetingTypeActions {
         types: [
           {id: 'all', name: this.translateService.instant(`geo-targeting-dropdown.all`)},
           {id: 'country', name: this.translateService.instant(`geo-targeting-dropdown.country`)},
+          {id: 'country_group', name: this.translateService.instant(`geo-targeting-dropdown.country_group`)},
           {id: 'region', name: this.translateService.instant(`geo-targeting-dropdown.region`)},
           {id: 'geo_market', name: this.translateService.instant(`geo-targeting-dropdown.geo_market`)},
           {id: 'city', name: this.translateService.instant(`geo-targeting-dropdown.city`)},
