@@ -1,0 +1,49 @@
+.fba-geo-items__list {
+  position:      relative;
+  display:       block;
+  overflow-y:    auto;
+  box-sizing:    border-box;
+  margin:        0;
+  padding:       0;
+  width:         100%;
+  height:        auto;
+  border:        1px solid #d0d0d0;
+  border-top:    none;
+  border-radius: 0 0 3px 3px;
+  background:    #ffffff;
+  box-shadow:    0 1px 3px rgba(0, 0, 0, 0.1)
+}
+
+.fba-geo-items__list_active-info {
+  border-radius: 0 0 0 3px
+}
+
+.fba-geo-items__row {
+  position:        relative;
+  display:         flex;
+  overflow:        hidden;
+  padding-right:   12px;
+  padding-left:    8px;
+  height:          28px;
+  background:      white;
+  text-overflow:   ellipsis;
+  white-space:     nowrap;
+  font-weight:     bold;
+  font-size:       12px;
+  cursor:          pointer;
+  align-items:     center;
+  justify-content: space-between
+}
+
+.fba-geo-items__row:hover, .fba-geo-items__row_active {
+  background-color: #f5fafd
+}
+
+.fba-geo-items__name {
+  color: #1d2129
+}
+
+.fba-geo-items__type {
+  color:       #b2b2b2;
+  font-weight: normal
+}

@@ -1,5 +1,5 @@
 import { DetailedTargetingSpec } from '../interfaces/targeting-spec-detailed.interface';
-import { GeoTargetingSpec, geoTargetingSpecInitial } from '../interfaces/targeting-spec-geo.interface';
+import { GeoSpec, geoSpecInitial } from '../interfaces/targeting-spec-geo.interface';
 import { Action, ActionReducer } from '@ngrx/store';
 import { TargetingFormActions } from './targeting-form.actions';
 import { GendersSpec } from '../interfaces/targeting-spec-gender.interface';
@@ -7,7 +7,7 @@ import { AgeSpec, ageInitial } from '../interfaces/targeting-spec-age.interface'
 import { LocalesSpec } from '../interfaces/targeting-spec-locales.interface';
 
 export interface TargetingFormState {
-  geoTargetings: Array<{geo_locations: GeoTargetingSpec; excluded_geo_locations?: GeoTargetingSpec}>;
+  geos: Array<{geo_locations: GeoSpec; excluded_geo_locations?: GeoSpec}>;
   detailedTargetings: Array<DetailedTargetingSpec>;
   genders: Array<GendersSpec>;
   ages: Array<AgeSpec>;
@@ -15,8 +15,8 @@ export interface TargetingFormState {
 }
 
 export const targetingFormInitial: TargetingFormState = {
-  geoTargetings:      [{
-    geo_locations: geoTargetingSpecInitial
+  geos:               [{
+    geo_locations: geoSpecInitial
   }],
   detailedTargetings: [{}],
   genders:            [{}],

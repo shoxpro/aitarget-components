@@ -41,11 +41,11 @@
     "WORK_EMPLOYERS": "雇主",
     "WORK_POSITIONS": "职位"
   },
-  "geo-targeting-input": {
+  "fba-geo-input": {
     "PLACEHOLDER": "添加地区",
     "INVALID_LOCATION": "不可定位此地区。"
   },
-  "geo-targeting-dropdown": {
+  "fba-geo-dropdown": {
     "all": "全选",
     "country": "国家",
     "country_group": "Country Group",
@@ -63,7 +63,7 @@
     "custom_location_many": "GPS坐标",
     "place": "地方"
   },
-  "geo-targeting-info": {
+  "fba-geo-info": {
     "MESSAGE": "你的定位地区已从 {{ fromNames }} 改为 {{ toName }}.",
     "UNDO": "撤销更改",
     "MESSAGE_NOT_FOUND": "找不到某些位置: {{ notFoundInputsStr }}",
@@ -71,28 +71,28 @@
     "MESSAGE_NARROW": "定位地区设置为 {{ narrowerLocationNames }}, 系统自动排除此地区以外的所有受众。",
     "LIMIT": "最大数量的{{mode}}{{type}}不能超过{{limit}}的。"
   },
-  "geo-targeting-mode": {
+  "fba-geo-mode": {
     "include": "包括",
     "include_past": "包括",
     "exclude": "排除",
     "exclude_past": "排除",
     "delete": "删除"
   },
-  "geo-targeting-map": {
+  "fba-geo-map": {
     "MAP": "地图",
     "COUNTRY_GROUP": "我们无法在地图中画出{{name}}的边界，但{{name}}已添加成功。"
   },
-  "geo-targeting-map-controls": {
+  "fba-geo-map-controls": {
     "DROP_PIN": "放置大头针"
   },
-  "geo-targeting-radius": {
+  "fba-geo-radius": {
     "mile": "英里",
     "kilometer": "公里",
     "CURRENT_ONLY": "只限当前城市",
     "USE_RADIUS": "范围内城市",
     "USE_RADIUS_INFO": "如果城市中心在半径范围以内，周边城市也将包括在内。"
   },
-  "geo-targeting-location-type": {
+  "fba-geo-location-type": {
     "ALL": "该地区内的所有用户",
     "ALL_INFO": "住址或最近出现在选定区域内的用户。",
     "HOME": "居住在该地区的用户",

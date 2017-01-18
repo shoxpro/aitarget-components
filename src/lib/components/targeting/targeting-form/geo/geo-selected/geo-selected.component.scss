@@ -1,0 +1,88 @@
+.fba-geo-selected__content {
+  overflow-y:    auto;
+  max-height:    200px;
+  border:        1px solid #d9dfe7;
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  background:    #ffffff;
+  opacity:       1;
+}
+
+.fba-geo-selected__mode {
+  margin-right: 8px;
+
+  .fb-dropdown-list {
+    left: -10px;
+  }
+}
+
+.fba-geo-selected__group_hover {
+  background: #f5fafd
+}
+
+.fba-geo-selected__remove {
+  position:            absolute;
+  top:                 0;
+  right:               0;
+  display:             none;
+  padding:             0 5px;
+  height:              100%;
+  color:               #bdc0c8;
+  font-weight:         bold;
+  font-size:           15px;
+  line-height:         24px;
+  cursor:              pointer;
+  -webkit-user-select: none;
+  -moz-user-select:    none;
+  -ms-user-select:     none;
+}
+
+.fba-geo-selected__group_hover .fba-geo-selected__remove-group {
+  display: inline-block;
+}
+
+.fba-geo-selected__group-title {
+  position:        relative;
+  display:         flex;
+  padding:         4px 0 4px 6px;
+  justify-content: space-between;
+  align-content:   center;
+  min-height:      26px;
+  box-sizing:      border-box;
+}
+
+.fba-geo-selected__group-title .fba-geo-selected__group-name {
+  color: #50a9c9;
+}
+
+.fba-geo-selected__item {
+  position:      relative;
+  display:       flex;
+  box-sizing:    border-box;
+  min-height:    26px;
+  height:        auto;
+  font-weight:   bold;
+  cursor:        pointer;
+  align-items:   center;
+  padding-right: 18px;
+}
+
+.fba-geo-selected__item:hover {
+  background: #f5fafd
+}
+
+.fba-geo-selected__item:hover .fba-geo-selected__remove-item {
+  display: inline-block;
+}
+
+.fba-geo-selected__group-devider {
+  padding: 0 8px;
+  height:  1px;
+}
+
+.fba-geo-selected__group-devider:after {
+  display:    block;
+  height:     100%;
+  background: #d9dfe7;
+  content:    "";
+}

@@ -5,7 +5,6 @@
  * track of your root app dependencies here. Only import directly in this file if
  * there is something that is specific to the environment.
  */
-
 import { ApplicationRef, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';

@@ -1,0 +1,113 @@
+:host {
+  display:             inline-block;
+  user-select:         none;
+  -webkit-user-select: none;
+  -moz-user-select:    none;
+  -ms-user-select:     none;
+}
+
+.fba-geo-map {
+  display:     flex;
+  padding:     0 6px;
+  border-left: 1px solid #bdc7d8;
+  white-space: nowrap;
+  cursor:      pointer;
+  align-items: center;
+  height:      18px;
+}
+
+.fba-geo-map__switcher {
+  cursor: pointer;
+}
+
+.fba-geo-map__title {
+  display:             inline-block;
+  color:               #4b4f56;
+  font-weight:         bold;
+  user-select:         none;
+  -webkit-user-select: none;
+  -moz-user-select:    none;
+  -ms-user-select:     none;
+}
+
+.fba-geo-map__title_inactive,
+.fba-geo-map__title.fba-geo-map__title_active:hover:not(.fba-geo-map__title_inactive) {
+  color: #4b4f56;
+}
+
+.fba-geo-map__title_active,
+.fba-geo-map__title.fba-geo-map__title_inactive:hover:not(.fba-geo-map__title_active) {
+  color: #53aaca;
+}
+
+.fba-geo-map__container {
+  position:      absolute;
+  bottom:        36px;
+  transform:     translateY(100%);
+  left:          0;
+  z-index:       100;
+  box-sizing:    border-box;
+  width:         100%;
+  border:        1px solid #d0d0d0;
+  border-top:    none;
+  border-radius: 0 0 3px 3px;
+}
+
+.fba-geo-map__container_pin-mode .leaflet-grab,
+.fba-geo-map__container_pin-mode .leaflet-interactive {
+  cursor: crosshair !important;
+}
+
+.fba-geo-map__element {
+  position: relative;
+  width:    100%;
+  height:   230px;
+  outline:  none;
+}
+
+.fba-geo-map__element .leaflet-popup-content {
+  margin: 8px;
+  width:  auto !important;
+}
+
+.fba-geo-map__element .leaflet-bar {
+  border-radius: 3px;
+}
+
+.fba-geo-map__pin {
+  position:         relative;
+  border-radius:    6px;
+  background-color: #ffffff;
+  box-shadow:       0 0 5px 0 rgba(154, 168, 181, 0.39);
+}
+
+.fba-geo-map__pin:before {
+  position:         absolute;
+  top:              2px;
+  left:             2px;
+  display:          block;
+  width:            8px;
+  height:           8px;
+  border-radius:    4px;
+  background-color: #4d6aa4;
+  content:          '';
+}
+
+.fba-geo-map__pin:after {
+  position:         relative;
+  top:              -26px;
+  display:          block;
+  width:            12px;
+  height:           12px;
+  background-color: #ffffff;
+  content:          '';
+}
+
+.fba-geo-map__pin svg {
+  width:          48px;
+  height:         48px;
+  transform:      translate3d(-18px, -40px, 0);
+  stroke:         #4d6aa4;
+  stroke-opacity: 1;
+  stroke-width:   1;
+}

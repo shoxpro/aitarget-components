@@ -1,0 +1,14 @@
+<div class="fba-geo-mode"
+     (click)="toggleDropdown(true, $event)">
+  <div class="fba-geo-mode__pin">
+    <fba-geo-pin [excluded]="selectedMode.id === 'exclude'"></fba-geo-pin>
+  </div>
+  <fb-arrow-drop [direction]="isOpen ? 'up' : 'down'"></fb-arrow-drop>
+  <fb-dropdown-list
+    *ngIf="isOpen"
+    [appendTo]="appendTarget"
+    (clickOutside)="toggleDropdown(false, $event)"
+    [items]="(model$ | async).modes.slice(0, 2)"
+    [selectedItem]="selectedMode"
+    (onClick)="selectMode($event)"></fb-dropdown-list>
+</div>

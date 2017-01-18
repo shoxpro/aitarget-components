@@ -1,0 +1,17 @@
+<div class="demo-geo__component-buttons">
+  <button md-raised-button
+          (click)="hideGeo = !hideGeo">Toggle</button>
+  <button md-raised-button
+          (click)="showSpec(true, $event)">Show Spec</button>
+  <fba-localization></fba-localization>
+</div>
+
+<div class="fba-geo-wrapper">
+  <fba-geo *ngIf="!hideGeo"
+           [(ngModel)]="spec"
+           [lang]="lang"></fba-geo>
+</div>
+
+<fba-spec (close)="showSpec(false, $event)"
+          *ngIf="isSpecVisible"
+          [spec]="spec"></fba-spec>

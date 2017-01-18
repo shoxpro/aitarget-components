@@ -1,0 +1,36 @@
+:host {
+  display:             inline-block;
+  user-select:         none;
+  -webkit-user-select: none;
+  -moz-user-select:    none;
+  -ms-user-select:     none;
+}
+
+.fba-geo-mode {
+  position:     relative;
+  display:      flex;
+  padding:      0 6px;
+  border-right: 1px solid #bdc7d8;
+  white-space:  nowrap;
+  cursor:       pointer;
+  align-items:  center;
+}
+
+.fba-geo-mode__pin,
+.fba-geo-mode__title {
+  display: inline-block;
+}
+
+.fba-geo-mode__pin {
+  width:  18px;
+  height: 18px;
+}
+
+.fba-geo-mode__title {
+  color:       #4b4f56;
+  font-weight: bold;
+}
+
+.fba-geo-mode__title:hover {
+  color: #53aaca;
+}

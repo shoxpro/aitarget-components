@@ -1,0 +1,54 @@
+.fba-geo-info {
+  position:        relative;
+  display:         flex;
+  justify-content: space-between;
+  box-sizing:      border-box;
+  width:           100%;
+  border:          1px solid #d9dfe7;
+  border-bottom:   none;
+  background:      #f5fafd;
+  white-space:     normal;
+  font-size:       14px;
+  max-height:      100px;
+  overflow:        auto;
+}
+
+.fba-geo-info__message {
+  display:     flex;
+  align-items: center;
+  flex-grow:   2;
+  height:      100%;
+  min-height:  35px;
+}
+
+.fba-geo-info__text {
+  display: inline-block;
+  padding: 5px 0;
+}
+
+.fba-geo-info__message_error {
+  color: #d00303;
+}
+
+.fba-geo-info__change {
+  color:       #50a9c9;
+  white-space: nowrap;
+  font-weight: 600;
+  cursor:      pointer;
+}
+
+.fba-geo-info__remove {
+  box-sizing:  border-box;
+  padding:     5px;
+  width:       20px;
+  color:       #bdc0c8;
+  font-weight: bold;
+  font-size:   15px;
+  cursor:      pointer;
+}
+
+.fba-geo-info__remove span {
+  position: relative;
+  top:      -2px;
+  display:  block;
+}

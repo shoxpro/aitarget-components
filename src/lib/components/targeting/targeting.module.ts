@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { TargetingComponent } from './targeting.component';
 import { TargetingFormComponent } from './targeting-form/targeting-form.component';
-import { GeoTargetingModule } from './targeting-form/geo-targeting/geo-targeting.module';
+import { GeoModule } from './targeting-form/geo/geo.module';
 import { TargetingFormAddComponent } from './targeting-form/targeting-form-add.comonent';
 import { TargetingFormArrayComponent } from './targeting-form/targeting-form-array.component';
 import { DetailedTargetingModule } from './targeting-form/detailed-targeting/detailed-targeting.module';
@@ -20,10 +20,10 @@ import { LocalesModule } from './targeting-form/locales/locales.module';
   imports:      [
     SharedModule,
     DetailedTargetingModule,
-    GeoTargetingModule,
+    GeoModule,
     LocalesModule,
     DynamicComponentModule.forRoot({
-      imports: [GeoTargetingModule, CoreModule]
+      imports: [GeoModule, CoreModule]
     }),
     MdSliderModule.forRoot()
   ],
@@ -40,7 +40,7 @@ import { LocalesModule } from './targeting-form/locales/locales.module';
   ],
   exports:      [
     TargetingComponent,
-    GeoTargetingModule,
+    GeoModule,
     DetailedTargetingModule
   ]
 })

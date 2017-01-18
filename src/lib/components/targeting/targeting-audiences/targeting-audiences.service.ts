@@ -8,7 +8,7 @@ import { TARGETING_KEY, TargetingState } from '../targeting.reducer';
 import { TargetingFormState } from '../targeting-form/targeting-form.reducer';
 import { splitFormValue, getSpecFromFormValue } from '../targeting.constants';
 import { AppState } from '../../../../app/reducers/index';
-import { TargetingApiService } from '../targeting-api/geo-targeting-api.service';
+import { TargetingApiService } from '../targeting-api/targeting-api.service';
 
 @Injectable()
 export class TargetingAudiencesService {

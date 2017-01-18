@@ -41,11 +41,11 @@
     "WORK_EMPLOYERS": "Employers",
     "WORK_POSITIONS": "Job Titles"
   },
-  "geo-targeting-input": {
+  "fba-geo-input": {
     "PLACEHOLDER": "Add locations",
     "INVALID_LOCATION": "This location is not available for targeting."
   },
-  "geo-targeting-dropdown": {
+  "fba-geo-dropdown": {
     "all": "All",
     "country": "Country",
     "country_group": "Country Group",
@@ -63,7 +63,7 @@
     "custom_location_many": "GPS Coordinates",
     "place": "Place"
   },
-  "geo-targeting-info": {
+  "fba-geo-info": {
     "MESSAGE": "Your audience location has been changed from {{ fromNames }} to {{ toName }}.",
     "UNDO": "Undo Change",
     "MESSAGE_NOT_FOUND": "Some locations were not found: {{ notFoundInputsStr }}",
@@ -71,28 +71,28 @@
     "MESSAGE_NARROW": "Your audience location is set to {{ narrowerLocationNames }}, so everything outside of this location is automatically excluded.",
     "LIMIT": "Maximum number of {{mode}} {{type}} cannot exceed {{limit}}."
   },
-  "geo-targeting-mode": {
+  "fba-geo-mode": {
     "include": "Include",
     "include_past": "included",
     "exclude": "Exclude",
     "exclude_past": "excluded",
     "delete": "Delete"
   },
-  "geo-targeting-map": {
+  "fba-geo-map": {
     "MAP": "Map",
     "COUNTRY_GROUP": "We are unable to highlight the border of {{name}} on the map, but it has been successfully added."
   },
-  "geo-targeting-map-controls": {
+  "fba-geo-map-controls": {
     "DROP_PIN": "Drop Pin"
   },
-  "geo-targeting-radius": {
+  "fba-geo-radius": {
     "mile": "mi",
     "kilometer": "km",
     "CURRENT_ONLY": "Current city only",
     "USE_RADIUS": "Cities within radius",
     "USE_RADIUS_INFO": "Surrounding cities are included if the center of the city falls within the radius."
   },
-  "geo-targeting-location-type": {
+  "fba-geo-location-type": {
     "ALL": "Everyone in this location",
     "ALL_INFO": "People whose home or most recent location is within the selected area.",
     "HOME": "People who live in this location",

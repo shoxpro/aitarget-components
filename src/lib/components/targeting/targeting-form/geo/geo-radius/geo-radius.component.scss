@@ -1,0 +1,158 @@
+:host {
+  margin-left: 5px;
+}
+
+.fba-geo-radius {
+  display:             inline-flex;
+  box-sizing:          border-box;
+  padding:             5px;
+  height:              26px;
+  border:              1px solid transparent;
+  border-radius:       3px;
+  font-weight:         normal;
+  font-size:           12px;
+  cursor:              pointer;
+  align-items:         center;
+  -webkit-user-select: none;
+  -moz-user-select:    none;
+  -ms-user-select:     none;
+}
+
+.fba-geo-radius:hover {
+  border:           1px solid #d9dfe7;
+  background-color: #e8ebf0;
+}
+
+.fba-geo-radius_open {
+  border:           1px solid #d9dfe7;
+  border-radius:    3px 3px 0 0;
+  background-color: #e8ebf0;
+  box-shadow:       inset 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.fba-geo-radius__result {
+  margin-right: 5px;
+  white-space:  nowrap;
+}
+
+.fba-geo-radius__dropdown {
+  position:         relative;
+  box-sizing:       border-box;
+  padding:          4px 0 4px 0;
+  width:            auto;
+  height:           auto;
+  border:           1px solid rgba(0, 0, 0, .15);
+  background-color: #ffffff;
+  box-shadow:       0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
+  font-size:        12px;
+}
+
+.fba-geo-radius__mode-row {
+  position:    relative;
+  display:     flex;
+  padding:     0 8px 0 30px;
+  height:      24px;
+  cursor:      pointer;
+  align-items: center;
+}
+
+.fba-geo-radius__mode-row_selected .fba-geo-radius__mode-text {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.fba-geo-radius__mode_current {
+  border-bottom: 1px solid #d9dfe7;
+}
+
+.fba-geo-radius__mode-row:not(.fba-geo-radius__mode-row_slider):hover {
+  background: #f5fafd;
+}
+
+.fba-geo-radius__dropdown-tick {
+  position: absolute;
+  left:     6px;
+}
+
+.fba-geo-radius__mode-row_slider {
+  display:         flex;
+  padding:         0 8px;
+  justify-content: space-between;
+  align-items:     center;
+}
+
+.fba-geo-radius__slider {
+  min-width: 60px;
+  height:    24px;
+}
+
+.fba-geo-radius__mode-row_slider .md-slider-thumb::after {
+  border-color:     #07a0cf;
+  background-color: #07a0cf;
+}
+
+.fba-geo-radius__mode-row_slider .md-slider-track {
+  background-color: rgba(0, 0, 0, 0.26);
+}
+
+.fba-geo-radius__mode-row_slider .md-slider-track-fill {
+  background-color: #07a0cf;
+}
+
+.fba-geo-radius__mode-row_slider .md-slider-wrapper {
+  padding: 0 5px;
+}
+
+.fba-geo-radius__mode-row_slider .md-slider-thumb {
+  top:       2px;
+  transform: scale(0.5) !important;
+}
+
+.fba-geo-radius__mode-row_slider .md-slider-track-container {
+  top: 11px;
+}
+
+.fba-geo-radius__mode-row_slider .md-slider-active .md-slider-thumb {
+  transform: scale(0.6) !important;
+}
+
+.fba-geo-radius__label {
+  margin-top: -2px !important;
+  all:        initial;
+}
+
+.fba-geo-radius__input {
+  margin:           0 5px;
+  padding:          2px 0 2px 2px;
+  width:            30px;
+  height:           auto;
+  border:           1px solid #d9dfe7;
+  border-radius:    3px;
+  background-color: #f2f6fa;
+  font-weight:      normal;
+  font-size:        12px;
+  line-height:      initial;
+}
+
+.fba-geo-radius__input:focus {
+  outline:      none;
+  border-color: #abbdd4;
+  box-shadow:   0 0 5px 0 rgba(154, 168, 181, 0.39);
+}
+
+.fba-geo-radius__distance-unit-wrapper {
+  display:     inline-block;
+  white-space: nowrap;
+}
+
+.fba-geo-radius__distance-unit {
+  cursor: pointer;
+}
+
+.fba-geo-radius__distance-unit:hover {
+  color: #289ac9;
+}
+
+.fba-geo-radius__distance-unit_active {
+  color: #50a9c9;
+}

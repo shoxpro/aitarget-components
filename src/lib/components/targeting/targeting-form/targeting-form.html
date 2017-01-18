@@ -5,14 +5,14 @@
 
     <fieldset>
       <legend>Geo Locations</legend>
-      <fba-targeting-form-array name="geoTargetings"
+      <fba-targeting-form-array name="geos"
                                 [single]="editMode"
                                 [group]="targetingForm"
                                 (add)="addControl($event)"
                                 (remove)="removeControl($event, i)">
         <template let-control>
           <fba-control-squeeze>
-            <geo-targeting [formControl]="control"></geo-targeting>
+            <fba-geo [formControl]="control"></fba-geo>
           </fba-control-squeeze>
         </template>
       </fba-targeting-form-array>

@@ -41,11 +41,11 @@
     "WORK_EMPLOYERS": "Работодатели",
     "WORK_POSITIONS": "Должности"
   },
-  "geo-targeting-input": {
+  "fba-geo-input": {
     "PLACEHOLDER": "Добавьте места",
     "INVALID_LOCATION": "Это местонахождение недоступно для таргетинга."
   },
-  "geo-targeting-dropdown": {
+  "fba-geo-dropdown": {
     "all": "Все",
     "country": "Страна",
     "country_group": "Группа стран",
@@ -63,7 +63,7 @@
     "custom_location_many": "GPS координат",
     "place": "Место"
   },
-  "geo-targeting-info": {
+  "fba-geo-info": {
     "MESSAGE": "Местоположение вашей аудитории изменено с {{ fromNames }} на {{ toName }}.",
     "UNDO": "Отменить изменения",
     "MESSAGE_NOT_FOUND": "Некторые местоположения не были найдены: {{ notFoundInputsStr }}",
@@ -71,28 +71,28 @@
     "MESSAGE_NARROW": "Местонахождение вашей аудитории — {{ narrowerLocationNames }}, все остальные места автоматически исключаются.",
     "LIMIT": "Количество {{mode}} {{type}} не может превышать {{limit}}."
   },
-  "geo-targeting-mode": {
+  "fba-geo-mode": {
     "include": "Включить",
     "include_past": "включенных",
     "exclude": "Исключить",
     "exclude_past": "исключенных",
     "delete": "Удалить"
   },
-  "geo-targeting-map": {
+  "fba-geo-map": {
     "MAP": "Карта",
     "COUNTRY_GROUP": "Мы не можем выделить границу {{name}} на карте, но местонахождение было добавлено."
   },
-  "geo-targeting-map-controls": {
+  "fba-geo-map-controls": {
     "DROP_PIN": "Отметить булавкой"
   },
-  "geo-targeting-radius": {
+  "fba-geo-radius": {
     "mile": "миль",
     "kilometer": "км",
     "CURRENT_ONLY": "Только текущий город",
     "USE_RADIUS": "Города в пределах радиуса",
     "USE_RADIUS_INFO": "Близлежащие города включаются в том случае, если центр город попадает в пределы радиуса."
   },
-  "geo-targeting-location-type": {
+  "fba-geo-location-type": {
     "ALL": "Все в этой местности",
     "ALL_INFO": "Люди, последнее местонахождение или дом которых находятся в рамках выбранной территории.",
     "HOME": "Живущие в этом месте",

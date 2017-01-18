@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { TargetingFormState, targetingFormInitial } from './targeting-form/targeting-form.reducer';
 import { TargetingService } from './targeting.service';
-import { TargetingApiService } from './targeting-api/geo-targeting-api.service';
+import { TargetingApiService } from './targeting-api/targeting-api.service';
 import { TargetingAudiencesService } from './targeting-audiences/targeting-audiences.service';
 import { TargetingFormService } from './targeting-form/targeting-form.service';
 import { TargetingFormActions } from './targeting-form/targeting-form.actions';

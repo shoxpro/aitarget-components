@@ -1,0 +1,19 @@
+:host {
+  flex-grow: 1;
+}
+
+.fba-geo-input__label {
+  display:     block;
+  position:    relative;
+  padding:     0 8px;
+  font-weight: normal;
+  font-size:   12px;
+  margin:      0;
+}
+
+.fba-geo-input__input {
+  width:            100%;
+  background-color: transparent;
+  outline:          none;
+  border:           none;
+}
