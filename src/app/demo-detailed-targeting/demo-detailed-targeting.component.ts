@@ -1,82 +1,34 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
-  selector:        'app-demo-detailed-targeting',
-  templateUrl:     './demo-detailed-targeting.component.html',
+  selector:        'app-demo-detailed',
+  templateUrl:     'demo-detailed-targeting.component.html',
   styleUrls:       ['demo-detailed-targeting.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DemoDetailedTargetingComponent implements OnInit {
 
-  hideDetailedTargeting = false;
-  isSpecVisible         = false;
+  hideDetailed  = false;
+  isSpecVisible = false;
 
   spec = {
-    'age_max':             65,
-    'age_min':             18,
-    'app_install_state':   'not_installed',
-    'education_majors':    [
-      {
-        'id':   '108180979203954',
-        'name': 'Economics'
-      }
-    ],
-    'education_schools':   [
-      {
-        'id':   '112070142203026',
-        'name': 'Harvard Medical School'
-      },
-      {
-        'id':   '208357009185713',
-        'name': 'Stanford Graduate School of Business'
-      },
-      {
-        'id':   '268833636515481',
-        'name': 'Harobanda'
-      },
-      {
-        'id':   '66459568171',
-        'name': 'Harvard Business School'
-      }
-    ],
-    'genders':             [
-      1
-    ],
-    'geo_locations':       {
-      'countries':      [
-        'RU'
-      ],
-      'location_types': [
-        'home'
-      ]
-    },
-    'interests':           [
-      {
-        'id':   '6002839660079',
-        'name': 'Cosmetics'
-      },
-      {
-        'id':   '6003088846792',
-        'name': 'Beauty salons'
-      },
-      {
-        'id':   '6003423248519',
-        'name': 'Hair care'
-      }
-    ],
-    'user_os':             [
-      'iOS'
-    ],
-    'publisher_platforms': [
-      'facebook',
-      'instagram'
-    ],
-    'facebook_positions':  [
-      'feed'
-    ],
-    'device_platforms':    [
-      'mobile'
-    ]
+    'geo_locations':                 {'location_types': ['home', 'recent'], 'countries': ['US']},
+    'age_min':                       18,
+    'age_max':                       65,
+    'publisher_platforms':           ['facebook', 'instagram', 'audience_network'],
+    'facebook_positions':            ['feed', 'instant_article', 'right_hand_column'],
+    'instagram_positions':           ['stream'],
+    'device_platforms':              ['mobile', 'desktop'],
+    'excluded_publisher_categories': [],
+    'excluded_publisher_list_ids':   [],
+    'user_device':                   [],
+    'excluded_user_device':          [],
+    'user_os':                       [],
+    'wireless_carrier':              [],
+    'exclusions':                    {'interested_in': ['2']},
+    'flexible_spec':                 [{
+      'interests': [{'id': '6003384248805', 'name': 'Fitness and wellness'}, {'id': '6003355530237', 'name': 'Gyms'}]
+    }, {'behaviors': [{'id': '6002714895372', 'name': 'All frequent travelers'}], 'relationship_statuses': ['3']}]
   };
 
   showSpec (isVisible, event?) {

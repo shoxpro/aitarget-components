@@ -1,0 +1,18 @@
+<div class="fba-detailed-input"
+     [ngClass]="{
+     'fba-detailed-input_dropdown-active': mode,
+     'fba-detailed-input_selected-items': structuredSelectedItems?.keys.length,
+     'fba-detailed-input_active-info': activeInfo,
+     'fba-detailed-input_focus': hasFocus}">
+  <label class="fba-detailed-input__label detailed-input__table-cell">
+    <input class="fba-detailed-input__input"
+           type="text"
+           [(ngModel)]="term"
+           (keyup)="keyup(term)"
+           (focus)="focus()"
+           (blur)="blur()"
+           placeholder="{{'fba-detailed-input.PLACEHOLDER' | translate}}">
+  </label>
+  <fba-detailed-mode class="detailed-input__table-cell"
+                     [type]="type"></fba-detailed-mode>
+</div>

@@ -1,0 +1,9 @@
+<label class="fba-browse-multi-select__label"
+       *ngIf="item.isParent">
+  <span class="fba-browse-multi-select__label-text">Select All</span>
+  <input
+    class="fba-browse-multi-select__input"
+    type="checkbox"
+    #checkbox
+    (change)="change(checkbox.checked)">
+</label>

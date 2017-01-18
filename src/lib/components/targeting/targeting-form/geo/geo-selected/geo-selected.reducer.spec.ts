@@ -178,7 +178,7 @@ describe(`geoSelectedReducer`, () => {
         let item2        = {key: 'test2', excluded: true};
         let updatedItem1 = Object.assign({}, item1, {name: 'updatedItem1', excluded: true});
         let updatedItem2 = Object.assign({}, item2, {name: 'updatedItem2', excluded: true});
-        let state = Object.assign({}, geoSelectedInitial, {
+        let state        = Object.assign({}, geoSelectedInitial, {
           items: [item, item1, item2]
         });
 

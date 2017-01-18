@@ -1,22 +1,22 @@
 {
-  "detailed-targeting-mode": {
+  "fba-detailed-mode": {
     "BROWSE": "Просмотр",
     "SUGGESTED": "Рекомендации"
   },
-  "detailed-targeting-input": {
+  "fba-detailed-input": {
     "PLACEHOLDER": "Добавьте демографические данные, интересы или модели поведения"
   },
-  "detailed-targeting-info": {
+  "fba-detailed-info": {
     "PEOPLE": "чел.",
     "DESCRIPTION": "Описание",
     "DESCRIBE_INTERESTS": "Пользователи, которые выразили интерес, или которым понравились Страницы, связанные с",
     "DESCRIBE_DEFAULT": "Люди, которые указали свое {{type}} как <i>{{name}}</i> в своем профиле Facebook."
   },
-  "browse-multi-select": {
+  "fba-browse-multi-select": {
     "SELECT_ALL": "Выбрать все",
     "UNSELECT_ALL": "Отменить выделение"
   },
-  "detailed-targeting-dropdown-suggested": {
+  "fba-detailed-dropdown-suggested": {
     "INTERESTS": "Интересы",
     "BEHAVIORS": "Поведение",
     "RELATIONSHIP_STATUSES": "Семейное положение",

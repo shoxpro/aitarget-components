@@ -47,7 +47,7 @@ export class SdkService {
        * @type {string}
        */
       let aitargetSelfserviceAppId = '683082315084696';
-      let FB: SDK = (<any>window).FB;
+      let FB: SDK                  = (<any>window).FB;
       let appId                    = `${(<any>window).app_id || aitargetSelfserviceAppId}`;
 
       FB.init({

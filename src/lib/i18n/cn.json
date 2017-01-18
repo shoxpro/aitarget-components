@@ -1,22 +1,22 @@
 {
-  "detailed-targeting-mode": {
+  "fba-detailed-mode": {
     "BROWSE": "浏览",
     "SUGGESTED": "建议"
   },
-  "detailed-targeting-input": {
+  "fba-detailed-input": {
     "PLACEHOLDER": "添加人口统计数据、兴趣和行为"
   },
-  "detailed-targeting-info": {
+  "fba-detailed-info": {
     "PEOPLE": "用户",
     "DESCRIPTION": "描述",
     "DESCRIBE_INTERESTS": "People who have expressed an interest in or like pages related to",
     "DESCRIBE_DEFAULT": "People who listed their {{type}} as <i>{{name}}</i> in their Facebook profile."
   },
-  "browse-multi-select": {
+  "fba-browse-multi-select": {
     "SELECT_ALL": "全选",
     "UNSELECT_ALL": "取消全选"
   },
-  "detailed-targeting-dropdown-suggested": {
+  "fba-detailed-dropdown-suggested": {
     "INTERESTS": "兴趣",
     "BEHAVIORS": "行为",
     "RELATIONSHIP_STATUSES": "感情状况",

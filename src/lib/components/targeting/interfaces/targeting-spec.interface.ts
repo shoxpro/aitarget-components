@@ -1,10 +1,10 @@
-import { DetailedTargetingSpec } from './targeting-spec-detailed.interface';
+import { DetailedSpec } from './targeting-spec-detailed.interface';
 import { GeoSpec, geoSpecInitial } from './targeting-spec-geo.interface';
 import { GendersSpec } from './targeting-spec-gender.interface';
 import { AgeSpec, ageInitial } from './targeting-spec-age.interface';
 import { LocalesSpec } from './targeting-spec-locales.interface';
 
-export interface TargetingSpec extends DetailedTargetingSpec, GendersSpec, AgeSpec, LocalesSpec {
+export interface TargetingSpec extends DetailedSpec, GendersSpec, AgeSpec, LocalesSpec {
   geo_locations?: GeoSpec;
   excluded_geo_locations?: GeoSpec;
 }

@@ -1,0 +1,12 @@
+<ul class="fba-detailed-items__list"
+    [ngClass]="{'fba-detailed-items__list_active-info': activeInfo}"
+    *ngIf="items && items.length">
+  <li class="fba-detailed-items__row"
+      *ngFor="let item of items"
+      (mouseover)="setDropdownInfoItem(item)"
+      (mouseout)="setDropdownInfoItem(null)"
+      (click)="selectItem(item)">
+    <div class="fba-detailed-items__name">{{item.name}}</div>
+    <div class="fba-detailed-items__type">{{item.type | typeToHuman}}</div>
+  </li>
+</ul>

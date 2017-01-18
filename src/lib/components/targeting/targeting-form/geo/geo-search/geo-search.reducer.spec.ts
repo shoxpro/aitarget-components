@@ -18,13 +18,13 @@ describe(`geoSearchReducer`, () => {
   describe(GeoSearchActions.PROCESS_INPUT_VALUE, () => {
     it(`should set input value and extract array of terms`, inject([GeoSearchActions],
       (geoSearchActions: GeoSearchActions) => {
-        let state = geoSearchInitial;
+        let state      = geoSearchInitial;
         let inputValue = 'Moscow  ; omsk;(40.638967, -95.449219); 56.1578, 47.2467);-2.558963 20.917969;' +
           '55.522412    44.121094  ;-57.189855;moscow Oblast;192198';
 
         deepFreeze(state);
 
-        let newState   = geoSearchReducer(state, geoSearchActions.processInputValue(inputValue));
+        let newState = geoSearchReducer(state, geoSearchActions.processInputValue(inputValue));
 
         expect(newState)
           .toEqual(Object.assign({}, state, {
@@ -53,7 +53,7 @@ describe(`geoSearchReducer`, () => {
   describe(GeoSearchActions.UPDATE_MODEL, () => {
     it(`should update all model values from passed payload model`,
       inject([GeoSearchActions], (geoSearchActions: GeoSearchActions) => {
-        let state = geoSearchInitial;
+        let state        = geoSearchInitial;
         let updatedModel = {
           items:          [1],
           termsFound:     [2],
@@ -66,7 +66,7 @@ describe(`geoSearchReducer`, () => {
 
         deepFreeze(state);
 
-        let newState     = geoSearchReducer(state, geoSearchActions.updateModel(updatedModel));
+        let newState = geoSearchReducer(state, geoSearchActions.updateModel(updatedModel));
 
         expect(newState)
           .toEqual(Object.assign({}, state, updatedModel));

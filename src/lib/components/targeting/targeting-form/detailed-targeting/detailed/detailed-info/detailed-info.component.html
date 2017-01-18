@@ -1,0 +1,22 @@
+<div class="fba-detailed-info__content"
+     *ngIf="item">
+  <div class="fba-detailed-info__audience-size">{{ item.audience_size | number }}
+    <span class="fba-detailed-info__audience-size-postfix">{{'fba-detailed-info.PEOPLE' | translate}}</span>
+  </div>
+  <div class="fba-detailed-info__breadcrumbs">
+    <template ngFor
+              let-crumb
+              [ngForOf]="item.path"
+              let-first="first"
+              let-last="last">
+      <span [ngClass]='{"fba-detailed-info__first-crumb": first}'>{{ crumb }}</span>
+      <span *ngIf="!last">
+        &gt; </span>
+    </template>
+  </div>
+  <div class="fba-detailed-info__description">
+    <span class="fba-detailed-info__description-label">{{'fba-detailed-info.DESCRIPTION' | translate}}:
+    </span>
+    <span [innerHTML]="item.description || getDescription(item)"></span>
+  </div>
+</div>

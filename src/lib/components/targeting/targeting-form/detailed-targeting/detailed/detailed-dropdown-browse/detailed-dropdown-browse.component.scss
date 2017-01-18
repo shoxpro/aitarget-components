@@ -1,0 +1,108 @@
+.fba-detailed-dropdown-browse__list {
+  position:   relative;
+  display:    block;
+  overflow-y: auto;
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+  max-height: 200px;
+  width:      100%;
+  height:     auto;
+  background: #ffffff
+}
+
+.fba-detailed-dropdown-browse__row {
+  position:      relative;
+  height:        31px;
+  border-bottom: 1px solid #e9eaed;
+  background:    white;
+  color:         #666666;
+  font-size:     12px;
+  cursor:        pointer
+}
+
+.fba-detailed-dropdown-browse__row:hover {
+  background: #f5fafd
+}
+
+.fba-detailed-dropdown-browse__row:last-of-type {
+  border-bottom: none
+}
+
+.fba-detailed-dropdown-browse__row-content {
+  position: absolute;
+  top:      0;
+  display:  table;
+  width:    100%;
+  height:   100%
+}
+
+.fba-detailed-dropdown-browse__row-cell {
+  display:        table-cell;
+  vertical-align: middle
+}
+
+.fba-detailed-dropdown-browse__row-tick {
+  position: relative
+}
+
+.fba-detailed-dropdown-browse__row-tick-content {
+  position:     absolute;
+  top:          6px;
+  right:        0;
+  padding:      2px 1px 2px 0;
+  width:        14px;
+  height:       14px;
+  border-right: 1px solid #e9eaed;
+  cursor:       pointer
+}
+
+.fba-detailed-dropdown-browse__row-tick-content:before {
+  position:          absolute;
+  top:               4px;
+  left:              2px;
+  display:           block;
+  width:             0;
+  height:            0;
+  border:            5px solid transparent;
+  border-left-color: #aaaaaa;
+  content:           ""
+}
+
+.fba-detailed-dropdown-browse__row-tick_open .fba-detailed-dropdown-browse__row-tick-content:before {
+  position:         absolute;
+  top:              5px;
+  left:             0;
+  display:          block;
+  width:            0;
+  height:           0;
+  border:           5px solid transparent;
+  border-top-color: #aaaaaa;
+  content:          ""
+}
+
+.fba-detailed-dropdown-browse__row-name {
+  overflow:      hidden;
+  padding-left:  8px;
+  max-width:     100px;
+  width:         auto;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+  font-weight:   bold
+}
+
+.fba-detailed-dropdown-browse__row-addon {
+  box-sizing: border-box;
+  padding:    0 9px;
+  width:      30px;
+  text-align: right
+}
+
+.fba-dropdown-row-addon_parent {
+  width: 110px
+}
+
+.fba-detailed-dropdown-browse__row-search {
+  width:  20px;
+  height: 20px
+}

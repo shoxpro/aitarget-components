@@ -1,22 +1,22 @@
 {
-  "detailed-targeting-mode": {
+  "fba-detailed-mode": {
     "BROWSE": "Browse",
     "SUGGESTED": "Suggested"
   },
-  "detailed-targeting-input": {
+  "fba-detailed-input": {
     "PLACEHOLDER": "Add demographics, interests or behaviours"
   },
-  "detailed-targeting-info": {
+  "fba-detailed-info": {
     "PEOPLE": "people",
     "DESCRIPTION": "Description",
     "DESCRIBE_INTERESTS": "People who have expressed an interest in or like pages related to",
     "DESCRIBE_DEFAULT": "People who listed their {{type}} as <i>{{name}}</i> in their Facebook profile."
   },
-  "browse-multi-select": {
+  "fba-browse-multi-select": {
     "SELECT_ALL": "Select All",
     "UNSELECT_ALL": "Unselect All"
   },
-  "detailed-targeting-dropdown-suggested": {
+  "fba-detailed-dropdown-suggested": {
     "INTERESTS": "Interests",
     "BEHAVIORS": "Behaviors",
     "RELATIONSHIP_STATUSES": "Relationship Status",

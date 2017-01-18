@@ -46,7 +46,6 @@ export class GeoMapComponent implements OnInit, OnDestroy {
 
   ngOnInit () {
     let map = this.elementRef.nativeElement.querySelector('.fba-geo-map__element');
-    console.log(`map: `, map);
     this.geoMapService.initializeMap(map);
 
     // Update map when selected items change

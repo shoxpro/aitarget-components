@@ -25,10 +25,14 @@ export class ClickOutsideDirective implements OnInit, OnDestroy {
       bodyClick$
         .takeUntil(this.destroy$)
         .subscribe((e: MouseEvent) => {
-          const targetElement = e.target;
+          const targetElement = <Element>e.target;
           const clickedInside = this.elementRef.nativeElement
                                     .contains(targetElement);
-          if (!clickedInside) {
+
+          // We consider true click outside if clicked element still exist in a DOM,
+          // but is not inside directive native element. Ignore clicks by 'close' buttons and
+          // other disappearing elements.
+          if (window.document.body.contains(targetElement) && !clickedInside) {
             this.clickOutsideStream.next(e);
             this.clickOutside.emit(e);
           }

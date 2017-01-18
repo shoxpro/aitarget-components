@@ -1,0 +1,41 @@
+.fba-detailed-browse-wrapper {
+  position:      absolute;
+  display:       block;
+  overflow:      hidden;
+  box-sizing:    border-box;
+  max-height:    200px;
+  width:         100%;
+  border:        1px solid #d0d0d0;
+  border-top:    none;
+  border-radius: 0 0 3px 3px;
+  box-shadow:    0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index:       1000;
+}
+
+.fba-detailed-browse-wrapper[hidden] {
+  display: none !important;
+}
+
+.fba-detailed-browse {
+  position:   relative;
+  right:      0;
+  display:    table;
+  width:      200%;
+  background: #ffffff;
+  transition: all 0.5s;
+}
+
+.fba-detailed-browse_search-visible {
+  left: -100%;
+}
+
+.fba-detailed-browse-wrapper_active-info {
+  border-radius: 0 0 0 3px;
+}
+
+fba-detailed-dropdown-browse,
+fba-detailed-search {
+  display:        table-cell;
+  width:          50%;
+  vertical-align: top;
+}

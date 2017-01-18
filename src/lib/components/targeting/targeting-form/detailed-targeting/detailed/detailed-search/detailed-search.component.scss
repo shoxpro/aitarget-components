@@ -1,0 +1,81 @@
+.fba-detailed-search {
+  position:   relative;
+  display:    block;
+  overflow-y: auto;
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+  width:      100%;
+  background: #ffffff;
+}
+
+.fba-detailed-search__toolbar {
+  display:    table;
+  width:      100%;
+  height:     32px;
+  background: #f2f6fa;
+}
+
+.fba-detailed-search__back {
+  display:        table-cell;
+  width:          30px;
+  vertical-align: middle;
+  text-align:     center;
+}
+
+.fba-detailed-search__back-tick {
+  width:  24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.fba-detailed-search__back-tick svg {
+  fill: #51a9c9;
+}
+
+.fba-detailed-search__box {
+  display:        table-cell;
+  vertical-align: middle;
+}
+
+.fba-detailed-search__label {
+  display:         flex;
+  box-sizing:      border-box;
+  margin:          0;
+  padding:         6px 8px 6px 0;
+  width:           100%;
+  align-content:   center;
+  justify-content: flex-start;
+}
+
+.fba-detailed-search__label-icon {
+  display:     inline-block;
+  box-sizing:  content-box;
+  padding:     0 8px;
+  width:       20px;
+  height:      20px;
+  border-left: 1px solid #bdc7d8;
+}
+
+.fba-detailed-search__label-icon svg {
+  width:  20px;
+  height: 20px;
+  fill:   #51a9c9;
+}
+
+.fba-detailed-search__input {
+  display:          inline-block;
+  box-sizing:       border-box;
+  padding:          0;
+  width:            100%;
+  height:           20px;
+  border:           none;
+  background-color: inherit;
+  font-weight:      normal;
+  font-size:        12px;
+  line-height:      normal;
+}
+
+.fba-detailed-search__input:focus {
+  outline: none;
+}

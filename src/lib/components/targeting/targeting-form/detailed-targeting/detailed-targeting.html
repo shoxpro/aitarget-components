@@ -1,0 +1,45 @@
+<form [formGroup]="detailedTargetingForm">
+  <fieldset>
+    <legend>
+      <span>INCLUDE people who match at least ONE of the following</span>
+    </legend>
+
+    <fieldset
+      *ngFor="let control of detailedTargetingForm.controls['flexible_spec'].controls; let first=first;">
+
+      <legend *ngIf="!first">
+        <span>and MUST ALSO match at least ONE of the following</span>
+
+        <fba-close (onClose)="removeControl({name: 'flexible_spec', i: i})"></fba-close>
+      </legend>
+
+      <fba-detailed
+        [type]="'flexible_spec'"
+        [formControl]="control"
+        [adaccountId]="adaccountId"></fba-detailed>
+    </fieldset>
+
+    <fieldset *ngIf="detailedTargetingForm.controls['exclusions']">
+      <legend>
+        <span>EXCLUDE people who match at least ONE of the following</span>
+
+        <fba-close (onClose)="removeControl({name: 'exclusions', i: i})"></fba-close>
+      </legend>
+
+      <fba-detailed
+        [type]="'exclusions'"
+        [formControl]="detailedTargetingForm.controls['exclusions']"
+        [adaccountId]="adaccountId"></fba-detailed>
+    </fieldset>
+  </fieldset>
+
+  <div class="fba-detailed-targeting__controls">
+    <a href=""
+       (click)="addControl('exclusions')">Exclude People
+    </a>
+    <span>or</span>
+    <a href=""
+       (click)="addControl('flexible_spec')">Narrow Audience
+    </a>
+  </div>
+</form>

@@ -1,0 +1,9 @@
+<div class="fba-detailed-browse-wrapper"
+     [ngClass]="{'fba-detailed-browse-wrapper_active-info': activeInfo}"
+     [hidden]="mode !== 'browse'">
+  <div class="fba-detailed-browse"
+       [ngClass]="{'fba-detailed-browse_search-visible': isVisible}">
+    <fba-detailed-dropdown-browse></fba-detailed-dropdown-browse>
+    <fba-detailed-search></fba-detailed-search>
+  </div>
+</div>
