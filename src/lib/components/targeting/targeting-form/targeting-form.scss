@@ -1,0 +1,18 @@
+:host {
+  display:   block;
+  padding:   0 10px;
+  flex-grow: 2;
+}
+
+fieldset {
+  margin-bottom: 10px;
+  border-color:  #f1f2f3;
+  border-radius: 3px;
+}
+
+legend {
+  margin-left: -3px;
+  padding:     0 3px;
+  font-weight: 500;
+  font-size:   14px;
+}

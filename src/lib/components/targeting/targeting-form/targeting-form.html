@@ -1,0 +1,86 @@
+<form [formGroup]="targetingForm"
+      (ngSubmit)="onSubmit()">
+  <fieldset>
+    <legend>{{ formLegend }}</legend>
+
+    <fieldset>
+      <legend>Geo Locations</legend>
+      <fba-targeting-form-array name="geoTargetings"
+                                [single]="editMode"
+                                [group]="targetingForm"
+                                (add)="addControl($event)"
+                                (remove)="removeControl($event, i)">
+        <template let-control>
+          <fba-control-squeeze>
+            <geo-targeting [formControl]="control"></geo-targeting>
+          </fba-control-squeeze>
+        </template>
+      </fba-targeting-form-array>
+    </fieldset>
+
+    <fieldset>
+      <legend>Genders</legend>
+      <fba-targeting-form-array name="genders"
+                                [single]="editMode"
+                                [group]="targetingForm"
+                                (add)="addControl($event)"
+                                (remove)="removeControl($event)">
+        <template let-control>
+          <fba-control-squeeze>
+            <fba-gender [formControl]="control"></fba-gender>
+          </fba-control-squeeze>
+        </template>
+      </fba-targeting-form-array>
+    </fieldset>
+
+    <fieldset>
+      <legend>Ages</legend>
+      <fba-targeting-form-array name="ages"
+                                [single]="editMode"
+                                [group]="targetingForm"
+                                (add)="addControl($event)"
+                                (remove)="removeControl($event)">
+        <template let-control>
+          <fba-control-squeeze>
+            <fba-age [formControl]="control"></fba-age>
+          </fba-control-squeeze>
+        </template>
+      </fba-targeting-form-array>
+    </fieldset>
+
+    <fieldset>
+      <legend>Languages</legend>
+      <fba-targeting-form-array name="locales"
+                                [single]="editMode"
+                                [group]="targetingForm"
+                                (add)="addControl($event)"
+                                (remove)="removeControl($event)">
+        <template let-control>
+          <fba-control-squeeze>
+            <fba-locales [formControl]="control"></fba-locales>
+          </fba-control-squeeze>
+        </template>
+      </fba-targeting-form-array>
+    </fieldset>
+
+    <fieldset>
+      <legend>Detailed Targetings</legend>
+      <fba-targeting-form-array name="detailedTargetings"
+                                [single]="editMode"
+                                [group]="targetingForm"
+                                (add)="addControl($event)"
+                                (remove)="removeControl($event)">
+        <template let-control>
+          <fba-control-squeeze>
+            <detailed-targeting [adaccountId]="adaccountId"
+                                [formControl]="control"></detailed-targeting>
+          </fba-control-squeeze>
+        </template>
+      </fba-targeting-form-array>
+    </fieldset>
+
+    <button type="submit"
+            md-raised-button>{{ submitText }}</button>
+  </fieldset>
+
+</form>

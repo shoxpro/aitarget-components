@@ -1,13 +1,11 @@
 import { NgModule, enableProdMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { DetailedTargetingModule } from './detailed-targeting/detailed-targeting.module';
-import { TargetingSpecService } from './targeting/targeting-spec.service';
-import { FbService } from './fb/fb.service';
+import { SdkService } from './shared/sdk/sdk.service';
 import { environment } from '../environments/environment';
-import { GeoTargetingModule } from './geo-targeting/geo-targeting.module';
 import { StoreModule } from '@ngrx/store';
 import { rootReducer } from '../app/reducers/index';
 import { SharedActions } from './shared/actions/index';
+import { TargetingModule } from './components/targeting/targeting.module';
 
 if (environment.production) {
   enableProdMode();
@@ -18,11 +16,10 @@ if (environment.production) {
   imports:      [
     BrowserModule,
     StoreModule.provideStore(rootReducer),
-    DetailedTargetingModule,
-    GeoTargetingModule
+    TargetingModule
   ],
-  providers:    [FbService, TargetingSpecService, SharedActions],
-  exports:      [BrowserModule, DetailedTargetingModule, GeoTargetingModule]
+  providers:    [SdkService, SharedActions],
+  exports:      [BrowserModule, TargetingModule]
 })
 export class LibModule {
 }

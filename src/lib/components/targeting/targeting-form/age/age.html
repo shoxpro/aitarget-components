@@ -1,0 +1,21 @@
+<label>
+  <select #age_min
+          [ngModel]="value.age_min"
+          (ngModelChange)="selectAge('age_min', $event)">
+    <option *ngFor="let age of ages"
+            [value]="age">
+      {{ age }}
+    </option>
+  </select>
+</label>
+<span>–</span>
+<label>
+  <select #age_max
+          [ngModel]="value.age_max"
+          (ngModelChange)="selectAge('age_max', $event)">
+    <option *ngFor="let age of ages"
+            [value]="age">
+      {{ age }}
+    </option>
+  </select>
+</label>

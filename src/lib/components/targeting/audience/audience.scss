@@ -1,0 +1,110 @@
+@import "../../../styles/main";
+
+.audience {
+  position:         relative;
+  border-radius:    $size__border-radius;
+  background-color: $color__background-common;
+  padding:          0 5px 5px 5px;
+  margin:           2px;
+  font-size:        1.3rem;
+  width:            100%;
+  box-sizing:       border-box;
+}
+
+.audience_off {
+  opacity: 0.7;
+}
+
+.audience_edited {
+  outline: 2px solid $color_info;
+}
+
+.audience__caption {
+  text-align: left;
+}
+
+.audience__caption-content {
+  position:    relative;
+  height:      35px;
+  display:     flex;
+  align-items: center;
+  width:       100%;
+}
+
+.audience__label {
+  display:       flex;
+  flex-grow:     2;
+  padding-right: 10px;
+}
+
+.audience__icon {
+  display:      inline;
+  font-size:    16px;
+  color:        $color_info;
+  margin-right: 5px;
+}
+
+.audience__input {
+  width:            100%;
+  box-sizing:       border-box;
+  background-color: transparent;
+  outline:          none;
+  border:           none;
+  border-bottom:    2px solid transparent;
+  font-weight:      normal;
+}
+
+.audience__input:focus {
+  border-color: $color_success;
+}
+
+.audience__input_name {
+  flex-grow:      2;
+  text-transform: uppercase;
+  font-size:      16px;
+  color:          #969ba7;
+  height:         20px;
+}
+
+.invalid {
+  color: $color_error;
+}
+
+.audience__input.ng-dirty.ng-invalid {
+  border-color: $color__border-control_error;
+}
+
+.validate-message {
+  font-size: 10px;
+}
+
+.audience__edit {
+  text-transform:   uppercase;
+  font-size:        13px;
+  line-height:      28px;
+  min-width:        50px;
+  background-color: #e5e6e7;
+  color:            #464647;
+  font-weight:      400;
+  margin-right:     5px;
+}
+
+.controls {
+  display: flex;
+}
+
+.audience__switch {
+  cursor: pointer;
+}
+
+.audience__sentence-content {
+  color: #707171;
+}
+
+.audience__sentence-children {
+  color: #383838;
+}
+
+.audience__reach-value {
+  font-weight: 600;
+}

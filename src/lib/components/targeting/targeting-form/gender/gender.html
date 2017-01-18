@@ -1,0 +1,11 @@
+<div class="genders">
+  <label *ngFor="let gender of genders">
+    <input type="radio"
+           name="gender"
+           (change)="selectGender(gender)"
+           [value]="gender.id"
+           [checked]="gender.id === selectedGender.id"
+    >
+    <span>{{ gender.name }}</span>
+  </label>
+</div>

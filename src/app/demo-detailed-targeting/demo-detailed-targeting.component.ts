@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
-  selector:    'app-demo-detailed-targeting',
-  templateUrl: './demo-detailed-targeting.component.html',
-  styleUrls:   ['demo-detailed-targeting.component.scss']
+  selector:        'app-demo-detailed-targeting',
+  templateUrl:     './demo-detailed-targeting.component.html',
+  styleUrls:       ['demo-detailed-targeting.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DemoDetailedTargetingComponent implements OnInit {
 
   hideDetailedTargeting = false;
-  showSpec              = false;
-  lang                  = 'en_US';
+  isSpecVisible         = false;
 
   spec = {
     'age_max':             65,
@@ -79,11 +79,18 @@ export class DemoDetailedTargetingComponent implements OnInit {
     ]
   };
 
-  onChange = (spec) => {
-    this.spec = spec;
-  };
+  showSpec (isVisible, event?) {
+    if (event) {
+      event.stopPropagation();
+    }
 
-  constructor () { }
+    this.isSpecVisible = isVisible;
+
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
+  }
+
+  constructor (private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit () {
   }

@@ -1,34 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { targetingSpecInitial } from '../../lib/components/targeting/interfaces/targeting-spec.interface';
 
 @Component({
-  selector:    'app-demo-geo-targeting',
-  templateUrl: './demo-geo-targeting.component.html',
-  styleUrls:   ['demo-geo-targeting.component.scss']
+  selector:        'app-demo-geo-targeting',
+  templateUrl:     './demo-geo-targeting.component.html',
+  styleUrls:       ['demo-geo-targeting.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DemoGeoTargetingComponent implements OnInit {
 
   hideGeoTargeting = false;
-  showSpec         = false;
+  isSpecVisible    = false;
   lang             = 'en_US';
 
-  spec = {
-    'geo_locations':          {
-      'location_types': [
-        'home',
-        'recent'
-      ],
-      'countries':      [
-        'RU'
-      ]
-    },
-    'excluded_geo_locations': {}
-  };
+  spec = targetingSpecInitial;
 
-  onChange = (spec) => {
-    this.spec = spec;
-  };
+  showSpec (isVisible, event?) {
+    if (event) {
+      event.stopPropagation();
+    }
 
-  constructor () { }
+    this.isSpecVisible = isVisible;
+
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
+  }
+
+  constructor (private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit () {
   }

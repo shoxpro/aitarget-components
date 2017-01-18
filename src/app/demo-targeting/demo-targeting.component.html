@@ -1,0 +1,19 @@
+<div class="demo-targeting__component-buttons">
+  <button md-raised-button
+          (click)="hideTargeting = !hideTargeting">Toggle</button>
+  <button md-raised-button
+          (click)="showSpec(true, $event)">Show Spec</button>
+  <fba-localization></fba-localization>
+</div>
+
+<div class="targeting-wrapper"
+     *ngIf="hideTargeting">
+  <fba-targeting
+    [spec]="spec"
+    (onChange)="onChange($event)"></fba-targeting>
+
+</div>
+
+<fba-spec (close)="showSpec(false, $event)"
+          *ngIf="isSpecVisible"
+          [spec]="spec"></fba-spec>
