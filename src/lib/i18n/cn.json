@@ -101,5 +101,28 @@
     "RECENT_INFO": "最近出现在选定区域内的用户。",
     "TRAVEL_IN": "到该地区旅游的用户",
     "TRAVEL_IN_INFO": "近期位于选定地区，但家庭住址距离此地区 125mi或 200 km。"
+  },
+  "fba-detailed-targeting-legend": {
+    "FIRST": "包含至少符合一项条件的用户",
+    "FIRST_HEADER_1": "包含",
+    "FIRST_TEXT_1": "添加更多定位条件可扩大受众，覆盖更多用户。",
+    "FIRST_HEADER_2": "提示",
+    "FIRST_TEXT_2": "进一步细分受众，请使用下方链接，根据其他条件排除用户或缩小受众范围。",
+    "REST": "必须也符合以下至少一项",
+    "REST_HEADER_1": "缩小受众",
+    "REST_TEXT_1": "选择新定位条件，进一步细分受众。",
+    "REST_HEADER_2": "提示",
+    "REST_TEXT_2": "添加第一个选项将缩小受众规模，之后的每个新选项将增加受众规模。",
+    "EXCLUSIONS": "排除符合以下至少一个条件的用户",
+    "EXCLUSIONS_HEADER_1": "排除",
+    "EXCLUSIONS_TEXT_1": "选择新条件，排除受众中的部分用户。",
+    "EXCLUSIONS_HEADER_2": "提示",
+    "EXCLUSIONS_TEXT_2": "每添加一个选项，受众的规模就会缩小。"
+  },
+  "fba-detailed-controls": {
+    "NARROW": "缩小受众范围",
+    "NARROW_FURTHER": "进一步缩小受众",
+    "EXCLUDE": "排除用户",
+    "OR": "或"
   }
 }

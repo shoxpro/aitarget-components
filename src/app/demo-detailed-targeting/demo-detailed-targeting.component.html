@@ -7,12 +7,12 @@
 </div>
 
 <div class="fba-detailed-targeting-wrapper">
-  <fba-control-squeeze
-    *ngIf="!hideDetailed">
+  <!--<fba-control-squeeze-->
+    <!--*ngIf="!hideDetailed">-->
     <fba-detailed-targeting
       [(ngModel)]="spec"
       [adaccountId]="'act_944874195534529'"></fba-detailed-targeting>
-  </fba-control-squeeze>
+  <!--</fba-control-squeeze>-->
 </div>
 
 <fba-spec (close)="showSpec(false, $event)"

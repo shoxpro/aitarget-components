@@ -1,17 +1,32 @@
 <form [formGroup]="detailedTargetingForm">
   <fieldset>
-    <legend>
-      <span>INCLUDE people who match at least ONE of the following</span>
-    </legend>
+
+    <fba-detailed-targeting-legend>
+      <span class="fba-detailed-targeting-legend__label">{{'fba-detailed-targeting-legend.FIRST' | translate}}</span>
+      <fba-info-icon>
+        <fba-info-icon-header>{{'fba-detailed-targeting-legend.FIRST_HEADER_1' | translate}}</fba-info-icon-header>
+        <fba-info-icon-text>{{'fba-detailed-targeting-legend.FIRST_TEXT_1' | translate}}</fba-info-icon-text>
+        <fba-info-icon-header>{{'fba-detailed-targeting-legend.FIRST_HEADER_2' | translate}}</fba-info-icon-header>
+        <fba-info-icon-text>{{'fba-detailed-targeting-legend.FIRST_TEXT_2' | translate}}</fba-info-icon-text>
+      </fba-info-icon>
+    </fba-detailed-targeting-legend>
 
     <fieldset
       *ngFor="let control of detailedTargetingForm.controls['flexible_spec'].controls; let first=first;">
 
-      <legend *ngIf="!first">
-        <span>and MUST ALSO match at least ONE of the following</span>
-
+      <fba-detailed-targeting-legend *ngIf="!first">
+        <span class="fba-detailed-targeting-legend__label">{{'fba-detailed-targeting-legend.REST' | translate}}</span>
+        <fba-info-icon>
+          <fba-info-icon-image>
+            <img src="http://res.cloudinary.com/dbd0yzqab/image/upload/c_scale,w_250/v1484913094/aitarget-components/flexible_spec_w32mhl.png">
+          </fba-info-icon-image>
+          <fba-info-icon-header>{{'fba-detailed-targeting-legend.REST_HEADER_1' | translate}}</fba-info-icon-header>
+          <fba-info-icon-text>{{'fba-detailed-targeting-legend.REST_TEXT_1' | translate}}</fba-info-icon-text>
+          <fba-info-icon-header>{{'fba-detailed-targeting-legend.REST_HEADER_2' | translate}}</fba-info-icon-header>
+          <fba-info-icon-text>{{'fba-detailed-targeting-legend.REST_TEXT_2' | translate}}</fba-info-icon-text>
+        </fba-info-icon>
         <fba-close (onClose)="removeControl({name: 'flexible_spec', i: i})"></fba-close>
-      </legend>
+      </fba-detailed-targeting-legend>
 
       <fba-detailed
         [type]="'flexible_spec'"
@@ -20,11 +35,20 @@
     </fieldset>
 
     <fieldset *ngIf="detailedTargetingForm.controls['exclusions']">
-      <legend>
-        <span>EXCLUDE people who match at least ONE of the following</span>
 
+      <fba-detailed-targeting-legend *ngIf="detailedTargetingForm.controls['exclusions']">
+        <span class="fba-detailed-targeting-legend__label">{{'fba-detailed-targeting-legend.EXCLUSIONS' | translate}}
+        </span>
+        <fba-info-icon>
+          <fba-info-icon-header>{{'fba-detailed-targeting-legend.EXCLUSIONS_HEADER_1' | translate}}
+          </fba-info-icon-header>
+          <fba-info-icon-text>{{'fba-detailed-targeting-legend.EXCLUSIONS_TEXT_1' | translate}}</fba-info-icon-text>
+          <fba-info-icon-header>{{'fba-detailed-targeting-legend.EXCLUSIONS_HEADER_2' | translate}}
+          </fba-info-icon-header>
+          <fba-info-icon-text>{{'fba-detailed-targeting-legend.EXCLUSIONS_TEXT_2' | translate}}</fba-info-icon-text>
+        </fba-info-icon>
         <fba-close (onClose)="removeControl({name: 'exclusions', i: i})"></fba-close>
-      </legend>
+      </fba-detailed-targeting-legend>
 
       <fba-detailed
         [type]="'exclusions'"

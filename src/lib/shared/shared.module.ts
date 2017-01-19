@@ -9,6 +9,8 @@ import { ValuesPipe } from './pipes/values.pipe';
 import { ValidateMessageComponent } from './components/validate-messages.component';
 import { ControlSqueezeComponent } from './components/control-squeeze.component';
 import { DynamicComponentModule } from 'ng-dynamic';
+import { InfoIconComponent } from './components/info-icon/info-icon.component';
+import { InfoIconModule } from './components/info-icon/info-icon.module';
 
 @NgModule({
   imports:      [
@@ -16,6 +18,7 @@ import { DynamicComponentModule } from 'ng-dynamic';
     DynamicComponentModule.forRoot({
       imports: [CoreModule]
     }),
+    InfoIconModule
   ],
   declarations: [
     AppendToDirective,
@@ -29,12 +32,14 @@ import { DynamicComponentModule } from 'ng-dynamic';
   ],
   exports:      [
     CoreModule,
+    InfoIconModule,
     AppendToDirective,
     ClickOutsideDirective,
     LinkDirective,
     ControlSqueezeComponent,
     LocalizationComponent,
     CloseComponent,
+    InfoIconComponent,
     ValuesPipe,
     ValidateMessageComponent
   ]

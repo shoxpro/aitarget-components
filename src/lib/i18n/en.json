@@ -101,5 +101,28 @@
     "RECENT_INFO": "People whose most recent location is within the selected area.",
     "TRAVEL_IN": "People traveling in this location",
     "TRAVEL_IN_INFO": "People whose most recent location is within the selected area but whose home is more than 125 mi/200 km away."
+  },
+  "fba-detailed-targeting-legend": {
+    "FIRST": "INCLUDE people who match at least ONE of the following",
+    "FIRST_HEADER_1": "INCLUDE",
+    "FIRST_TEXT_1": "Adding more targeting details here will expand your audience to include more people.",
+    "FIRST_HEADER_2": "TIPS",
+    "FIRST_TEXT_2": "To refine your audience, you can use the links below to exclude people or narrow based on other details.",
+    "REST": "and MUST ALSO match at least ONE of the following",
+    "REST_HEADER_1": "NARROW AUDIENCE",
+    "REST_TEXT_1": "Choose new targeting details to refine your audience from the people included above.",
+    "REST_HEADER_2": "TIPS",
+    "REST_TEXT_2": "Adding the first option will decrease the size of your audience, and then each new option will increase the size from there.",
+    "EXCLUSIONS": "EXCLUDE people who match at least ONE of the following",
+    "EXCLUSIONS_HEADER_1": "EXCLUDE",
+    "EXCLUSIONS_TEXT_1": "Choose new details to exclude people from the audience included above.",
+    "EXCLUSIONS_HEADER_2": "TIPS",
+    "EXCLUSIONS_TEXT_2": "Each new option will decrease the size of your audience."
+  },
+  "fba-detailed-controls": {
+    "NARROW": "Narrow Audience",
+    "NARROW_FURTHER": "Narrow Further",
+    "EXCLUDE": "Exclude People",
+    "OR": "or"
   }
 }
