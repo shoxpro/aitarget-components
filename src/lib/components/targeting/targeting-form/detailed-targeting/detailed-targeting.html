@@ -12,7 +12,7 @@
     </fba-detailed-targeting-legend>
 
     <fieldset
-      *ngFor="let control of detailedTargetingForm.controls['flexible_spec'].controls; let first=first;">
+      *ngFor="let control of detailedTargetingForm.controls['flexible_spec'].controls; let i=index; let first=first;">
 
       <fba-detailed-targeting-legend *ngIf="!first">
         <span class="fba-detailed-targeting-legend__label">{{'fba-detailed-targeting-legend.REST' | translate}}</span>
@@ -47,7 +47,7 @@
           </fba-info-icon-header>
           <fba-info-icon-text>{{'fba-detailed-targeting-legend.EXCLUSIONS_TEXT_2' | translate}}</fba-info-icon-text>
         </fba-info-icon>
-        <fba-close (onClose)="removeControl({name: 'exclusions', i: i})"></fba-close>
+        <fba-close (onClose)="removeControl({name: 'exclusions'})"></fba-close>
       </fba-detailed-targeting-legend>
 
       <fba-detailed
@@ -57,13 +57,7 @@
     </fieldset>
   </fieldset>
 
-  <div class="fba-detailed-targeting__controls">
-    <a href=""
-       (click)="addControl('exclusions')">Exclude People
-    </a>
-    <span>or</span>
-    <a href=""
-       (click)="addControl('flexible_spec')">Narrow Audience
-    </a>
-  </div>
+  <fba-detailed-targeting-controls
+    [formValue]="detailedTargetingForm.value"
+    (addControl)="addControl($event)"></fba-detailed-targeting-controls>
 </form>

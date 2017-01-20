@@ -167,6 +167,8 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
         .takeUntil(this.destroy$)
         .subscribe((formValue) => {
           this.value = formValue;
+          this.changeDetectorRef.markForCheck();
+          this.changeDetectorRef.detectChanges();
         });
   }
 

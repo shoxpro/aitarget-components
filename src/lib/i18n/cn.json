@@ -119,7 +119,7 @@
     "EXCLUSIONS_HEADER_2": "提示",
     "EXCLUSIONS_TEXT_2": "每添加一个选项，受众的规模就会缩小。"
   },
-  "fba-detailed-controls": {
+  "fba-detailed-targeting-controls": {
     "NARROW": "缩小受众范围",
     "NARROW_FURTHER": "进一步缩小受众",
     "EXCLUDE": "排除用户",
