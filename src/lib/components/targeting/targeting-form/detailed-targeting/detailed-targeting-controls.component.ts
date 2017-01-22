@@ -1,14 +1,15 @@
 import {
-  Component, ChangeDetectionStrategy, Output, EventEmitter, Input, ChangeDetectorRef, OnChanges
+  Component, ChangeDetectionStrategy, Output, EventEmitter, Input, ChangeDetectorRef, OnChanges, OnInit, OnDestroy
 } from '@angular/core';
-import { TranslateService } from 'ng2-translate';
 
 @Component({
   selector:        'fba-detailed-targeting-controls',
   template:        `<div class="fba-detailed-targeting__controls">
                       <template ngFor let-control [ngForOf]="controls" let-last="last">
                         <a href=""
-                           (click)="addControl.emit(control.key)">{{control.name}}</a>
+                           (click)="addControl.emit(control.key)">
+                          {{control.translationKey | translate}}
+                        </a>
                         <span *ngIf="!last">{{'fba-detailed-targeting-controls.OR' | translate}}</span>
                       </template>
                     </div>
@@ -17,9 +18,7 @@ import { TranslateService } from 'ng2-translate';
                       :host {
                         position: relative;
                         display: block;
-                        padding-top: 10px;
                         font-size:   1.2rem;
-                      
                       }
                       
                       a {
@@ -30,16 +29,16 @@ import { TranslateService } from 'ng2-translate';
 })
 export class DetailedTargetingControlsComponent implements OnChanges {
   excludeControl       = {
-    key:  'exclusions',
-    name: this.translateService.instant(`fba-detailed-targeting-controls.EXCLUDE`)
+    key:            'exclusions',
+    translationKey: 'fba-detailed-targeting-controls.EXCLUDE'
   };
   narrowControl        = {
-    key:  'flexible_spec',
-    name: this.translateService.instant(`fba-detailed-targeting-controls.NARROW`)
+    key:            'flexible_spec',
+    translationKey: 'fba-detailed-targeting-controls.NARROW'
   };
   narrowFurtherControl = {
-    key:  'flexible_spec',
-    name: this.translateService.instant(`fba-detailed-targeting-controls.NARROW_FURTHER`)
+    key:            'flexible_spec',
+    translationKey: 'fba-detailed-targeting-controls.NARROW_FURTHER'
   };
 
   controls = [this.excludeControl];
@@ -74,6 +73,5 @@ export class DetailedTargetingControlsComponent implements OnChanges {
     this.changeDetectorRef.detectChanges();
   }
 
-  constructor (private changeDetectorRef: ChangeDetectorRef,
-               private translateService: TranslateService) {}
+  constructor (private changeDetectorRef: ChangeDetectorRef) {}
 }

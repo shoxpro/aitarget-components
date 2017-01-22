@@ -1,17 +1,19 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnChanges, OnInit } from '@angular/core';
 import { TranslateService } from 'ng2-translate';
 
-type language = 'en_US' | 'ru_RU' | 'zh_CN';
+type Language = 'en_US' | 'ru_RU' | 'zh_CN';
 
 @Component({
   selector:        'fba-localization',
   template:        `
-                      <button md-raised-button
+                      <div *ngIf="!lang">
+                        <button md-raised-button
                                 (click)="setLanguage('en_US')">EN</button>
-                      <button md-raised-button
+                        <button md-raised-button
                                 (click)="setLanguage('ru_RU')">RU</button>
-                      <button md-raised-button
+                        <button md-raised-button
                                 (click)="setLanguage('zh_CN')">CN</button>
+                      </div>
                     `,
   styles:          [`
                       :host {
@@ -20,11 +22,18 @@ type language = 'en_US' | 'ru_RU' | 'zh_CN';
                     `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LocalizationComponent {
+export class LocalizationComponent implements OnChanges {
 
   static DEFAULT_LANGUAGE = 'en_US';
 
-  setLanguage (lang: language) {
+  @Input() lang;
+
+  setLanguage (lang: Language) {
+    this.translateService.use(lang);
+  }
+
+  ngOnChanges (changes) {
+    let lang: Language = changes.lang.currentValue || LocalizationComponent.DEFAULT_LANGUAGE;
     this.translateService.use(lang);
   }
 

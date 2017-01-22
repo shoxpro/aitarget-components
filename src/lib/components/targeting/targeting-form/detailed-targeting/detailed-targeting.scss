@@ -6,19 +6,9 @@ fieldset {
   margin:  0;
 }
 
-legend {
-  position:    relative;
-  display:     block;
-  width:       100%;
-  font-size:   1.2rem;
-  color:       $color_legend;
-  font-weight: bold;
-  padding:     10px 0;
-}
-
 fba-close {
   font-size: 1.8rem;
   padding:   0;
-  right:     0;
+  right:     1px;
+  top:       -4px;
 }
-

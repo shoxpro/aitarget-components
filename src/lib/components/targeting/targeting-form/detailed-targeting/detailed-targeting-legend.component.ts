@@ -10,19 +10,15 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
       </legend>`,
   styles:          [`
                       legend {
-                        position:    relative;
-                        display:     block;
-                        width:       100%;
-                        font-size:   1.2rem;
-                        color:       #7f7f7f;
-                        font-weight: bold;
-                        padding:     10px 0;
-                      }
-                      
-                      fba-close {
-                        font-size: 1.8rem;
-                        padding:   0;
-                        right:     0;
+                        position:       relative;
+                        display:        block;
+                        width:          100%;
+                        font-size:      1.2rem;
+                        color:          #7f7f7f;
+                        font-weight:    bold;
+                        padding:        0;
+                        margin:         0;
+                        border:         none;
                       }
                     `],
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -8,8 +8,7 @@
 
 <div class="fba-geo-wrapper">
   <fba-geo *ngIf="!hideGeo"
-           [(ngModel)]="spec"
-           [lang]="lang"></fba-geo>
+           [(ngModel)]="spec"></fba-geo>
 </div>
 
 <fba-spec (close)="showSpec(false, $event)"

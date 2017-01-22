@@ -11,7 +11,6 @@ export class DemoGeoComponent implements OnInit {
 
   hideGeo       = false;
   isSpecVisible = false;
-  lang          = 'en_US';
 
   spec = targetingSpecInitial;
 
