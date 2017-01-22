@@ -21,7 +21,7 @@ export class GeoModeService {
                    return geoState[GEO_TARGETING_MODE_KEY];
                  })
                  .distinctUntilChanged();
-  };
+  }
 
   setMode (selectedMode: GeoModeType) {
     this._store.dispatch(this.geoModeActions.setMode(selectedMode));

@@ -18,9 +18,9 @@ xdescribe('Component: Geo', () => {
       declarations: [GeoComponent],
       providers:    [
         {
-          provide: TranslateService, useValue: {setDefaultLang () {}}
+          provide: TranslateService, useValue: {setDefaultLang () { return; }}
         },
-        {provide: Store, useValue: {let () {}}},
+        {provide: Store, useValue: {let () { return; }}},
         {provide: SharedActions, useValue: {}},
         {provide: GeoApiService, useValue: {}},
         {provide: GeoSelectedService, useValue: {}},

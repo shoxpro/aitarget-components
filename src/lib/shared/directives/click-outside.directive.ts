@@ -4,15 +4,15 @@ import { bodyClick$ } from '../constants/event-streams.constants';
 
 /* tslint:disable:directive-selector-name */
 @Directive({
-  selector: '[clickOutside],[clickOutsideStream]'
+  selector: '[fbaClickOutside],[fbaClickOutsideStream]'
 })
 /* tslint:enable:directive-selector-name */
 export class ClickOutsideDirective implements OnInit, OnDestroy {
 
   destroy$ = new Subject();
 
-  @Input() clickOutsideStream = new Subject();
-  @Output() clickOutside      = new EventEmitter();
+  @Input() fbaClickOutsideStream = new Subject();
+  @Output() fbaClickOutside      = new EventEmitter();
 
   constructor (private elementRef: ElementRef) {}
 
@@ -33,8 +33,8 @@ export class ClickOutsideDirective implements OnInit, OnDestroy {
           // but is not inside directive native element. Ignore clicks by 'close' buttons and
           // other disappearing elements.
           if (window.document.body.contains(targetElement) && !clickedInside) {
-            this.clickOutsideStream.next(e);
-            this.clickOutside.emit(e);
+            this.fbaClickOutsideStream.next(e);
+            this.fbaClickOutside.emit(e);
           }
         });
     });

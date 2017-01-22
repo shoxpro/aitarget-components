@@ -12,7 +12,7 @@ describe('Service: GeoInfo', () => {
       providers: [
         GeoInfoService,
         {provide: Store, useValue: {}},
-        {provide: GeoIdService, useValue: {id$: {getValue () {}}}},
+        {provide: GeoIdService, useValue: {id$: {getValue () { return; }}}},
         {provide: GeoInfoActions, useValue: {}},
         {provide: SharedActions, useValue: {}},
       ]

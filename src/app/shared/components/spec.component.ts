@@ -9,7 +9,7 @@ import { escape$ } from '../../../lib/shared/constants/event-streams.constants';
   template: `
 
 <div class="fba-spec"
-     [clickOutsideStream]="clickOutsideOfSpec$">
+     [fbaClickOutsideStream]="fbaClickOutsideOfSpec$">
   <textarea #textarea cols="50" autofocus readonly>{{ spec | json}}</textarea>
   <fba-close (onClose)="close.emit($event)"></fba-close>
 </div>
@@ -51,7 +51,7 @@ textarea {
 export class SpecComponent implements OnInit, OnDestroy, AfterViewInit {
 
   destroy$            = new Subject();
-  clickOutsideOfSpec$ = new Subject();
+  fbaClickOutsideOfSpec$ = new Subject();
 
   @ViewChild('textarea') textarea;
 
@@ -72,11 +72,9 @@ export class SpecComponent implements OnInit, OnDestroy, AfterViewInit {
 
     escape$
       .takeUntil(this.destroy$)
-      .merge(this.clickOutsideOfSpec$)
+      .merge(this.fbaClickOutsideOfSpec$)
       .subscribe((e) => {
         this.close.emit(e);
       });
   }
-
-  constructor () {}
 }

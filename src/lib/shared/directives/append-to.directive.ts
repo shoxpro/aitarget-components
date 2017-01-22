@@ -1,11 +1,11 @@
 import { Directive, ElementRef, OnInit, OnDestroy, Input } from '@angular/core';
 
 @Directive({
-  selector: '[appendTo]'
+  selector: '[fbaAppendTo]'
 })
 export class AppendToDirective implements OnInit, OnDestroy {
 
-  @Input() appendTo: string;
+  @Input() fbaAppendTo: string;
   @Input() showVeil: boolean = false;
 
   element: HTMLElement;
@@ -23,12 +23,12 @@ export class AppendToDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
-    if (!this.appendTo) {
+    if (!this.fbaAppendTo) {
       return;
     }
 
-    const targetElement       = <HTMLElement>window.document.querySelector(this.appendTo);
-    const appendToElementRect = targetElement.getBoundingClientRect();
+    const targetElement       = <HTMLElement>window.document.querySelector(this.fbaAppendTo);
+    const fbaAppendToElementRect = targetElement.getBoundingClientRect();
     const currentRect         = this.element.getBoundingClientRect();
 
     if (targetElement.style.position === 'static') {
@@ -47,8 +47,8 @@ export class AppendToDirective implements OnInit, OnDestroy {
 
     this.element.style.position = 'absolute';
     this.element.style.zIndex   = '1000';
-    this.element.style.top      = `${currentRect.top - appendToElementRect.top}px`;
-    this.element.style.left     = `${currentRect.left - appendToElementRect.left}px`;
+    this.element.style.top      = `${currentRect.top - fbaAppendToElementRect.top}px`;
+    this.element.style.left     = `${currentRect.left - fbaAppendToElementRect.left}px`;
 
     targetElement.appendChild(this.element);
   }

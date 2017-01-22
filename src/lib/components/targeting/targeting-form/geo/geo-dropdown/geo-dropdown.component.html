@@ -1,11 +1,11 @@
 <ul class="fba-geo-items__list"
     *ngIf="isOpen"
-    appendTo="fba-geo">
+    fbaAppendTo="fba-geo">
   <li class="fba-geo-items__row"
       *ngFor="let item of items; let i = index;"
       [ngClass]="{'fba-geo-items__row_active': i === activeItemIndex}"
       (click)="select.emit(item)">
-    <div class="fba-geo-items__name">{{ item | fullName }}</div>
-    <div class="fba-geo-items__type">{{ item | fullType }}</div>
+    <div class="fba-geo-items__name">{{ item | fbaFullName }}</div>
+    <div class="fba-geo-items__type">{{ item | fbaFullType }}</div>
   </li>
 </ul>

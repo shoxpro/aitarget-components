@@ -89,7 +89,7 @@ export class GeoSearchComponent implements OnInit, OnDestroy {
      */
     escape$
       .takeUntil(this.destroy$)
-      .merge(this.geoService.clickOutsideOfComponent$)
+      .merge(this.geoService.fbaClickOutsideOfComponent$)
       .withLatestFrom(this.model$
                           .map(({hasFocus}) => hasFocus)
                           .distinctUntilChanged())
@@ -117,7 +117,7 @@ export class GeoSearchComponent implements OnInit, OnDestroy {
      */
     escape$
       .takeUntil(this.destroy$)
-      .merge(this.geoService.clickOutsideOfComponent$)
+      .merge(this.geoService.fbaClickOutsideOfComponent$)
       .withLatestFrom(this.model$
                           .map(({isMapOpen, isDropdownOpen}) => ({isMapOpen, isDropdownOpen}))
                           .distinctUntilChanged())

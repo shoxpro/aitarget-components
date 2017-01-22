@@ -17,7 +17,7 @@ describe('Component: GeoMapControls', () => {
         TranslatePipe
       ],
       providers:    [
-        {provide: Store, useValue: {let () {}}},
+        {provide: Store, useValue: {let () { return; }}},
         {provide: TranslateService, useValue: {}},
         {provide: GeoModeService, useValue: {}},
         {provide: GeoMapService, useValue: {}}

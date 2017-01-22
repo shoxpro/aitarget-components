@@ -236,7 +236,7 @@ export class GeoMapService {
 
           this.togglePinMode();
         });
-  };
+  }
 
   enterPinMode () {
     this.map.on('click', this.onMapClick);

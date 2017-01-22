@@ -24,7 +24,7 @@ export class GeoLocationTypeService {
                    return geoState[GEO_TARGETING_LOCATION_TYPE_KEY];
                  })
                  .distinctUntilChanged();
-  };
+  }
 
   setTranslatedTypes () {
     this._store.dispatch(this.geoLocationTypeActions.setTranslatedTypes());

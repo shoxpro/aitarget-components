@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { GeoInfoService } from './geo-info.service';
 import { AppState } from '../../../../../../app/reducers/index';
 import { Store } from '@ngrx/store';
@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
   styleUrls:       ['geo-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GeoInfoComponent implements OnInit, OnDestroy {
+export class GeoInfoComponent {
 
   model$;
 
@@ -31,11 +31,4 @@ export class GeoInfoComponent implements OnInit, OnDestroy {
                private geoInfoService: GeoInfoService) {
     this.model$ = this._store.let(this.geoInfoService.getModel);
   }
-
-  ngOnDestroy () {}
-
-  ngOnInit () {
-    // TODO: Translate message on language change
-  }
-
 }

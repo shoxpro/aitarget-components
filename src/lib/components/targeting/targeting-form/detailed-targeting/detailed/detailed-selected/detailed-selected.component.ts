@@ -43,7 +43,7 @@ export class DetailedSelectedComponent implements OnInit, OnDestroy {
     // noinspection TypeScriptUnresolvedFunction
     let openItems        = Object.assign({}, defaultOpenItems);
 
-    path.forEach((crumb: string, pos: number) => {
+    for (let pos = 0; pos < path.length; pos++) {
       if (pos <= index) {
         let openItemKey = path.slice(0, pos + 1)
                               .join(' > ');
@@ -51,7 +51,7 @@ export class DetailedSelectedComponent implements OnInit, OnDestroy {
         openItems._scrollTo    = openItemKey;
         openItems[openItemKey] = true;
       }
-    });
+    }
 
     // Close search mode before opening browse tree
     this.detailedSearchService.update({isVisible: false, type: null});

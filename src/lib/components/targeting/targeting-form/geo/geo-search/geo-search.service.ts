@@ -11,6 +11,7 @@ import { GEO_TARGETING_STATE_KEY, GeoState } from '../geo.reducer';
 import { GeoIdService } from '../geo.id';
 import { AppState } from '../../../../../../app/reducers/index';
 import { SdkError } from '../../../../../shared/errors/sdkError';
+import { GeoItem } from '../geo-item.interface';
 
 @Injectable()
 export class GeoSearchService {
@@ -27,7 +28,7 @@ export class GeoSearchService {
                    return geoState[GEO_TARGETING_SEARCH_KEY];
                  })
                  .distinctUntilChanged();
-  };
+  }
 
   focus () {
     this._store.dispatch(this.geoSearchActions.updateModel({hasFocus: true}));
@@ -118,7 +119,7 @@ export class GeoSearchService {
             return this.geoApiService.search(query);
           }),
           (...results) => {
-            return results.reduce((acc: GeoSearchState, items, index) => {
+            return results.reduce((acc: GeoSearchState, items: Array<GeoItem>, index) => {
               let query        = model.termsGrouped.queries[index];
               let term         = model.terms.filter((t) => t.query === query)[0];
               let matchedItems = items.filter((item) => item.name.toLowerCase()
@@ -138,7 +139,7 @@ export class GeoSearchService {
             }, updatedModel);
           });
       });
-  };
+  }
 
   /**
    * Request for model custom locations items and return updated model
@@ -176,7 +177,7 @@ export class GeoSearchService {
                      return acc;
                    }, updatedModel);
       });
-  };
+  }
 
   /**
    * Propagate model with found items and dispatch update model action

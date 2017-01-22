@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { PRELOADER_DOTS } from '../constants/data-urls.constants';
 
 @Component({
-  selector: 'fb-preloader-dots',
+  selector: 'fba-preloader-dots',
   template: `
             <!--suppress HtmlUnknownTarget -->
             <img src="${PRELOADER_DOTS}" alt="">
@@ -22,5 +22,5 @@ import { PRELOADER_DOTS } from '../constants/data-urls.constants';
               }
             `]
 })
-export class FbPreloaderDotsComponent {
+export class PreloaderDotsComponent {
 }

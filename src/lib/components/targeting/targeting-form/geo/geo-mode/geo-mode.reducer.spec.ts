@@ -1,22 +1,22 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { geoModeActions, GeoModeActions } from './geo-mode.actions';
-import { geoModeInitial, geoModeReducer, GeoModeIdType } from './geo-mode.reducer';
+import { GeoModeActions } from './geo-mode.actions';
+import { geoModeInitial, geoModeReducer, GeoModeType, GeoModeIdType } from './geo-mode.reducer';
 import { TranslateService } from 'ng2-translate';
 import { GeoIdService } from '../geo.id';
 
-let deepFreeze = require('deep-freeze');
+let deepFreeze = require('deep-freeze-strict');
 
 let modesWithKeys = [
   {
-    id:   'include',
+    id:   <GeoModeIdType>'include',
     name: `fba-geo-mode.include`
   },
   {
-    id:   'exclude',
+    id:   <GeoModeIdType>'exclude',
     name: `fba-geo-mode.exclude`
   },
   {
-    id:   'delete',
+    id:   <GeoModeIdType>'delete',
     name: `fba-geo-mode.delete`
   }
 ];
@@ -26,7 +26,7 @@ describe(`geoModeReducer`, () => {
     TestBed.configureTestingModule({
       providers: [
         GeoModeActions,
-        {provide: GeoIdService, useValue: {id$: {getValue () {}}}},
+        {provide: GeoIdService, useValue: {id$: {getValue () { return; }}}},
         {provide: TranslateService, useValue: {instant (key) { return key; }}},
       ]
     });
@@ -79,9 +79,9 @@ describe(`geoModeReducer`, () => {
 
   describe(GeoModeActions.SET_MODE, () => {
     it(`should set mode`, inject([GeoModeActions],
-      (geoModeActions: geoModeActions) => {
-        let state                       = geoModeInitial;
-        let selectedMode: GeoModeIdType = modesWithKeys[1];
+      (geoModeActions: GeoModeActions) => {
+        let state                     = geoModeInitial;
+        let selectedMode: GeoModeType = modesWithKeys[1];
 
         deepFreeze(state);
 
@@ -95,7 +95,7 @@ describe(`geoModeReducer`, () => {
 
   describe(GeoModeActions.TOGGLE_MODE_DROPDOWN, () => {
     it(`should set isOpen flag`, inject([GeoModeActions],
-      (geoModeActions: geoModeActions) => {
+      (geoModeActions: GeoModeActions) => {
         let state = geoModeInitial;
 
         deepFreeze(state);

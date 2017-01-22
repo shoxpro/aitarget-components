@@ -18,7 +18,4 @@ export class DetailedSearchService {
       type:      data.type
     });
   };
-
-  constructor () { }
-
 }

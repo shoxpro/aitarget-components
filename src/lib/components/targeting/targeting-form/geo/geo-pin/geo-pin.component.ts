@@ -1,17 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector:    'fba-geo-pin',
   templateUrl: 'geo-pin.component.html',
   styleUrls:   ['geo-pin.component.scss']
 })
-export class GeoPinComponent implements OnInit {
+export class GeoPinComponent {
 
   @Input('excluded') excluded: boolean = false;
-
-  constructor () { }
-
-  ngOnInit () {
-  }
-
 }

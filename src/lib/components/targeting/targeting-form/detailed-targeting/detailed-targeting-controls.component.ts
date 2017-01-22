@@ -1,5 +1,5 @@
 import {
-  Component, ChangeDetectionStrategy, Output, EventEmitter, Input, ChangeDetectorRef, OnChanges, OnInit, OnDestroy
+  Component, ChangeDetectionStrategy, Output, EventEmitter, Input, ChangeDetectorRef, OnChanges
 } from '@angular/core';
 
 @Component({

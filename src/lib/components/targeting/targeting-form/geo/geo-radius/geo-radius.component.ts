@@ -19,7 +19,7 @@ import { GeoIdService } from '../geo.id';
 export class GeoRadiusComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
-  appendToSelector;
+  fbaAppendToSelector;
 
   _itemOriginal;
   _itemCopy;
@@ -127,7 +127,7 @@ export class GeoRadiusComponent implements OnInit, OnDestroy {
                private geoService: GeoService,
                private geoIdService: GeoIdService,
                private changeDetectorRef: ChangeDetectorRef) {
-    this.appendToSelector = `#${this.geoIdService.id$.getValue()}`;
+    this.fbaAppendToSelector = `#${this.geoIdService.id$.getValue()}`;
   }
 
   ngOnDestroy () {
@@ -168,7 +168,7 @@ export class GeoRadiusComponent implements OnInit, OnDestroy {
     enter$
       .takeUntil(this.destroy$)
       .do((e: KeyboardEvent) => e.preventDefault())
-      .merge(this.geoService.clickOutsideOfComponent$)
+      .merge(this.geoService.fbaClickOutsideOfComponent$)
       .filter(() => this.isOpen)
       .subscribe(() => {
         // Close dropdown and save value

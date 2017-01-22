@@ -8,7 +8,7 @@ import { DetailedModule } from './targeting-form/detailed-targeting/detailed/det
 import { SharedModule } from '../../shared/shared.module';
 import { CoreModule } from '../../core.module';
 import { DynamicComponentModule } from 'ng-dynamic';
-import { TargetingAudiences } from './targeting-audiences/targeting-audiences.component';
+import { TargetingAudiencesComponent } from './targeting-audiences/targeting-audiences.component';
 import { AudienceComponent } from './audience/audience.component';
 import { MdSliderModule } from '@angular/material';
 import { GenderComponent } from './targeting-form/gender/gender';
@@ -32,7 +32,7 @@ import { DetailedTargetingModule } from './targeting-form/detailed-targeting/det
     TargetingFormComponent,
     TargetingFormAddComponent,
     TargetingFormArrayComponent,
-    TargetingAudiences,
+    TargetingAudiencesComponent,
     AudienceComponent,
     GenderComponent,
     AgeComponent

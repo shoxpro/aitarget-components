@@ -82,7 +82,7 @@ export class DetailedComponent implements ControlValueAccessor, SqueezedValueAcc
     this.propagateChange = fn;
   }
 
-  registerOnTouched () {}
+  registerOnTouched () { return; }
 
   // ==== implement ControlValueAccessor ====
 
@@ -134,7 +134,7 @@ export class DetailedComponent implements ControlValueAccessor, SqueezedValueAcc
   close = () => {
     this.detailedModeService.set(null);
     this.detailedInfoService.update(null);
-  };
+  }
 
   /**
    * Set mode to null if user click outside detailed element
@@ -148,14 +148,14 @@ export class DetailedComponent implements ControlValueAccessor, SqueezedValueAcc
     if (!clickedInside) {
       this.close();
     }
-  };
+  }
 
   processKeydown = (e) => {
     // when Escape
     if (e.keyCode === 27) {
       this.close();
     }
-  };
+  }
 
   updateView () {
     // Set targetingList array for validation

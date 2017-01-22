@@ -5,22 +5,22 @@
         *ngIf="item.radius > 0">+ {{ item.radius }} {{'fba-geo-radius.' + item.distance_unit | translate}}
   </span>
 
-  <fb-arrow-drop [direction]="isOpen ? 'up' : 'down'"></fb-arrow-drop>
+  <fba-arrow-drop [direction]="isOpen ? 'up' : 'down'"></fba-arrow-drop>
 </div>
 <!--Select Radius Dropdown-->
 <div class="fba-geo-radius__dropdown"
      *ngIf="isOpen"
-     [appendTo]="appendToSelector"
-     (clickOutside)="toggleDropdown()"
+     [fbaAppendTo]="fbaAppendToSelector"
+     (fbaClickOutside)="toggleDropdown()"
      [showVeil]="true">
   <div class="fba-geo-radius__mode fba-geo-radius__mode_current"
        *ngIf="item.type === 'city'">
     <div class="fba-geo-radius__mode-row"
          [ngClass]="{'fba-geo-radius__mode-row_selected': item.radius === 0}"
          (click)="disableRadius()">
-      <fb-tick class="fba-geo-radius__dropdown-tick"
+      <fba-tick class="fba-geo-radius__dropdown-tick"
                *ngIf="item.radius === 0">
-      </fb-tick>
+      </fba-tick>
       <span class="fba-geo-radius__mode-text">{{ 'fba-geo-radius.CURRENT_ONLY' | translate }}</span>
     </div>
   </div>
@@ -29,9 +29,9 @@
          [ngClass]="{'fba-geo-radius__mode-row_selected': item.radius > 0}"
          (click)="enableRadius()"
          *ngIf="item.type === 'city'">
-      <fb-tick class="fba-geo-radius__dropdown-tick"
+      <fba-tick class="fba-geo-radius__dropdown-tick"
                *ngIf="item.radius > 0">
-      </fb-tick>
+      </fba-tick>
       <span class="fba-geo-radius__mode-text">{{ 'fba-geo-radius.USE_RADIUS' | translate }}</span>
     </div>
     <div class="fba-geo-radius__mode-row fba-geo-radius__mode-row_slider">

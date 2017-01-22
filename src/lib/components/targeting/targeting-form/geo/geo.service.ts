@@ -10,7 +10,7 @@ import { GEO_LIMITS } from './geo.constants';
 @Injectable()
 export class GeoService {
 
-  clickOutsideOfComponent$ = new Subject();
+  fbaClickOutsideOfComponent$ = new Subject();
 
   init () {
     this._store.dispatch(this.geoActions.init());

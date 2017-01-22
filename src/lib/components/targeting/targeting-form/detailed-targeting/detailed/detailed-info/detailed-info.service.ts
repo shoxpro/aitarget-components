@@ -11,7 +11,4 @@ export class DetailedInfoService {
   update (item: DetailedItem) {
     this._item.next(item);
   };
-
-  constructor () {}
-
 }

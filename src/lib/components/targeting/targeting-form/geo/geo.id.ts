@@ -9,5 +9,4 @@ export class GeoIdService {
   _prefix = 'geo';
   id$     = new BehaviorSubject(`${this._prefix}-${nextId++}`);
 
-  constructor () {}
 }

@@ -1,13 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { targetingSpecInitial } from '../../lib/components/targeting/interfaces/targeting-spec.interface';
 
 @Component({
-  selector:        'app-demo-geo',
+  selector:        'fba-demo-geo',
   templateUrl:     './demo-geo.component.html',
   styleUrls:       ['demo-geo.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DemoGeoComponent implements OnInit {
+export class DemoGeoComponent {
 
   hideGeo       = false;
   isSpecVisible = false;
@@ -26,8 +26,4 @@ export class DemoGeoComponent implements OnInit {
   }
 
   constructor (private changeDetectorRef: ChangeDetectorRef) { }
-
-  ngOnInit () {
-  }
-
 }

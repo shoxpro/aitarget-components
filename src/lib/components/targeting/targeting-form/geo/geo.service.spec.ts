@@ -15,7 +15,7 @@ describe('Service: Geo', () => {
         {provide: GeoActions, useValue: {}},
         {provide: GeoInfoService, useValue: {}},
         {provide: TranslateService, useValue: {}},
-        {provide: Store, useValue: {let () {}}},
+        {provide: Store, useValue: {let () { return; }}},
       ]
     });
   });

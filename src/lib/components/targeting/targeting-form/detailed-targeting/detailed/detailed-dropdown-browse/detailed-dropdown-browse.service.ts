@@ -37,7 +37,4 @@ export class DetailedDropdownBrowseService {
   getOpenItems () {
     return this._openItems.getValue();
   };
-
-  constructor () {}
-
 }

@@ -27,7 +27,7 @@
           (toggle)="toggleModeDropdown(itemMode, $event)"
           (modeChange)="modeChange(item, $event)"></fba-geo-mode>
 
-        <span>{{ item | fullName }}</span>
+        <span>{{ item | fbaFullName }}</span>
 
         <fba-geo-radius *ngIf="['city', 'custom_location', 'place'].includes(item.type)"
                         [item]="item"></fba-geo-radius>

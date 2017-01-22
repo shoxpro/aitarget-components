@@ -15,7 +15,4 @@ export class DetailedModeService {
   set = function (mode: string) {
     this._mode.next(mode);
   };
-
-  constructor () {}
-
 }

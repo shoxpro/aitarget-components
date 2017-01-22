@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'fb-arrow-drop',
-  template: `<span class="fb-arrow-drop__wrapper">
+  selector: 'fba-arrow-drop',
+  template: `<span class="fba-arrow-drop__wrapper">
                 <svg xmlns="http://www.w3.org/2000/svg"
                      *ngIf="direction === 'down'"
-                     class="fb-arrow-drop__svg fb-arrow-drop__svg_down"
+                     class="fba-arrow-drop__svg fba-arrow-drop__svg_down"
                      fill="#4b4f56"
                      height="24"
                      viewBox="0 0 24 24"
@@ -16,7 +16,7 @@ import { Component, OnInit, Input } from '@angular/core';
                 </svg>
                 <svg xmlns="http://www.w3.org/2000/svg"
                      *ngIf="direction === 'up'"
-                     class="fb-arrow-drop__svg fb-arrow-drop__svg_up"
+                     class="fba-arrow-drop__svg fba-arrow-drop__svg_up"
                      fill="#4b4f56"
                      height="24"
                      viewBox="0 0 24 24"
@@ -33,31 +33,24 @@ import { Component, OnInit, Input } from '@angular/core';
                 width:    14px;
                 height:   14px;
               }
-              .fb-arrow-drop__wrapper {
+              .fba-arrow-drop__wrapper {
                 position: relative;
                 display:  inline-block;
                 overflow: hidden;
                 width:    14px;
                 height:   14px;
               }
-              .fb-arrow-drop__svg {
+              .fba-arrow-drop__svg {
                 position: absolute;
                 top:      -4px;
                 left:     -5px;
               }
-              .fb-arrow-drop__svg_up {
+              .fba-arrow-drop__svg_up {
                 position: relative;
                 top:      -2px;
               }
             `]
 })
-export class FbArrowDropComponent implements OnInit {
-
+export class ArrowDropComponent {
   @Input() direction: string = 'down';
-
-  constructor () { }
-
-  ngOnInit () {
-  }
-
 }

@@ -25,7 +25,7 @@ export class DetailedInfoComponent implements OnInit, OnDestroy {
   getDescription (item: DetailedItem) {
     let description: string;
     let lastCrumb       = item.path[item.path.length - 1];
-    let typeToHumanPipe = new TypeToHumanPipe(this.translateService);
+    let fbaTypeToHumanPipe = new TypeToHumanPipe(this.translateService);
     switch (item.type) {
       case 'interests':
         description = this.translateService.instant('fba-detailed-info.DESCRIBE_INTERESTS') +
@@ -33,7 +33,7 @@ export class DetailedInfoComponent implements OnInit, OnDestroy {
         break;
       default:
         description = this.translateService.instant('fba-detailed-info.DESCRIBE_DEFAULT', {
-          type: typeToHumanPipe.transform(item.type),
+          type: fbaTypeToHumanPipe.transform(item.type),
           name: lastCrumb
         });
     }

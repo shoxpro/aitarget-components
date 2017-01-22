@@ -3,7 +3,7 @@ import { geoInfoInitial, geoInfoReducer, InfoLevel } from './geo-info.reducer';
 import { GeoInfoActions } from './geo-info.actions';
 import { GeoIdService } from '../geo.id';
 
-let deepFreeze = require('deep-freeze');
+let deepFreeze = require('deep-freeze-strict');
 
 let testInfo = {
   message:   'test message',
@@ -16,7 +16,7 @@ describe(`geoInfoReducer`, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        {provide: GeoIdService, useValue: {id$: {getValue () {}}}},
+        {provide: GeoIdService, useValue: {id$: {getValue () { return; }}}},
         GeoInfoActions
       ]
     });

@@ -1,12 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
-  selector:        'app-demo-detailed',
+  selector:        'fba-demo-detailed',
   templateUrl:     'demo-detailed-targeting.component.html',
   styleUrls:       ['demo-detailed-targeting.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DemoDetailedTargetingComponent implements OnInit {
+export class DemoDetailedTargetingComponent {
 
   hideDetailed  = false;
   isSpecVisible = false;
@@ -43,8 +43,4 @@ export class DemoDetailedTargetingComponent implements OnInit {
   }
 
   constructor (private changeDetectorRef: ChangeDetectorRef) { }
-
-  ngOnInit () {
-  }
-
 }

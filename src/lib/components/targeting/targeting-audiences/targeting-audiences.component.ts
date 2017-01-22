@@ -13,7 +13,7 @@ import { AppState } from '../../../../app/reducers/index';
   styleUrls:       ['targeting-audiences.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TargetingAudiences implements OnInit, OnDestroy {
+export class TargetingAudiencesComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   audiences$;
   audienceIndexes$;

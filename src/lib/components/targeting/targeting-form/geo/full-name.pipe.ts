@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'fullName'
+  name: 'fbaFullName'
 })
 export class FullNamePipe implements PipeTransform {
 
-  transform (value: any, args?: any): any {
+  transform (value: any): any {
     let allNames = [value.name, value.region, (value.type !== 'country' && value.country_name)];
     return allNames.filter((name) => Boolean(name))
                    .join(', ');

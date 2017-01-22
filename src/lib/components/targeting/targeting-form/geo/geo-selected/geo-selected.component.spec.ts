@@ -18,7 +18,7 @@ xdescribe('Component: GeoSelected', () => {
         FullNamePipe
       ],
       providers:    [
-        {provide: Store, useValue: {let () {}}},
+        {provide: Store, useValue: {let () { return; }}},
         {provide: GeoSelectedService, useValue: {}},
         {provide: GeoSearchService, useValue: {}},
         {provide: GeoMapService, useValue: {}}

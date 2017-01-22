@@ -43,7 +43,4 @@ export class DetailedSelectedService {
       map:  structuredSelectedMap
     };
   }
-
-  constructor () {}
-
 }

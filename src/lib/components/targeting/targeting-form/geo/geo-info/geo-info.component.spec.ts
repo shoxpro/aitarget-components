@@ -14,7 +14,7 @@ describe('Component: GeoInfo', () => {
       declarations: [GeoInfoComponent, TranslatePipe],
       providers:    [
         {provide: GeoInfoService, useValue: {}},
-        {provide: Store, useValue: {let () {}}},
+        {provide: Store, useValue: {let () { return; }}},
       ],
       schemas:      [CUSTOM_ELEMENTS_SCHEMA]
     });

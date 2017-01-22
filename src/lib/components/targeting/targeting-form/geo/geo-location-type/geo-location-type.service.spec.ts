@@ -11,8 +11,8 @@ describe('Service: GeoType', () => {
     TestBed.configureTestingModule({
       providers: [
         GeoLocationTypeService,
-        {provide: Store, useValue: {let () {}}},
-        {provide: GeoIdService, useValue: {id$: {getValue () {}}}},
+        {provide: Store, useValue: {let () { return; }}},
+        {provide: GeoIdService, useValue: {id$: {getValue () { return; }}}},
         {provide: GeoLocationTypeActions, useValue: {}},
       ]
     });

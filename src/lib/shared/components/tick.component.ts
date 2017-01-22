@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'fb-tick',
+  selector: 'fba-tick',
   template: `<svg xmlns="http://www.w3.org/2000/svg"
                fill="#07a0cf"
                height="18"
@@ -13,11 +13,5 @@ import { Component, OnInit } from '@angular/core';
               </svg>`,
   styles:   [`:host {display: inline-block;width: 18px;height: 18px;}`]
 })
-export class FbTickComponent implements OnInit {
-
-  constructor () { }
-
-  ngOnInit () {
-  }
-
+export class TickComponent {
 }

@@ -14,7 +14,7 @@ export interface PluralMap {
 
 @Injectable()
 @Pipe({
-  name: 'plural'
+  name: 'fbaPlural'
 })
 export class PluralPipe implements PipeTransform {
 

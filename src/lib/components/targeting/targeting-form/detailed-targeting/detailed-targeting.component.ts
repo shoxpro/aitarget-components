@@ -69,7 +69,7 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
     this.propagateChange = fn;
   }
 
-  registerOnTouched () {}
+  registerOnTouched () { return; }
 
   // ==== implement ControlValueAccessor ====
 
@@ -91,8 +91,7 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
     return this.squeezedValue$.getValue();
   }
 
-  focus () {
-  }
+  focus () { return; }
 
   // ==== implement SqueezedValueAccessor ====
 

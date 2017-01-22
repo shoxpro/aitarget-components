@@ -20,7 +20,7 @@ export class BrowseMultiSelectComponent implements AfterViewInit, OnDestroy {
   constructor (private elRef: ElementRef,
                private translateService: TranslateService,
                private detailedSelectedService: DetailedSelectedService) {
-    this.el = elRef.nativeElement;
+    this.el = this.elRef.nativeElement;
   }
 
   change (checked: boolean) {

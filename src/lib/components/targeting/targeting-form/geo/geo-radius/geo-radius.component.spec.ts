@@ -16,7 +16,7 @@ describe('Component: GeoRadius', () => {
       declarations: [GeoRadiusComponent, TranslatePipe, AppendToDirective],
       providers:    [
         {provide: GeoSelectedService, useValue: {}},
-        {provide: GeoIdService, useValue: {id$: {getValue () {}}}},
+        {provide: GeoIdService, useValue: {id$: {getValue () { return; }}}},
         {provide: GeoService, useValue: {}},
         {provide: TranslateService, useValue: {}},
       ],

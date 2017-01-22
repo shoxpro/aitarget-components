@@ -17,9 +17,6 @@ export class DetailedService {
   update (spec: DetailedSpec) {
     this._spec.next(spec);
   }
-
-  constructor () { }
-
   updateWithSelectedItems (items: DetailedItem[]) {
     let detailed = {};
 

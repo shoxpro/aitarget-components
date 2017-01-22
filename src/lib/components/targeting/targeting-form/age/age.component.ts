@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { FormControlToken } from '../../../../shared/constants/form-control-token';
 import { SqueezedValueAccessor } from '../../../../shared/interfaces/squeeze-value-accessor.inteface';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
 import { ageInitial } from '../../interfaces/targeting-spec-age.interface';
 
@@ -22,8 +22,7 @@ const range = require('lodash/range');
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AgeComponent implements ControlValueAccessor, SqueezedValueAccessor, OnInit, OnDestroy {
-  destroy$       = new Subject();
+export class AgeComponent implements ControlValueAccessor, SqueezedValueAccessor {
   squeezedValue$ = new BehaviorSubject(this.getAgeString(ageInitial));
 
   ages = range(13, 66);
@@ -61,7 +60,7 @@ export class AgeComponent implements ControlValueAccessor, SqueezedValueAccessor
     this.propagateChange = fn;
   }
 
-  registerOnTouched () {}
+  registerOnTouched () { return; }
 
   // ==== implement ControlValueAccessor ====
 
@@ -75,8 +74,7 @@ export class AgeComponent implements ControlValueAccessor, SqueezedValueAccessor
     return this.squeezedValue$.getValue();
   }
 
-  focus () {
-  }
+  focus () { return; }
 
   // ==== implement SqueezedValueAccessor ====
 
@@ -94,12 +92,4 @@ export class AgeComponent implements ControlValueAccessor, SqueezedValueAccessor
 
     this.value = updatedValue;
   }
-
-  ngOnDestroy () {
-    this.destroy$.next();
-  }
-
-  ngOnInit () {}
-
-  constructor () {}
 }

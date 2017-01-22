@@ -4,7 +4,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { TranslateService } from 'ng2-translate';
 import { GeoIdService } from '../geo.id';
 
-let deepFreeze = require('deep-freeze');
+let deepFreeze = require('deep-freeze-strict');
 const types    = [
   {id: 'all', name: `fba-geo-dropdown.all`},
   {id: 'country', name: `fba-geo-dropdown.country`},
@@ -26,7 +26,7 @@ describe('geoTypeReducer', () => {
       imports:      [],
       providers:    [
         GeoTypeActions,
-        {provide: GeoIdService, useValue: {id$: {getValue () {}}}},
+        {provide: GeoIdService, useValue: {id$: {getValue () { return; }}}},
         {provide: TranslateService, useValue: {instant: (key) => key}}
       ],
       declarations: []

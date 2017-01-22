@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
                             (click)="toggleSqueezedValue($event)">
                         <div *dynamicComponent="squeezedValue"></div>
                       </div>
-                      <div *ngIf="!squeezeValueVisible" (clickOutside)="toggleSqueezedValue($event)">
+                      <div *ngIf="!squeezeValueVisible" (fbaClickOutside)="toggleSqueezedValue($event)">
                         <ng-content></ng-content>
                       </div>
                     </div>`,

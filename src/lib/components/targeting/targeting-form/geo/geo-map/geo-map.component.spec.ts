@@ -17,10 +17,10 @@ xdescribe('Component: GeoMap', () => {
         TranslatePipe
       ],
       providers:    [
-        {provide: Store, useValue: {let () {}}},
+        {provide: Store, useValue: {let () { return; }}},
         {provide: GeoMapService, useValue: {}},
-        {provide: TranslateService, useValue: {instant () {}}},
-        {provide: ComponentsHelperService, useValue: {setRootViewContainerRef () {}}},
+        {provide: TranslateService, useValue: {instant () { return; }}},
+        {provide: ComponentsHelperService, useValue: {setRootViewContainerRef () { return; }}},
       ],
       schemas:      [CUSTOM_ELEMENTS_SCHEMA]
     });

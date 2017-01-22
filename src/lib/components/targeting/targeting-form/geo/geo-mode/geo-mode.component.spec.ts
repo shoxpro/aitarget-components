@@ -14,7 +14,7 @@ describe('Component: GeoMode', () => {
         GeoModeComponent
       ],
       providers:    [
-        {provide: Store, useValue: {let () {}}},
+        {provide: Store, useValue: {let () { return; }}},
         {provide: GeoModeService, useValue: {}},
       ],
       schemas:      [CUSTOM_ELEMENTS_SCHEMA]

@@ -10,7 +10,4 @@ export class DetailedInputService {
   setTerm (term: string) {
     this._term.next(term);
   }
-
-  constructor () {}
-
 }

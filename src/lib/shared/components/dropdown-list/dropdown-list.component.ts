@@ -4,9 +4,9 @@ import { EventEmitter } from '@angular/common/src/facade/async';
 interface Item { id: string|number; name: string; }
 
 @Component({
-  selector:        'fb-dropdown-list',
-  templateUrl:     './fb-dropdown-list.html',
-  styleUrls:       ['./fb-dropdown-list.scss'],
+  selector:        'fba-dropdown-list',
+  templateUrl:     './dropdown-list.html',
+  styleUrls:       ['./dropdown-list.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FbDropdownListComponent {
@@ -17,6 +17,4 @@ export class FbDropdownListComponent {
   showInfo (listItem, showInfo) {
     listItem.showInfo = showInfo;
   }
-
-  constructor () {}
 }

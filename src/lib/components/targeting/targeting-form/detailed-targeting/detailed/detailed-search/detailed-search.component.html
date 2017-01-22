@@ -29,7 +29,7 @@
         </span>
         <input type="text"
                class="fba-detailed-search__input"
-               placeholder="{{ type | typeToHuman }}"
+               placeholder="{{ type | fbaTypeToHuman }}"
                #term
                (keyup)="keyup(term.value)">
       </label>

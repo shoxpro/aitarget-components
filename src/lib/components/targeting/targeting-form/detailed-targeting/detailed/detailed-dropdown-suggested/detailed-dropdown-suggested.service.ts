@@ -11,7 +11,4 @@ export class DetailedDropdownSuggestedService {
   updateDropdown (items: DetailedItem[]) {
     this._items.next(items);
   };
-
-  constructor () {}
-
 }

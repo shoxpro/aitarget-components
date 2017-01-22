@@ -15,7 +15,4 @@ export class GeoRadiusService {
 
     return item;
   }
-
-  constructor () { }
-
 }

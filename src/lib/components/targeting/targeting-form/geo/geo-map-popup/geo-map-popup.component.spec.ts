@@ -17,8 +17,8 @@ describe('Component: GeoMapPopup', () => {
         FullNamePipe
       ],
       providers:    [
-        {provide: Store, useValue: {let () {}}},
-        {provide: GeoModeService, useValue: {let () {}}},
+        {provide: Store, useValue: {let () { return; }}},
+        {provide: GeoModeService, useValue: {let () { return; }}},
         {provide: GeoSelectedService, useValue: {}}
       ],
       schemas:      [CUSTOM_ELEMENTS_SCHEMA]

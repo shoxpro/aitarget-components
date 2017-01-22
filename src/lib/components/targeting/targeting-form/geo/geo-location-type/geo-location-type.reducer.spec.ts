@@ -4,7 +4,7 @@ import { geoLocationTypeInitial, geoLocationTypeReducer, LocationType } from './
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { GeoIdService } from '../geo.id';
 
-let deepFreeze = require('deep-freeze');
+let deepFreeze = require('deep-freeze-strict');
 
 let typesWithKeys: Array<LocationType> = [
   {
@@ -42,7 +42,7 @@ describe(`geoLocationTypeReducer`, () => {
     TestBed.configureTestingModule({
       providers: [
         GeoLocationTypeActions,
-        {provide: GeoIdService, useValue: {id$: {getValue () {}}}},
+        {provide: GeoIdService, useValue: {id$: {getValue () { return; }}}},
         {provide: TranslateService, useValue: {instant: (key) => key}}
       ]
     });

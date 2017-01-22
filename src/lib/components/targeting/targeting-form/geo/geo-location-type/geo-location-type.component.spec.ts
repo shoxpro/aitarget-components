@@ -13,7 +13,7 @@ describe('Component: GeoType', () => {
       imports:      [],
       declarations: [GeoLocationTypeComponent],
       providers:    [
-        {provide: Store, useValue: {let () {}}},
+        {provide: Store, useValue: {let () { return; }}},
         {provide: GeoLocationTypeService, useValue: {}},
         {provide: TranslateService, useValue: {}},
       ],

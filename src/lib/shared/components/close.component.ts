@@ -24,8 +24,5 @@ import { Component, Output, EventEmitter } from '@angular/core';
             `]
 })
 export class CloseComponent {
-
   @Output() onClose = new EventEmitter();
-
-  constructor () {}
 }

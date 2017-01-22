@@ -22,7 +22,7 @@ export class GeoInfoService {
                    return geoState[GEO_TARGETING_INFO_KEY];
                  })
                  .distinctUntilChanged();
-  };
+  }
 
   showInfo ({level = 'info', message, canRevert = false, revertKeys = [], isVisible = true}: GeoInfoState) {
     this._store.dispatch(this.geoInfoActions.showInfo({

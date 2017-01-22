@@ -11,7 +11,7 @@ describe('Service: GeoMode', () => {
       providers: [
         GeoModeService,
         {provide: Store, useValue: {}},
-        {provide: GeoIdService, useValue: {id$: {getValue () {}}}},
+        {provide: GeoIdService, useValue: {id$: {getValue () { return; }}}},
         {provide: GeoModeActions, useValue: {}}
       ]
     });

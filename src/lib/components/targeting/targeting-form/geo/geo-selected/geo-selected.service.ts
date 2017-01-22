@@ -14,9 +14,9 @@ import { GEO_TARGETING_STATE_KEY, GeoState } from '../geo.reducer';
 import { GeoLocationTypeService } from '../geo-location-type/geo-location-type.service';
 import { GeoIdService } from '../geo.id';
 import { AppState } from '../../../../../../app/reducers/index';
-import { CustomLocation, City, Key } from '../../../interfaces/targeting-spec-geo.interface';
 import { TargetingSpec } from '../../../interfaces/targeting-spec.interface';
 import { SdkError } from '../../../../../shared/errors/sdkError';
+import { CustomLocation, City, Key } from '../../../interfaces/targeting-spec-geo.interface';
 
 @Injectable()
 export class GeoSelectedService {
@@ -121,7 +121,7 @@ export class GeoSelectedService {
 
                  for (let mappedType in metaData) {
                    if (metaData.hasOwnProperty(mappedType)) {
-                     extendedItems = [...extendedItems, ...Object.values(metaData[mappedType])];
+                     extendedItems = extendedItems.concat(extendedItems, Object.values(metaData[mappedType]));
                    }
                  }
 
@@ -179,18 +179,20 @@ export class GeoSelectedService {
    * Return final targeting spec with included and excluded locations
    * @returns {TargetingSpec}
    */
+
   getSpec () {
-    const initialSpec$ = this._store.let(this.geoLocationTypeService.getModel)
-                             .take(1)
-                             .map(({selectedType}) => selectedType)
-                             .filter((selectedType) => Boolean(selectedType))
-                             .map((selectedType) => {
-                               return {
-                                 geo_locations:             {
-                                   location_types: selectedType.value
-                                 }, excluded_geo_locations: {}
-                               };
-                             });
+    const initialSpec$: Observable<TargetingSpec> =
+            this._store.let(this.geoLocationTypeService.getModel)
+                .take(1)
+                .map(({selectedType}) => selectedType)
+                .filter((selectedType) => Boolean(selectedType))
+                .map((selectedType) => {
+                  return {
+                    geo_locations:             {
+                      location_types: selectedType.value
+                    }, excluded_geo_locations: {}
+                  };
+                });
 
     let selectedItems = [];
 

@@ -3,14 +3,14 @@ import { TestBed, inject } from '@angular/core/testing';
 import { GeoSearchActions } from './geo-search.actions';
 import { GeoIdService } from '../geo.id';
 
-let deepFreeze = require('deep-freeze');
+let deepFreeze = require('deep-freeze-strict');
 
 describe(`geoSearchReducer`, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         GeoSearchActions,
-        {provide: GeoIdService, useValue: {id$: {getValue () {}}}},
+        {provide: GeoIdService, useValue: {id$: {getValue () { return; }}}},
       ]
     });
   });

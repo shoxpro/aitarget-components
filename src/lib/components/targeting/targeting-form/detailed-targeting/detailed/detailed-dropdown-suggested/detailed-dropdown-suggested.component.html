@@ -7,6 +7,6 @@
       (mouseout)="setDropdownInfoItem(null)"
       (click)="selectItem(item)">
     <div class="fba-detailed-dropdown-suggested__name">{{item.name}}</div>
-    <div class="fba-detailed-dropdown-suggested__type">{{item.type | typeToHuman}}</div>
+    <div class="fba-detailed-dropdown-suggested__type">{{item.type | fbaTypeToHuman}}</div>
   </li>
 </ul>

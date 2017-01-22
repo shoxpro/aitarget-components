@@ -8,6 +8,6 @@
            (blur)="blur.emit()"
            (keyup.enter)="enter.emit(inputValue)"
            placeholder="{{'fba-geo-input.PLACEHOLDER' | translate}}">
-    <fb-preloader-dots *ngIf="fetching"></fb-preloader-dots>
+    <fba-preloader-dots *ngIf="fetching"></fba-preloader-dots>
   </label>
 </div>

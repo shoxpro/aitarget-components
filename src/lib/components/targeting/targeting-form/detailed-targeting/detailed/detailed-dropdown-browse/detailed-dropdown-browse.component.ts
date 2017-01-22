@@ -183,7 +183,7 @@ export class DetailedDropdownBrowseComponent implements OnInit, OnDestroy {
     this.items.forEach((item: DetailedItem) => {
       item.selected = this.selectedItemsCombinedIds.indexOf(this.combinedId(item)) > -1;
     });
-  };
+  }
 
   ngOnInit () {
     /**

@@ -20,7 +20,7 @@ export class GeoTypeService {
                    return geoState[GEO_TARGETING_TYPE_KEY];
                  })
                  .distinctUntilChanged();
-  };
+  }
 
   setTranslatedSearchType () {
     this._store.dispatch(this.geoTypeActions.setTranslatedSearchType());

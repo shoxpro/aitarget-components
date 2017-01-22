@@ -6,7 +6,7 @@ import { country, region, zip, city } from './geo-selected.mocks';
 import { GeoIdService } from '../geo.id';
 import { SharedActions } from '../../../../../shared/actions/index';
 
-let deepFreeze = require('deep-freeze');
+let deepFreeze = require('deep-freeze-strict');
 
 describe(`geoSelectedReducer`, () => {
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe(`geoSelectedReducer`, () => {
       providers: [
         GeoSelectedActions,
         SharedActions,
-        {provide: GeoIdService, useValue: {id$: {getValue () {}}}},
+        {provide: GeoIdService, useValue: {id$: {getValue () { return; }}}},
       ]
     });
   });

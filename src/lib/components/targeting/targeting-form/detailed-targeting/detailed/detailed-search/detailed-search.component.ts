@@ -25,7 +25,7 @@ export class DetailedSearchComponent implements OnInit, OnDestroy {
 
   closeSearch = () => {
     this.detailedSearchService.update({isVisible: false, type: this.type});
-  };
+  }
 
   /**
    * On key up handler.

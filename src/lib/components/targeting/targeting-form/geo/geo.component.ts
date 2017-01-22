@@ -56,7 +56,7 @@ import { AppState } from '../../../../../app/reducers/index';
 export class GeoComponent implements ControlValueAccessor, SqueezedValueAccessor, OnInit, OnDestroy {
   destroy$       = new Subject();
   squeezedValue$ = new BehaviorSubject('–');
-  clickOutsideOfComponent$;
+  fbaClickOutsideOfComponent$;
   modelSelected$;
 
   id;
@@ -96,7 +96,7 @@ export class GeoComponent implements ControlValueAccessor, SqueezedValueAccessor
                private geoModeService: GeoModeService,
                private changeDetectorRef: ChangeDetectorRef) {
     this.modelSelected$           = this._store.let(this.geoSelectedService.getModel);
-    this.clickOutsideOfComponent$ = this.geoService.clickOutsideOfComponent$;
+    this.fbaClickOutsideOfComponent$ = this.geoService.fbaClickOutsideOfComponent$;
     this.id                       = this.geoIdService.id$.getValue();
   }
 
@@ -110,7 +110,7 @@ export class GeoComponent implements ControlValueAccessor, SqueezedValueAccessor
     this.propagateChange = fn;
   }
 
-  registerOnTouched () {}
+  registerOnTouched () { return; }
 
   // ==== implement ControlValueAccessor ====
 

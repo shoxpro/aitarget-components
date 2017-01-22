@@ -15,13 +15,13 @@ import { GeoLocationTypeComponent } from './geo-location-type/geo-location-type.
 import { GeoMapControlsComponent } from './geo-map-controls/geo-map-controls.component';
 import { GeoMapPopupComponent } from './geo-map-popup/geo-map-popup.component';
 import { FullTypePipe } from './full-type.pipe';
-import { FbTickComponent } from '../../../../shared/components/fb-tick.component';
-import { FbArrowDropComponent } from '../../../../shared/components/fb-arrow-drop.component';
+import { TickComponent } from '../../../../shared/components/tick.component';
+import { ArrowDropComponent } from '../../../../shared/components/arrow-drop.component';
 import { GeoTypeComponent } from './geo-type/geo-type.component';
-import { FbDropdownListComponent } from '../../../../shared/components/fb-dropdown-list/fb-dropdown-list.component';
+import { FbDropdownListComponent } from '../../../../shared/components/dropdown-list/dropdown-list.component';
 import { GeoInfoIconComponent } from './geo-info/geo-info-icon';
 import { GeoSearchComponent } from './geo-search/geo-search.component';
-import { FbPreloaderDotsComponent } from '../../../../shared/components/fb-preloader-dots.component';
+import { PreloaderDotsComponent } from '../../../../shared/components/preloader-dots.component';
 import { SharedModule } from '../../../../shared/shared.module';
 /* tslint:enable:max-line-length */
 
@@ -45,13 +45,13 @@ import { SharedModule } from '../../../../shared/shared.module';
     GeoMapControlsComponent,
     FullNamePipe,
     FullTypePipe,
-    FbTickComponent,
-    FbArrowDropComponent,
+    TickComponent,
+    ArrowDropComponent,
     GeoMapPopupComponent,
     GeoTypeComponent,
     FbDropdownListComponent,
     GeoInfoIconComponent,
-    FbPreloaderDotsComponent
+    PreloaderDotsComponent
   ],
   exports:      [
     GeoComponent,

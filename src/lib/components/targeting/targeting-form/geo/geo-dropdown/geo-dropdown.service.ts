@@ -21,7 +21,4 @@ export class GeoDropdownService {
   close () {
     this._isOpen.next(false);
   }
-
-  constructor () { }
-
 }

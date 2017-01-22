@@ -1,7 +1,7 @@
 import { ActionReducer, Action } from '@ngrx/store';
 import { GeoModeActions } from './geo-mode.actions';
 
-export type GeoModeIdType = 'include'|'exclude';
+export type GeoModeIdType = 'include'|'exclude'|'delete';
 export type GeoModeType = {
   id: GeoModeIdType,
   name: string;

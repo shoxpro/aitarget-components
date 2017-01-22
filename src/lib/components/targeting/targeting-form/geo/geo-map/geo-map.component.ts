@@ -36,7 +36,7 @@ export class GeoMapComponent implements OnInit, OnDestroy {
                private changeDetectorRef: ChangeDetectorRef,
                private viewContainerRef: ViewContainerRef,
                private elementRef: ElementRef) {
-    this.componentsHelperService.setRootViewContainerRef(viewContainerRef);
+    this.componentsHelperService.setRootViewContainerRef(this.viewContainerRef);
     this.modelSelected$ = this._store.let(this.geoSelectedService.getModel);
   }
 

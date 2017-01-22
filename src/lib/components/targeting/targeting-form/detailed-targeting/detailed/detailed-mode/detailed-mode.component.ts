@@ -25,7 +25,7 @@ export class DetailedModeComponent implements OnInit, OnDestroy {
       mode = null;
     }
     this.detailedModeService.set(mode);
-  };
+  }
 
   ngOnDestroy () {
     this.destroy$.next();

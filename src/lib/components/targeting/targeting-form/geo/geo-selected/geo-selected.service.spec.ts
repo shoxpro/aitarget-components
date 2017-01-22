@@ -18,11 +18,11 @@ describe('Service: GeoSelected', () => {
       imports:   [],
       providers: [
         GeoSelectedService,
-        {provide: Store, useValue: {let () {}}},
+        {provide: Store, useValue: {let () { return; }}},
         {provide: GeoApiService, useValue: {}},
         {provide: GeoLocationTypeService, useValue: {}},
         {provide: GeoModeService, useValue: {}},
-        {provide: GeoIdService, useValue: {id$: {getValue () {}}}},
+        {provide: GeoIdService, useValue: {id$: {getValue () { return; }}}},
         {provide: GeoSelectedActions, useValue: {}},
         {provide: GeoInfoService, useValue: {}},
         {provide: TranslateService, useValue: {}},
