@@ -4,6 +4,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { DetailedModule } from './detailed/detailed.module';
 import { DetailedTargetingLegendComponent } from './detailed-targeting-legend.component';
 import { DetailedTargetingControlsComponent } from './detailed-targeting-controls.component';
+import { DetailedTargetingWrapperComponent } from './detailed-targeting-wrapper.component';
 
 @NgModule({
   imports:      [
@@ -12,11 +13,13 @@ import { DetailedTargetingControlsComponent } from './detailed-targeting-control
   ],
   declarations: [
     DetailedTargetingComponent,
+    DetailedTargetingWrapperComponent,
     DetailedTargetingLegendComponent,
     DetailedTargetingControlsComponent
   ],
   exports:      [
-    DetailedTargetingComponent
+    DetailedTargetingComponent,
+    DetailedTargetingWrapperComponent
   ]
 })
 export class DetailedTargetingModule {

@@ -23,6 +23,7 @@ import { GeoInfoIconComponent } from './geo-info/geo-info-icon';
 import { GeoSearchComponent } from './geo-search/geo-search.component';
 import { PreloaderDotsComponent } from '../../../../shared/components/preloader-dots.component';
 import { SharedModule } from '../../../../shared/shared.module';
+import { GeoWrapperComponent } from './geo-wrapper.component';
 /* tslint:enable:max-line-length */
 
 @NgModule({
@@ -32,6 +33,7 @@ import { SharedModule } from '../../../../shared/shared.module';
   ],
   declarations: [
     GeoComponent,
+    GeoWrapperComponent,
     GeoSelectedComponent,
     GeoSearchComponent,
     GeoInputComponent,
@@ -55,6 +57,7 @@ import { SharedModule } from '../../../../shared/shared.module';
   ],
   exports:      [
     GeoComponent,
+    GeoWrapperComponent,
     GeoPinComponent
   ]
 })

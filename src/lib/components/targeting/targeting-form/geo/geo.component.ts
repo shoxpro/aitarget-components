@@ -95,9 +95,9 @@ export class GeoComponent implements ControlValueAccessor, SqueezedValueAccessor
                private geoIdService: GeoIdService,
                private geoModeService: GeoModeService,
                private changeDetectorRef: ChangeDetectorRef) {
-    this.modelSelected$           = this._store.let(this.geoSelectedService.getModel);
+    this.modelSelected$              = this._store.let(this.geoSelectedService.getModel);
     this.fbaClickOutsideOfComponent$ = this.geoService.fbaClickOutsideOfComponent$;
-    this.id                       = this.geoIdService.id$.getValue();
+    this.id                          = this.geoIdService.id$.getValue();
   }
 
   // ==== implement ControlValueAccessor ====

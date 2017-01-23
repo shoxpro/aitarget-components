@@ -114,6 +114,8 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
   getForm (formValue = detailedTargetingSpecInitial) {
     let groupData = {};
 
+    formValue = Object.assign({}, detailedTargetingSpecInitial, formValue);
+
     /**
      * Iterate through initial detailedTargeting keys
      */
@@ -165,7 +167,20 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
     this.detailedTargetingForm.valueChanges
         .takeUntil(this.destroy$)
         .subscribe((formValue) => {
-          this.value = formValue;
+          let newValue = Object.assign({}, {flexible_spec: null, exclusions: null}, formValue);
+
+          // Filter out empty flexible specs
+          if (Array.isArray(newValue['flexible_spec'])) {
+            newValue['flexible_spec'] = newValue['flexible_spec'].filter((flexibleSpec) => Object.keys(flexibleSpec).length);
+          }
+
+          // Filter out empty exclusions
+          if (newValue['exclusions'] && !Object.keys(newValue['exclusions']).length) {
+            newValue['exclusions'] = null;
+          }
+
+          this.value = newValue;
+
           this.changeDetectorRef.markForCheck();
           this.changeDetectorRef.detectChanges();
         });

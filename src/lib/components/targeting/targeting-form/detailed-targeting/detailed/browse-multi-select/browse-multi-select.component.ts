@@ -56,8 +56,8 @@ export class BrowseMultiSelectComponent implements AfterViewInit, OnDestroy {
     let allChildrenSelected = selectedChildren.length === this.item.children.length;
     let isIndeterminate     = hasSelectedChildren && !allChildrenSelected;
 
-    let checkbox = <HTMLInputElement>this.el.querySelector('input[type="checkbox"]');
-    let label    = this.el.querySelector('span.fba-browse-multi-select__label-text');
+    let checkbox = <any>this.el.querySelector('input[type="checkbox"]');
+    let label    = <any>this.el.querySelector('span.fba-browse-multi-select__label-text');
 
     if (!checkbox) {
       return;

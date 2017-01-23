@@ -25,10 +25,10 @@ export class DemoDetailedTargetingComponent {
     'excluded_user_device':          [],
     'user_os':                       [],
     'wireless_carrier':              [],
-    'exclusions':                    {'interested_in': ['2']},
-    'flexible_spec':                 [{
+    /*'exclusions':                    {'interested_in': ['2']},*/
+    /*'flexible_spec':                 [{
       'interests': [{'id': '6003384248805', 'name': 'Fitness and wellness'}, {'id': '6003355530237', 'name': 'Gyms'}]
-    }, {'behaviors': [{'id': '6002714895372', 'name': 'All frequent travelers'}], 'relationship_statuses': ['3']}]
+    }, {'behaviors': [{'id': '6002714895372', 'name': 'All frequent travelers'}], 'relationship_statuses': ['3']}]*/
   };
 
   showSpec (isVisible, event?) {

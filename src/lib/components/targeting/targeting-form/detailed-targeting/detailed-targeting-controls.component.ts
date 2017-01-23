@@ -60,9 +60,7 @@ export class DetailedTargetingControlsComponent implements OnChanges {
     }
 
     // Flexible spec is valid if it has at least 1 filled key
-    const validFlexibleSpecs = formValue['flexible_spec'].filter((flexibleSpec) => {
-      return Object.keys(flexibleSpec).length > 0;
-    }, 0);
+    const validFlexibleSpecs = formValue['flexible_spec'].filter((flexibleSpec) => Object.keys(flexibleSpec).length);
 
     if (formValue['flexible_spec'].length === validFlexibleSpecs.length && validFlexibleSpecs.length > 0) {
       const control = validFlexibleSpecs.length === 1 ? this.narrowControl : this.narrowFurtherControl;
