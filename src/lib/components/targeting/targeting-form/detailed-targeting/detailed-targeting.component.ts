@@ -1,48 +1,36 @@
-/* tslint:disable:max-line-length */
-import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef, OnDestroy } from '@angular/core';
-import { DetailedTargetingSelectedService } from './detailed-targeting-selected/detailed-targeting-selected.service';
-import { DetailedTargetingApiService } from './detailed-targeting-api/detailed-targeting-api.service';
-import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
-import { defaultDetailedTargetingSpec } from '../../interfaces/targeting-spec-detailed.const';
-import { DetailedTargetingService } from './detailed-targeting.service';
-import { DetailedTargetingSpec } from '../../interfaces/targeting-spec-detailed.interface';
-import { DetailedTargetingModeService } from './detailed-targeting-mode/detailed-targeting-mode.service';
-import { DetailedTargetingInfoService } from './detailed-targeting-info/detailed-targeting-info.service';
-import { DetailedTargetingDropdownSuggestedService } from './detailed-targeting-dropdown-suggested/detailed-targeting-dropdown-suggested.service';
-import { DetailedTargetingDropdownBrowseService } from './detailed-targeting-dropdown-browse/detailed-targeting-dropdown-browse.service';
-import { DetailedTargetingInputService } from './detailed-targeting-input/detailed-targeting-input.service';
-import { DetailedTargetingSearchService } from './detailed-targeting-search/detailed-targeting-search.service';
-import { Subject, BehaviorSubject } from 'rxjs';
-import { DetailedTargetingItem } from './detailed-targeting-item';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { cleanDetailedTargetingSpec } from './detailed-targeting.constants';
-import { FormControlToken } from '../../../../shared/constants/form-control-token';
+import {
+  Component, ChangeDetectionStrategy, OnDestroy, Input, ChangeDetectorRef, OnInit, ViewChildren
+} from '@angular/core';
 import { SqueezedValueAccessor } from '../../../../shared/interfaces/squeeze-value-accessor.inteface';
-/* tslint:enable:max-line-length */
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { FormControlToken } from '../../../../shared/constants/form-control-token';
+import { detailedTargetingSpecInitial } from '../../interfaces/targeting-spec-detailed.interface';
+
+const isEqual = require('lodash/isEqual');
 
 @Component({
-  selector:    'detailed-targeting',
-  templateUrl: 'detailed-targeting.component.html',
-  styleUrls:   ['detailed-targeting.component.scss'],
-  providers:   [
+  selector:        'fba-detailed-targeting',
+  templateUrl:     './detailed-targeting.html',
+  styleUrls:       ['./detailed-targeting.scss'],
+  providers:       [
     {
       provide:     NG_VALUE_ACCESSOR,
       useExisting: DetailedTargetingComponent,
       multi:       true
     },
-    {provide: FormControlToken, useExisting: DetailedTargetingComponent},
-    DetailedTargetingApiService, DetailedTargetingDropdownSuggestedService,
-    DetailedTargetingDropdownBrowseService, DetailedTargetingInfoService,
-    DetailedTargetingSelectedService, DetailedTargetingModeService, DetailedTargetingInputService,
-    DetailedTargetingService, DetailedTargetingSearchService
-  ],
+    {provide: FormControlToken, useExisting: DetailedTargetingComponent}],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailedTargetingComponent implements ControlValueAccessor, SqueezedValueAccessor, OnInit, OnDestroy {
   destroy$       = new Subject();
   squeezedValue$ = new BehaviorSubject('–');
 
-  @Input('adaccountId') adaccountId: string;
+  @Input() adaccountId = 'act_944874195534529';
+  @ViewChildren(FormControlToken) detailedComponents;
+
+  detailedTargetingForm: FormGroup;
 
   // ==== value ====
   _value: TargetingSpec = {};
@@ -50,8 +38,8 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
   set value (value: any) {
     this._value = value || this._value;
 
-    this.propagateChange(this._value);
     this.updateSqueezedValue();
+    this.propagateChange(this._value);
   }
 
   get value () {
@@ -74,108 +62,128 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
     }
 
     this._value = value || this._value;
-    this.updateView();
-
+    this.updateForm();
   }
 
   registerOnChange (fn: any) {
     this.propagateChange = fn;
   }
 
-  registerOnTouched () {}
+  registerOnTouched () { return; }
 
   // ==== implement ControlValueAccessor ====
 
   // ==== implement SqueezedValueAccessor ====
 
   updateSqueezedValue () {
-    this.detailedTargetingSelectedService.items
-        .take(1)
-        .map((items) => {
-          return items.reduce((acc, item, index) => {
-            let postfix = index === items.length - 1 ? '' : ';&nbsp;';
+    let squeezedValue = this.detailedComponents.reduce((acc, control, index) => {
+      let prefix = '<b>People Who Match: </b>';
+      if (index > 0) {
+        prefix = control.type === 'flexible_spec' ? '<b>And Must Also Match: </b>' : '<b>Exclude: </b>';
+      }
 
-            acc += `<span style="display: inline-flex">
-                        <span>${item.name}${postfix}</span>
-                      </span>`;
-
-            return acc;
-          }, '');
-        })
-        .subscribe((value) => {
-          this.squeezedValue$.next(value || '–');
-        });
+      return acc + prefix + control.getSqueezedValue() + '<br>';
+    }, '');
+    this.squeezedValue$.next(squeezedValue || '–');
   }
 
   getSqueezedValue () {
     return this.squeezedValue$.getValue();
   }
 
-  focus () {
-    // TODO: should be changed after moving architecture to @ngrx/store
-    const input = this.elementRef.nativeElement.querySelector('.detailed-targeting-input__input');
-    setTimeout(() => {
-      input.focus();
-    });
-  }
+  focus () { return; }
 
   // ==== implement SqueezedValueAccessor ====
 
-  constructor (private detailedTargetingService: DetailedTargetingService,
-               private detailedTargetingApiService: DetailedTargetingApiService,
-               private detailedTargetingSelectedService: DetailedTargetingSelectedService,
-               private detailedTargetingModeService: DetailedTargetingModeService,
-               private detailedTargetingInfoService: DetailedTargetingInfoService,
-               private elementRef: ElementRef) {}
+  updateForm (formValue = this.value) {
+    if (isEqual(formValue, this.detailedTargetingForm.value)) {
+      return;
+    }
+
+    this.detailedTargetingForm = this.getForm(formValue);
+    this.watchFormValueChanges();
+
+    this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
+  }
 
   /**
-   * Close detailed targeting component
+   * Set model driven form using passed form value or initial form value
+   * @param formValue
    */
-  close = () => {
-    this.detailedTargetingModeService.set(null);
-    this.detailedTargetingInfoService.update(null);
-  };
+  getForm (formValue = detailedTargetingSpecInitial) {
+    let groupData = {};
 
-  /**
-   * Set mode to null if user click outside detailed-targeting element
-   * @param e
-   */
-  processOutsideClick = (e) => {
-    let targetElement = e.target;
+    formValue = Object.assign({}, detailedTargetingSpecInitial, formValue);
 
-    const clickedInside = this.elementRef.nativeElement.contains(targetElement);
-
-    if (!clickedInside) {
-      this.close();
-    }
-  };
-
-  processKeydown = (e) => {
-    // when Escape
-    if (e.keyCode === 27) {
-      this.close();
-    }
-  };
-
-  updateView () {
-    // Set targetingList array for validation
-    let targetingList = [];
-    for (let type in defaultDetailedTargetingSpec) {
-      if (this.value[type] && this.value[type].length) {
-        this.value[type].forEach((item) => {
-          targetingList.push({type: type, id: item.id || item});
-        });
+    /**
+     * Iterate through initial detailedTargeting keys
+     */
+    for (let name in detailedTargetingSpecInitial) {
+      if (detailedTargetingSpecInitial.hasOwnProperty(name)) {
+        if (Array.isArray(formValue[name])) {
+          groupData[name] = this.formBuilder.array(
+            formValue[name].map((data) => this.formBuilder.control(data))
+          );
+        } else if (formValue[name] !== null) { // ignore null value
+          groupData[name] = this.formBuilder.control(formValue[name]);
+        }
       }
     }
 
-    // If targetingList is not empty get validated items and update selected
-    if (targetingList.length) {
-      this.detailedTargetingApiService.validate(targetingList)
-          .subscribe((selectedItems: DetailedTargetingItem[]) => {
-            let validSelectedItems = selectedItems.filter((selectedItem) => selectedItem.valid);
-            this.detailedTargetingSelectedService.updateSelected(validSelectedItems);
-          });
+    return this.formBuilder.group(groupData);
+  }
+
+  /**
+   * Narrow audience by adding another control
+   */
+  addControl (name: string) {
+    if (this.detailedTargetingForm.controls[name] instanceof FormArray) {
+      const control = <FormArray>this.detailedTargetingForm.controls[name];
+      control.push(this.formBuilder.control({}));
+    } else {
+      this.detailedTargetingForm.addControl(name, this.formBuilder.control({}));
     }
+  }
+
+  /**
+   * Remove control from by index
+   * @param name
+   * @param i
+   */
+  removeControl ({name, i}: {name: string, i: number}) {
+    if (this.detailedTargetingForm.controls[name] instanceof FormArray) {
+      const control = <FormArray>this.detailedTargetingForm.controls[name];
+      control.removeAt(i);
+    } else {
+      this.detailedTargetingForm.removeControl(name);
+    }
+  }
+
+  /**
+   * Subscribe to form value changes and update component's value when it is changed
+   */
+  watchFormValueChanges () {
+    this.detailedTargetingForm.valueChanges
+        .takeUntil(this.destroy$)
+        .subscribe((formValue) => {
+          let newValue = Object.assign({}, {flexible_spec: null, exclusions: null}, formValue);
+
+          // Filter out empty flexible specs
+          if (Array.isArray(newValue['flexible_spec'])) {
+            newValue['flexible_spec'] = newValue['flexible_spec'].filter((flexibleSpec) => Object.keys(flexibleSpec).length);
+          }
+
+          // Filter out empty exclusions
+          if (newValue['exclusions'] && !Object.keys(newValue['exclusions']).length) {
+            newValue['exclusions'] = null;
+          }
+
+          this.value = newValue;
+
+          this.changeDetectorRef.markForCheck();
+          this.changeDetectorRef.detectChanges();
+        });
   }
 
   ngOnDestroy () {
@@ -183,38 +191,10 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
   }
 
   ngOnInit () {
-    if (this.adaccountId) {
-      this.detailedTargetingApiService.setAdaccount(this.adaccountId);
-    } else {
-      throw 'Adaccout ID must be provided for this detailed targeting component!';
-    }
-
-    /**
-     * Update global Targeting spec when detailedTargetingSpec changes
-     */
-    this.detailedTargetingService.spec
-        .takeUntil(this.destroy$)
-        // Skip first initialization subject and second with passed spec
-        .skip(2)
-        .subscribe((detailedTargetingSpec: DetailedTargetingSpec) => {
-          this.value = cleanDetailedTargetingSpec(detailedTargetingSpec);
-        });
-
-    /**
-     * Bind/unbind different events depending on detailed-component mode.
-     * Mode changeDetectorReflects component's current state.
-     */
-    this.detailedTargetingModeService.mode
-        .takeUntil(this.destroy$)
-        .subscribe((mode: string) => {
-          // Process body clicks in order to close element if clicked outside and element
-          window.document.body.removeEventListener('click', this.processOutsideClick);
-          window.document.body.removeEventListener('keydown', this.processKeydown);
-          if (mode) {
-            window.document.body.addEventListener('click', this.processOutsideClick);
-            window.document.body.addEventListener('keydown', this.processKeydown);
-          }
-        });
+    this.detailedTargetingForm = this.getForm();
+    this.watchFormValueChanges();
   }
 
+  constructor (private formBuilder: FormBuilder,
+               private changeDetectorRef: ChangeDetectorRef) {}
 }

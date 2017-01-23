@@ -5,7 +5,7 @@ import { views } from './app-nav-views';
 import { MOBILE } from './services/constants';
 
 @Component({
-  selector:      'app-root',
+  selector:      'fba-root',
   styleUrls:     ['./app.component.scss'],
   templateUrl:   './app.component.html',
   encapsulation: ViewEncapsulation.None

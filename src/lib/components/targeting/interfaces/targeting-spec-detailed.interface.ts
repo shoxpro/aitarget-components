@@ -43,7 +43,7 @@ enum EducationStatuses {
   'SOME_HIGH_SCHOOL'    = 13
 }
 
-export interface DetailedTargetingSpec {
+export interface DetailedSpec {
   interests?: Array<SelectedItem | Id>;
   behaviors?: Array<SelectedItem | Id>;
   relationship_statuses?: relationshipStatuses[]; // Array of enum values
@@ -67,3 +67,38 @@ export interface DetailedTargetingSpec {
   work_employers?: Array<SelectedItem | Id>; // Limit: 200 employers.
   work_positions?: Array<SelectedItem | Id>; // Limit: 200 work positions.
 }
+
+export interface DetailedTargetingSpec {
+  flexible_spec: Array<DetailedSpec>;
+  exclusions: DetailedSpec | null;
+}
+
+export const detailedSpecInitial: DetailedSpec = {
+  interests:             [],
+  behaviors:             [],
+  relationship_statuses: [],
+  interested_in:         [],
+  life_events:           [],
+  politics:              [],
+  industries:            [],
+  income:                [],
+  net_worth:             [],
+  home_type:             [],
+  home_ownership:        [],
+  ethnic_affinity:       [],
+  generation:            [],
+  household_composition: [],
+  moms:                  [],
+  office_type:           [],
+  education_schools:     [],
+  education_statuses:    [],
+  college_years:         [],
+  education_majors:      [],
+  work_employers:        [],
+  work_positions:        []
+};
+
+export const detailedTargetingSpecInitial: DetailedTargetingSpec = {
+  flexible_spec: [{}],
+  exclusions:    null
+};

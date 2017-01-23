@@ -5,14 +5,14 @@
 
     <fieldset>
       <legend>Geo Locations</legend>
-      <fba-targeting-form-array name="geoTargetings"
+      <fba-targeting-form-array name="geoLocations"
                                 [single]="editMode"
                                 [group]="targetingForm"
                                 (add)="addControl($event)"
                                 (remove)="removeControl($event, i)">
         <template let-control>
           <fba-control-squeeze>
-            <geo-targeting [formControl]="control"></geo-targeting>
+            <fba-geo [formControl]="control"></fba-geo>
           </fba-control-squeeze>
         </template>
       </fba-targeting-form-array>
@@ -72,8 +72,9 @@
                                 (remove)="removeControl($event)">
         <template let-control>
           <fba-control-squeeze>
-            <detailed-targeting [adaccountId]="adaccountId"
-                                [formControl]="control"></detailed-targeting>
+            <fba-detailed-targeting
+              [adaccountId]="adaccountId"
+              [formControl]="control"></fba-detailed-targeting>
           </fba-control-squeeze>
         </template>
       </fba-targeting-form-array>

@@ -1,0 +1,63 @@
+.fba-detailed-mode__content {
+  display: table;
+  height:  100%;
+}
+
+.fba-detailed-mode__suggested, .fba-detailed-mode__browse {
+  position:       relative;
+  display:        table-cell;
+  padding:        0 8px;
+  color:          #4b4f56;
+  vertical-align: middle;
+  white-space:    nowrap;
+  font-weight:    bold;
+  cursor:         pointer;
+}
+
+.fba-detailed-mode__suggested.active, .fba-detailed-mode__browse.active,
+.fba-detailed-mode__suggested:hover, .fba-detailed-mode__browse:hover {
+  color: #53aaca;
+}
+
+.fba-detailed-mode__left-border {
+  position:    absolute;
+  left:        0;
+  display:     inline-block;
+  border-left: 1px solid #bdc7d8;
+}
+
+.fba-detailed-mode__left-border:before {
+  display: inline-block;
+  content: '';
+}
+
+.fba-detailed-mode__tick {
+  position:      absolute;
+  bottom:        0;
+  left:          50%;
+  z-index:       101;
+  display:       none;
+  margin-left:   -7px;
+  width:         0;
+  height:        0;
+  border-right:  5px solid transparent;
+  border-bottom: 5px solid #abbdd4;
+  border-left:   5px solid transparent;
+}
+
+.fba-detailed-mode__tick:after {
+  position:      relative;
+  top:           1px;
+  left:          -5px;
+  display:       block;
+  width:         0;
+  height:        0;
+  border-right:  5px solid transparent;
+  border-bottom: 5px solid white;
+  border-left:   5px solid transparent;
+  content:       '';
+}
+
+.fba-detailed-mode__suggested_active .fba-detailed-mode__tick, .detailed-mode__browse_active .fba-detailed-mode__tick {
+  display: inline-block;
+}

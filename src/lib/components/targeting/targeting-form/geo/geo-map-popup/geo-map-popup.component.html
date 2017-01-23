@@ -1,0 +1,13 @@
+<div class="fba-geo-map-popup">
+  <div class="fba-geo-map-popup__name">{{item | fbaFullName}}</div>
+  <div class="fba-geo-map-popup__drop"
+       (click)="toggleDropdown($event)">
+    <fba-arrow-drop [direction]="isOpen ? 'up' : 'down'"></fba-arrow-drop>
+    <fba-dropdown-list
+      *ngIf="isOpen"
+      (fbaClickOutside)="toggleDropdown()"
+      [items]="(modelMode$ | async).modes"
+      [selectedItem]="item.excluded ? (modelMode$ | async).modes[1] : (modelMode$ | async).modes[0]"
+      (onClick)="selectMode(item, $event)"></fba-dropdown-list>
+  </div>
+</div>

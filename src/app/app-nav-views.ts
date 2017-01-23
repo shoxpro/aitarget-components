@@ -7,7 +7,7 @@ export const views: Object[] = [
   {
     name: 'Geo Targeting',
     icon: 'place',
-    link: ['geo-targeting']
+    link: ['geo']
   },
   {
     name: 'Detailed Targeting',

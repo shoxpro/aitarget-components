@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 @Component({
-  selector: 'my-not-found',
+  selector: 'fba-not-found',
   template: '<h3>Error 404: Not found</h3>'
 })
 

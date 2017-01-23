@@ -1,0 +1,10 @@
+<div class="fba-geo-map-controls">
+  <div class="fba-geo-map-controls__button-wrapper">
+    <button class="fba-geo-map-controls__button fba-geo-map-controls__button_pin"
+            [ngClass]="{'fba-geo-map-controls__button_active': pinMode}"
+            (click)="togglePinMode()">
+      <fba-geo-pin [excluded]="(modelMode$ | async).selectedMode.id === 'exclude'"></fba-geo-pin>
+      {{'fba-geo-map-controls.DROP_PIN' | translate }}
+    </button>
+  </div>
+</div>

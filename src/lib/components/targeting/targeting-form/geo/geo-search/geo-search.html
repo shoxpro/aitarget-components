@@ -1,0 +1,32 @@
+<div class="fba-geo-search"
+     [ngClass]="{
+          'fba-geo-search_dropdown-active': (model$ | async).isDropdownOpen,
+          'fba-geo-search_map-active': (model$ | async).isMapOpen,
+          'fba-geo-search_selected-items': hasSelected$ | async,
+          'fba-geo-search_visible-info': (modelInfo$ | async).isVisible,
+          'fba-geo-search_focus': (model$ | async).hasFocus
+          }">
+  <fba-geo-mode
+    [selectedMode]="(modelMode$ | async).selectedMode"
+    [isOpen]="(modelMode$ | async).isOpen"
+    [updateState]="true"></fba-geo-mode>
+
+  <fba-geo-input [inputValue]="(model$ | async).inputValue"
+                 [hasFocus]="(model$ | async).hasFocus"
+                 [fetching]="(model$ | async).fetching"
+                 (focus)="focus()"
+                 (blur)="blur()"
+                 (inputValueChange)="inputValueChange($event)"
+                 (enter)="inputValueEnter($event)"></fba-geo-input>
+
+  <fba-geo-type></fba-geo-type>
+
+  <fba-geo-map
+    [isOpen]="(model$ | async).isMapOpen"
+    (toggleMap)="toggleMap($event)"></fba-geo-map>
+</div>
+
+<fba-geo-dropdown
+  [isOpen]="(model$ | async).isDropdownOpen"
+  [items]="(model$ | async).items"
+  (select)="select($event)"></fba-geo-dropdown>

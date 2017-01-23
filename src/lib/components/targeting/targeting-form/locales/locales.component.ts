@@ -66,7 +66,7 @@ export class LocalesComponent implements ControlValueAccessor, SqueezedValueAcce
     this.propagateChange = fn;
   }
 
-  registerOnTouched () {}
+  registerOnTouched () { return; }
 
   // ==== implement ControlValueAccessor ====
 
@@ -82,8 +82,7 @@ export class LocalesComponent implements ControlValueAccessor, SqueezedValueAcce
     return this.squeezedValue$.getValue();
   }
 
-  focus () {
-  }
+  focus () { return; }
 
   // ==== implement SqueezedValueAccessor ====
 

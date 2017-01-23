@@ -1,0 +1,13 @@
+<div class="fba-geo-input">
+  <label class="fba-geo-input__label">
+    <input class="fba-geo-input__input"
+           type="text"
+           [(ngModel)]="inputValue"
+           (keyup)="keyup(inputValue)"
+           (focus)="focus.emit()"
+           (blur)="blur.emit()"
+           (keyup.enter)="enter.emit(inputValue)"
+           placeholder="{{'fba-geo-input.PLACEHOLDER' | translate}}">
+    <fba-preloader-dots *ngIf="fetching"></fba-preloader-dots>
+  </label>
+</div>

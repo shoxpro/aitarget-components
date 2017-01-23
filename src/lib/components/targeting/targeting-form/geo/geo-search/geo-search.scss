@@ -1,0 +1,27 @@
+.fba-geo-search {
+  display:          flex;
+  box-sizing:       border-box;
+  height:           32px;
+  border:           1px solid #d9dfe7;
+  border-radius:    3px;
+  background-color: #f2f6fa;
+  align-items:      center;
+}
+
+.fba-geo-search_dropdown-active,
+.fba-geo-search_map-active {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius:  0;
+}
+
+.fba-geo-search_selected-items,
+.fba-geo-search_visible-info {
+  border-top-left-radius:  0;
+  border-top-right-radius: 0;
+}
+
+.fba-geo-search_focus {
+  outline:      none;
+  border-color: #abbdd4;
+  box-shadow:   0 0 5px 0 rgba(154, 168, 181, 0.39);
+}

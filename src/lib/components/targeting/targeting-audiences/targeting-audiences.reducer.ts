@@ -18,8 +18,8 @@ export const targetingAudiencesReducer: ActionReducer<Array<AudienceState>> = (s
         }
         return audience;
       });
-      // state[action.payload.index] = Object.assign({}, state[action.payload.index], action.payload.audience);
-      // return state;
+    // state[action.payload.index] = Object.assign({}, state[action.payload.index], action.payload.audience);
+    // return state;
     default:
       return state;
   }

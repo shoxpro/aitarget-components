@@ -1,0 +1,15 @@
+<div class="fba-geo-type">
+  <div class="fba-geo-type__toggler"
+       (click)="toggleDropdown(true, $event)">
+    <div class="fba-geo-type__title">
+      <span>{{ (model$ | async).selectedType.name }}</span>
+    </div>
+    <fba-arrow-drop [direction]="{'true': 'up', 'false': 'down'}[(model$ | async).isOpen]"></fba-arrow-drop>
+  </div>
+  <fba-dropdown-list
+    *ngIf="(model$ | async).isOpen"
+    (fbaClickOutside)="toggleDropdown(false)"
+    [items]="(model$ | async).types"
+    [selectedItem]="(model$ | async).selectedType"
+    (onClick)="selectType($event)"></fba-dropdown-list>
+</div>

@@ -3,7 +3,7 @@ import { DemoDetailedTargetingComponent } from './demo-detailed-targeting.compon
 import { TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-describe('Component: DemoDetailedTargeting', () => {
+describe('Component: DemoDetailed', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports:      [],

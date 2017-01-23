@@ -1,16 +1,18 @@
 <div class="demo-detailed-targeting__component-buttons">
   <button md-raised-button
-          (click)="hideDetailedTargeting = !hideDetailedTargeting">Toggle</button>
+          (click)="hideDetailed = !hideDetailed">Toggle</button>
   <button md-raised-button
           (click)="showSpec(true, $event)">Show Spec</button>
   <fba-localization></fba-localization>
 </div>
 
-<div class="detailed-targeting-wrapper">
-  <detailed-targeting
-    *ngIf="!hideDetailedTargeting"
+<div class="fba-detailed-targeting-wrapper">
+  <!--<fba-control-squeeze-->
+  <!--*ngIf="!hideDetailed">-->
+  <fba-detailed-targeting
     [(ngModel)]="spec"
-    [adaccountId]="'act_944874195534529'"></detailed-targeting>
+    [adaccountId]="'act_944874195534529'"></fba-detailed-targeting>
+  <!--</fba-control-squeeze>-->
 </div>
 
 <fba-spec (close)="showSpec(false, $event)"

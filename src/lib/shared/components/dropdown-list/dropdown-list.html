@@ -1,0 +1,18 @@
+<div class="fba-dropdown-list">
+  <div class="fba-dropdown-list__item"
+       *ngFor="let item of items"
+       [ngClass]="{'fba-dropdown-list__item_selected': item.id === selectedItem.id}"
+       (click)="onClick.emit(item)"
+       #listItem
+       (mouseenter)="showInfo(listItem, true)"
+       (mouseleave)="showInfo(listItem, false)">
+    <fba-tick class="fba-dropdown-list__tick"
+             *ngIf="item.id === selectedItem.id">
+    </fba-tick>
+    <span class="fba-dropdown-list__item-name">{{ item.name }}</span>
+    <div class="fba-dropdown-list__info"
+         *ngIf="item.info && listItem.showInfo">
+      <span>{{ item.info }}</span>
+    </div>
+  </div>
+</div>

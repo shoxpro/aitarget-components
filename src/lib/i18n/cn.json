@@ -1,22 +1,22 @@
 {
-  "detailed-targeting-mode": {
+  "fba-detailed-mode": {
     "BROWSE": "浏览",
     "SUGGESTED": "建议"
   },
-  "detailed-targeting-input": {
+  "fba-detailed-input": {
     "PLACEHOLDER": "添加人口统计数据、兴趣和行为"
   },
-  "detailed-targeting-info": {
+  "fba-detailed-info": {
     "PEOPLE": "用户",
     "DESCRIPTION": "描述",
     "DESCRIBE_INTERESTS": "People who have expressed an interest in or like pages related to",
     "DESCRIBE_DEFAULT": "People who listed their {{type}} as <i>{{name}}</i> in their Facebook profile."
   },
-  "browse-multi-select": {
+  "fba-browse-multi-select": {
     "SELECT_ALL": "全选",
     "UNSELECT_ALL": "取消全选"
   },
-  "detailed-targeting-dropdown-suggested": {
+  "fba-detailed-dropdown-suggested": {
     "INTERESTS": "兴趣",
     "BEHAVIORS": "行为",
     "RELATIONSHIP_STATUSES": "感情状况",
@@ -41,11 +41,11 @@
     "WORK_EMPLOYERS": "雇主",
     "WORK_POSITIONS": "职位"
   },
-  "geo-targeting-input": {
+  "fba-geo-input": {
     "PLACEHOLDER": "添加地区",
     "INVALID_LOCATION": "不可定位此地区。"
   },
-  "geo-targeting-dropdown": {
+  "fba-geo-dropdown": {
     "all": "全选",
     "country": "国家",
     "country_group": "Country Group",
@@ -63,7 +63,7 @@
     "custom_location_many": "GPS坐标",
     "place": "地方"
   },
-  "geo-targeting-info": {
+  "fba-geo-info": {
     "MESSAGE": "你的定位地区已从 {{ fromNames }} 改为 {{ toName }}.",
     "UNDO": "撤销更改",
     "MESSAGE_NOT_FOUND": "找不到某些位置: {{ notFoundInputsStr }}",
@@ -71,28 +71,28 @@
     "MESSAGE_NARROW": "定位地区设置为 {{ narrowerLocationNames }}, 系统自动排除此地区以外的所有受众。",
     "LIMIT": "最大数量的{{mode}}{{type}}不能超过{{limit}}的。"
   },
-  "geo-targeting-mode": {
+  "fba-geo-mode": {
     "include": "包括",
     "include_past": "包括",
     "exclude": "排除",
     "exclude_past": "排除",
     "delete": "删除"
   },
-  "geo-targeting-map": {
+  "fba-geo-map": {
     "MAP": "地图",
     "COUNTRY_GROUP": "我们无法在地图中画出{{name}}的边界，但{{name}}已添加成功。"
   },
-  "geo-targeting-map-controls": {
+  "fba-geo-map-controls": {
     "DROP_PIN": "放置大头针"
   },
-  "geo-targeting-radius": {
+  "fba-geo-radius": {
     "mile": "英里",
     "kilometer": "公里",
     "CURRENT_ONLY": "只限当前城市",
     "USE_RADIUS": "范围内城市",
     "USE_RADIUS_INFO": "如果城市中心在半径范围以内，周边城市也将包括在内。"
   },
-  "geo-targeting-location-type": {
+  "fba-geo-location-type": {
     "ALL": "该地区内的所有用户",
     "ALL_INFO": "住址或最近出现在选定区域内的用户。",
     "HOME": "居住在该地区的用户",
@@ -101,5 +101,28 @@
     "RECENT_INFO": "最近出现在选定区域内的用户。",
     "TRAVEL_IN": "到该地区旅游的用户",
     "TRAVEL_IN_INFO": "近期位于选定地区，但家庭住址距离此地区 125mi或 200 km。"
+  },
+  "fba-detailed-targeting-legend": {
+    "FIRST": "包含至少符合一项条件的用户",
+    "FIRST_HEADER_1": "包含",
+    "FIRST_TEXT_1": "添加更多定位条件可扩大受众，覆盖更多用户。",
+    "FIRST_HEADER_2": "提示",
+    "FIRST_TEXT_2": "进一步细分受众，请使用下方链接，根据其他条件排除用户或缩小受众范围。",
+    "REST": "必须也符合以下至少一项",
+    "REST_HEADER_1": "缩小受众",
+    "REST_TEXT_1": "选择新定位条件，进一步细分受众。",
+    "REST_HEADER_2": "提示",
+    "REST_TEXT_2": "添加第一个选项将缩小受众规模，之后的每个新选项将增加受众规模。",
+    "EXCLUSIONS": "排除符合以下至少一个条件的用户",
+    "EXCLUSIONS_HEADER_1": "排除",
+    "EXCLUSIONS_TEXT_1": "选择新条件，排除受众中的部分用户。",
+    "EXCLUSIONS_HEADER_2": "提示",
+    "EXCLUSIONS_TEXT_2": "每添加一个选项，受众的规模就会缩小。"
+  },
+  "fba-detailed-targeting-controls": {
+    "NARROW": "缩小受众范围",
+    "NARROW_FURTHER": "进一步缩小受众",
+    "EXCLUDE": "排除用户",
+    "OR": "或"
   }
 }

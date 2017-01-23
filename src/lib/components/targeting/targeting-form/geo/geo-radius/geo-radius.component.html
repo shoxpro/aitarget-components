@@ -1,0 +1,71 @@
+<div class="fba-geo-radius"
+     [ngClass]="{'fba-geo-radius_open': isOpen}"
+     (click)="toggleDropdown($event)">
+  <span class="fba-geo-radius__result"
+        *ngIf="item.radius > 0">+ {{ item.radius }} {{'fba-geo-radius.' + item.distance_unit | translate}}
+  </span>
+
+  <fba-arrow-drop [direction]="isOpen ? 'up' : 'down'"></fba-arrow-drop>
+</div>
+<!--Select Radius Dropdown-->
+<div class="fba-geo-radius__dropdown"
+     *ngIf="isOpen"
+     [fbaAppendTo]="fbaAppendToSelector"
+     (fbaClickOutside)="toggleDropdown()"
+     [showVeil]="true">
+  <div class="fba-geo-radius__mode fba-geo-radius__mode_current"
+       *ngIf="item.type === 'city'">
+    <div class="fba-geo-radius__mode-row"
+         [ngClass]="{'fba-geo-radius__mode-row_selected': item.radius === 0}"
+         (click)="disableRadius()">
+      <fba-tick class="fba-geo-radius__dropdown-tick"
+               *ngIf="item.radius === 0">
+      </fba-tick>
+      <span class="fba-geo-radius__mode-text">{{ 'fba-geo-radius.CURRENT_ONLY' | translate }}</span>
+    </div>
+  </div>
+  <div class="fba-geo-radius__mode fba-geo-radius__mode_radius">
+    <div class="fba-geo-radius__mode-row"
+         [ngClass]="{'fba-geo-radius__mode-row_selected': item.radius > 0}"
+         (click)="enableRadius()"
+         *ngIf="item.type === 'city'">
+      <fba-tick class="fba-geo-radius__dropdown-tick"
+               *ngIf="item.radius > 0">
+      </fba-tick>
+      <span class="fba-geo-radius__mode-text">{{ 'fba-geo-radius.USE_RADIUS' | translate }}</span>
+    </div>
+    <div class="fba-geo-radius__mode-row fba-geo-radius__mode-row_slider">
+      <span class="fba-geo-radius__boundary">{{ min }}</span>
+      <md-slider class="fba-geo-radius__slider"
+                 [min]="min"
+                 [max]="max"
+                 [ngModel]="item.radius"
+                 (ngModelChange)="onChange($event)"></md-slider>
+      <span class="fba-geo-radius__boundary">{{ max }}</span>
+      <label class="fba-geo-radius__label">
+        <input type="number"
+               class="fba-geo-radius__input"
+               [ngModel]="item.radius"
+               (ngModelChange)="onChange($event)"
+               [min]="min"
+               [max]="max"
+               required />
+      </label>
+      <div class="fba-geo-radius__distance-unit-wrapper">
+        <span class="fba-geo-radius__distance-unit"
+              [ngClass]="{'fba-geo-radius__distance-unit_active': item.distance_unit === 'mile'}"
+              (click)="setDistanceUnit('mile')">
+          {{ 'fba-geo-radius.mile' | translate}}
+        </span>
+        <span>/</span>
+        <span class="fba-geo-radius__distance-unit"
+              [ngClass]="{'fba-geo-radius__distance-unit_active': item.distance_unit === 'kilometer'}"
+              (click)="setDistanceUnit('kilometer')">
+          {{ 'fba-geo-radius.kilometer' | translate}}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End of Select Radius Dropdown-->
+

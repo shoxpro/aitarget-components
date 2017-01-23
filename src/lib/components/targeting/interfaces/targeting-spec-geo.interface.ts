@@ -60,7 +60,7 @@ export type CountryGroup = 'worldwide' | 'africa' | 'south_america'
  * Describe properties of targeting spec for geo locations
  * @see https://developers.facebook.com/docs/marketing-api/targeting-specs/v2.7#location
  */
-export interface GeoTargetingSpec {
+export interface GeoSpec {
   /**
    * Values for country targeting. It must be an array of country codes.
    * @see https://developers.facebook.com/docs/reference/ads-api/get-autocomplete-data/#countries
@@ -143,7 +143,7 @@ export interface GeoTargetingSpec {
   country_groups?: Array<CountryGroup>;
 }
 
-export const geoTargetingSpecInitial = {
+export const geoSpecInitial = {
   'location_types': [
     <LocationTypeValue>'home',
     <LocationTypeValue>'recent'

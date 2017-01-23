@@ -4,7 +4,7 @@ export class AitargetComponentsPage {
   }
 
   static getAppTitleLinkText () {
-    return element(by.css('app-root .app__title-link'))
+    return element(by.css('fba-root .app__title-link'))
       .getText();
   }
 

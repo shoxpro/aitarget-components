@@ -6,11 +6,12 @@
   font-size: 14px
 }
 
-.detailed-targeting-wrapper {
+.fba-detailed-targeting-wrapper {
   display:         flex;
   justify-content: center;
 }
 
-detailed-targeting {
-  width: 50%;
+fba-control-squeeze,
+fba-detailed-targeting {
+  width: 80%;
 }

@@ -1,0 +1,42 @@
+<div *ngIf="(model$ | async).items && (model$ | async).items.length"
+     class="fba-geo-selected__content">
+  <!--Group of items which belong to the same country-->
+  <div class="fba-geo-selected__group"
+       [ngClass]='{"fba-geo-selected__group_hover": groupHovered[key]}'
+       *ngFor="let key of (itemsGroupedByCountry$ | async).keys; let last = last">
+    <!--Title (country name)-->
+    <div class="fba-geo-selected__group-title"
+         (mouseenter)="hoverGroup(key, true)"
+         (mouseleave)="hoverGroup(key, false)">
+      <span class="fba-geo-selected__group-name">{{ (itemsGroupedByCountry$ | async).map[key].name }}</span>
+      <span class="fba-geo-selected__remove fba-geo-selected__remove-group"
+            (click)="removeGroup(key)">&times;</span>
+    </div>
+    <!--List of items-->
+    <div class="fba-geo-selected__items">
+      <div class="fba-geo-selected__item"
+           (click)="showItemOnMap(item)"
+           *ngFor="let item of (itemsGroupedByCountry$ | async).map[key].items">
+
+        <fba-geo-mode
+          class="fba-geo-selected__mode"
+          #itemMode
+          [appendTarget]="'geo'"
+          [selectedMode]="item.excluded ? (modelMode$ | async).modes[1] : (modelMode$ | async).modes[0]"
+          [isOpen]="itemMode.isOpen"
+          (toggle)="toggleModeDropdown(itemMode, $event)"
+          (modeChange)="modeChange(item, $event)"></fba-geo-mode>
+
+        <span>{{ item | fbaFullName }}</span>
+
+        <fba-geo-radius *ngIf="['city', 'custom_location', 'place'].includes(item.type)"
+                        [item]="item"></fba-geo-radius>
+
+        <span class="fba-geo-selected__remove fba-geo-selected__remove-item"
+              (click)="removeItem(item)">&times;</span>
+      </div>
+    </div>
+    <div class="fba-geo-selected__group-devider"
+         *ngIf="!last"></div>
+  </div>
+</div>

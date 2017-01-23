@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { routes } from './demo-detailed-targeting.routing';
 import { DemoDetailedTargetingComponent } from './demo-detailed-targeting.component';
-import { DetailedTargetingModule } from '../../lib/components/targeting/targeting-form/detailed-targeting/detailed-targeting.module';
 import { AppSharedModule } from '../shared/index';
+import { DetailedTargetingModule } from '../../lib/components/targeting/targeting-form/detailed-targeting/detailed-targeting.module';
 /* tslint:enable:max-line-length */
 
 // noinspection JSUnusedGlobalSymbols

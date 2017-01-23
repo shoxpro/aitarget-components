@@ -16,7 +16,7 @@ export class SdkService {
    * Load the SDK asynchronously
    */
   loadSdk (lang: string = this._defaultLang) {
-    let js,
+    let js: any,
         id  = `facebook-jssdk-${lang}`,
         s   = 'script',
         fjs = document.getElementsByTagName(s)[0];
@@ -47,7 +47,7 @@ export class SdkService {
        * @type {string}
        */
       let aitargetSelfserviceAppId = '683082315084696';
-      let FB: SDK = (<any>window).FB;
+      let FB: SDK                  = (<any>window).FB;
       let appId                    = `${(<any>window).app_id || aitargetSelfserviceAppId}`;
 
       FB.init({
@@ -79,7 +79,7 @@ export class SdkService {
   startSdk = (lang: string = this._defaultLang) => {
     this.setAsyncInit(this._sdk);
     this.loadSdk(lang);
-  };
+  }
 
   constructor (private translateService: TranslateService) {
     this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {

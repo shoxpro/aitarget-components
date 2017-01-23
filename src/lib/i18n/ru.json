@@ -1,22 +1,22 @@
 {
-  "detailed-targeting-mode": {
+  "fba-detailed-mode": {
     "BROWSE": "Просмотр",
     "SUGGESTED": "Рекомендации"
   },
-  "detailed-targeting-input": {
+  "fba-detailed-input": {
     "PLACEHOLDER": "Добавьте демографические данные, интересы или модели поведения"
   },
-  "detailed-targeting-info": {
+  "fba-detailed-info": {
     "PEOPLE": "чел.",
     "DESCRIPTION": "Описание",
     "DESCRIBE_INTERESTS": "Пользователи, которые выразили интерес, или которым понравились Страницы, связанные с",
     "DESCRIBE_DEFAULT": "Люди, которые указали свое {{type}} как <i>{{name}}</i> в своем профиле Facebook."
   },
-  "browse-multi-select": {
+  "fba-browse-multi-select": {
     "SELECT_ALL": "Выбрать все",
     "UNSELECT_ALL": "Отменить выделение"
   },
-  "detailed-targeting-dropdown-suggested": {
+  "fba-detailed-dropdown-suggested": {
     "INTERESTS": "Интересы",
     "BEHAVIORS": "Поведение",
     "RELATIONSHIP_STATUSES": "Семейное положение",
@@ -41,11 +41,11 @@
     "WORK_EMPLOYERS": "Работодатели",
     "WORK_POSITIONS": "Должности"
   },
-  "geo-targeting-input": {
+  "fba-geo-input": {
     "PLACEHOLDER": "Добавьте места",
     "INVALID_LOCATION": "Это местонахождение недоступно для таргетинга."
   },
-  "geo-targeting-dropdown": {
+  "fba-geo-dropdown": {
     "all": "Все",
     "country": "Страна",
     "country_group": "Группа стран",
@@ -63,7 +63,7 @@
     "custom_location_many": "GPS координат",
     "place": "Место"
   },
-  "geo-targeting-info": {
+  "fba-geo-info": {
     "MESSAGE": "Местоположение вашей аудитории изменено с {{ fromNames }} на {{ toName }}.",
     "UNDO": "Отменить изменения",
     "MESSAGE_NOT_FOUND": "Некторые местоположения не были найдены: {{ notFoundInputsStr }}",
@@ -71,28 +71,28 @@
     "MESSAGE_NARROW": "Местонахождение вашей аудитории — {{ narrowerLocationNames }}, все остальные места автоматически исключаются.",
     "LIMIT": "Количество {{mode}} {{type}} не может превышать {{limit}}."
   },
-  "geo-targeting-mode": {
+  "fba-geo-mode": {
     "include": "Включить",
     "include_past": "включенных",
     "exclude": "Исключить",
     "exclude_past": "исключенных",
     "delete": "Удалить"
   },
-  "geo-targeting-map": {
+  "fba-geo-map": {
     "MAP": "Карта",
     "COUNTRY_GROUP": "Мы не можем выделить границу {{name}} на карте, но местонахождение было добавлено."
   },
-  "geo-targeting-map-controls": {
+  "fba-geo-map-controls": {
     "DROP_PIN": "Отметить булавкой"
   },
-  "geo-targeting-radius": {
+  "fba-geo-radius": {
     "mile": "миль",
     "kilometer": "км",
     "CURRENT_ONLY": "Только текущий город",
     "USE_RADIUS": "Города в пределах радиуса",
     "USE_RADIUS_INFO": "Близлежащие города включаются в том случае, если центр город попадает в пределы радиуса."
   },
-  "geo-targeting-location-type": {
+  "fba-geo-location-type": {
     "ALL": "Все в этой местности",
     "ALL_INFO": "Люди, последнее местонахождение или дом которых находятся в рамках выбранной территории.",
     "HOME": "Живущие в этом месте",
@@ -101,5 +101,28 @@
     "RECENT_INFO": "Люди с последним местонахождением в рамках выбранной территории.",
     "TRAVEL_IN": "Путешествующие по этому месту",
     "TRAVEL_IN_INFO": "Люди, которые по последним геоданным от них находятся в выбранном районе, но которые проживают на расстоянии больше 125 mi/200 km от текущего места."
+  },
+  "fba-detailed-targeting-legend": {
+    "FIRST": "ВКЛЮЧИТЬ людей, которые соответствуют как минимум ОДНОМУ из следующих условий",
+    "FIRST_HEADER_1": "ВКЛЮЧИТЬ",
+    "FIRST_TEXT_1": "Добавление других параметров таргетинга здесь приведет к увеличению размера вашей аудитории.",
+    "FIRST_HEADER_2": "СОВЕТЫ",
+    "FIRST_TEXT_2": "Для более точной настройки аудитории можно использовать ссылки ниже для исключения людей или сужения аудитории на основании других данных",
+    "REST": "и ТАКЖЕ ДОЛЖНО соответствовать как минимум ОДНОМУ из следующих условий",
+    "REST_HEADER_1": "СУЗИТЬ АУДИТОРИЮ",
+    "REST_TEXT_1": "Выберите новые настройки таргетинга, чтобы более точно настроить указанную выше аудиторию.",
+    "REST_HEADER_2": "СОВЕТЫ",
+    "REST_TEXT_2": "Выбор первого параметра приведет к сужению вашей аудитории, но все последующие параметры будут способствовать увеличению размера аудитории.",
+    "EXCLUSIONS": "ИСКЛЮЧИТЬ людей, которые соответствуют как минимум ОДНОМУ из следующих условий",
+    "EXCLUSIONS_HEADER_1": "ИСКЛЮЧИТЬ",
+    "EXCLUSIONS_TEXT_1": "Укажите новые данные для исключения людей из указанной выше аудитории.",
+    "EXCLUSIONS_HEADER_2": "СОВЕТЫ",
+    "EXCLUSIONS_TEXT_2": "Каждый новый параметр будет и дальше снижать размер аудитории."
+  },
+  "fba-detailed-targeting-controls": {
+    "NARROW": "Сузить аудиторию",
+    "NARROW_FURTHER": "Сузить еще больше",
+    "EXCLUDE": "Исключить людей",
+    "OR": "или"
   }
 }

@@ -1,29 +1,29 @@
 import { NgModule } from '@angular/core';
 import { TargetingComponent } from './targeting.component';
 import { TargetingFormComponent } from './targeting-form/targeting-form.component';
-import { GeoTargetingModule } from './targeting-form/geo-targeting/geo-targeting.module';
+import { GeoModule } from './targeting-form/geo/geo.module';
 import { TargetingFormAddComponent } from './targeting-form/targeting-form-add.comonent';
 import { TargetingFormArrayComponent } from './targeting-form/targeting-form-array.component';
-import { DetailedTargetingModule } from './targeting-form/detailed-targeting/detailed-targeting.module';
+import { DetailedModule } from './targeting-form/detailed-targeting/detailed/detailed.module';
 import { SharedModule } from '../../shared/shared.module';
 import { CoreModule } from '../../core.module';
 import { DynamicComponentModule } from 'ng-dynamic';
-import { ControlSqueezeComponent } from '../../shared/components/control-squeeze.component';
-import { TargetingAudiences } from './targeting-audiences/targeting-audiences.component';
+import { TargetingAudiencesComponent } from './targeting-audiences/targeting-audiences.component';
 import { AudienceComponent } from './audience/audience.component';
 import { MdSliderModule } from '@angular/material';
 import { GenderComponent } from './targeting-form/gender/gender';
 import { AgeComponent } from './targeting-form/age/age.component';
 import { LocalesModule } from './targeting-form/locales/locales.module';
+import { DetailedTargetingModule } from './targeting-form/detailed-targeting/detailed-targeting.module';
 
 @NgModule({
   imports:      [
     SharedModule,
     DetailedTargetingModule,
-    GeoTargetingModule,
+    GeoModule,
     LocalesModule,
     DynamicComponentModule.forRoot({
-      imports: [GeoTargetingModule, CoreModule]
+      imports: [GeoModule, CoreModule]
     }),
     MdSliderModule.forRoot()
   ],
@@ -32,16 +32,15 @@ import { LocalesModule } from './targeting-form/locales/locales.module';
     TargetingFormComponent,
     TargetingFormAddComponent,
     TargetingFormArrayComponent,
-    TargetingAudiences,
-    ControlSqueezeComponent,
+    TargetingAudiencesComponent,
     AudienceComponent,
     GenderComponent,
     AgeComponent
   ],
   exports:      [
     TargetingComponent,
-    GeoTargetingModule,
-    DetailedTargetingModule
+    GeoModule,
+    DetailedModule
   ]
 })
 export class TargetingModule {

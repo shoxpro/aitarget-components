@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector:        'fba-validate-messages',
   template:        `<div *ngIf="control && control.errors">
-                      <div *ngFor="let message of control.errors | values">
+                      <div *ngFor="let message of control.errors | fbaValues">
                         <span>{{ message }}</span>
                       </div>
                     </div>`,

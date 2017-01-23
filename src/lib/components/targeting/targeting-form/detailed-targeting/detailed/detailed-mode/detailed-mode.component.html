@@ -1,0 +1,17 @@
+<div class="fba-detailed-mode__content">
+  <div class="fba-detailed-mode__suggested"
+       *ngIf="type === 'flexible_spec'"
+       [ngClass]="{'fba-detailed-mode__suggested_active': mode === 'suggested'}"
+       (click)="setMode('suggested')">
+    <span class="fba-detailed-mode__left-border"></span>
+    {{'fba-detailed-mode.SUGGESTED' | translate}}
+    <span class="fba-detailed-mode__tick"></span>
+  </div>
+  <div class="fba-detailed-mode__browse"
+       [ngClass]="{'fba-detailed-mode__browse_active': mode === 'browse'}"
+       (click)="setMode('browse')">
+    <span class="fba-detailed-mode__left-border"></span>
+    {{'fba-detailed-mode.BROWSE' | translate}}
+    <span class="fba-detailed-mode__tick"></span>
+  </div>
+</div>

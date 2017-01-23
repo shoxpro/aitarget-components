@@ -1,0 +1,28 @@
+.fba-browse-multi-select__label {
+  display: table;
+  float:   right;
+  margin:  initial;
+  padding: initial;
+  width:   100%;
+}
+
+.fba-browse-multi-select__label:hover .fba-browse-multi-select__label-text {
+  visibility:      visible;
+  text-decoration: underline;
+  cursor:          pointer;
+}
+
+.fba-browse-multi-select__label-text {
+  display:        table-cell;
+  visibility:     collapse;
+  padding-right:  10px;
+  color:          #365899;
+  vertical-align: middle;
+  text-align:     right;
+  white-space:    nowrap;
+  font-weight:    bold;
+}
+
+.fba-browse-multi-select__input {
+  display: table-cell;
+}

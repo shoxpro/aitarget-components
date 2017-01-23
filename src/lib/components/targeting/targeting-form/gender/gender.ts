@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SqueezedValueAccessor } from '../../../../shared/interfaces/squeeze-value-accessor.inteface';
 import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { FormControlToken } from '../../../../shared/constants/form-control-token';
 
 @Component({
@@ -19,10 +19,9 @@ import { FormControlToken } from '../../../../shared/constants/form-control-toke
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GenderComponent implements ControlValueAccessor, SqueezedValueAccessor, OnInit, OnDestroy {
+export class GenderComponent implements ControlValueAccessor, SqueezedValueAccessor {
   _allGenders = {id: 0, name: 'All'};
 
-  destroy$       = new Subject();
   squeezedValue$ = new BehaviorSubject(this._allGenders.name);
 
   genders = [
@@ -73,7 +72,7 @@ export class GenderComponent implements ControlValueAccessor, SqueezedValueAcces
     this.propagateChange = fn;
   }
 
-  registerOnTouched () {}
+  registerOnTouched () { return; }
 
   // ==== implement ControlValueAccessor ====
 
@@ -87,8 +86,7 @@ export class GenderComponent implements ControlValueAccessor, SqueezedValueAcces
     return this.squeezedValue$.getValue();
   }
 
-  focus () {
-  }
+  focus () { return; }
 
   // ==== implement SqueezedValueAccessor ====
 
@@ -103,12 +101,4 @@ export class GenderComponent implements ControlValueAccessor, SqueezedValueAcces
       };
     }
   }
-
-  ngOnDestroy () {
-    this.destroy$.next();
-  }
-
-  ngOnInit () {}
-
-  constructor () {}
 }

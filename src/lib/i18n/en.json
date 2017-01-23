@@ -1,22 +1,22 @@
 {
-  "detailed-targeting-mode": {
+  "fba-detailed-mode": {
     "BROWSE": "Browse",
     "SUGGESTED": "Suggested"
   },
-  "detailed-targeting-input": {
+  "fba-detailed-input": {
     "PLACEHOLDER": "Add demographics, interests or behaviours"
   },
-  "detailed-targeting-info": {
+  "fba-detailed-info": {
     "PEOPLE": "people",
     "DESCRIPTION": "Description",
     "DESCRIBE_INTERESTS": "People who have expressed an interest in or like pages related to",
     "DESCRIBE_DEFAULT": "People who listed their {{type}} as <i>{{name}}</i> in their Facebook profile."
   },
-  "browse-multi-select": {
+  "fba-browse-multi-select": {
     "SELECT_ALL": "Select All",
     "UNSELECT_ALL": "Unselect All"
   },
-  "detailed-targeting-dropdown-suggested": {
+  "fba-detailed-dropdown-suggested": {
     "INTERESTS": "Interests",
     "BEHAVIORS": "Behaviors",
     "RELATIONSHIP_STATUSES": "Relationship Status",
@@ -41,11 +41,11 @@
     "WORK_EMPLOYERS": "Employers",
     "WORK_POSITIONS": "Job Titles"
   },
-  "geo-targeting-input": {
+  "fba-geo-input": {
     "PLACEHOLDER": "Add locations",
     "INVALID_LOCATION": "This location is not available for targeting."
   },
-  "geo-targeting-dropdown": {
+  "fba-geo-dropdown": {
     "all": "All",
     "country": "Country",
     "country_group": "Country Group",
@@ -63,7 +63,7 @@
     "custom_location_many": "GPS Coordinates",
     "place": "Place"
   },
-  "geo-targeting-info": {
+  "fba-geo-info": {
     "MESSAGE": "Your audience location has been changed from {{ fromNames }} to {{ toName }}.",
     "UNDO": "Undo Change",
     "MESSAGE_NOT_FOUND": "Some locations were not found: {{ notFoundInputsStr }}",
@@ -71,28 +71,28 @@
     "MESSAGE_NARROW": "Your audience location is set to {{ narrowerLocationNames }}, so everything outside of this location is automatically excluded.",
     "LIMIT": "Maximum number of {{mode}} {{type}} cannot exceed {{limit}}."
   },
-  "geo-targeting-mode": {
+  "fba-geo-mode": {
     "include": "Include",
     "include_past": "included",
     "exclude": "Exclude",
     "exclude_past": "excluded",
     "delete": "Delete"
   },
-  "geo-targeting-map": {
+  "fba-geo-map": {
     "MAP": "Map",
     "COUNTRY_GROUP": "We are unable to highlight the border of {{name}} on the map, but it has been successfully added."
   },
-  "geo-targeting-map-controls": {
+  "fba-geo-map-controls": {
     "DROP_PIN": "Drop Pin"
   },
-  "geo-targeting-radius": {
+  "fba-geo-radius": {
     "mile": "mi",
     "kilometer": "km",
     "CURRENT_ONLY": "Current city only",
     "USE_RADIUS": "Cities within radius",
     "USE_RADIUS_INFO": "Surrounding cities are included if the center of the city falls within the radius."
   },
-  "geo-targeting-location-type": {
+  "fba-geo-location-type": {
     "ALL": "Everyone in this location",
     "ALL_INFO": "People whose home or most recent location is within the selected area.",
     "HOME": "People who live in this location",
@@ -101,5 +101,28 @@
     "RECENT_INFO": "People whose most recent location is within the selected area.",
     "TRAVEL_IN": "People traveling in this location",
     "TRAVEL_IN_INFO": "People whose most recent location is within the selected area but whose home is more than 125 mi/200 km away."
+  },
+  "fba-detailed-targeting-legend": {
+    "FIRST": "INCLUDE people who match at least ONE of the following",
+    "FIRST_HEADER_1": "INCLUDE",
+    "FIRST_TEXT_1": "Adding more targeting details here will expand your audience to include more people.",
+    "FIRST_HEADER_2": "TIPS",
+    "FIRST_TEXT_2": "To refine your audience, you can use the links below to exclude people or narrow based on other details.",
+    "REST": "and MUST ALSO match at least ONE of the following",
+    "REST_HEADER_1": "NARROW AUDIENCE",
+    "REST_TEXT_1": "Choose new targeting details to refine your audience from the people included above.",
+    "REST_HEADER_2": "TIPS",
+    "REST_TEXT_2": "Adding the first option will decrease the size of your audience, and then each new option will increase the size from there.",
+    "EXCLUSIONS": "EXCLUDE people who match at least ONE of the following",
+    "EXCLUSIONS_HEADER_1": "EXCLUDE",
+    "EXCLUSIONS_TEXT_1": "Choose new details to exclude people from the audience included above.",
+    "EXCLUSIONS_HEADER_2": "TIPS",
+    "EXCLUSIONS_TEXT_2": "Each new option will decrease the size of your audience."
+  },
+  "fba-detailed-targeting-controls": {
+    "NARROW": "Narrow Audience",
+    "NARROW_FURTHER": "Narrow Further",
+    "EXCLUDE": "Exclude People",
+    "OR": "or"
   }
 }
