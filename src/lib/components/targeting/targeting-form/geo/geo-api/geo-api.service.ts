@@ -146,6 +146,9 @@ export class GeoApiService {
                    }
                  }
 
+                 // Put included items before excluded
+                 items = items.sort((a, b) => Number(a.excluded) - Number(b.excluded));
+
                  return items;
                });
   }

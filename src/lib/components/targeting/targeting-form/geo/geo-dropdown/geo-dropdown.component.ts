@@ -59,6 +59,7 @@ export class GeoDropdownComponent implements OnInit, OnDestroy, OnChanges {
         }
 
         this.changeDetectorRef.markForCheck();
+        this.changeDetectorRef.detectChanges();
       });
 
     enter$

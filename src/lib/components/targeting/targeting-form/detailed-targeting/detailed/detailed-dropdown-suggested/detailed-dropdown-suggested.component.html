@@ -2,7 +2,8 @@
     [ngClass]="{'fba-detailed-dropdown-suggested__list_active-info': activeInfo}"
     *ngIf="items && items.length && (mode === 'search' || mode === 'suggested')">
   <li class="fba-detailed-dropdown-suggested__row"
-      *ngFor="let item of items"
+      [ngClass]="{'fba-detailed-dropdown-suggested__row_active': i === activeItemIndex}"
+      *ngFor="let item of items; let i = index;"
       (mouseover)="setDropdownInfoItem(item)"
       (mouseout)="setDropdownInfoItem(null)"
       (click)="selectItem(item)">

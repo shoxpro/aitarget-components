@@ -8,6 +8,8 @@ import { DetailedApiService } from '../detailed-api/detailed-api.service';
 import { DetailedInputService } from '../detailed-input/detailed-input.service';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { Subject } from 'rxjs';
+import { enter$, arrowDown$, arrowUp$ } from '../../../../../../shared/constants/event-streams.constants';
+import { isScrolledIntoView } from '../../../../../../shared/utils/isScrolledIntoView';
 
 @Component({
   selector:        'fba-detailed-dropdown-suggested',
@@ -20,8 +22,9 @@ export class DetailedDropdownSuggestedComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject();
 
-  items: DetailedItem[];
+  items: DetailedItem[] = [];
   mode;
+  activeItemIndex       = 0;
   activeInfo;
 
   suggest (targetingList: Array<Object> = []) {
@@ -78,6 +81,8 @@ export class DetailedDropdownSuggestedComponent implements OnInit, OnDestroy {
         .subscribe((mode: string) => {
           this.mode = mode;
 
+          this.activeItemIndex = 0;
+
           this.changeDetectorRef.markForCheck();
         });
 
@@ -118,6 +123,44 @@ export class DetailedDropdownSuggestedComponent implements OnInit, OnDestroy {
      * Load suggestions on first init
      */
     this.detailedApiService.suggest();
+
+    arrowUp$
+      .takeUntil(this.destroy$)
+      .do((e: KeyboardEvent) => e.preventDefault())
+      .mapTo(-1)
+      .merge(arrowDown$
+        .do((e: KeyboardEvent) => e.preventDefault())
+        .mapTo(1))
+      .filter(() => this.items.length && ['search', 'suggested'].includes(this.mode))
+      .subscribe((delta) => {
+        this.activeItemIndex += delta;
+
+        if (this.activeItemIndex < 0) {
+          this.activeItemIndex = this.items.length - 1;
+        }
+
+        if (this.activeItemIndex > this.items.length - 1) {
+          this.activeItemIndex = 0;
+        }
+
+        // Scroll active row into view
+        let activeRow = <HTMLElement>document.querySelector(`.fba-detailed-dropdown-suggested__row:nth-child(${this.activeItemIndex + 1})`);
+        let list      = <HTMLElement>document.querySelector('.fba-detailed-dropdown-suggested__list');
+        if (activeRow && !isScrolledIntoView(activeRow, list)) {
+          list.scrollTop = activeRow.offsetTop;
+        }
+
+        this.changeDetectorRef.markForCheck();
+        this.changeDetectorRef.detectChanges();
+      });
+
+    enter$
+      .takeUntil(this.destroy$)
+      .do((e: KeyboardEvent) => e.preventDefault())
+      .filter(() => this.items.length && ['search', 'suggested'].includes(this.mode))
+      .subscribe(() => {
+        this.selectItem(this.items[this.activeItemIndex]);
+      });
 
     /**
      * Load suggestions when language changes
