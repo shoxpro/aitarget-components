@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy, OnInit, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GeoSearchService } from './geo-search.service';
 import { Subject } from 'rxjs';
@@ -42,7 +42,13 @@ export class GeoSearchComponent implements OnInit, OnDestroy {
   }
 
   inputValueEnter (inputValue) {
-    this.geoSearchService.processInputValue(inputValue);
+    /**
+     * Async task that should be run inside angular Zone.
+     * Allow proper change detection when is used outside on angular 2 (e.g. angular 1 apps)
+     **/
+    this.ngZone.run(() => {
+      this.geoSearchService.processInputValue(inputValue);
+    });
   }
 
   inputValueChange (inputValue) {
@@ -51,18 +57,31 @@ export class GeoSearchComponent implements OnInit, OnDestroy {
     }
 
     if (inputValue) {
-      this.geoSearchService.processInputValue(inputValue);
+      /**
+       * Async task that should be run inside angular Zone.
+       * Allow proper change detection when is used outside on angular 2 (e.g. angular 1 apps)
+       **/
+      this.ngZone.run(() => {
+        this.geoSearchService.processInputValue(inputValue);
+      });
     } else {
       this.geoSearchService.reset();
     }
   }
 
   select (item) {
-    this.geoSelectedService.addItems([item]);
-    this.geoSearchService.reset();
-  }
+    /**
+     * Async task that should be run inside angular Zone.
+     * Allow proper change detection when is used outside on angular 2 (e.g. angular 1 apps)
+     **/
+    this.ngZone.run(() => {
+      this.geoSelectedService.addItems([item]);
+      this.geoSearchService.reset();
+    });
+  };
 
   constructor (private _store: Store<AppState>,
+               private ngZone: NgZone,
                private geoSearchService: GeoSearchService,
                private geoSelectedService: GeoSelectedService,
                private geoModeService: GeoModeService,

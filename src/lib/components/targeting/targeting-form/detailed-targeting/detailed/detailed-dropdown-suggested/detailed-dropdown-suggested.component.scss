@@ -36,7 +36,8 @@
   justify-content: space-between
 }
 
-.fba-detailed-dropdown-suggested__row:hover {
+.fba-detailed-dropdown-suggested__row:hover,
+.fba-detailed-dropdown-suggested__row_active {
   background-color: #f5fafd
 }
 

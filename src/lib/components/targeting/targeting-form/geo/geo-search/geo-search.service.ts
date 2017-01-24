@@ -139,7 +139,7 @@ export class GeoSearchService {
             }, updatedModel);
           });
       });
-  }
+  };
 
   /**
    * Request for model custom locations items and return updated model
@@ -177,7 +177,7 @@ export class GeoSearchService {
                      return acc;
                    }, updatedModel);
       });
-  }
+  };
 
   /**
    * Propagate model with found items and dispatch update model action

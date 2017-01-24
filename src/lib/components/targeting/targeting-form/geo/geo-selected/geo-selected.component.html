@@ -21,7 +21,7 @@
         <fba-geo-mode
           class="fba-geo-selected__mode"
           #itemMode
-          [appendTarget]="'geo'"
+          [appendTarget]="'fba-geo'"
           [selectedMode]="item.excluded ? (modelMode$ | async).modes[1] : (modelMode$ | async).modes[0]"
           [isOpen]="itemMode.isOpen"
           (toggle)="toggleModeDropdown(itemMode, $event)"

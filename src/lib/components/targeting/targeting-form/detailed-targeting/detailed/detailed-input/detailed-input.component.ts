@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input, NgZone } from '@angular/core';
 import { DetailedApiService } from '../detailed-api/detailed-api.service';
 import { DetailedModeService } from '../detailed-mode/detailed-mode.service';
 import { DetailedInputService } from './detailed-input.service';
@@ -57,7 +57,8 @@ export class DetailedInputComponent implements OnInit, OnDestroy {
     this.changeDetectorRef.markForCheck();
   }
 
-  constructor (private detailedApiService: DetailedApiService,
+  constructor (private ngZone: NgZone,
+               private detailedApiService: DetailedApiService,
                private detailedModeService: DetailedModeService,
                private detailedInputService: DetailedInputService,
                private detailedInfoService: DetailedInfoService,
@@ -81,8 +82,14 @@ export class DetailedInputComponent implements OnInit, OnDestroy {
           if (!term) {
             this.detailedInfoService.update(null);
           } else {
-            this.detailedModeService.set('search');
-            this.detailedApiService.search(term);
+            /**
+             * Async task that should be run inside angular Zone.
+             * Allow proper change detection when is used outside on angular 2 (e.g. angular 1 apps)
+             **/
+            this.ngZone.run(() => {
+              this.detailedModeService.set('search');
+              this.detailedApiService.search(term);
+            });
           }
 
           this.changeDetectorRef.markForCheck();
