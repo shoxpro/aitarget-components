@@ -13,6 +13,7 @@ import { AppState } from '../../../../../../app/reducers/index';
 import { Store } from '@ngrx/store';
 import { GeoApiService } from '../geo-api/geo-api.service';
 import { ComponentsHelperService } from '../../../../../shared/services/components-helper.service';
+import { GeoSearchService } from '../geo-search/geo-search.service';
 
 @Injectable()
 export class GeoMapService {
@@ -68,12 +69,19 @@ export class GeoMapService {
 
     if (item.type === 'country_group') {
       this.setView(item.latitude, item.longitude);
-      // Show message
-      this.geoInfoService.showInfo({
-        message: this.translateService.instant(`fba-geo-map.COUNTRY_GROUP`, {
-          name: item.name
-        })
-      });
+      // Show message when map is open
+      this._store.let(this.geoSearchService.getModel)
+          .take(1)
+          .map(({isMapOpen}) => isMapOpen)
+          .subscribe((isMapOpen) => {
+            if (isMapOpen) {
+              this.geoInfoService.showInfo({
+                message: this.translateService.instant(`fba-geo-map.COUNTRY_GROUP`, {
+                  name: item.name
+                })
+              });
+            }
+          });
     } else {
       this.map.fitBounds(this.itemsMap[item.key].featureGroup.getBounds());
     }
@@ -236,7 +244,7 @@ export class GeoMapService {
 
           this.togglePinMode();
         });
-  }
+  };
 
   enterPinMode () {
     this.map.on('click', this.onMapClick);
@@ -247,6 +255,7 @@ export class GeoMapService {
   }
 
   constructor (private _store: Store<AppState>,
+               private geoSearchService: GeoSearchService,
                private translateService: TranslateService,
                private geoInfoService: GeoInfoService,
                private geoApiService: GeoApiService,

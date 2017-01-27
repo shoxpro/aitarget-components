@@ -6,9 +6,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroup, FormBuilder, FormAr
 import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { FormControlToken } from '../../../../shared/constants/form-control-token';
-import { detailedTargetingSpecInitial } from '../../interfaces/targeting-spec-detailed.interface';
+import { detailedTargetingSpecInitial, detailedSpecInitial } from '../../interfaces/targeting-spec-detailed.interface';
 
 const isEqual = require('lodash/isEqual');
+const isEmpty = require('lodash/isEmpty');
 
 @Component({
   selector:        'fba-detailed-targeting',
@@ -114,7 +115,30 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
   getForm (formValue = detailedTargetingSpecInitial) {
     let groupData = {};
 
+    /*Extend with initial values*/
     formValue = Object.assign({}, detailedTargetingSpecInitial, formValue);
+
+    /*
+     * Set or extend flexible specs from detailed targeting keys from upper level
+     * e.g. interests, behaviors, etc. That's how we support old format targetings
+     * (before flexible specs become available).
+     * Important! Targeting segments e.g. interests/behaviors specified inside flexible_spec
+     * are not available for use outside of flexible_spec.
+     * */
+    let generatedFlexibleSpecs = [];
+    for (let name in detailedSpecInitial) {
+      if (detailedSpecInitial.hasOwnProperty(name) && formValue[name]) {
+        // Add to flexible spec
+        generatedFlexibleSpecs.push({[name]: formValue[name]});
+      }
+    }
+
+    /**
+     * If no true flexible specs, but has generated flexible spec, update!
+     */
+    formValue['flexible_spec'] = formValue['flexible_spec']
+      .filter((flexibleSpec) => !generatedFlexibleSpecs.length || !isEmpty(flexibleSpec))
+      .concat(generatedFlexibleSpecs);
 
     /**
      * Iterate through initial detailedTargeting keys
@@ -151,7 +175,7 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
    * @param name
    * @param i
    */
-  removeControl ({name, i}: {name: string, i: number}) {
+  removeControl ({name, i}: {name: string, i?: number}) {
     if (this.detailedTargetingForm.controls[name] instanceof FormArray) {
       const control = <FormArray>this.detailedTargetingForm.controls[name];
       control.removeAt(i);
@@ -171,12 +195,29 @@ export class DetailedTargetingComponent implements ControlValueAccessor, Squeeze
 
           // Filter out empty flexible specs
           if (Array.isArray(newValue['flexible_spec'])) {
-            newValue['flexible_spec'] = newValue['flexible_spec'].filter((flexibleSpec) => Object.keys(flexibleSpec).length);
+            newValue['flexible_spec'] = newValue['flexible_spec'].filter((flexibleSpec, i) => {
+              const isEmptySpec = isEmpty(flexibleSpec);
+
+              /*Remove control if current spec is empty, it is not the first and the only one spec
+               * and previously had a value*/
+              if (isEmptySpec &&
+                this.value['flexible_spec'] && !isEmpty(this.value['flexible_spec'][i]) &&
+                newValue['flexible_spec'].length > 1) {
+                this.removeControl({name: 'flexible_spec', i});
+              }
+
+              // Ignore first flexible_spec
+              return !isEmptySpec;
+            });
           }
 
           // Filter out empty exclusions
-          if (newValue['exclusions'] && !Object.keys(newValue['exclusions']).length) {
+          if (newValue['exclusions'] !== null && isEmpty(newValue['exclusions'])) {
             newValue['exclusions'] = null;
+            // Remove exclusions if previously it had values
+            if (!isEmpty(this.value['exclusions'])) {
+              this.removeControl({name: 'exclusions'});
+            }
           }
 
           this.value = newValue;

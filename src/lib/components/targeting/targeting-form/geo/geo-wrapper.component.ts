@@ -15,13 +15,12 @@ export class GeoWrapperComponent {
   @Input() spec: TargetingSpec;
   @Output() onChange: EventEmitter<TargetingSpec> = new EventEmitter();
 
-  ngModelChange (spec: TargetingSpec) {
-    const updatedSpec = Object.assign({}, this.spec, spec);
-
-    if (isEqual(updatedSpec, this.spec)) {
+  ngModelChange (geoSpec: TargetingSpec) {
+    if (isEqual(this.spec['geo_locations'], geoSpec['geo_locations']) &&
+      isEqual(this.spec['excluded_geo_locations'], geoSpec['excluded_geo_locations'])) {
       return;
     }
 
-    this.onChange.emit(updatedSpec);
+    this.onChange.emit(geoSpec);
   }
 }

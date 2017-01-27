@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
+import { DetailedTargetingSpec, detailedSpecInitial } from '../../interfaces/targeting-spec-detailed.interface';
 
 const isEqual = require('lodash/isEqual');
 
@@ -19,13 +20,14 @@ export class DetailedTargetingWrapperComponent {
   @Input() adaccountId;
   @Output() onChange: EventEmitter<TargetingSpec> = new EventEmitter();
 
-  ngModelChange (spec: TargetingSpec) {
-    const updatedSpec = Object.assign({}, this.spec, spec);
-
-    if (isEqual(updatedSpec, this.spec)) {
+  ngModelChange (detailedSpec: DetailedTargetingSpec) {
+    if (isEqual(this.spec['flexible_spec'], detailedSpec['flexible_spec']) &&
+      isEqual(this.spec['exclusions'], detailedSpec['exclusions'])) {
       return;
     }
 
-    this.onChange.emit(updatedSpec);
+    /*All old keys of detailedSpecInitial should be cleared,
+     because now they are inside flexible_spec*/
+    this.onChange.emit(Object.assign({}, detailedSpecInitial, detailedSpec));
   }
 }

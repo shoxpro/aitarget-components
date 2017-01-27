@@ -21,7 +21,11 @@ export function isNarrower (item: GeoItem, selectedItem: GeoItem) {
     /*passed item is a country of selected item*/
     selectedItem.country_code === item.key ||
     /*passed item is a country group that includes selected item country*/
-    (item.country_codes && item.country_codes.includes(selectedItem.key)) ||
+    (item.country_codes && (
+        item.country_codes.includes(selectedItem.key) ||
+        item.country_codes.includes(selectedItem.country_code)
+      )
+    ) ||
     /*passed item is always narrower than worldwide*/
     selectedItem.is_worldwide ||
     /*passed item is a region of selected item*/
@@ -36,7 +40,11 @@ export function isBroader (item: GeoItem, selectedItem: GeoItem) {
     /*country of passed item is selected*/
     selectedItem.key === item.country_code ||
     /*country group of passed item is selected*/
-    (selectedItem.country_codes && selectedItem.country_codes.includes(item.key)) ||
+    (selectedItem.country_codes && (
+        selectedItem.country_codes.includes(item.key) ||
+        selectedItem.country_codes.includes(item.country_code)
+      )
+    ) ||
     /*worldwide passed item is always broader than any other selected item*/
     item.is_worldwide ||
     /*region of passed item is selected*/

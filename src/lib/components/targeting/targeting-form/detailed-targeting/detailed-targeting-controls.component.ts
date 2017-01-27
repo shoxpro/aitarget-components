@@ -2,6 +2,8 @@ import {
   Component, ChangeDetectionStrategy, Output, EventEmitter, Input, ChangeDetectorRef, OnChanges
 } from '@angular/core';
 
+const isEmpty = require('lodash/isEmpty');
+
 @Component({
   selector:        'fba-detailed-targeting-controls',
   template:        `<div class="fba-detailed-targeting__controls">
@@ -59,8 +61,8 @@ export class DetailedTargetingControlsComponent implements OnChanges {
       this.controls.push(this.excludeControl);
     }
 
-    // Flexible spec is valid if it has at least 1 filled key
-    const validFlexibleSpecs = formValue['flexible_spec'].filter((flexibleSpec) => Object.keys(flexibleSpec).length);
+    // Flexible spec is valid if it is not empty
+    const validFlexibleSpecs = formValue['flexible_spec'].filter((flexibleSpec) => !isEmpty(flexibleSpec));
 
     if (formValue['flexible_spec'].length === validFlexibleSpecs.length && validFlexibleSpecs.length > 0) {
       const control = validFlexibleSpecs.length === 1 ? this.narrowControl : this.narrowFurtherControl;

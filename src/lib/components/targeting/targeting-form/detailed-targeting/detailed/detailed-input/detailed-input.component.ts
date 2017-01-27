@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input, NgZone } from '@angular/core';
+import {
+  Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input, NgZone, ElementRef
+} from '@angular/core';
 import { DetailedApiService } from '../detailed-api/detailed-api.service';
 import { DetailedModeService } from '../detailed-mode/detailed-mode.service';
 import { DetailedInputService } from './detailed-input.service';
@@ -23,6 +25,7 @@ export class DetailedInputComponent implements OnInit, OnDestroy {
   term;
   mode;
   hasFocus;
+  inputElement;
   structuredSelectedItems;
   activeInfo;
 
@@ -63,6 +66,7 @@ export class DetailedInputComponent implements OnInit, OnDestroy {
                private detailedInputService: DetailedInputService,
                private detailedInfoService: DetailedInfoService,
                private detailedSelectedService: DetailedSelectedService,
+               private elementRef: ElementRef,
                private translateService: TranslateService,
                private changeDetectorRef: ChangeDetectorRef) {
   }
@@ -72,6 +76,8 @@ export class DetailedInputComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit () {
+    this.inputElement = this.elementRef.nativeElement.querySelector('input');
+
     this.detailedInputService.term
         .takeUntil(this.destroy$)
         .debounceTime(500)
@@ -123,6 +129,22 @@ export class DetailedInputComponent implements OnInit, OnDestroy {
         .subscribe((item: DetailedItem) => {
           this.activeInfo = Boolean(item);
           this.changeDetectorRef.markForCheck();
+        });
+
+    this.detailedInputService.hasFocus
+        .takeUntil(this.destroy$)
+        .subscribe((hasFocus: boolean) => {
+          if (hasFocus) {
+            // Set native element focus
+            this.inputElement.focus();
+            // Process focus
+            this.focus();
+          } else {
+            // Blur native element
+            this.inputElement.blur();
+            // Process blur
+            this.blur();
+          }
         });
 
     this.translateService.onLangChange
