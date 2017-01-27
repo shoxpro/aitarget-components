@@ -61,6 +61,8 @@ export class DetailedDropdownSuggestedComponent implements OnInit, OnDestroy {
     this.detailedInputService.setTerm('');
 
     this.detailedSelectedService.updateSelected(selectedItems);
+
+    this.detailedInputService.setFocus(true);
   }
 
   ngOnDestroy () {

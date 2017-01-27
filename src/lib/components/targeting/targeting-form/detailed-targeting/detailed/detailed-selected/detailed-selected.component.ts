@@ -1,5 +1,5 @@
 /* tslint:disable:max-line-length */
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { DetailedSelectedService } from './detailed-selected.service';
 import { DetailedItem } from '../detailed-item';
 import { DetailedModeService } from '../detailed-mode/detailed-mode.service';
@@ -24,7 +24,8 @@ export class DetailedSelectedComponent implements OnInit, OnDestroy {
   structuredSelectedItems;
   groupHovered: Object = {};
 
-  constructor (private detailedService: DetailedService,
+  constructor (private zone: NgZone,
+               private detailedService: DetailedService,
                private detailedDropdownBrowseService: DetailedDropdownBrowseService,
                private detailedModeService: DetailedModeService,
                private detailedSelectedService: DetailedSelectedService,
@@ -53,11 +54,13 @@ export class DetailedSelectedComponent implements OnInit, OnDestroy {
       }
     }
 
-    // Close search mode before opening browse tree
-    this.detailedSearchService.update({isVisible: false, type: null});
+    this.zone.run(() => {
+      // Close search mode before opening browse tree
+      this.detailedSearchService.update({isVisible: false, type: null});
 
-    this.detailedModeService.set('browse');
-    this.detailedDropdownBrowseService.updateOpenItems(openItems);
+      this.detailedModeService.set('browse');
+      this.detailedDropdownBrowseService.updateOpenItems(openItems);
+    });
   }
 
   removeGroup (key) {
@@ -84,6 +87,7 @@ export class DetailedSelectedComponent implements OnInit, OnDestroy {
   hoverGroup (key, isHovered) {
     this.groupHovered[key] = isHovered;
     this.changeDetectorRef.markForCheck();
+    this.changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy () {

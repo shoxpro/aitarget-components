@@ -28,7 +28,7 @@ export class GeoSearchService {
                    return geoState[GEO_TARGETING_SEARCH_KEY];
                  })
                  .distinctUntilChanged();
-  }
+  };
 
   focus () {
     this._store.dispatch(this.geoSearchActions.updateModel({hasFocus: true}));
