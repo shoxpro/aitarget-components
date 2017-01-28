@@ -1,12 +1,12 @@
 require('ts-node/register');
-const ports = require('../constants')
+const ports = require('../constants');
 const helpers = require('../helpers');
 
 exports.config = {
   baseUrl: `http://localhost:${ports.E2E_PORT}/`,
 
   // use `npm run e2e`
-  specs: [
+  specs:   [
     helpers.root('e2e/**/**.e2e.ts'),
     helpers.root('e2e/**/*.e2e.ts'),
     helpers.root('src/**/**.e2e.ts'),
@@ -19,23 +19,35 @@ exports.config = {
   allScriptsTimeout: 110000,
 
   jasmineNodeOpts: {
-    showTiming: true,
-    showColors: true,
-    isVerbose: false,
-    includeStackTrace: false,
+    showTiming:             true,
+    showColors:             true,
+    isVerbose:              false,
+    includeStackTrace:      false,
     defaultTimeoutInterval: 400000
   },
-  directConnect: true,
+  directConnect:   true,
 
   capabilities: {
-    'browserName': 'chrome',
+    'browserName':   'chrome',
     'chromeOptions': {
       'args': ['show-fps-counter=true']
     }
   },
 
-  onPrepare: function() {
+  onPrepare: function () {
     browser.ignoreSynchronization = true;
+
+    browser.get('https://www.facebook.com/');
+
+    element(by.id('email'))
+      .sendKeys(browser.params.login.email);
+    element(by.id('pass'))
+      .sendKeys(browser.params.login.pass);
+
+    element(by.css('input[value="Log In"]'))
+      .click();
+
+    browser.ignoreSynchronization = false;
   },
 
   /**
@@ -44,5 +56,5 @@ exports.config = {
    * useAllAngular2AppRoots: tells Protractor to wait for any angular2 apps on the page instead of just the one matching
    * `rootEl`
    */
-   useAllAngular2AppRoots: true
+  useAllAngular2AppRoots: true
 };
