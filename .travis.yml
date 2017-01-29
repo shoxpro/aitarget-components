@@ -29,6 +29,7 @@ before_script:
   - npm prune
 script:
   - npm run test:once:ci
+  - npm run e2e
   - npm run build:lib
 after_success:
   - npm run semantic-release

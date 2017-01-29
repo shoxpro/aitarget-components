@@ -1,10 +1,12 @@
+import { browser, element, by } from 'protractor';
+
 export class AitargetComponentsPage {
   static navigateTo () {
     return browser.get('/');
   }
 
-  static getAppTitleLinkText () {
-    return element(by.css('fba-root .app__title-link'))
+  static getDashboardTitleText () {
+    return element(by.tagName('my-dashboard h3'))
       .getText();
   }
 

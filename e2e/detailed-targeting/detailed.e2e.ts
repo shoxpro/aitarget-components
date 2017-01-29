@@ -1,21 +1,35 @@
 import { DetailedPage as page } from './detailed.po';
-import { UtilsE2E as utils } from '../app.e2e-utils';
 
 describe('aitarget-components Detailed Targeting', function () {
   beforeAll(() => {
     page.navigateTo();
-    utils.login();
+  });
+
+  describe(`select item`, () => {
+    it(`should select first suggested item`, () => {
+      page.getInput(page.getIncludeControl())
+          .click();
+
+      const itemTextToSelect = page.getSuggestedRowName(page.getSuggestedActiveRow());
+
+      page.getSuggestedActiveRow()
+          .click();
+
+      expect(page.getSelectedItemName(page.getSelectedItems()
+                                          .first()))
+        .toEqual(itemTextToSelect);
+    });
   });
 
   describe(`selected`, () => {
-    it('should have preselected groups of detailed targeting', () => {
+    xit('should have preselected groups of detailed targeting', () => {
       expect(page.getDetailedSelectedGroups()
                  .count())
         .toBe(4);
     });
 
-    it('should have preselected items of detailed targeting', () => {
-      expect(page.getDetailedSelectedItems()
+    xit('should have preselected items of detailed targeting', () => {
+      expect(page.getSelectedItems()
                  .count())
         .toBe(8);
     });

@@ -24,7 +24,7 @@
     <div class="detailed-selected__items">
       <div class="fba-detailed-selected__item"
            *ngFor="let item of structuredSelectedItems.map[key]">
-        <span>{{ item.name }}</span>
+        <span class="fba-detailed-selected__item-name">{{ item.name }}</span>
         <span class="fba-detailed-selected__remove fba-detailed-selected__remove-item"
               (click)="removeItem(item)">&times;</span>
       </div>
