@@ -11,6 +11,7 @@ import { ControlSqueezeComponent } from './components/control-squeeze.component'
 import { DynamicComponentModule } from 'ng-dynamic';
 import { InfoIconComponent } from './components/info-icon/info-icon.component';
 import { InfoIconModule } from './components/info-icon/info-icon.module';
+import { PluralPipe } from './pipes/plural.pipe';
 
 @NgModule({
   imports:      [
@@ -28,6 +29,7 @@ import { InfoIconModule } from './components/info-icon/info-icon.module';
     LocalizationComponent,
     CloseComponent,
     ValuesPipe,
+    PluralPipe,
     ValidateMessageComponent
   ],
   exports:      [
