@@ -1,9 +1,9 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { DetailedItem } from '../detailed-item';
 import { DetailedInfoService } from './detailed-info.service';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { TypeToHumanPipe } from '../type-to-human.pipe';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector:        'fba-detailed-info',

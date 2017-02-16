@@ -1,5 +1,5 @@
-import { TranslateLoader } from 'ng2-translate/ng2-translate';
-import { Observable } from 'rxjs/Rx';
+import { TranslateLoader } from 'ng2-translate/src/translate.service';
+import { Observable } from 'rxjs/Observable';
 
 let en = require('../../i18n/en.json');
 let ru = require('../../i18n/ru.json');

@@ -1,7 +1,7 @@
 import {
   Component, OnInit, ChangeDetectionStrategy, OnDestroy, Input, Output, EventEmitter, ElementRef, OnChanges
 } from '@angular/core';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector:        'fba-geo-input',

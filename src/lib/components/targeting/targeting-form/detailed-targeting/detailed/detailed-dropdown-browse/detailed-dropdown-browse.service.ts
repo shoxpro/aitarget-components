@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DetailedItem } from '../detailed-item';
-import { Subject, BehaviorSubject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 interface DefaultOpenItems {
   __ROOT__: boolean;

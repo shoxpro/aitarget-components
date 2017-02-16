@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnDestroy, OnInit, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GeoSearchService } from './geo-search.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { GeoService } from '../geo.service';
 import { GeoSelectedService } from '../geo-selected/geo-selected.service';
 import { GeoModeService } from '../geo-mode/geo-mode.service';

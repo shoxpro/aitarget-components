@@ -2,8 +2,8 @@
 import { Injectable } from '@angular/core';
 import { DetailedDropdownSuggestedService } from '../detailed-dropdown-suggested/detailed-dropdown-suggested.service';
 import { DetailedDropdownBrowseService } from '../detailed-dropdown-browse/detailed-dropdown-browse.service';
-import { Observable } from 'rxjs';
-import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
+import { Observable } from 'rxjs/Observable';
+import { TranslateService, LangChangeEvent } from 'ng2-translate/src/translate.service';
 import { SDK } from '../../../../../../shared/sdk/sdk.interface';
 import { SdkService } from '../../../../../../shared/sdk/sdk.service';
 import { SdkError } from '../../../../../../shared/errors/sdkError';

@@ -1,8 +1,8 @@
 import { Component, AfterViewInit, Input, ElementRef, OnDestroy } from '@angular/core';
 import { DetailedItem } from '../detailed-item';
 import { DetailedSelectedService } from '../detailed-selected/detailed-selected.service';
-import { TranslateService } from 'ng2-translate/ng2-translate';
-import { Subject } from 'rxjs';
+import { TranslateService } from 'ng2-translate/src/translate.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector:    'fba-browse-multi-select',

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AudienceActions } from './audience.actions';
 import { AudienceIndexesState, AUDIENCE_INDEXES_KEY } from './audience.reducer';
 import { TARGETING_KEY, TargetingState } from '../targeting.reducer';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AudienceService {

@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { GeoComponent } from './geo.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { GeoApiService } from './geo-api/geo-api.service';
 import { GeoSelectedService } from './geo-selected/geo-selected.service';
 import { GeoLocationTypeService } from './geo-location-type/geo-location-type.service';

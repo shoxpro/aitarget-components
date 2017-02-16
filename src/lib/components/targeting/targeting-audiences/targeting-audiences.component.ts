@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TargetingAudiencesService } from './targeting-audiences.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { AudienceService } from '../audience/audience.service';
 import { AppState } from '../../../../app/reducers/index';
 

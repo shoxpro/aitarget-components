@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRe
 import { GeoSelectedService } from './geo-selected.service';
 import { GeoItem } from '../geo-item.interface';
 import { GeoMapService } from '../geo-map/geo-map.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import { GeoSearchService } from '../geo-search/geo-search.service';
 import { GeoModeType } from '../geo-mode/geo-mode.reducer';

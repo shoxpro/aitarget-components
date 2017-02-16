@@ -3,7 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { GeoMapService } from './geo-map.service';
 import { ComponentsHelperService } from '../../../../../shared/services/components-helper.service';
 import { GeoInfoService } from '../geo-info/geo-info.service';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { GeoSelectedService } from '../geo-selected/geo-selected.service';
 import { Store } from '@ngrx/store';
 import { GeoApiService } from '../geo-api/geo-api.service';

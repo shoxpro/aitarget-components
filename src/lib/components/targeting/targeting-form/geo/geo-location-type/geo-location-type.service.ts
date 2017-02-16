@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { GeoLocationTypeState, GEO_TARGETING_LOCATION_TYPE_KEY, LocationType } from './geo-location-type.reducer';
 import { GeoState, GEO_TARGETING_STATE_KEY } from '../geo.reducer';
 import { Store } from '@ngrx/store';

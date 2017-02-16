@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SDK } from './sdk.interface';
-import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
+import { TranslateService, LangChangeEvent } from 'ng2-translate/src/translate.service';
 
 @Injectable()
 export class SdkService {

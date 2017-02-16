@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { GeoApiService } from '../geo-api/geo-api.service';
 import { GeoSelectedActions } from './geo-selected.actions';
 import { GeoInfoService } from '../geo-info/geo-info.service';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { GeoLocationTypeService } from '../geo-location-type/geo-location-type.service';
 import { GeoModeService } from '../geo-mode/geo-mode.service';
 import { GeoIdService } from '../geo.id';

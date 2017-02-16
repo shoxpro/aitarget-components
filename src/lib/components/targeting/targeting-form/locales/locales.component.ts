@@ -2,7 +2,9 @@ import { Component, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/
 import { FormControlToken } from '../../../../shared/constants/form-control-token';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
-import { BehaviorSubject, Subject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 import { SqueezedValueAccessor } from '../../../../shared/interfaces/squeeze-value-accessor.inteface';
 import { LocalesApiService } from './locales-api/locales-api.service';
 import { Locale } from './interfaces/locale.interface';

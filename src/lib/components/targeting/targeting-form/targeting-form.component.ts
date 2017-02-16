@@ -7,14 +7,14 @@ import { targetingFormInitial } from './targeting-form.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../app/reducers/index';
 import { TargetingService } from '../targeting.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { getSpecFromFormValue } from '../targeting.constants';
 import { TargetingFormService } from './targeting-form.service';
 import { TargetingAudiencesService } from '../targeting-audiences/targeting-audiences.service';
 import { AudienceState } from '../audience/audience.interface';
 import { AudienceService } from '../audience/audience.service';
 
-const isEqual = require('lodash/isEqual');
+import isEqual from 'lodash-es/isEqual';
 
 @Component({
   selector:        'fba-targeting-form',

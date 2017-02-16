@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { AudienceState, audienceInitial } from './audience.interface';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({

@@ -6,8 +6,8 @@ import { DetailedSelectedService } from '../detailed-selected/detailed-selected.
 import { DetailedModeService } from '../detailed-mode/detailed-mode.service';
 import { DetailedApiService } from '../detailed-api/detailed-api.service';
 import { DetailedInputService } from '../detailed-input/detailed-input.service';
-import { TranslateService } from 'ng2-translate/ng2-translate';
-import { Subject } from 'rxjs';
+import { TranslateService } from 'ng2-translate/src/translate.service';
+import { Subject } from 'rxjs/Subject';
 import { enter$, arrowDown$, arrowUp$ } from '../../../../../../shared/constants/event-streams.constants';
 import { isScrolledIntoView } from '../../../../../../shared/utils/isScrolledIntoView';
 

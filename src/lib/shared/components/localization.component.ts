@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, OnChanges } from '@angular/core';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 
 type Language = 'en_US' | 'ru_RU' | 'zh_CN';
 

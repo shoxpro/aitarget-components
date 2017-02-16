@@ -5,7 +5,7 @@ import { GeoModeService } from '../geo-mode/geo-mode.service';
 import { AppState } from '../../../../../../app/reducers/index';
 import { Store } from '@ngrx/store';
 import { GeoModeType, GeoModeIdType } from '../geo-mode/geo-mode.reducer';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector:        'fba-geo-map-popup',

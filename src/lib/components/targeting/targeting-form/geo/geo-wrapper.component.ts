@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
 
-const isEqual = require('lodash/isEqual');
+import isEqual from 'lodash-es/isEqual';
 
 /**
  * Proxy component to be downgraded in angular1.

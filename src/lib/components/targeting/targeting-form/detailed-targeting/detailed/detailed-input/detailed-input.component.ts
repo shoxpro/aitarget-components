@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, Input, NgZone, ElementRef
+  Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input, NgZone, ElementRef, OnDestroy
 } from '@angular/core';
 import { DetailedApiService } from '../detailed-api/detailed-api.service';
 import { DetailedModeService } from '../detailed-mode/detailed-mode.service';
@@ -7,8 +7,8 @@ import { DetailedInputService } from './detailed-input.service';
 import { DetailedInfoService } from '../detailed-info/detailed-info.service';
 import { DetailedSelectedService } from '../detailed-selected/detailed-selected.service';
 import { DetailedItem } from '../detailed-item';
-import { TranslateService } from 'ng2-translate/ng2-translate';
-import { Subject } from 'rxjs';
+import { TranslateService } from 'ng2-translate/src/translate.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector:        'fba-detailed-input',

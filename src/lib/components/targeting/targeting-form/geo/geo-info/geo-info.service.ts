@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { GeoInfoState, GEO_TARGETING_INFO_KEY } from './geo-info.reducer';
 import { AppState } from '../../../../../../app/reducers/index';
 import { Store } from '@ngrx/store';

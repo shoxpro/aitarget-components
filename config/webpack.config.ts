@@ -35,7 +35,7 @@ module.exports = function (env) {
     entry:   require('./components.entry')(path.resolve(__dirname, parentRoot)),
     output:  {
       path:          path.resolve(__dirname, parentRoot, './lib/components'),
-      filename:      "[name].js",
+      filename:      '[name].js',
       libraryTarget: 'umd'
     },
     module:  {

@@ -4,7 +4,7 @@ import { GeoDropdownComponent } from './geo-dropdown.component';
 import { FullTypePipe } from '../full-type.pipe';
 import { FullNamePipe } from '../full-name.pipe';
 import { GeoService } from '../geo.service';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 
 describe('Component: GeoDropdown', () => {
   beforeEach(() => {

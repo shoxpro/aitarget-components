@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DetailedSpec } from '../../../interfaces/targeting-spec-detailed.interface';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { detailedSpecInitial } from '../../../interfaces/targeting-spec-detailed.interface';
 import { DetailedItem } from './detailed-item';
 

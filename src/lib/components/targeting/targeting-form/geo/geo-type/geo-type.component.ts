@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GeoTypeService } from './geo-type.service';
-import { Subject } from 'rxjs';
-import { TranslateService } from 'ng2-translate';
+import { Subject } from 'rxjs/Subject';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { AppState } from '../../../../../../app/reducers/index';
 
 @Component({

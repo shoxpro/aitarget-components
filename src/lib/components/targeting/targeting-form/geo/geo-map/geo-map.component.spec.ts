@@ -1,7 +1,8 @@
 /* tslint:disable:no-unused-variable */
 import { TestBed } from '@angular/core/testing';
 import { GeoMapComponent } from './geo-map.component';
-import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
+import { TranslatePipe } from 'ng2-translate/src/translate.pipe';
 import { ComponentsHelperService } from '../../../../../shared/services/components-helper.service';
 import { GeoMapService } from './geo-map.service';
 import { Store } from '@ngrx/store';

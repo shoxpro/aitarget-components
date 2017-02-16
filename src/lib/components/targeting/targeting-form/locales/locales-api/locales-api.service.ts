@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SDK } from '../../../../../shared/sdk/sdk.interface';
-import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
+import { TranslateService, LangChangeEvent } from 'ng2-translate/src/translate.service';
 import { SdkService } from '../../../../../shared/sdk/sdk.service';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { SdkError } from '../../../../../shared/errors/sdkError';
 import { Locale } from '../interfaces/locale.interface';
 

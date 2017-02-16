@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform, Injectable } from '@angular/core';
 import { NgLocaleLocalization } from '@angular/common/src/localization';
 import { I18nPluralPipe } from '@angular/common';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 
 export interface PluralMap {
   [zero: string]: string;

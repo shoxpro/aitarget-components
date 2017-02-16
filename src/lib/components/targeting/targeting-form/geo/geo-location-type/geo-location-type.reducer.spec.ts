@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { GeoLocationTypeActions } from './geo-location-type.actions';
 import { geoLocationTypeInitial, geoLocationTypeReducer, LocationType } from './geo-location-type.reducer';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { GeoIdService } from '../geo.id';
 
 let deepFreeze = require('deep-freeze-strict');

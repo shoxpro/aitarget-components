@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SqueezedValueAccessor } from '../../../../shared/interfaces/squeeze-value-accessor.inteface';
 import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { FormControlToken } from '../../../../shared/constants/form-control-token';
 
 @Component({

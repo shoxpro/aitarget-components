@@ -1,8 +1,7 @@
 import {
   Component, ChangeDetectionStrategy, Output, EventEmitter, Input, ChangeDetectorRef, OnChanges
 } from '@angular/core';
-
-const isEmpty = require('lodash/isEmpty');
+import isEmpty from 'lodash-es/isEmpty';
 
 @Component({
   selector:        'fba-detailed-targeting-controls',

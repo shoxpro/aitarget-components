@@ -4,7 +4,7 @@ import { AppState } from '../../../../../../app/reducers/index';
 import { GeoModeActions } from './geo-mode.actions';
 import { GEO_TARGETING_MODE_KEY, GeoModeState, GeoModeType } from './geo-mode.reducer';
 import { GeoState, GEO_TARGETING_STATE_KEY } from '../geo.reducer';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { GeoIdService } from '../geo.id';
 
 @Injectable()

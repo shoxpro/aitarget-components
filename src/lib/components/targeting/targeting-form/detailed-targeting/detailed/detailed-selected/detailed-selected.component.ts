@@ -6,7 +6,7 @@ import { DetailedModeService } from '../detailed-mode/detailed-mode.service';
 import { DetailedDropdownBrowseService } from '../detailed-dropdown-browse/detailed-dropdown-browse.service';
 import { DetailedService } from '../detailed.service';
 import { DetailedSearchService } from '../detailed-search/detailed-search.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 /* tslint:enable:max-line-length */
 
 @Component({

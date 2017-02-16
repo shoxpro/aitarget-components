@@ -1,7 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, ElementRef } from '@angular/core';
 import { DetailedSearchService } from './detailed-search.service';
-import { Subject, Observable } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
 import { DetailedApiService } from '../detailed-api/detailed-api.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector:        'fba-detailed-search',
@@ -25,7 +26,7 @@ export class DetailedSearchComponent implements OnInit, OnDestroy {
 
   closeSearch = () => {
     this.detailedSearchService.update({isVisible: false, type: this.type});
-  }
+  };
 
   /**
    * On key up handler.

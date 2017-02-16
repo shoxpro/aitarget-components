@@ -4,7 +4,7 @@ import {
 import { GeoItem } from '../geo-item.interface';
 import { GeoSelectedService } from '../geo-selected/geo-selected.service';
 import { GeoService } from '../geo.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { MILE_MIN, KILOMETER_MIN, MILE_MAX, KILOMETER_MAX, CUSTOM_LOCATION_RADIUS_MIN } from './geo-radius.constants';
 import { escape$, arrowUp$, arrowDown$, enter$ } from '../../../../../shared/constants/event-streams.constants';
 import { GeoIdService } from '../geo.id';

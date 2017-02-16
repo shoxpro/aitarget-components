@@ -3,7 +3,7 @@ import { TargetingFormActions } from './targeting-form.actions';
 import { TargetingFormState, TARGETING_FORM_KEY } from './targeting-form.reducer';
 import { AppState } from '../../../../app/reducers/index';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { TargetingState, TARGETING_KEY } from '../targeting.reducer';
 
 @Injectable()

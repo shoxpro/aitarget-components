@@ -10,7 +10,6 @@ import { CoreModule } from '../../core.module';
 import { DynamicComponentModule } from 'ng-dynamic';
 import { TargetingAudiencesComponent } from './targeting-audiences/targeting-audiences.component';
 import { AudienceComponent } from './audience/audience.component';
-import { MdSliderModule } from '@angular/material';
 import { GenderComponent } from './targeting-form/gender/gender';
 import { AgeComponent } from './targeting-form/age/age.component';
 import { LocalesModule } from './targeting-form/locales/locales.module';
@@ -25,7 +24,6 @@ import { DetailedTargetingModule } from './targeting-form/detailed-targeting/det
     DynamicComponentModule.forRoot({
       imports: [GeoModule, CoreModule]
     }),
-    MdSliderModule.forRoot()
   ],
   declarations: [
     TargetingComponent,
