@@ -5,8 +5,7 @@ import { SqueezedValueAccessor } from '../../../../shared/interfaces/squeeze-val
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
 import { ageInitial } from '../../interfaces/targeting-spec-age.interface';
-
-const range = require('lodash/range');
+import range from 'lodash-es/range';
 
 @Component({
   selector:        'fba-age',

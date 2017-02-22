@@ -207,13 +207,13 @@
   dependencies:
     "@types/geojson" "*"
 
-"@types/lodash-es@4.14.4":
+"@types/lodash-es@^4.14.4":
   version "4.14.4"
   resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.14.4.tgz#b874a1c39dd59b28089ac05f13ab8df73a21b23b"
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash@*":
+"@types/lodash@*", "@types/lodash@ts2.0":
   version "4.14.50"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.50.tgz#2227da4d65fafe249bccd59c7b9396e27674c8f7"
 

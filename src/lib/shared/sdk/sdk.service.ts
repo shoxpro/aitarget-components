@@ -79,7 +79,7 @@ export class SdkService {
   startSdk = (lang: string = this._defaultLang) => {
     this.setAsyncInit(this._sdk);
     this.loadSdk(lang);
-  }
+  };
 
   constructor (private translateService: TranslateService) {
     this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
