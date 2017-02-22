@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { AudienceState, audienceInitial } from '../audience/audience.interface';
 import { TargetingAudiencesActions } from './targeting-audiences.actions';
 import { TARGETING_AUDIENCES_KEY } from './targeting-audiences.reducer';

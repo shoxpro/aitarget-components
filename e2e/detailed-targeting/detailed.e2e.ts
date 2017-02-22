@@ -1,6 +1,6 @@
 import { DetailedPage as page } from './detailed.po';
 
-describe('aitarget-components Detailed Targeting', function () {
+xdescribe('aitarget-components Detailed Targeting', function () {
   beforeAll(() => {
     page.navigateTo();
   });

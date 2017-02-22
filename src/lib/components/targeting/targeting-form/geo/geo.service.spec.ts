@@ -4,7 +4,7 @@ import { GeoService } from './geo.service';
 import { Store } from '@ngrx/store';
 import { GeoActions } from './geo.actions';
 import { GeoInfoService } from './geo-info/geo-info.service';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 
 describe('Service: Geo', () => {
   beforeEach(() => {

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { GeoSearchActions } from './geo-search.actions';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { GeoSearchState, geoSearchInitial, GEO_TARGETING_SEARCH_KEY } from './geo-taregting-search.reducer';
 import { GeoApiService } from '../geo-api/geo-api.service';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { GeoInfoService } from '../geo-info/geo-info.service';
 import { GeoSelectedService } from '../geo-selected/geo-selected.service';
 import { GEO_TARGETING_STATE_KEY, GeoState } from '../geo.reducer';

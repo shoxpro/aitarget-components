@@ -3,8 +3,8 @@ import { TestBed } from '@angular/core/testing';
 import { GeoTypeComponent } from './geo-type.component';
 import { Store } from '@ngrx/store';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Subject } from 'rxjs/Rx';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { Subject } from 'rxjs/Subject';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { GeoTypeService } from './geo-type.service';
 
 describe('Component: GeoType', () => {

@@ -2,7 +2,7 @@ import {
   Component, OnInit, OnDestroy, ChangeDetectionStrategy, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef
 } from '@angular/core';
 import { GeoItem } from '../geo-item.interface';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { arrowUp$, arrowDown$, enter$ } from '../../../../../shared/constants/event-streams.constants';
 
 @Component({

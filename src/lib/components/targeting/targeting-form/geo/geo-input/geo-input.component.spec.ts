@@ -2,7 +2,8 @@
 import { TestBed } from '@angular/core/testing';
 import { GeoInputComponent } from './geo-input.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TranslatePipe, TranslateService } from 'ng2-translate';
+import { TranslatePipe } from 'ng2-translate/src/translate.pipe';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { FormsModule } from '@angular/forms';
 
 describe('Component: GeoInput', () => {

@@ -5,7 +5,7 @@ import { PRELOADER_DOTS } from '../constants/data-urls.constants';
   selector: 'fba-preloader-dots',
   template: `
             <!--suppress HtmlUnknownTarget -->
-            <img src="${PRELOADER_DOTS}" alt="">
+            <img src="{{preloaderDots}}" alt="">
             `,
   styles:   [`
               :host {
@@ -23,4 +23,5 @@ import { PRELOADER_DOTS } from '../constants/data-urls.constants';
             `]
 })
 export class PreloaderDotsComponent {
+  preloaderDots = PRELOADER_DOTS;
 }

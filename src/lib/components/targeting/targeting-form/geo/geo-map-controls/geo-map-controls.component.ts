@@ -3,7 +3,7 @@ import { GeoMapService } from '../geo-map/geo-map.service';
 import { GeoModeService } from '../geo-mode/geo-mode.service';
 import { AppState } from '../../../../../../app/reducers/index';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector:        'fba-geo-map-controls',

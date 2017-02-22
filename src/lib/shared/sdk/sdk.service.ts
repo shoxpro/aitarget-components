@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SDK } from './sdk.interface';
-import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
+import { TranslateService, LangChangeEvent } from 'ng2-translate/src/translate.service';
 
 @Injectable()
 export class SdkService {
@@ -79,7 +79,7 @@ export class SdkService {
   startSdk = (lang: string = this._defaultLang) => {
     this.setAsyncInit(this._sdk);
     this.loadSdk(lang);
-  }
+  };
 
   constructor (private translateService: TranslateService) {
     this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {

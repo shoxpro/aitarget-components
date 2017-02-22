@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DetailedItem } from '../detailed-item';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class DetailedDropdownSuggestedService {

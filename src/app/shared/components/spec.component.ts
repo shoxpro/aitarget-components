@@ -1,7 +1,7 @@
 import {
   Component, OnDestroy, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter, ViewChild, AfterViewInit
 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { escape$ } from '../../../lib/shared/constants/event-streams.constants';
 
 @Component({

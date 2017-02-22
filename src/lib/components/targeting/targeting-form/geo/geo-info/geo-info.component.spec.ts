@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { GeoInfoComponent } from './geo-info.component';
 import { GeoInfoService } from './geo-info.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TranslatePipe } from 'ng2-translate';
+import { TranslatePipe } from 'ng2-translate/src/translate.pipe';
 import { Store } from '@ngrx/store';
 
 describe('Component: GeoInfo', () => {

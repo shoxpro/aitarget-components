@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Output, EventEmitter, OnInit, OnDestroy, Input } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { bodyClick$ } from '../constants/event-streams.constants';
 
 /* tslint:disable:directive-selector-name */

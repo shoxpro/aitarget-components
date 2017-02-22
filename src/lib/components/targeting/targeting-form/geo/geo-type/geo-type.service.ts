@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GeoTypeState, GEO_TARGETING_TYPE_KEY, GeoType } from './geo-type.reducer';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { GeoTypeActions } from './geo-type.actions';
 import { GEO_TARGETING_STATE_KEY, GeoState } from '../geo.reducer';

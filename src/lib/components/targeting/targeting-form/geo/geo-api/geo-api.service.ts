@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TranslateService, LangChangeEvent } from 'ng2-translate/ng2-translate';
-import { Observable } from 'rxjs';
+import { TranslateService, LangChangeEvent } from 'ng2-translate/src/translate.service';
+import { Observable } from 'rxjs/Observable';
 import { GeoItem } from '../geo-item.interface';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../../app/reducers/index';

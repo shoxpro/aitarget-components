@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { TestBed } from '@angular/core/testing';
 import { FullTypePipe } from './full-type.pipe';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 
 describe('Pipe: FullType', () => {
   beforeEach(() => {

@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ContentChild, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormControlToken } from '../constants/form-control-token';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector:        'fba-control-squeeze',

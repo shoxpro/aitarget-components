@@ -3,7 +3,7 @@ import { DetailedModeService } from '../detailed-mode/detailed-mode.service';
 import { DetailedSearchService } from '../detailed-search/detailed-search.service';
 import { DetailedItem } from '../detailed-item';
 import { DetailedInfoService } from '../detailed-info/detailed-info.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector:    'fba-detailed-browse',

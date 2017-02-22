@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { GeoLocationTypeService } from './geo-location-type.service';
 import { AppState } from '../../../../../../app/reducers/index';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector:        'fba-geo-location-type',

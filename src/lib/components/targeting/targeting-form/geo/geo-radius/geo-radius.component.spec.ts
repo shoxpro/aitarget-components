@@ -2,7 +2,8 @@
 import { TestBed } from '@angular/core/testing';
 import { GeoRadiusComponent } from './geo-radius.component';
 import { GeoSelectedService } from '../geo-selected/geo-selected.service';
-import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
+import { TranslatePipe } from 'ng2-translate/src/translate.pipe';
 import { GeoService } from '../geo.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppendToDirective } from '../../../../../shared/directives/append-to.directive';

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { GeoApiService } from './geo-api/geo-api.service';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
 import { GeoDropdownService } from './geo-dropdown/geo-dropdown.service';
 import { GeoItem } from './geo-item.interface';
@@ -19,7 +19,9 @@ import { GeoLocationTypeActions } from './geo-location-type/geo-location-type.ac
 import { GeoInfoActions } from './geo-info/geo-info.actions';
 import { GeoSelectedService } from './geo-selected/geo-selected.service';
 import { Store } from '@ngrx/store';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GeoTypeActions } from './geo-type/geo-type.actions';
 import { GeoIdService } from './geo.id';
 import { GeoActions } from './geo.actions';

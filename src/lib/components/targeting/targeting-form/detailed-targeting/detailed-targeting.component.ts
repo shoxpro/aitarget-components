@@ -4,12 +4,12 @@ import {
 import { SqueezedValueAccessor } from '../../../../shared/interfaces/squeeze-value-accessor.inteface';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { FormControlToken } from '../../../../shared/constants/form-control-token';
 import { detailedTargetingSpecInitial, detailedSpecInitial } from '../../interfaces/targeting-spec-detailed.interface';
-
-const isEqual = require('lodash/isEqual');
-const isEmpty = require('lodash/isEmpty');
+import isEqual from 'lodash-es/isEqual';
+import isEmpty from 'lodash-es/isEmpty';
 
 @Component({
   selector:        'fba-detailed-targeting',

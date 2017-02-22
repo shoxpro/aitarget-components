@@ -11,7 +11,8 @@ import { DetailedDropdownSuggestedService } from './detailed-dropdown-suggested/
 import { DetailedDropdownBrowseService } from './detailed-dropdown-browse/detailed-dropdown-browse.service';
 import { DetailedInputService } from './detailed-input/detailed-input.service';
 import { DetailedSearchService } from './detailed-search/detailed-search.service';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DetailedItem } from './detailed-item';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cleanDetailedSpec } from './detailed.constants';

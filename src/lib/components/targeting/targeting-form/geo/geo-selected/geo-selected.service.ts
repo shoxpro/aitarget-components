@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { GeoItem } from '../geo-item.interface';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { GeoSelectedState, GEO_TARGETING_SELECTED_KEY } from './geo-selected.reducer';
 import { GeoRadiusService } from '../geo-radius/geo-radius.service';
 import { typeMap } from './geo-selected.constants';
 import { Store } from '@ngrx/store';
 import { GeoApiService } from '../geo-api/geo-api.service';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { GeoSelectedActions } from './geo-selected.actions';
 import { GeoInfoService } from '../geo-info/geo-info.service';
 import { GeoModeService } from '../geo-mode/geo-mode.service';

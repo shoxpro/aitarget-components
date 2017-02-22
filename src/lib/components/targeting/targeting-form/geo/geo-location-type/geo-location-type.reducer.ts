@@ -2,7 +2,7 @@ import { ActionReducer, Action } from '@ngrx/store';
 import { GeoLocationTypeActions } from './geo-location-type.actions';
 import { LocationTypeValue } from '../../../interfaces/targeting-spec-geo.interface';
 
-const isEqual = require('lodash/isEqual');
+import isEqual from 'lodash-es/isEqual';
 
 export interface LocationType {
   id: string;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GeoModeType } from './geo-mode.reducer';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { GeoIdService } from '../geo.id';
 import { Action } from '@ngrx/store';
 

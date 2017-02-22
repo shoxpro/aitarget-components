@@ -81,15 +81,6 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
-    },
-    "opt": {
-      "in": [],
-      "out": [
-        "pre-commit"
-      ]
-    },
-    "ghooks": {
-      "pre-commit": "opt --in pre-commit --exec \"npm run validate\""
     }
   },
   "directories": {
@@ -129,9 +120,9 @@
     "@types/ip": "0.0.29",
     "@types/jasmine": "2.5.41",
     "@types/leaflet": "1.0.49",
-    "@types/lodash": "4.14.50",
+    "@types/lodash": "ts2.0",
+    "@types/lodash-es": "^4.14.4",
     "@types/node": "7.0.1",
-    "@types/protractor": "4.0.0",
     "@types/selenium-webdriver": "2.53.39",
     "angular-cli": "1.0.0-beta.17",
     "angular2-router-loader": "0.3.4",
@@ -145,13 +136,13 @@
     "core-js": "2.4.1",
     "css-loader": "0.26.1",
     "cz-conventional-changelog": "1.2.0",
-    "deep-freeze-strict": "^1.1.1",
+    "deep-freeze-strict": "1.1.1",
     "es6-promise": "4.0.5",
     "es6-promise-loader": "1.0.2",
     "express": "4.14.0",
-    "ghooks": "2.0.0",
     "hammerjs": "2.0.8",
     "html-webpack-plugin": "2.26.0",
+    "husky": "^0.13.1",
     "ip": "1.1.3",
     "istanbul-instrumenter-loader": "1.2.0",
     "json-loader": "0.5.4",
@@ -165,7 +156,7 @@
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "2.0.1",
     "leaflet": "1.0.2",
-    "lodash": "4.17.4",
+    "lodash-es": "4.17.4",
     "ng-dynamic": "2.0.0",
     "ng2-translate": "5.0.0",
     "ngrx-store-freeze": "0.1.6",

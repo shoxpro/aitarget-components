@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
 import { AppState } from '../../../../../app/reducers/index';
 import { Store } from '@ngrx/store';
 import { GeoActions } from './geo.actions';
 import { GeoInfoService } from './geo-info/geo-info.service';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { GEO_LIMITS } from './geo.constants';
 
 @Injectable()

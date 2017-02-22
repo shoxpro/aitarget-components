@@ -2,11 +2,10 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { FormControlToken } from '../../../../shared/constants/form-control-token';
 import { SqueezedValueAccessor } from '../../../../shared/interfaces/squeeze-value-accessor.inteface';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TargetingSpec } from '../../interfaces/targeting-spec.interface';
 import { ageInitial } from '../../interfaces/targeting-spec-age.interface';
-
-const range = require('lodash/range');
+import range from 'lodash-es/range';
 
 @Component({
   selector:        'fba-age',

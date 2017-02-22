@@ -4,7 +4,8 @@ import { GeoMapControlsComponent } from './geo-map-controls.component';
 import { GeoMapService } from '../geo-map/geo-map.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { TranslatePipe, TranslateService } from 'ng2-translate';
+import { TranslatePipe } from 'ng2-translate/src/translate.pipe';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { GeoModeService } from '../geo-mode/geo-mode.service';
 
 describe('Component: GeoMapControls', () => {

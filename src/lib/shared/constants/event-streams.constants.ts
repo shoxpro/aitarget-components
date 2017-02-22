@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 export const bodyClick$ = Observable.fromEvent(window.document.body, 'click')
                                     .share();

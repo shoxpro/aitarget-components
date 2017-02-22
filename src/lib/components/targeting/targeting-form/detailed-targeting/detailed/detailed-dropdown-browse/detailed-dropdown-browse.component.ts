@@ -4,9 +4,9 @@ import { DetailedApiService } from '../detailed-api/detailed-api.service';
 import { DetailedSelectedService } from '../detailed-selected/detailed-selected.service';
 import { DetailedItem } from '../detailed-item';
 import { DetailedInfoService } from '../detailed-info/detailed-info.service';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { DetailedSearchService } from '../detailed-search/detailed-search.service';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector:        'fba-detailed-dropdown-browse',

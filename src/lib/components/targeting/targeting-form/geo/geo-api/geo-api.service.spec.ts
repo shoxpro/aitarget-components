@@ -1,9 +1,9 @@
 /* tslint:disable:no-unused-variable */
 import { TestBed, inject } from '@angular/core/testing';
 import { GeoApiService } from './geo-api.service';
-import { TranslateService } from 'ng2-translate';
+import { TranslateService } from 'ng2-translate/src/translate.service';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { GeoTypeService } from '../geo-type/geo-type.service';
 import { SdkService } from '../../../../../shared/sdk/sdk.service';
 
