@@ -8,8 +8,7 @@
     "url": "https://github.com/aitarget/aitarget-components.git"
   },
   "engines": {
-    "node": "6.8.1",
-    "npm": "3.10.9"
+    "node": "<7.0.0"
   },
   "scripts": {
     "postinstall": "(npm run clean:overlaycss && npm run build:dll && npm run build:prod) || exit 0",
