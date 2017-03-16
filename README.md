@@ -1,7 +1,6 @@
 # AitargetComponents
 
 [![travis build](https://img.shields.io/travis/aitarget/aitarget-components.svg?style=flat)](https://travis-ci.org/aitarget/aitarget-components.svg)
-[![codecov coverage](https://img.shields.io/codecov/c/github/aitarget/aitarget-components.svg?style=flat)](https://codecov.io/github/aitarget/aitarget-components.svg)
 [![version](https://img.shields.io/npm/v/aitarget-components.svg?style=flat)](http://npm.im/aitarget-components.svg)
 [![downloads](https://img.shields.io/npm/dm/aitarget-components.svg?style=flat)](http://npm-stat.com/charts.html?package=aitarget-components.svg&from=2015-08-01)
 [![MIT License](https://img.shields.io/npm/l/aitarget-components.svg?style=flat)](http://opensource.org/licenses/MIT)
@@ -37,9 +36,9 @@
 
 ## Basic scripts
 
-Use `npm start` for dev server. Default dev port is `3000`.
+Use `npm run server:dev` for dev server. Default dev port is `3000`.
 
-Use `npm run start:hmr` to run dev server in HMR mode.
+Use `npm run server:hmr` to run dev server in HMR mode.
 
 Use `npm run build` for production build.
 
