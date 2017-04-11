@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FieldsService } from './fields.service';
+import { Field } from './field.interface';
 
 @Component({
   selector: 'fba-filter-field',
@@ -17,24 +19,28 @@ import { Component } from '@angular/core';
     }
   `]
 })
-export class FilterFieldComponent {
-  fields = [{
-    id:   '1',
-    name: 'Delivery'
-  }, {
-    id:   '2',
-    name: 'Campaign Name'
-  }, {
-    id:   '3',
-    name: 'Adset Name'
-  }, {
-    id:   '4',
-    name: 'Ad Name'
-  }];
+export class FilterFieldComponent implements OnInit {
+  fields: Array<Field>;
+  field: Field;
+  isOpen = true;
 
-  field = this.fields[0];
+  @Input() filterStream;
 
-  selectField (field) {
+  selectField (field: Field) {
     this.field = field;
+
+    let filter   = this.filterStream.getValue();
+    filter.field = field.id;
+
+    this.filterStream.next(filter);
   }
+
+  ngOnInit () {
+    this.fields = this.fieldsService.get();
+
+    let filter = this.filterStream.getValue();
+    this.field = this.fields.find((field) => field.id === filter.id) || this.fields[0];
+  }
+
+  constructor (private fieldsService: FieldsService) {}
 }

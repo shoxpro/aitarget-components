@@ -2,8 +2,14 @@
   <span>Filters:</span>
 </div>
 <div class="content">
-  <fba-filter></fba-filter>
-  <button class="filtering-btn filtering-btn_add">+</button>
+  <fba-filter *ngFor="let filter of value; let i = index;"
+              [filter]="filter"
+              (onRemove)="removeFilter(i)"
+              (onChange)="changeFilter($event, i)"></fba-filter>
+  <div role="button"
+       class="filtering-btn filtering-btn_add"
+       (click)="addFilter()">+
+  </div>
 </div>
 <div class="filtering-buttons">
   <div role="button"

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { FIELDS } from './fields.constant';
 
 @Component({
   selector:        'fba-demo-filtering',
@@ -13,6 +14,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 
                      <div class="content">
                        <fba-filtering *ngIf="!hideGeo"
+                                      [fields]="fields"
                                       [(ngModel)]="filtering"></fba-filtering>
                      </div>
 
@@ -36,6 +38,7 @@ export class DemoFilteringComponent {
   isSpecVisible = false;
 
   filtering = [];
+  fields    = FIELDS;
 
   showFiltering (isVisible, event?) {
     if (event) {

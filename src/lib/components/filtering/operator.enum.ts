@@ -1,20 +1,20 @@
-export enum Operator {
-  EQUAL                 = 'EQUAL' as any,
-  NOT_EQUAL             = 'NOT_EQUAL' as any,
-  GREATER_THAN          = 'GREATER_THAN' as any,
-  GREATER_THAN_OR_EQUAL = 'GREATER_THAN_OR_EQUAL' as any,
-  LESS_THAN             = 'LESS_THAN' as any,
-  LESS_THAN_OR_EQUAL    = 'LESS_THAN_OR_EQUAL' as any,
-  IN_RANGE              = 'IN_RANGE' as any,
-  NOT_IN_RANGE          = 'NOT_IN_RANGE' as any,
-  CONTAIN               = 'CONTAIN' as any,
-  NOT_CONTAIN           = 'NOT_CONTAIN' as any,
-  IN                    = 'IN' as any,
-  NOT_IN                = 'NOT_IN' as any,
-  STARTS_WITH           = 'STARTS_WITH' as any,
-  ANY                   = 'ANY' as any,
-  ALL                   = 'ALL' as any,
-  AFTER                 = 'AFTER' as any,
-  BEFORE                = 'BEFORE' as any,
-  NON                   = 'NON' as any
+export class Operator {
+  static EQUAL                 = 'EQUAL';
+  static NOT_EQUAL             = 'NOT_EQUAL';
+  static GREATER_THAN          = 'GREATER_THAN';
+  static GREATER_THAN_OR_EQUAL = 'GREATER_THAN_OR_EQUAL';
+  static LESS_THAN             = 'LESS_THAN';
+  static LESS_THAN_OR_EQUAL    = 'LESS_THAN_OR_EQUAL';
+  static IN_RANGE              = 'IN_RANGE';
+  static NOT_IN_RANGE          = 'NOT_IN_RANGE';
+  static CONTAIN               = 'CONTAIN';
+  static NOT_CONTAIN           = 'NOT_CONTAIN';
+  static IN                    = 'IN';
+  static NOT_IN                = 'NOT_IN';
+  static STARTS_WITH           = 'STARTS_WITH';
+  static ANY                   = 'ANY';
+  static ALL                   = 'ALL';
+  static AFTER                 = 'AFTER';
+  static BEFORE                = 'BEFORE';
+  static NON                   = 'NON';
 }

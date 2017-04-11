@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { SqueezedValueAccessor } from '../../shared/interfaces/squeeze-value-accessor.inteface';
 import { FormControlToken } from '../../shared/constants/form-control-token';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -10,13 +10,15 @@ import { Filter } from './filtering.interface';
     {provide: FormControlToken, useExisting: FilterComponent},
   ],
   template:  `
-               <fba-filter-field class="filter-item"></fba-filter-field>
+               <fba-filter-field class="filter-item"
+                                 [filterStream]="filter$"></fba-filter-field>
                <fba-filter-operator class="filter-item"></fba-filter-operator>
                <fba-filter-value class="filter-item"></fba-filter-value>
                <div role="button"
                     class="apply filter-item">Apply
                </div>
-               <fba-close class="remove"></fba-close>
+               <fba-close class="remove"
+                          (onClose)="remove()"></fba-close>
              `,
   styles:    [`
     :host {
@@ -66,10 +68,15 @@ import { Filter } from './filtering.interface';
     }
   `]
 })
-export class FilterComponent implements SqueezedValueAccessor, OnInit, OnDestroy {
+export class FilterComponent implements SqueezedValueAccessor, OnDestroy, OnInit {
   destroy$       = new Subject();
   squeezedValue$ = new BehaviorSubject('–');
-  filter$        = new Subject();
+  filter$        = new BehaviorSubject({});
+
+  @Input() filter: Filter;
+  @Output() onRemove = new EventEmitter();
+  @Output() onChange = new EventEmitter();
+
   // ==== implement SqueezedValueAccessor ====
 
   updateSqueezedValue () {
@@ -99,11 +106,23 @@ export class FilterComponent implements SqueezedValueAccessor, OnInit, OnDestroy
 
   // ==== implement SqueezedValueAccessor ====
 
-  ngOnDestroy () {
+  remove () {
+    this.onRemove.emit();
+  }
 
+  ngOnDestroy () {
+    this.destroy$.next();
   }
 
   ngOnInit () {
+    console.log(`this.filter: `, this.filter);
+    this.filter$.next(this.filter);
 
+    this.filter$
+        .skip(1)
+        .takeUntil(this.destroy$)
+        .subscribe((filter: Filter) => {
+          this.onChange.emit(filter);
+        });
   }
 }
