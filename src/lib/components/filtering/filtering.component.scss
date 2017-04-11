@@ -1,0 +1,45 @@
+:host {
+  display:          flex;
+  background-color: #4b4f56;
+  box-sizing:       border-box;
+  padding:          0 12px;
+}
+
+.label {
+  display:        flex;
+  align-items:    center;
+  font-size:      11px;
+  font-weight:    bold;
+  text-transform: uppercase;
+  color:          #ffffff;
+}
+
+.content {
+  flex:    1;
+  padding: 0 12px;
+}
+
+.filtering-buttons {
+  display:     flex;
+  align-items: center;
+}
+
+.filtering-btn {
+  background:    #4b4f56;
+  border:        solid 1px #4e5665;
+  color:         #ffffff;
+  border-radius: 4px;
+  box-sizing:    border-box;
+  height:        28px;
+  line-height:   26px;
+  margin:        4px;
+  padding:       0 8px;
+  white-space:   nowrap;
+  font-size:     12px;
+  font-weight:   bold;
+  cursor:        pointer;
+}
+
+.filtering-btn:hover {
+  border-color: #ffffff;
+}
