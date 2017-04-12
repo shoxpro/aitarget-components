@@ -1,3 +1,5 @@
+import { Operator } from './operator.interface';
+
 export interface Field {
   name: string;
   type?: string;
@@ -7,5 +9,5 @@ export interface Field {
   values?: {
     [key: string]: string;
   };
-  operator: Array<string>;
+  operator: Array<Operator>;
 }

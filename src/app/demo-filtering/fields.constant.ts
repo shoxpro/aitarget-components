@@ -1,5 +1,5 @@
 import { Field } from '../../lib/components/filtering/field.interface';
-import { Operator } from '../../lib/components/filtering/operator.enum';
+import { Operator } from '../../lib/components/filtering/operator.class';
 
 export const FIELDS: Array<Field> = [
   {
@@ -21,8 +21,8 @@ export const FIELDS: Array<Field> = [
     },
     'multiple': true,
     'operator': [
-      Operator.CONTAIN,
-      Operator.NOT_CONTAIN
+      Operator.IN,
+      Operator.NOT_IN
     ]
   }, {
     'type':     'string',
@@ -30,8 +30,8 @@ export const FIELDS: Array<Field> = [
     'id':       'campaign_name',
     'input':    'input',
     'operator': [
-      'IN',
-      'NOT_IN'
+      Operator.CONTAIN,
+      Operator.NOT_CONTAIN
     ]
   }
 ];

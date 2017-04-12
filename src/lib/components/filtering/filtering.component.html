@@ -4,8 +4,7 @@
 <div class="content">
   <fba-filter *ngFor="let filter of value; let i = index;"
               [filter]="filter"
-              (onRemove)="removeFilter(i)"
-              (onChange)="changeFilter($event, i)"></fba-filter>
+              (onRemove)="removeFilter(i)"></fba-filter>
   <div role="button"
        class="filtering-btn filtering-btn_add"
        (click)="addFilter()">+
@@ -13,7 +12,7 @@
 </div>
 <div class="filtering-buttons">
   <div role="button"
-       class="filtering-btn filtering-btn_save">Save Filter
+       class="filtering-btn filtering-btn_apply">Apply
   </div>
   <div role="button"
        class="filtering-btn filtering-btn_clear">Clear

@@ -83,12 +83,6 @@ export class FilteringComponent implements ControlValueAccessor, OnInit, OnDestr
     this.filteringService.set(this.value);
   }
 
-  changeFilter (filter, index) {
-    this.value[index] = filter;
-
-    this.filteringService.set(this.value);
-  }
-
   ngOnDestroy () {
     this.destroy$.next();
   }

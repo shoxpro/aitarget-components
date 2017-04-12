@@ -1,4 +1,4 @@
-import { Operator } from './operator.enum';
+import { Operator } from './operator.class';
 
 export interface Filter {
   field: string;

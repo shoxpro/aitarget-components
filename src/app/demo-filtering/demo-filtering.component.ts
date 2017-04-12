@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FIELDS } from './fields.constant';
+import { Filter } from '../../lib/components/filtering/filtering.interface';
 
 @Component({
   selector:        'fba-demo-filtering',
@@ -37,7 +38,7 @@ export class DemoFilteringComponent {
   hideGeo       = false;
   isSpecVisible = false;
 
-  filtering = [];
+  filtering: Array<Filter> = [{field: 'campaign_name', operator: ''}];
   fields    = FIELDS;
 
   showFiltering (isVisible, event?) {
