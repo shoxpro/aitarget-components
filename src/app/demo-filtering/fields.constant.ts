@@ -1,5 +1,4 @@
-import { Field } from '../../lib/components/filtering/field.interface';
-import { Operator } from '../../lib/components/filtering/operator.class';
+import { Field } from '../../lib/components/filtering/filtering.interface';
 
 export const FIELDS: Array<Field> = [
   {
@@ -20,18 +19,19 @@ export const FIELDS: Array<Field> = [
       'PENDING_BILLING_INFO': 'Pending billing info'
     },
     'multiple': true,
-    'operator': [
-      Operator.IN,
-      Operator.NOT_IN
-    ]
-  }, {
-    'type':     'string',
-    'name':     'Campaign Name',
-    'id':       'campaign_name',
-    'input':    'input',
-    'operator': [
-      Operator.CONTAIN,
-      Operator.NOT_CONTAIN
-    ]
-  }
+    'operator': {
+      IN:     'is',
+      NOT_IN: 'is not'
+    },
+  },
+  // {
+  //   'type':     'string',
+  //   'name':     'Campaign Name',
+  //   'id':       'campaign_name',
+  //   'input':    'input',
+  //   'operator': {
+  //     CONTAIN:     'contains',
+  //     NOT_CONTAIN: 'not contain'
+  //   }
+  // }
 ];

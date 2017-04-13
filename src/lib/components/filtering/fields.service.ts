@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Field } from './field.interface';
+import { Field } from './filtering.interface';
 
 @Injectable()
 export class FieldsService {

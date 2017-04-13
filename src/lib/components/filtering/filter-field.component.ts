@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Field } from './field.interface';
+import { Field } from './filtering.interface';
 
 @Component({
   selector:        'fba-filter-field',
   template:        `
                      <div (click)="isOpen = !isOpen">{{ field?.name }}</div>
                      <fba-dropdown-list
-                       *ngIf="isOpen"
+                       *ngIf="isOpen && fields?.length > 1"
                        (fbaClickOutside)="isOpen = !isOpen"
                        [items]="fields"
                        [selectedItem]="field"
-                       (onClick)="onChange.emit($event)"></fba-dropdown-list>
+                       (onClick)="isOpen = !isOpen;onChange.emit($event)"></fba-dropdown-list>
                    `,
   styles:          [`
     :host {

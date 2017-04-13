@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FIELDS } from './fields.constant';
 import { Filter } from '../../lib/components/filtering/filtering.interface';
+import { DEFAULT_FILTERING } from '../../lib/components/filtering/filtering.constants';
 
 @Component({
   selector:        'fba-demo-filtering',
@@ -16,6 +17,7 @@ import { Filter } from '../../lib/components/filtering/filtering.interface';
                      <div class="content">
                        <fba-filtering *ngIf="!hideGeo"
                                       [fields]="fields"
+                                      (onApply)="onApply($event)"
                                       [(ngModel)]="filtering"></fba-filtering>
                      </div>
 
@@ -38,8 +40,8 @@ export class DemoFilteringComponent {
   hideGeo       = false;
   isSpecVisible = false;
 
-  filtering: Array<Filter> = [{field: 'campaign_name', operator: ''}];
-  fields    = FIELDS;
+  filtering: Array<Filter> = [].concat(DEFAULT_FILTERING);
+  fields                   = FIELDS;
 
   showFiltering (isVisible, event?) {
     if (event) {
@@ -50,6 +52,10 @@ export class DemoFilteringComponent {
 
     this.changeDetectorRef.markForCheck();
     this.changeDetectorRef.detectChanges();
+  }
+
+  onApply (filtering) {
+    console.log(`Apply filtering: `, filtering);
   }
 
   constructor (private changeDetectorRef: ChangeDetectorRef) { }

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Operator } from './operator.interface';
+import { Operator } from './filtering.interface';
 
 @Component({
   selector:        'fba-filter-operator',
@@ -8,9 +8,9 @@ import { Operator } from './operator.interface';
                      <fba-dropdown-list
                        *ngIf="isOpen"
                        (fbaClickOutside)="isOpen = !isOpen"
-                       [items]="operators"
+                       [items]="processedOperators"
                        [selectedItem]="operator"
-                       (onClick)="onChange.emit($event)"></fba-dropdown-list>
+                       (onClick)="isOpen = !isOpen;onChange.emit($event.id)"></fba-dropdown-list>
                    `,
   styles:          [`
     :host {
@@ -20,8 +20,44 @@ import { Operator } from './operator.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilterOperatorComponent {
-  @Input() operators: Array<Operator>;
-  @Input() operator: Operator;
+  processedOperators = [];
+  // ===== operators =====
+  _operators;
+  @Input()
+  set operators (val: Operator) {
+    this._operators = val;
+    /**
+     * Create values array compatible with fba-dropdown-list component
+     */
+    for (let key in val) {
+      if (val.hasOwnProperty(key)) {
+        this.processedOperators.push({id: key, name: val[key]});
+      }
+    }
+  };
+
+  get operators () {
+    return this._operators;
+  }
+
+  // ===== operators =====
+
+  // ===== operator =====
+  _operator;
+  @Input()
+  set operator (val: undefined | string) {
+    if (typeof val === 'undefined') {
+      return;
+    }
+
+    this._operator = {id: val, name: this.operators[val]};
+  }
+
+  get operator () {
+    return this._operator;
+  }
+
+  // ===== operator =====
 
   @Output() onChange = new EventEmitter();
 }

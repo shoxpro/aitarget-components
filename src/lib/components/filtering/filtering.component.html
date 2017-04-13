@@ -4,17 +4,22 @@
 <div class="content">
   <fba-filter *ngFor="let filter of value; let i = index;"
               [filter]="filter"
+              [hideRemove]="i === 0"
               (onRemove)="removeFilter(i)"></fba-filter>
   <div role="button"
        class="filtering-btn filtering-btn_add"
+       *ngIf="fields?.length > 1"
        (click)="addFilter()">+
   </div>
 </div>
 <div class="filtering-buttons">
   <div role="button"
-       class="filtering-btn filtering-btn_apply">Apply
+       class="filtering-btn filtering-btn_apply"
+       (click)="apply()">Apply
   </div>
   <div role="button"
-       class="filtering-btn filtering-btn_clear">Clear
+       class="filtering-btn filtering-btn_clear"
+       *ngIf="fields?.length > 1"
+       (click)="clear()">Clear
   </div>
 </div>

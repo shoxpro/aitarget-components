@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Field } from './field.interface';
-import { Filter } from './filtering.interface';
+import {
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output
+} from '@angular/core';
+import { Field, Filter } from './filtering.interface';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { FieldsService } from './fields.service';
 import { FilteringService } from './filtering.service';
+import { DEFAULT_FILTERING } from './filtering.constants';
 
 @Component({
   selector:        'fba-filtering',
@@ -26,6 +28,7 @@ export class FilteringComponent implements ControlValueAccessor, OnInit, OnDestr
   filtering$ = new BehaviorSubject([]);
 
   @Input() fields: Array<Field>;
+  @Output() onApply = new EventEmitter();
 
   // ==== value ====
   _value: Array<Filter> = [];
@@ -71,7 +74,7 @@ export class FilteringComponent implements ControlValueAccessor, OnInit, OnDestr
   addFilter () {
     this.value.push({
       field:    this.fields[0].id,
-      operator: this.fields[0].operator[0]
+      operator: Object.keys(this.fields[0].operator)[0]
     });
 
     this.filteringService.set(this.value);
@@ -81,6 +84,14 @@ export class FilteringComponent implements ControlValueAccessor, OnInit, OnDestr
     this.value.splice(index, 1);
 
     this.filteringService.set(this.value);
+  }
+
+  apply () {
+    this.onApply.emit(this.filteringService.get());
+  }
+
+  clear () {
+    this.filteringService.set([].concat(DEFAULT_FILTERING));
   }
 
   ngOnDestroy () {
@@ -93,8 +104,6 @@ export class FilteringComponent implements ControlValueAccessor, OnInit, OnDestr
     this.filteringService.filters.takeUntil(this.destroy$)
         .subscribe((filters: Filter[]) => {
           this.value = filters;
-
-          console.log(`this.value: `, this.value);
 
           this.changeDetectorRef.markForCheck();
           this.changeDetectorRef.detectChanges();
