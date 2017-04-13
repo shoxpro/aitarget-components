@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output
 } from '@angular/core';
 import { Field, Filter } from './filtering.interface';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -21,13 +21,14 @@ import { DEFAULT_FILTERING } from './filtering.constants';
   ],
   templateUrl:     'filtering.component.html',
   styleUrls:       ['filtering.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
-export class FilteringComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class FilteringComponent implements ControlValueAccessor, OnInit, OnDestroy, OnChanges {
   destroy$   = new Subject();
   filtering$ = new BehaviorSubject([]);
 
   @Input() fields: Array<Field>;
+  @Input() filtering: Array<Filter>;
   @Output() onApply = new EventEmitter();
 
   // ==== value ====
@@ -87,11 +88,30 @@ export class FilteringComponent implements ControlValueAccessor, OnInit, OnDestr
   }
 
   apply () {
-    this.onApply.emit(this.filteringService.get());
+    // Filter out filers without values
+    let filtering = this.filteringService.get()
+                        .filter((filter) => Boolean(filter.value));
+    this.onApply.emit(filtering);
   }
 
   clear () {
-    this.filteringService.set([].concat(DEFAULT_FILTERING));
+    let fields        = this.fieldsService.get();
+    let statusField   = fields.find((field) => field.id.indexOf('.effective_status') > -1);
+    let defaultFilter = [].concat(DEFAULT_FILTERING)[0];
+
+    defaultFilter.field = statusField.id;
+
+    this.filteringService.set([defaultFilter]);
+  }
+
+  ngOnChanges (changes) {
+    if (changes.filtering) {
+      this.filteringService.set(changes.filtering.currentValue);
+    }
+
+    if (changes.fields) {
+      this.fieldsService.set(changes.fields.currentValue);
+    }
   }
 
   ngOnDestroy () {
@@ -99,15 +119,14 @@ export class FilteringComponent implements ControlValueAccessor, OnInit, OnDestr
   }
 
   ngOnInit () {
-    this.fieldsService.set(this.fields);
-
-    this.filteringService.filters.takeUntil(this.destroy$)
+    this.filteringService.filters
+        .takeUntil(this.destroy$)
         .subscribe((filters: Filter[]) => {
           this.value = filters;
-
-          this.changeDetectorRef.markForCheck();
-          this.changeDetectorRef.detectChanges();
         });
+
+    this.fieldsService.set(this.fields);
+    this.filteringService.set(this.filtering);
   }
 
   constructor (private changeDetectorRef: ChangeDetectorRef,

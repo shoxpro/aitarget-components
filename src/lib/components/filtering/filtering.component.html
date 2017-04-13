@@ -1,16 +1,15 @@
-<div class="label">
-  <span>Filters:</span>
-</div>
-<div class="content">
-  <fba-filter *ngFor="let filter of value; let i = index;"
-              [filter]="filter"
-              [hideRemove]="i === 0"
-              (onRemove)="removeFilter(i)"></fba-filter>
+<div class="filtering-buttons">
   <div role="button"
        class="filtering-btn filtering-btn_add"
        *ngIf="fields?.length > 1"
-       (click)="addFilter()">+
+       (click)="addFilter()">Add Filter
   </div>
+</div>
+<div class="filtering__content">
+  <fba-filter *ngFor="let filter of value; let i = index;"
+              [filter]="filter"
+              [hideRemove]="value.length === 1"
+              (onRemove)="removeFilter(i)"></fba-filter>
 </div>
 <div class="filtering-buttons">
   <div role="button"
@@ -19,7 +18,7 @@
   </div>
   <div role="button"
        class="filtering-btn filtering-btn_clear"
-       *ngIf="fields?.length > 1"
+       *ngIf="fields?.length > 1 || !value.length"
        (click)="clear()">Clear
   </div>
 </div>

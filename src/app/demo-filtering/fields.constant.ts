@@ -24,14 +24,14 @@ export const FIELDS: Array<Field> = [
       NOT_IN: 'is not'
     },
   },
-  // {
-  //   'type':     'string',
-  //   'name':     'Campaign Name',
-  //   'id':       'campaign_name',
-  //   'input':    'input',
-  //   'operator': {
-  //     CONTAIN:     'contains',
-  //     NOT_CONTAIN: 'not contain'
-  //   }
-  // }
+  {
+    'type':     'string',
+    'name':     'Campaign Name',
+    'id':       'campaign_name',
+    'input':    'input',
+    'operator': {
+      CONTAIN:     'contains',
+      NOT_CONTAIN: 'not contain'
+    }
+  }
 ];

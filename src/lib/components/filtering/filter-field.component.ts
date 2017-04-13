@@ -17,7 +17,7 @@ import { Field } from './filtering.interface';
       position: relative;
     }
   `],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class FilterFieldComponent {
   isOpen = false;

@@ -17,7 +17,7 @@ import { Operator } from './filtering.interface';
       position: relative;
     }
   `],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class FilterOperatorComponent {
   processedOperators = [];
@@ -29,6 +29,7 @@ export class FilterOperatorComponent {
     /**
      * Create values array compatible with fba-dropdown-list component
      */
+    this.processedOperators = [];
     for (let key in val) {
       if (val.hasOwnProperty(key)) {
         this.processedOperators.push({id: key, name: val[key]});

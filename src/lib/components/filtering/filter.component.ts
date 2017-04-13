@@ -27,10 +27,9 @@ import { FieldsService } from './fields.service';
       display:             inline-flex;
       align-items:         center;
       height:              30px;
-      background:          #e9ebee;
+      background:          #ffffff;
       border:              solid 1px #dddfe2;
       border-radius:       4px;
-      box-shadow:          0 0 1px rgba(0, 0, 0, .6);
       margin:              4px;
       max-width:           100%;
       padding:             2px 4px;
@@ -41,15 +40,16 @@ import { FieldsService } from './fields.service';
     }
 
     .filter-item {
-      position:     relative;
-      display:      inline-flex;
-      align-items:  center;
-      border:       1px solid #cccccc;
-      margin-right: 4px;
-      padding:      0 4px;
-      height:       20px;
-      font-size:    1.1rem;
-      cursor:       pointer;
+      position:      relative;
+      display:       inline-flex;
+      align-items:   center;
+      border:        1px solid #d6d6d6;
+      border-radius: 3px;
+      margin-right:  4px;
+      padding:       0 4px;
+      height:        20px;
+      font-size:     1.1rem;
+      cursor:        pointer;
     }
 
     .filter-item:last-child {
@@ -62,7 +62,7 @@ import { FieldsService } from './fields.service';
       right:    0;
     }
   `],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class FilterComponent implements OnDestroy, OnInit {
   destroy$ = new Subject();
@@ -91,6 +91,12 @@ export class FilterComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit () {
+    this.fieldsService.fields
+        .takeUntil(this.destroy$)
+        .subscribe((fields) => {
+          this.fields = fields;
+        });
+
     this.filter$
         .takeUntil(this.destroy$)
         .distinctUntilKeyChanged('field')
@@ -103,7 +109,7 @@ export class FilterComponent implements OnDestroy, OnInit {
         .takeUntil(this.destroy$)
         .skip(1)
         .subscribe(({operator}) => {
-          this.operator$.next(operator[Object.keys(operator)[0]]);
+          this.operator$.next(Object.keys(operator)[0]);
           this.value$.next();
         });
 

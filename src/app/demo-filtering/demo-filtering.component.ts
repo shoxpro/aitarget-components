@@ -17,8 +17,8 @@ import { DEFAULT_FILTERING } from '../../lib/components/filtering/filtering.cons
                      <div class="content">
                        <fba-filtering *ngIf="!hideGeo"
                                       [fields]="fields"
-                                      (onApply)="onApply($event)"
-                                      [(ngModel)]="filtering"></fba-filtering>
+                                      [filtering]="filtering"
+                                      (onApply)="onApply($event)"></fba-filtering>
                      </div>
 
                      <fba-spec (close)="showFiltering(false, $event)"

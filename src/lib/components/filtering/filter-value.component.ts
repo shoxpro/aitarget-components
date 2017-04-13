@@ -1,4 +1,4 @@
-import { Component, ContentChild, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { Field, Item } from './filtering.interface';
 
 @Component({
@@ -6,7 +6,8 @@ import { Field, Item } from './filtering.interface';
   template: `
               <div class="select"
                    *ngIf="field?.input === 'select'">
-                <div (click)="isOpen = !isOpen">{{ displayValue || '–' }}
+                <div class="ellipsis"
+                     (click)="isOpen = !isOpen">{{ displayValue || '–' }}
                 </div>
                 <fba-dropdown-list
                   *ngIf="isOpen"
@@ -21,12 +22,18 @@ import { Field, Item } from './filtering.interface';
                 <input type="text"
                        #input
                        [value]="value"
-                       (keyup)="onChange.emit(input.value)">
+                       (keyup)="inputValueChanged(input.value)">
               </div>`,
   styles: [`
     :host {
       position: relative;
       padding:  0 !important;
+    }
+
+    .ellipsis {
+      text-overflow: ellipsis;
+      max-width:     200px;
+      overflow:      hidden;
     }
 
     .select {
@@ -35,13 +42,14 @@ import { Field, Item } from './filtering.interface';
 
     .input {
       position: relative;
-      width:    70px;
+      width:    92px;
       height:   100%;
     }
 
     input {
       background-color: #ffffff;
       border-width:     0;
+      border-radius:    3px;
       box-sizing:       border-box;
       height:           100%;
       margin:           0;
@@ -55,9 +63,6 @@ export class FilterValueComponent {
   values: Array<Item>         = [];
   processedValue: Array<Item> = [];
   displayValue: string;
-
-  @ViewChild('input') input: ElementRef;
-  @ContentChild('input') input2: ElementRef;
 
   // ===== field =====
   _field;
@@ -133,6 +138,15 @@ export class FilterValueComponent {
     } else {
       this.onChange.emit(item.id);
       this.setDisplayName([item]);
+    }
+  }
+
+  inputValueChanged (value) {
+    if (this.field.multiple) {
+      this.onChange.emit(value.split(',')
+                              .map((item) => item.trim()));
+    } else {
+      this.onChange.emit(value);
     }
   }
 
