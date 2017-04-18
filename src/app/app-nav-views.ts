@@ -5,6 +5,11 @@ export const views: Object[] = [
     link: ['']
   },
   {
+    name: 'Filtering',
+    icon: 'filter_list',
+    link: ['filtering']
+  },
+  {
     name: 'Geo Targeting',
     icon: 'place',
     link: ['geo']

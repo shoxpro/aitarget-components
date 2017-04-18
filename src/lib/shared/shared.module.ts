@@ -12,6 +12,8 @@ import { DynamicComponentModule } from 'ng-dynamic';
 import { InfoIconComponent } from './components/info-icon/info-icon.component';
 import { InfoIconModule } from './components/info-icon/info-icon.module';
 import { PluralPipe } from './pipes/plural.pipe';
+import { FbDropdownListComponent } from './components/dropdown-list/dropdown-list.component';
+import { TickComponent } from './components/tick.component';
 
 @NgModule({
   imports:      [
@@ -28,6 +30,8 @@ import { PluralPipe } from './pipes/plural.pipe';
     ControlSqueezeComponent,
     LocalizationComponent,
     CloseComponent,
+    FbDropdownListComponent,
+    TickComponent,
     ValuesPipe,
     PluralPipe,
     ValidateMessageComponent
@@ -41,6 +45,8 @@ import { PluralPipe } from './pipes/plural.pipe';
     ControlSqueezeComponent,
     LocalizationComponent,
     CloseComponent,
+    FbDropdownListComponent,
+    TickComponent,
     InfoIconComponent,
     ValuesPipe,
     ValidateMessageComponent

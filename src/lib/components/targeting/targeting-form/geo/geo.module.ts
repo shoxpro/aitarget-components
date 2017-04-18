@@ -15,10 +15,8 @@ import { GeoLocationTypeComponent } from './geo-location-type/geo-location-type.
 import { GeoMapControlsComponent } from './geo-map-controls/geo-map-controls.component';
 import { GeoMapPopupComponent } from './geo-map-popup/geo-map-popup.component';
 import { FullTypePipe } from './full-type.pipe';
-import { TickComponent } from '../../../../shared/components/tick.component';
 import { ArrowDropComponent } from '../../../../shared/components/arrow-drop.component';
 import { GeoTypeComponent } from './geo-type/geo-type.component';
-import { FbDropdownListComponent } from '../../../../shared/components/dropdown-list/dropdown-list.component';
 import { GeoInfoIconComponent } from './geo-info/geo-info-icon';
 import { GeoSearchComponent } from './geo-search/geo-search.component';
 import { PreloaderDotsComponent } from '../../../../shared/components/preloader-dots.component';
@@ -47,11 +45,9 @@ import { GeoWrapperComponent } from './geo-wrapper.component';
     GeoMapControlsComponent,
     FullNamePipe,
     FullTypePipe,
-    TickComponent,
     ArrowDropComponent,
     GeoMapPopupComponent,
     GeoTypeComponent,
-    FbDropdownListComponent,
     GeoInfoIconComponent,
     PreloaderDotsComponent
   ],

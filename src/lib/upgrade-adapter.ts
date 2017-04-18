@@ -6,6 +6,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { GeoWrapperComponent } from './components/targeting/targeting-form/geo/geo-wrapper.component';
 import { DetailedTargetingWrapperComponent } from './components/targeting/targeting-form/detailed-targeting/detailed-targeting-wrapper.component';
 import { LocalizationComponent } from './shared/components/localization.component';
+import { FilteringComponent } from './components/filtering/filtering.component';
 /* tslint:enable:max-line-length */
 
 export const NG2 = {
@@ -15,5 +16,6 @@ export const NG2 = {
   platformBrowserDynamic,
   GeoWrapperComponent,
   DetailedTargetingWrapperComponent,
-  LocalizationComponent
+  LocalizationComponent,
+  FilteringComponent
 };
