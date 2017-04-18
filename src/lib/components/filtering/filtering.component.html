@@ -2,7 +2,7 @@
   <div role="button"
        class="filtering-btn filtering-btn_add"
        *ngIf="fields?.length > 1"
-       (click)="addFilter()">Add Filter
+       (click)="addFilter()">{{'fba-filtering.ADD' | translate}}
   </div>
 </div>
 <div class="filtering__content">
@@ -14,11 +14,11 @@
 <div class="filtering-buttons">
   <div role="button"
        class="filtering-btn filtering-btn_apply"
-       (click)="apply()">Apply
+       (click)="apply()">{{'fba-filtering.APPLY' | translate}}
   </div>
   <div role="button"
        class="filtering-btn filtering-btn_clear"
        *ngIf="fields?.length > 1 || !value.length"
-       (click)="clear()">Clear
+       (click)="clear()">{{'fba-filtering.CLEAR' | translate}}
   </div>
 </div>

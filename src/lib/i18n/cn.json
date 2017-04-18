@@ -124,5 +124,10 @@
     "NARROW_FURTHER": "进一步缩小受众",
     "EXCLUDE": "排除用户",
     "OR": "或"
+  },
+  "fba-filtering": {
+    "ADD": "添加过滤器",
+    "APPLY": "应用",
+    "CLEAR": "清除"
   }
 }
