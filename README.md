@@ -1,7 +1,7 @@
 # AitargetComponents
 
-[![travis build](https://img.shields.io/travis/aitarget/aitarget-components.svg?style=flat)](https://travis-ci.org/aitarget/aitarget-components.svg)
-[![version](https://img.shields.io/npm/v/aitarget-components.svg?style=flat)](http://npm.im/aitarget-components.svg)
+[![travis build](https://img.shields.io/travis/aitarget/aitarget-components.svg?style=flat)](https://travis-ci.org/aitarget/aitarget-components)
+[![version](https://img.shields.io/npm/v/aitarget-components.svg?style=flat)](https://www.npmjs.com/package/aitarget-components)
 [![downloads](https://img.shields.io/npm/dm/aitarget-components.svg?style=flat)](http://npm-stat.com/charts.html?package=aitarget-components.svg&from=2015-08-01)
 [![MIT License](https://img.shields.io/npm/l/aitarget-components.svg?style=flat)](http://opensource.org/licenses/MIT)
 
