@@ -124,5 +124,10 @@
     "NARROW_FURTHER": "Narrow Further",
     "EXCLUDE": "Exclude People",
     "OR": "or"
+  },
+  "fba-filtering": {
+    "ADD": "Add Filter",
+    "APPLY": "Apply",
+    "CLEAR": "Clear"
   }
 }
