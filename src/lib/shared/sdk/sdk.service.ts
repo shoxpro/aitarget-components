@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SDK } from './sdk.interface';
-import { TranslateService, LangChangeEvent } from 'ng2-translate/src/translate.service';
+import { LangChangeEvent, TranslateService } from 'ng2-translate/src/translate.service';
 
 @Injectable()
 export class SdkService {
@@ -55,7 +55,7 @@ export class SdkService {
         status:  true,
         cookie:  true,
         xfbml:   true,
-        version: 'v2.7'
+        version: 'v2.8'
       });
 
       FB.Event.subscribe('auth.statusChange', (response) => {
