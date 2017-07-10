@@ -7,6 +7,7 @@ import { GeoWrapperComponent } from './components/targeting/targeting-form/geo/g
 import { DetailedTargetingWrapperComponent } from './components/targeting/targeting-form/detailed-targeting/detailed-targeting-wrapper.component';
 import { LocalizationComponent } from './shared/components/localization.component';
 import { FilteringComponent } from './components/filtering/filtering.component';
+import { FbaMenuComponent } from './shared/components/menu.component';
 /* tslint:enable:max-line-length */
 
 export const NG2 = {
@@ -17,5 +18,6 @@ export const NG2 = {
   GeoWrapperComponent,
   DetailedTargetingWrapperComponent,
   LocalizationComponent,
-  FilteringComponent
+  FilteringComponent,
+  FbaMenuComponent
 };

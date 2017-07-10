@@ -14,6 +14,10 @@ import { InfoIconModule } from './components/info-icon/info-icon.module';
 import { PluralPipe } from './pipes/plural.pipe';
 import { FbDropdownListComponent } from './components/dropdown-list/dropdown-list.component';
 import { TickComponent } from './components/tick.component';
+import { ArrowDropComponent } from './components/arrow-drop.component';
+import { PreloaderDotsComponent } from './components/preloader-dots.component';
+import { MdMenuModule } from '@angular/material/menu';
+import { FbaMenuComponent } from './components/menu.component';
 
 @NgModule({
   imports:      [
@@ -21,7 +25,8 @@ import { TickComponent } from './components/tick.component';
     DynamicComponentModule.forRoot({
       imports: [CoreModule]
     }),
-    InfoIconModule
+    InfoIconModule,
+    MdMenuModule.forRoot(),
   ],
   declarations: [
     AppendToDirective,
@@ -34,7 +39,10 @@ import { TickComponent } from './components/tick.component';
     TickComponent,
     ValuesPipe,
     PluralPipe,
-    ValidateMessageComponent
+    ValidateMessageComponent,
+    FbaMenuComponent,
+    ArrowDropComponent,
+    PreloaderDotsComponent
   ],
   exports:      [
     CoreModule,
@@ -49,8 +57,10 @@ import { TickComponent } from './components/tick.component';
     TickComponent,
     InfoIconComponent,
     ValuesPipe,
-    ValidateMessageComponent
+    ValidateMessageComponent,
+    PreloaderDotsComponent,
+    ArrowDropComponent,
+    FbaMenuComponent
   ]
 })
-export class SharedModule {
-}
+export class SharedModule {}
