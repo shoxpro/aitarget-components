@@ -2,8 +2,8 @@ import { Component, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/common/src/facade/async';
 
 interface MenuItem {
-  id: number,
-  name: string
+  id: number;
+  name: string;
 }
 
 @Component({
@@ -19,7 +19,7 @@ interface MenuItem {
                 *ngIf="isOpen && menuItems?.length > 0"
                 (fbaClickOutside)="isOpen = !isOpen"
                 [items]="menuItems"
-                (onClick)="isOpen = !isOpen; onClick.emit($event)"></fba-dropdown-list>`,
+                (onClick)="select($event)"></fba-dropdown-list>`,
   styles: [`
     :host {
       position: relative;
@@ -61,6 +61,7 @@ export class FbaMenuComponent {
   @Output() onClick = new EventEmitter();
 
   select (item) {
+    this.isOpen = !this.isOpen;
     this.onClick.emit(item);
   }
 }

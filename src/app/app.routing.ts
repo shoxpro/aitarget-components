@@ -10,5 +10,6 @@ export const routes: Routes = [
   {path: 'geo', loadChildren: './demo-geo/index#DemoGeoModule'},
   {path: 'detailed-targeting', loadChildren: './demo-detailed-targeting/index#DemoDetailedTargetingModule'},
   {path: 'targeting', loadChildren: './demo-targeting/index#DemoTargetingModule'},
-  {path: '**', component: NotFound404Component}
+  {path: 'shared', loadChildren: './demo-shared/index#DemoSharedModule'},
+  {path: '**', component: NotFound404Component},
 ];

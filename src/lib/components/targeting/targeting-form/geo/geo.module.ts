@@ -15,11 +15,9 @@ import { GeoLocationTypeComponent } from './geo-location-type/geo-location-type.
 import { GeoMapControlsComponent } from './geo-map-controls/geo-map-controls.component';
 import { GeoMapPopupComponent } from './geo-map-popup/geo-map-popup.component';
 import { FullTypePipe } from './full-type.pipe';
-import { ArrowDropComponent } from '../../../../shared/components/arrow-drop.component';
 import { GeoTypeComponent } from './geo-type/geo-type.component';
 import { GeoInfoIconComponent } from './geo-info/geo-info-icon';
 import { GeoSearchComponent } from './geo-search/geo-search.component';
-import { PreloaderDotsComponent } from '../../../../shared/components/preloader-dots.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { GeoWrapperComponent } from './geo-wrapper.component';
 /* tslint:enable:max-line-length */
@@ -45,11 +43,9 @@ import { GeoWrapperComponent } from './geo-wrapper.component';
     GeoMapControlsComponent,
     FullNamePipe,
     FullTypePipe,
-    ArrowDropComponent,
     GeoMapPopupComponent,
     GeoTypeComponent,
-    GeoInfoIconComponent,
-    PreloaderDotsComponent
+    GeoInfoIconComponent
   ],
   exports:      [
     GeoComponent,

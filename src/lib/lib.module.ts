@@ -13,8 +13,7 @@ import { GeoWrapperComponent } from './components/targeting/targeting-form/geo/g
 import { DetailedTargetingWrapperComponent } from './components/targeting/targeting-form/detailed-targeting/detailed-targeting-wrapper.component';
 import { FilteringModule } from './components/filtering/filtering.module';
 import { FilteringComponent } from './components/filtering/filtering.component';
-// import { SharedModule } from './shared/shared.module';
-
+import { SharedModule } from './shared/shared.module';
 
 import { FbaMenuComponent } from './shared/components/menu.component';
 /* tslint:enable:max-line-length */
@@ -31,7 +30,7 @@ if (environment.production) {
     StoreModule.provideStore(rootReducer),
     TargetingModule,
     FilteringModule,
-    // SharedModule
+    SharedModule
   ],
   providers:       [SdkService, SharedActions],
   entryComponents: [GeoWrapperComponent, DetailedTargetingWrapperComponent, LocalizationComponent, FilteringComponent, FbaMenuComponent],
