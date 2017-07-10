@@ -22,9 +22,9 @@ import { AppState } from './reducers';
     APP_DECLERATIONS
   ],
   imports:      [
-    APP_IMPORTS,
     BrowserModule,
     HttpModule,
+    APP_IMPORTS
   ],
   bootstrap:    [AppComponent],
   providers:    [APP_PROVIDERS]
@@ -52,7 +52,6 @@ export class AppModule {
     Object.keys(store)
           .forEach(prop => delete store[prop]);
   }
-
   hmrOnDestroy (store) {
     const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
     this._store.take(1)
@@ -61,7 +60,6 @@ export class AppModule {
     store.restoreInputValues = createInputTransfer();
     removeNgStyles();
   }
-
   hmrAfterDestroy (store) {
     store.disposeOldHosts();
     delete store.disposeOldHosts;

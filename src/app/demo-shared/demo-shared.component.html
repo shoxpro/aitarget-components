@@ -1,0 +1,19 @@
+<div class="demo-shared__component-buttons">
+  <button md-raised-button
+          (click)="hideMenu = !hideMenu">Toggle</button>
+  <button md-raised-button
+          (click)="showSpec(true, $event)">Show Spec</button>
+  <fba-localization></fba-localization>
+</div>
+
+<div class="fba-shared-wrapper" *ngIf="!hideMenu">
+  <fba-menu [menuItems]="menuItems"
+            (onClick)="onClick($event)"
+            [menuButtonName]="menuButtonName"></fba-menu>
+  <p style="margin-top: 8px; font-size: 15px;" *ngIf="selectedItem?.name">Selected item: {{ selectedItem.name }}</p>
+</div>
+
+<fba-spec (close)="showSpec(false, $event)"
+          *ngIf="isSpecVisible"
+          [spec]="menuItems"></fba-spec>
+

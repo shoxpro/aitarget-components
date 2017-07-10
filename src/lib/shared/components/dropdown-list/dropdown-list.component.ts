@@ -1,21 +1,22 @@
 import { ChangeDetectionStrategy, Component, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/common/src/facade/async';
 
-interface Item { id: string | number; name: string; }
+export interface Item { id: string | number; name: string; }
 
 @Component({
   selector:        'fba-dropdown-list',
   templateUrl:     './dropdown-list.html',
   styleUrls:       ['./dropdown-list.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class FbDropdownListComponent {
   selectedItems = {};
+  noTick        = true;
 
   @Input() items: Array<Item>;
 
   @Input()
-  set selectedItem (value: Item) {
+  set selectedItem (value: Item | Item[]) {
     this.selectedItems = {};
     if (Array.isArray(value)) {
       value.forEach((item) => {
@@ -24,6 +25,9 @@ export class FbDropdownListComponent {
     } else {
       this.selectedItems[value.id] = value;
     }
+
+    this.noTick = !(<any[]>Object.values(this.selectedItems)).length;
+    console.log('noTick', this.noTick);
   }
 
   @Input() multiple: Boolean = false;

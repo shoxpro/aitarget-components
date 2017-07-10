@@ -1,7 +1,7 @@
 <div class="fba-dropdown-list">
   <div class="fba-dropdown-list__item"
        *ngFor="let item of items"
-       [ngClass]="{'fba-dropdown-list__item_selected': selectedItems[item.id]}"
+       [ngClass]="{'fba-dropdown-list__item_selected': selectedItems[item.id], 'fba-dropdown-list__item_no-tick': noTick}"
        (click)="select(item)"
        #listItem
        (mouseenter)="showInfo(listItem, true)"
