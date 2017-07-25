@@ -76,9 +76,9 @@ export class AudienceComponent implements OnInit, OnDestroy {
   ngOnInit () {
     this.audienceForm.patchValue(this.audience);
 
-    this.bidMin    = this.audience.reachestimate.bid_estimations[0].bid_amount_min / 100;
-    this.bidMax    = this.audience.reachestimate.bid_estimations[0].bid_amount_max / 100;
-    this.bidMedian = this.audience.reachestimate.bid_estimations[0].bid_amount_median / 100;
+    this.bidMin    = this.audience.reachestimate.bid_estimate.min_bid / 100;
+    this.bidMax    = this.audience.reachestimate.bid_estimate.max_bid / 100;
+    this.bidMedian = this.audience.reachestimate.bid_estimate.median_bid / 100;
 
     /**
      * Process bid changes, toggle bidAuto and validators when changed
