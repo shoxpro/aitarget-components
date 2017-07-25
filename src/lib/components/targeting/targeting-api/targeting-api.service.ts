@@ -56,15 +56,15 @@ export class TargetingApiService {
   reachestimate (targetingSpec: TargetingSpec, adaccountId = this.adaccountId, optimizeFor = 'IMPRESSIONS') {
     return this.sdk.switchMap((FB: SDK) => {
       return Observable.create((observer) => {
-        FB.api(`/${adaccountId}/reachestimate`, {
+        FB.api(`/${adaccountId}/delivery_estimate`, {
           targeting_spec: targetingSpec,
-          optimize_for:   optimizeFor,
+          optimization_goal:   optimizeFor,
           locale:         this.lang
         }, (response) => {
           if (response.error) {
             observer.error(new SdkError(response.error));
           } else {
-            observer.next(response.data);
+            observer.next(response.data[0]);
             observer.complete();
           }
         });
