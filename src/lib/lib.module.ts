@@ -16,6 +16,7 @@ import { FilteringComponent } from './components/filtering/filtering.component';
 import { SharedModule } from './shared/shared.module';
 
 import { FbaMenuComponent } from './shared/components/menu.component';
+import { CrudModule } from './components/crud/crud.module';
 /* tslint:enable:max-line-length */
 
 if (environment.production) {
@@ -30,10 +31,12 @@ if (environment.production) {
     StoreModule.provideStore(rootReducer),
     TargetingModule,
     FilteringModule,
-    SharedModule
+    SharedModule,
+    CrudModule
   ],
   providers:       [SdkService, SharedActions],
-  entryComponents: [GeoWrapperComponent, DetailedTargetingWrapperComponent, LocalizationComponent, FilteringComponent, FbaMenuComponent],
+  entryComponents: [GeoWrapperComponent, DetailedTargetingWrapperComponent, LocalizationComponent, FilteringComponent,
+    FbaMenuComponent],
   exports:         [BrowserModule, TargetingModule, FilteringModule]
 })
 export class LibModule {

@@ -28,5 +28,10 @@ export const views: Object[] = [
     name: 'Shared',
     icon: 'developer_board',
     link: ['shared']
-  }
+  },
+  {
+    name: 'Crud',
+    icon: 'developer_board',
+    link: ['crud']
+  },
 ];
