@@ -15,12 +15,12 @@ export class CrudApiService {
                .take(1);
   }
 
-  createCampaign (campaign, adaccountId = this.adaccountId) {
+  create (endpoint, params, adaccountId = this.adaccountId) {
     return this.sdk.switchMap((FB: SDK) => {
       return Observable.create((observer) => {
-        FB.api(`/${adaccountId}/campaigns`,
+        FB.api(`/${adaccountId}/${endpoint}`,
           'post',
-          Object.assign({}, campaign, {locale: this.locale}),
+          Object.assign({}, params, {locale: this.locale}),
           (response) => {
             if (response.error) {
               observer.error(new SdkError(response.error));

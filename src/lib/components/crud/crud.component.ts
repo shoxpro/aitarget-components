@@ -1,60 +1,104 @@
 import { Component } from '@angular/core';
-import { campaignDefault } from './crud.constants';
+import { adsetDefault, campaignDefault } from './crud.constants';
 import { CrudApiService } from './crud-api.service';
 
 @Component({
   selector: 'fba-crud',
   template: `
-              <div>
+              <div class="content">
                 <form #f="ngForm"
                       (ngSubmit)="save(f.value, f.valid)"
                       novalidate>
+
                   <fieldset>
-                    <legend>Create Campaign</legend>
-                    <textarea name="campaign"
-                              [(ngModel)]="campaign"
-                              cols="100"
-                              rows="7">
-                      </textarea>
+                    <legend>CRUD</legend>
+
+                    <fieldset ngModelGroup="campaign">
+                      <legend>Campaign</legend>
+
+                      <label *ngFor="let key of campaignKeys">
+                        {{key | capitalize}}
+                        <input
+                          [name]="key"
+                          [(ngModel)]="campaign[key]">
+                      </label>
+                    </fieldset>
+
+                    <fieldset ngModelGroup="adset">
+                      <legend>Adset</legend>
+
+                      <label *ngFor="let key of adsetKeys">
+                        {{key | capitalize}}
+                        <input
+                          [name]="key"
+                          [(ngModel)]="adset[key]">
+                      </label>
+                    </fieldset>
+
                   </fieldset>
 
                   <button>Submit</button>
-                  <div>
-                    <div *ngIf="campaignResponse">
-                      <p>Result:</p>
-                      <div>{{campaignResponse | json}}</div>
-                    </div>
-                    <div *ngIf="campaignError">
-                      <p>Error:</p>
-                      <div>{{campaignError | json}}</div>
-                    </div>
-                  </div>
                 </form>
+
+                <div class="responses">
+                  <p *ngFor="let response of responses">{{response | json}}</p>
+                </div>
               </div>
             `,
   styles:   [`
     :host {
+      display:   block;
       font-size: 1.4rem;
     }
 
-    textarea {
-      display: block;
+    .content {
+      display: flex;
+    }
+
+    form {
+      flex-grow: 1;
+      max-width: 50%;
+    }
+
+    label, fieldset {
+      margin-bottom: 10px;
+      display:       block;
+    }
+
+    label:last-child, fieldset:last-child {
+      margin: 0;
+    }
+
+    input {
+      display: inline-block;
+      width:   100%;
+    }
+
+    button {
+      margin: 0 auto;
     }
   `]
 })
 export class CrudComponent {
-  campaign = JSON.stringify(campaignDefault, null, 2);
-  campaignResponse;
-  campaignError;
+  campaign     = campaignDefault;
+  campaignKeys = Object.keys(this.campaign);
+  adset        = adsetDefault;
+  adsetKeys    = Object.keys(this.adset);
+  responses    = [];
 
-  save (value, valid) {
-    console.log(`value, valid: `, value, valid);
-    this.crudApiService.createCampaign(JSON.parse(value.campaign))
+  save (crud, isValid) {
+    console.log(`crud, isValid: `, crud, isValid);
+    this.crudApiService.create('campaigns', crud.campaign)
+        .do((response) => {
+          this.responses.push(response);
+        })
+        .switchMap(({id}) => {
+          return this.crudApiService.create('adsets', Object.assign({}, crud.adset, {campaign_id: id}));
+        })
         .subscribe((response) => {
-          this.campaignResponse = response;
+          this.responses.push(response);
         }, (error) => {
-          this.campaignError = error;
-          console.log(`Error crating campaign: `, error);
+          this.responses.push(error);
         });
   }
 

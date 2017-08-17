@@ -18,6 +18,7 @@ import { ArrowDropComponent } from './components/arrow-drop.component';
 import { PreloaderDotsComponent } from './components/preloader-dots.component';
 import { MdMenuModule } from '@angular/material/menu';
 import { FbaMenuComponent } from './components/menu.component';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 @NgModule({
   imports:      [
@@ -39,6 +40,7 @@ import { FbaMenuComponent } from './components/menu.component';
     TickComponent,
     ValuesPipe,
     PluralPipe,
+    CapitalizePipe,
     ValidateMessageComponent,
     FbaMenuComponent,
     ArrowDropComponent,
@@ -57,6 +59,7 @@ import { FbaMenuComponent } from './components/menu.component';
     TickComponent,
     InfoIconComponent,
     ValuesPipe,
+    CapitalizePipe,
     ValidateMessageComponent,
     PreloaderDotsComponent,
     ArrowDropComponent,
